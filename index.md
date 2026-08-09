@@ -8,6 +8,11 @@ title: Wiki Index
 
 ## Concepts
 
+- [[commit-linked-knowledge]]
+- [[e2e-agentic-engineering-workflow]]
+- [[evidence-driven-engineering]]
+- [[historical-hw-change-reconstruction]]
+- [[hw-change-contract]]
 - [[llm-wiki-vs-rag]]
 
 ## Entities
@@ -30,3 +35,5 @@ title: Wiki Index
 ## Journal
 
 ## Projects
+
+- [[HW Change List E2E]]

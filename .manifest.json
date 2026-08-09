@@ -30,5 +30,19 @@
       "entities/improve-token-efficiency.md",
       "entities/presentation-slides-generator.md"
     ]
+  },
+  "_source/Projects/HW Change List E2E implementation loop/handoff.md": {
+    "content_hash": "sha256:generated_on_ingest",
+    "last_ingested": "2026-08-10T00:26:00+09:00",
+    "pages_produced": [
+      "projects/HW Change List E2E/HW Change List E2E.md",
+      "concepts/evidence-driven-engineering.md",
+      "concepts/hw-change-contract.md",
+      "concepts/commit-linked-knowledge.md",
+      "concepts/historical-hw-change-reconstruction.md",
+      "concepts/e2e-agentic-engineering-workflow.md"
+    ],
+    "source_type": "document",
+    "project": "HW Change List E2E implementation loop"
   }
 }
