@@ -1,0 +1,34 @@
+{
+  "https://www.youtube.com/watch?v=GrEFRTmbMfI": {
+    "path": "https://www.youtube.com/watch?v=GrEFRTmbMfI",
+    "timestamps": {
+      "ingested": "2026-08-09T18:14:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/llm-wiki-vs-rag.md"
+    ]
+  },
+  "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md": {
+    "path": "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+    "timestamps": {
+      "ingested": "2026-08-09T18:38:00+09:00"
+    },
+    "pages_produced": [
+      "entities/weknora.md",
+      "entities/xwiki.md",
+      "entities/obsidian-llm-plugins.md",
+      "synthesis/llm-wiki-tools-comparison.md"
+    ]
+  },
+  "https://github.com/jha0313/skills_repo": {
+    "path": "https://github.com/jha0313/skills_repo",
+    "timestamps": {
+      "ingested": "2026-08-09T23:56:00+09:00"
+    },
+    "pages_produced": [
+      "entities/ai-readiness-cartography.md",
+      "entities/improve-token-efficiency.md",
+      "entities/presentation-slides-generator.md"
+    ]
+  }
+}

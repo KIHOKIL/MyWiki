@@ -1,0 +1,236 @@
+{
+  "main": {
+    "id": "f39e97c8282ac4ae",
+    "type": "split",
+    "children": [
+      {
+        "id": "c18cf5b6e3d92b3b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8efca7f9e49ba180",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "LLM Wiki 설치 사이트"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a72a1a2d2c0b83ae",
+    "type": "split",
+    "children": [
+      {
+        "id": "b7f0412960dc8fb0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2758a6643a13d386",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "3061b960c1c7dcc1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "3e4b0e62a2ae0891",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "79c587f50ac6dda9",
+    "type": "split",
+    "children": [
+      {
+        "id": "509013a2e2a18842",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "898683a01042c373",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "백링크"
+            }
+          },
+          {
+            "id": "a4ede1ab9cb8cbe8",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "나가는 링크"
+            }
+          },
+          {
+            "id": "a7d4b3225b52ef14",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "f5d8ba3543a95293",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "모든 속성"
+            }
+          },
+          {
+            "id": "ab8af7084e895910",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "bases:새 베이스 생성하기": false
+    }
+  },
+  "active": "2758a6643a13d386",
+  "lastOpenFiles": [
+    "_source/Projects/HW Change List E2E implementation loop/HW Change List E2E.zip",
+    "_source/Projects/HW Change List E2E implementation loop/Presentation.zip",
+    "_source/Projects/HW Change List E2E implementation loop/handoff.zip",
+    "_source/Projects/HW Change List E2E implementation loop/handoff.md",
+    "_source/Projects/HW Change List E2E implementation loop/PRD.pdf",
+    "_source/Projects/HW Change List E2E implementation loop/미확인 96619.crdownload",
+    "_source/Projects/HW Change List E2E implementation loop/handoff",
+    "_source/Projects/HW Change List E2E implementation loop/새 폴더",
+    "_source/Projects/HW Change List E2E implementation loop/Presentation/PHY_SW_AI_E2E_Executive_Diagram.pptx",
+    "_source/Projects/HW Change List E2E implementation loop/Presentation/PHY_SW_AI_E2E_Executive_HTML/README.md",
+    "_source/Projects/HW Change List E2E implementation loop/Presentation/PHY_SW_AI_E2E_Executive_HTML/index.html",
+    "_source/Projects/HW Change List E2E implementation loop/Presentation/PHY_SW_AI_E2E_Executive_HTML/06-knowledge.html",
+    "_source/Projects/HW Change List E2E implementation loop/Presentation/PHY_SW_AI_E2E_Executive_HTML/12-kpi.html",
+    "_source/Study/AI-활용법/LLM_WiKi/LLM_Wiki와_RAG_비교.md",
+    "무제.canvas",
+    "entities/presentation-slides-generator.md",
+    "entities/improve-token-efficiency.md",
+    "entities/ai-readiness-cartography.md",
+    "_source/skills_repo_tmp/presentation_slides/references/layouts.md",
+    "_source/skills_repo_tmp/presentation_slides/references/index-template.md",
+    "_source/skills_repo_tmp/presentation_slides/SKILL.md",
+    "_source/skills_repo_tmp/ai-readiness-cartography/references/scoring-rubric.md",
+    "_source/skills_repo_tmp/ai-readiness-cartography/SKILL.md",
+    "_source/skills_repo_tmp/ai-readiness-cartography/CREATION_PROMPT.md",
+    "_source/skills_repo_tmp/improve-token-efficiency/SKILL.md",
+    "_source/skills_repo_tmp/improve-token-efficiency/CREATION_PROMPT.md",
+    "_source/skills_repo_tmp/ai-readiness-cartography-en/references/scoring-rubric.md",
+    "_source/skills_repo_tmp/ai-readiness-cartography-en/SKILL.md",
+    "_source/skills_repo_tmp/ai-readiness-cartography-en/CREATION_PROMPT.md",
+    "synthesis/llm-wiki-tools-comparison.md",
+    "entities/obsidian-llm-plugins.md",
+    "entities/xwiki.md",
+    "entities/weknora.md",
+    "2026-08-09.md",
+    "_source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+    "references/AI-Tools/ai-agent-skills-catalog.md",
+    "_source/Clippings/CodeMate transforming developer productivity with on-device AI assistance.md",
+    "temp_obsidian_wiki/extensions/brain-capture/assets/store-screenshot-1280x800.png",
+    "temp_obsidian_wiki/extensions/brain-capture/assets/obsidian-brain.png",
+    "temp_obsidian_wiki/extensions/brain-capture/assets/icon-48.png",
+    "temp_obsidian_wiki/extensions/brain-capture/assets/icon-16.png",
+    "temp_obsidian_wiki/extensions/brain-capture/assets/icon-128.png"
+  ]
+}
