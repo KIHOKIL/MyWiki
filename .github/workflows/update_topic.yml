@@ -7,6 +7,7 @@ on:
 permissions:
   contents: write
   issues: write
+  actions: write
 
 jobs:
   update-topic:
@@ -54,3 +55,10 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           comment: "자동화 봇이 이슈를 닫았습니다."
+
+      - name: Trigger Daily News Summarizer Workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh workflow run news_summarizer.yml
+          echo "뉴스 요약 워크플로우를 성공적으로 트리거했습니다."
