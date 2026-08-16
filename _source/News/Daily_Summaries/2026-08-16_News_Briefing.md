@@ -11,44 +11,13 @@ sources: []
 
 ### 📊 Mobile Communication Industry
 
-### [Global Mobile & Tech Market Intelligence Briefing]
-
----
-
-### 1. 6G 표준화 전쟁 조기 점화 및 ‘AI-RAN’ 주도권 경쟁
-* **상용화 타임라인 가속화 (2029~2030년)**: 퀄컴이 2029년 상용화를 목표로 글로벌 파트너십을 확장하고, 한국 과기정통부가 ‘하이퍼 AI 네트워크’ 전략을 통해 2030년 6G 상용화 로드맵을 확정하는 등 주요국 및 선도 칩셋 업체를 중심으로 6G 주도권 선점 속도가 빨라지고 있습니다.
-* **미·중 기술 패권 및 표준화 각축**: 단순 통신 속도 경쟁을 넘어 **AI-RAN(AI-네이티브 무선망)** 및 **AI·6G 보안 표준**이 핵심 전장으로 부상했습니다. 한국이 6G 보안 표준 29건을 주도하고 유엔젤 등 미들웨어·코어망 기업이 부각되는 가운데, 베트남 등 신흥국 역시 선제적 인프라 정비에 나서며 6G 진영 경쟁이 다극화되고 있습니다.
-
----
-
-### 2. 모바일 외 비즈니스 확장: 위성 통신(NTN) 및 광대역(Broadband)
-* **MediaTek의 NTN(비지상 네트워크) 확장**: 미디어텍이 스타링크 모바일과 손잡고 스마트폰용 긴급 위성 통신 서비스를 시연하며 지상망 한계를 극복하는 D2D(Direct-to-Device) 생태계 구축에 속도를 내고 있습니다.
-* **화웨이의 인프라 침투와 지정학적 딜레마**: 화웨이는 서방 제재 속에서도 아제르바이잔 전역의 광대역(Broadband)망 구축을 완수하며 신흥국 유선·광통신 시장 점유율을 공격적으로 확대하고 있습니다. 반면, 한국(LGU+) 등 기존 화웨이 장비 도입 사업자들은 여전히 미·중 갈등의 외교·안보적 리스크에 직면해 있습니다.
-
----
-
-### 3. 반도체·OEM 진영의 재편: AI 하드웨어 융합과 내재화
-* **AI 빅테크 × 칩셋 연합 (OpenAI-MediaTek)**: OpenAI가 차기 AI 디바이스용 프로세서로 미디어텍의 Dimensity 9600 채택을 유력하게 검토하면서, 기존 스마트폰 폼팩터를 넘어선 ‘Edge AI 전용 디바이스’ 시장이 본격 태동하고 있습니다.
-* **중화권 OEM의 반도체 내재화 및 가격 전략 변화**: 샤오미와 오포가 전력관리반도체(PMIC) 스타트업에 공동 투자하며 부품 공급망 자립화에 나섰습니다. 원가 상승 및 프리미엄 전략 전환으로 샤오미 단말기 ASP(평균판매단가)가 급격히 상승하고 있습니다.
-* **스마트폰 3사의 차별화 양상**:
-  * **삼성전자**: MWC26 등을 기점으로 ‘갤럭시 AI’ 생태계를 모바일에서 전방위 기기로 확장하며 온디바이스 AI 시장 주도권 굳히기.
-  * **애플**: 독점적 생태계 기반의 강경한 공급망 압박 전략이 파트너사들과의 마찰 요인으로 대두.
-  * **통신 3사**: 단순 망 제공자에서 탈피해 월드IT쇼 등에서 풀스택 AI(AI Transformation, 보이스 AI 에이전트) 경쟁으로 전환.
-
----
-
-### 💡 오늘의 추천 신규 키워드
-
-1. **AI-RAN (AI-Native Radio Access Network)**
-   * *선정 이유*: 6G 상용화의 핵심 전제 기술이자, 엔비디아·퀄컴·통신사 연합이 주도하는 기지국-AI 융합 아키텍처로 통신 장비 및 반도체 업계의 필수 추적 테마입니다.
-2. **D2D NTN (Direct-to-Device Non-Terrestrial Network)**
-   * *선정 이유*: 스타링크-미디어텍 협력 사례처럼 지상 기지국 없이 저궤도 위성과 스마트폰이 직접 통신하는 기술로, 6G 시대 지·공 통합 네트워크의 핵심 수익 모델로 부상하고 있습니다.
+⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (Fallback용 OPENAI_API_KEY 없음) 아래 원문 기사 링크를 참고해 주세요.
 
 ### 🔗 참고 기사 목록:
+- 6G 룰북 누가 쓰나…미중 기술패권 전쟁, 표준 선점전으로 이동 - 동포저널
+  https://news.google.com/rss/articles/CBMic0FVX3lxTFBZMFE3ZDEtRG1IMHV4Z3phb2NsdlVFVXJoU2ZwNXBRUFg3X3o1bE1kZ3Q5ZEhXQ1B0SzQ0elNFY1pKam1iYjN5T1BHX2ZydmNpbjd5TEZhemJvNEd1b3c5NWJFTU1NeDdZVjFEdW43c2VDOUE?oc=5
 - “6G 규칙 누가 정하나”…미·중 기술패권, ‘표준 전쟁’ 본격화 - 인터내셔널포커스
   https://news.google.com/rss/articles/CBMiVkFVX3lxTFBaREtQenZvT18tNFl1VWtscXVqckdsMXFHUjB4b1A3NDRYNFRHTXQtWDJZc0dPdWxzalFTUV9kZVpESWJscDZtX21mWkZKYWpGV2hDbFRR?oc=5
-- 한국, AI·6G 보안 국제표준 개발 주도…국제회의서 총 29건 성과 - 대한민국 정책브리핑
-  https://news.google.com/rss/articles/CBMibEFVX3lxTE5wUkNlem9QZElLYmhqQXYwSnI2aHhmY3hySUNGUXVrbXk3Mms5MTBVdGp3aXMwV0hlX1VVYmJyRVBPdEJULXNVTFZscUJrS0VCTHpnTkYtUGdvb3pxWWJyeXU4cVlJS3NjNVRKSg?oc=5
 - 유엔젤, 글로벌 빅테크 6G 투자 본격화 '수혜'…"정부 표준화 국책과제 수행 기술력 주목" - 프라임경제
   https://news.google.com/rss/articles/CBMickFVX3lxTE5sb3JuandOcTNiUXBRMmh3cHhiWU9HRWl6NF93eGhLam5iY2lhNktVcm1HX3YxZzJVZ0FrSnUxcDQ4dGMzaTY5VE9SU01xNkZwNzVkV1Jia3d2YS1femU2MzhtSktaR09HRm81MF92UmhIQQ?oc=5
 - 2030년 6G 상용화-AI랜 전국 구축...과기정통부 '제2의 CDMA' 위한 '하이퍼 AI 네트워크' 전략 띄웠다 - 테크M
@@ -60,52 +29,44 @@ sources: []
 
 ### 📊 AI Era: Hardware & Infrastructure
 
-# [Global AI HW & Infra Analyst Report] AI 하드웨어 생태계 동향 및 인프라 리스크 진단
+# [Executive Briefing] AI Era: Hardware & Infrastructure 산업 동향 분석
 
 ---
 
-###  Executive Summary
-* **파운드리·메모리 공급망 다변화 가속:** TSMC의 첨단 패키징(CoWoS) 병목 심화로 구글 등 빅테크의 차세대 AI 칩 생산 파트너로 삼성전자가 급부상. SK하이닉스는 단순 HBM 공급자를 넘어 종합 AI 인프라 솔루션 기업으로 진화 중.
-* **인프라 병목(Bottleneck)의 이동:** 연산 능력(Compute) 경쟁에서 **‘전력 공급망(Power Grid) 및 자본 부담(Capex Debt)’**으로 병목 축이 이동. SMR(소형모듈원전), 슈퍼커패시터 등 차세대 에너지·전력 인프라가 핵심 밸류체인으로 진입.
-* **HW 벤더의 풀스택(Full-Stack)화:** 엔비디아는 하드웨어 독점을 넘어 AI 모델 및 양자 컴퓨팅 플랫폼(NVIDIA Ising)으로 확장하며 생태계 락인(Lock-in) 강화.
+### 1. 파운드리 및 AI ASIC: TSMC 병목 현상과 삼성전자의 턴키(Turnkey) 기회
+* **빅테크의 공급망 다변화 가속:** 구글 등 주요 빅테크가 차세대 자체 AI 칩(ASIC) 생산 파트너로 삼성전자를 유력하게 검토 중입니다. 이는 TSMC의 첨단 패키징(CoWoS) 및 파운드리 생산능력(Capa) 포화에 따른 리스크 분산 조치입니다.
+* **삼성전자의 '원스톱' 경쟁력 부각:** 선단 파운드리 공정, HBM, 2.5D/3D 어드밴스드 패키징을 일괄 공급할 수 있는 삼성전자의 턴키 솔루션이 TSMC 단일 공급망의 대안으로 부상하며, AI 반도체 수탁 제조 시장의 재편 가능성이 커지고 있습니다.
 
----
+### 2. 메모리 반도체: HBM을 넘어 '추론(Inference) 특화 인프라'로 진화
+* **AI 워크로드의 무게중심 이동 (학습 → 추론):** SK하이닉스는 고대역폭 메모리(HBM) 주도권을 기반으로 HBF(High Bandwidth Flash), 고성능 AI 낸드(eSSD) 등 추론 중심의 메모리 포트폴리오로 영역을 확장하고 있습니다.
+* **사업적 함의:** 거대언어모델(LLM)의 상용화로 대규모 추론 연산이 급증함에 따라, 고비용 HBM뿐만 아니라 전력 효율과 대용량을 지원하는 차세대 CXL, HBF 등의 메모리가 데이터센터 TCO(총소유비용) 절감의 핵심 변수로 자리잡고 있습니다.
 
-### 1. 칩셋·파운드리·메모리: 공급망 다변화와 턴키(Turnkey) 경쟁
-* **TSMC 병목에 따른 구글-삼성전자 연대 가능성:** 빅테크의 자체 AI 가속기(Custom ASIC) 수요가 폭증하는 가운데, TSMC의 캐파 한계로 구글이 차세대 AI 칩 파운드리 대안으로 삼성전자를 적극 검토 중. 이는 메모리(HBM)+파운드리+패키징을 일괄 제공하는 삼성의 ‘턴키 전략’에 중요한 기회 요인으로 작용.
-* **SK하이닉스의 차세대 메모리 주도권 강화:** 세미콘 타이완 등을 기점으로 HBM4 및 CXL 등 차세대 기술 로드맵을 가시화하며, 단순 메모리 벤더에서 글로벌 AI 인프라 파트너로의 입지 공고화.
-* **엔비디아의 포트폴리오 다각화:** 단순 GPU 판매를 넘어 자체 AI 파운데이션 모델 및 양자 시뮬레이션(NVIDIA Ising) 오픈소스를 배포, 연산 HW와 SW 플랫폼 간 결합력을 극대화.
+### 3. 에너지 & 인프라 병목: 빅테크의 전력 위기 대응과 차세대 에너지 투자
+* **전력 그리드(Grid) 한계와 재무적 부담:** AI 데이터센터 증설로 전력 수요 예측치가 급증(한국 2040 전력계획 등)하는 반면, 인프라 구축 지연, 주민 수용성, 빅테크의 자본지출(CapEx) 및 부채 리스크가 부각되고 있습니다.
+* **SMR 및 차세대 전력 장비로 자금 집중:** 빅테크들은 전력망 불안정을 극복하기 위해 SMR(소형 모듈 원자로) 등 차세대 원자력에 대규모 자금을 직접 투자하고 있으며, 데이터센터 안정성을 위한 슈퍼커패시터(Supercapacitor) 등 고신뢰성 전력 보조 장비 도입을 가속화하고 있습니다.
 
----
-
-### 2. 에너지·인프라 & 빅테크 금융 리스크: 'Power & Capital'의 한계 시험
-* **전력망 위기와 대체 솔루션 급부상:** 초거대 AI 데이터센터 가동을 위한 전력 피크 부하 문제가 심화되면서, 백업 전력용 **슈퍼커패시터(Supercapacitor)** 도입 및 **SMR(소형모듈원전)·스마트 그리드 연계**가 필수 인프라로 부상.
-* **빅테크 Capex 부채 및 지역 수용성 문제 대두:** 데이터센터 증설에 따른 전력·용수 소비로 지역사회 반발이 증가하고 있으며, 막대한 인프라 부채에 대한 금융시장의 감시가 강화됨. 다만 단기적 AI 거품론 완화로 반도체 밸류체인 주가는 기술적 반등세를 유지.
-
----
-
-### 3. 피지컬 AI 및 엣지 시스템 반도체 확장
-* 로봇 및 드론 등 비(非)데이터센터 환경에서 GPS 없이 자체 위치를 인식하고 연산하는 오프라인 엣지 AI 시스템(Makeware-Nucode 협력 등)과 특화 설계 인재 풀이 확대되며, **데이터센터 중심의 AI 연산이 물리적 단말(Physical AI)로 본격 전이**되는 양상.
+### 4. 연산 HW 생태계: 엔비디아의 풀스택(Full-Stack) 지배력 확장
+* **단순 칩 제조사 탈피:** 엔비디아는 GPU 공급을 넘어 자체 AI 모델 개발 및 양자 컴퓨팅 플랫폼(NVIDIA Ising) 오픈소스를 통해 연산 생태계 전반을 장악하려 하고 있습니다.
+* **플랫폼 락인(Lock-in) 전략:** 하드웨어(GPU/NPU)-소프트웨어(CUDA)-모델-양자 인프라를 수직 통합함으로써 경쟁사(커스텀 ASIC 진영)의 진입 장벽을 높이고 있습니다.
 
 ---
 
 ### 💡 오늘의 추천 신규 키워드
 
-1. **SMR-Powered Data Center (SMR 기반 AI 데이터센터)**
-   * *선정 이유:* AI 전력 수요의 기저부하(Baseload) 해결을 위해 빅테크들이 탄소 배출이 없는 SMR(소형모듈원전)과의 직접 PPA(전력구매계약) 또는 온사이트(On-site) 구축 투자를 본격화하고 있어 장기 인프라 테마로 추적 필요.
-
-2. **Turnkey Advanced Packaging (턴키 첨단 패키징 생태계)**
-   * *선정 이유:* TSMC의 CoWoS 공급 부족으로 인해 파운드리, HBM 제조, 2.5D/3D 패키징을 원스톱으로 처리할 수 있는 통합 턴키 공급 역량이 파운드리 점유율 재편의 핵심 변수로 작용 중.
+1. **HBF (High Bandwidth Flash) & CXL 3.0**
+   * *선정 이유:* HBM의 높은 가격과 용량 한계를 극복하기 위해 '추론 전용 데이터센터'를 타깃으로 부상 중인 고대역폭 낸드 및 CXL 기반 메모리 풀링 기술 추적 필요.
+2. **빅테크 전력 PPA(전력구매계약)와 SMR(소형 모듈 원자로)**
+   * *선정 이유:* AI 인프라 확장의 실질적 제약 조건이 '컴퓨팅'에서 '에너지'로 전이됨에 따라 빅테크의 원자력 스타트업 지분 투자 및 장기 전력 공급 계약(PPA) 동향 모니터링 필요.
 
 ### 🔗 참고 기사 목록:
-- Samsung Electronics Emerges as Key Candidate for Google's Next-Generation AI Chip Production - Korea IT Times
+- Samsung Electronics Emerges as Key Candidate for Google's Next-Generation AI Chip Production - koreaittimes.com
   https://news.google.com/rss/articles/CBMicEFVX3lxTFBKeHRHSWxSZTFRM0NXamxlcXhJT0xhc254RHNfRjZJdjZBTEpiVXdZTFVVRE1nZktIYzlYalNQVjhqS0hXSWEzMTNnSUZ0WkFDWDRrTTJYcW1EWEVydHJWYVk1SzQ3LVh0b21KZmxfY0s?oc=5
 - “Google Considers Entrusting Production of Next-Generation AI Chips to Samsung Electronics” - 경향신문
   https://news.google.com/rss/articles/CBMiXkFVX3lxTE9jSTFFTDJsZzl3LWF4MHlONDJDVF9yS0NEMzhMRkR1OEw1dzlfRndDcVV4ZEtRWDVIMDhacmNqZkpXcExGckNPOHJCN2Zmb2tQTVJtY1MyQ0JNUkRJZkE?oc=5
 - [AI 산업] "HBM 다음은 AI"…SK하이닉스, 메모리 강자에서 ‘AI 인프라 플레이어’로 승부수 - AI라이프경제
   https://news.google.com/rss/articles/CBMia0FVX3lxTE1XWi1UWDRKcXJNYnRzYnppeDhoVzNjNFFkaEJUb0UzUGhWWnE4cC1vZUw4WTJDVzk5ZmxmSVdyVEtaU1hUOHlkVzM2MEZaa1g4enRySnZEZEFkZ1U4Skd0QnpNWDYxLWlrVTJN?oc=5
-- SK하이닉스, 내달 ‘세미콘 타이완’서 AI 시대 HBM 차세대 기술 방향 제시 - 더구루
-  https://news.google.com/rss/articles/CBMiZkFVX3lxTE05b3c1blFyX2xTbVBWSFp4aTY1SXVLT0hMRjdVS1ZWTEFzeTdKdjd4eFY4SWJkZS1VeG0xRUdEQ2hjbHFZNGx5NDRGR1dCdzRQdFA4aTBYOWc2cC1kWGRvRTI2WFdOUQ?oc=5
+- HBM만으론 부족하다…SK하이닉스 HBF·AI낸드로 `추론 메모리` 새판 - 디지털데일리
+  https://news.google.com/rss/articles/CBMiYkFVX3lxTE9wSGljLTQxVmU4OC1ScUdadFhZUGxBT0JQR2pjMkctXzk3TDRtNmhGQkZkQnp3YTFOLWlkNGl4M253YlFUdGpzZ3hZbXJNdllXdS1sUFBsRnFzZlVkMk1mU29R?oc=5
 - TSMC, AI칩 패키징 질주…삼성전자, HBM·파운드리·패키징 역량 총력 - 파이낸셜뉴스
   https://news.google.com/rss/articles/CBMiWkFVX3lxTE10bjJUc3MtbjNkRFY4U196TVFrLVZxZEhpZzNaRnhBc3JGbjZxVTZUWmRIc1A3QmNVMmo5RFhvMTd4RUhjWDEwbnBBY0VnZmxoNjlTSDRpVTdfZw?oc=5
 
@@ -131,19 +92,49 @@ sources: []
 
 ### 📊 Autonomous Driving & Smart Mobility
 
-⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (Fallback용 OPENAI_API_KEY 없음) 아래 원문 기사 링크를 참고해 주세요.
+# [Global Mobility Briefing] 자율주행 및 스마트 모빌리티 동향 분석
+
+### 1. 로보택시 상용화의 가속화 및 글로벌 영토 확장
+* **플랫폼-기술 기업 간 연합을 통한 대규모 배포 (Pony.ai & Uber):** 
+  포니에이아이(Pony.ai)와 우버의 협력으로 유럽 시장에 2,000대 이상의 로보택시가 투입되는 것은, 자율주행 서비스가 실증 단계를 넘어 **기존 차량 호출(Ride-hailing) 인프라와 결합한 '규모의 경제' 단계로 진입**했음을 시사합니다.
+* **중동 등 신흥 스마트시티 시장 개척 (오토너스에이투지):** 
+  국내 자율주행 스타트업의 UAE 수출(770만 달러 규모) 사례처럼, 정부 주도의 스마트 인프라 구축이 활발한 중동 시장이 L4급 셔틀/특수 목적 자율주행 솔루션의 핵심 수요처로 부상하고 있습니다.
+
+---
+
+### 2. AI SW 아키텍처 혁신과 기술적 한계 돌파 경쟁
+* **'AI·반도체' 중심의 핵심 인재 영입 (현대차그룹):** 
+  현대차가 삼성전자 및 엔비디아 출신의 권정현 상무를 자율주행개발센터장으로 영입한 것은, 완성차 제조사(OEM)의 자율주행 개발 패러다임이 기계/제어 중심에서 **고성능 컴퓨팅(HPC) 및 엔드투엔드(E2E) AI 알고리즘** 중심으로 완전히 전환되었음을 보여줍니다.
+* **테슬라 FSD 100억 마일의 명암과 'Edge Case' 해결 과제:** 
+  테슬라의 대규모 주행 데이터 축적에도 불구하고 여전히 '풀지 못한 숙제(코너 케이스, 악천후, 규제 승인)'가 상존합니다. 이는 순수 비전(Vision-only) 기반 신경망의 한계를 극복하기 위해 물리적 AI(World Model) 고도화 및 고정밀 센서(4D 이미징 레이더, 라이다)와의 상호보완적 검증이 여전히 중요한 쟁점임을 방증합니다.
+
+---
+
+### 3. ADAS 및 부품 생태계의 장기적 성장 전망 (2034 전망)
+* **단계적 자율주행(L2+~L3) 보급 확대에 따른 부품 시장 팽창:** 
+  시장조사기관들의 2034년 장기 전망은 완전 자율주행(L4/L5)의 점진적 도래 이전에도 고도화된 ADAS 장착 의무화와 고성능 센서(LiDAR, 고해상도 카메라 모듈) 및 ECU 부품 수요가 안정적인 고성장(High-CAGR) 궤도에 올랐음을 뒷받침합니다.
+
+---
+
+### 💡 오늘의 추천 신규 키워드
+
+1. **월드 모델(World Model) 기반 자율주행 AI**
+   * *선정 이유:* 테슬라를 필두로 한 기존 E2E(End-to-End) 신경망의 환각 및 엣지 케이스 한계를 극복하기 위해, 물리 법칙과 미래 주행 환경을 사전 예측·시뮬레이션하는 '생성형 비디오/월드 모델'이 차세대 자율주행 SW의 핵심 게임체인저로 급부상하고 있습니다.
+
+2. **중동 스마트 모빌리티 인프라(MENA Autonomous Hub)**
+   * *선정 이유:* UAE(두바이, 아부다비), 사우디아라비아(NEOM) 등 중동 국가들이 규제 샌드박스와 오일머니를 바탕으로 L4 로보택시 및 스마트 셔틀의 글로벌 테스트베드로 부상하고 있어, 관련 수주 및 진출 동향을 지속 추적할 가치가 높습니다.
 
 ### 🔗 참고 기사 목록:
 - Pony.ai and Uber Expand Partnership to Deploy Over 2,000 Robotaxis in Europe - KIPOST
   https://news.google.com/rss/articles/CBMiaEFVX3lxTE5DRi1ZdWdxN2htb3A0YkhJZklzU3RocGdZVGVSZ251VzBtcUhWOG05LS1mS2dJQVFHNzdoa09Hb1E0ZTFyT1ZQZ21sTlQtMXlicHpqS2F3Ml9kY2FWSFJCYUJCSGRfeTMw0gFsQVVfeXFMTWtXRWZlSnQ2OWdvbmdBdC15N05LUUd0M0psVjBmaVMybFdGRmVseDJjRFRfa3dWeFZWVmd2VENIb2s0bTFKX21OMkZkdC1uT01uby1HT3BsSl9mNFYzemRGdUZFaEtZVTAtUzRP?oc=5
-- [Hwang Misun’s Crisis Escape] Trust, Not Sensors, Will Complete Autonomous Driving - 한국강사신문
-  https://news.google.com/rss/articles/CBMicEFVX3lxTE45S3J3VzFIcDBWSjBxLUIxTGpuMHgwTHQzc0VKeUZwT05zblJsWmtBRHl6aGpEOVRndVd3ZXJQVEtYOHJyekZPVDA4aENVb3dnN1lBU2xXOGxpRjFHT0Nqc0ViOEhFaXZ0YWViSXdVaDU?oc=5
+- Autonomous A2Z signs $7.7mn deal to export self-driving technology to UAE - 네이트
+  https://news.google.com/rss/articles/CBMiU0FVX3lxTE9QeENSNV93M1Z3bkkyQTRUYkYybnFBdzVtMmVuY0c5dVkyUklCUDRuY0lpNmptVF9XQnVOajRLV2I2RkVMM1VMeldXZ1M1VTZRM0Z3?oc=5
 - 자율주행 자동차 시장 규모, 점유율 및 성장 보고서 [2034] - Fortune Business Insights
   https://news.google.com/rss/articles/CBMioAFBVV95cUxOQllZMzNRalIxaGpfT1g4emdLQ2RFWDdweXZuQzFWMmZtWU9Fc2tzUnZYZVYtRDBkLXFrY1NaMndjTVJ0bDFlR1BOOW82SGZHTzRTQ18xTnJpTFotbzJMYmVrNlVaNi1mVjBoa2RCNlVYNTJWT2dfaXdtVDRvVGFUN0YzUUZERVdWNGJtaHE2Y3hHS1Npcy0xT0puRXAyRjVj?oc=5
-- 안전을 설계하다: E2E 아키텍처와 자율주행의 미래 - autoelectronics.co.kr
-  https://news.google.com/rss/articles/CBMidEFVX3lxTE9HVFpEdEJfYmNaUm9JZEJjQnMzb1NLcWFURDJka1hyY05WZi1EVy1FaXJERlF1SG1mYlk1M1J6MFFzSkl5TFZoNW1uODFabUpaRm9BYjBOSVJNNWdyMjU1aUUxRzNUZUF5ZzRuWExBMGg4RGVx?oc=5
-- HL Group Accelerates SDV Transition as HL Klemove Expands Level 4 Autonomous Driving Partnerships - Korea IT Times
-  https://news.google.com/rss/articles/CBMicEFVX3lxTE9xMUdodDJYSW53bUNVOGtmMkdicXBzczZCeXJXUG1ObDEzTGI4UzlKSlRoOGNGVlhiVjRmazZWXzBYQUpEdGU1RDIyNURzanVMdzNKa1lzQzlMOVliQ3pwaUlqR3FKVUkyM1c3ckVKdy0?oc=5
+- 테슬라 FSD, 100억 마일 주행했지만..여전히 풀지 못한 숙제는? - dailycar.co.kr
+  https://news.google.com/rss/articles/CBMidkFVX3lxTE00cnY3YXFvTzZ2d2FHZ2ZRbmh1eVdsTU5qeS0tcGdxWkxIaE5kQ2JaLVRMS08wdGV3cFpIejlwekExVkhaZjVsanpyTEVRTDR4cjR4bElNZURVbGY0eUxOOUdwX1BkN09RWTRfZDh5dk9McjBqWVE?oc=5
+- ADAS 및 자율주행 부품 시장 규모 및 점유율, 2034년 - Straits Research
+  https://news.google.com/rss/articles/CBMiigFBVV95cUxNOUNidnRoLU5PTnZDU1V1Tl9ka016SWpRTWc0VXl0UW5fa2ZnMTNGb0pvMHJjTE9xemUzZkRZZW01VDFYZGRWNU15UGhROFQzemp1V1F5Rk1UTkY4N1VBTXBoMUptTnE4MUh2MU96ajh5VWh6UWxPcFJMX2FBRDZPTjgzSk9DMjZfLUE?oc=5
 
 ==================================================
 
@@ -160,7 +151,7 @@ sources: []
   https://news.google.com/rss/articles/CBMi1wFBVV95cUxOMHJLeklWYV9zVUVFalRmMkZuNkxHTkFfZlNFYlM1ZkVVbUlSY1VLSEZ2WWltZGo2Y0M5NVBMU2lBYTBxYzFpWUdkbkpjRU90dGtKYkl2QXRVTzZGMmxhUlJMc1JuaWtreDVuYl9jWVBMNGdOdGI2em1jWDJsTnhTZU9KbjlBenlPUmpSVTBWN29pNjlFLVFqOThfdk5jbUViU2NUbTQtbzBTTnFxQ3Y0NGhqemhiaGdkRDI3V2lIODczM2NXbFB5OXMyeEVKcG81UkVJNTRNdw?oc=5
 - IIoT 기술 시장 규모, 산업 점유율, 2034년 예측 - Fortune Business Insights
   https://news.google.com/rss/articles/CBMiuwFBVV95cUxNQ2p2SFVEU1RjZ21KdU9wRHR5ODRCRWRIemtzb3AtODhkU1FJeGg4NEQyd1RiM0MtWHQyTzVoak5lSG1taWxtbFRGTFF4SC1kRkZtaW12ZU8zVjV6cXc3T2p0OFNDUmkxMlRKMFFLc0s1eENLX1RzNmZWNXdkQ0xnUm02aEg1TktiX1IxZUJMaXpDRmdUdHF2VVoya3N4Y0xRYzdNRVJSbDlLME1MM0JCMmJYVldHVHdYSmpz?oc=5
-- LG Electronics Expands Brazil Production - Korea IT Times
+- LG Electronics Expands Brazil Production - koreaittimes.com
   https://news.google.com/rss/articles/CBMicEFVX3lxTE10RmRKaFFrbURZazhfSFRxU3pWR3VzTVAyMXFrQVpYU3hRd1YxUjRFQldCNThFZWF1TFRHOGJrREJuXzdzQ0V5cTJkTExBaW85VkprUV9STmNRdnoxYUNQMG56UlZOTTlET3c1SmVTbFA?oc=5
 
 ==================================================
