@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>요약 및 마무리</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #e6edf3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+.container {
+  width: 1280px;
+  padding: 44px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 44px;
+  line-height: 1.3;
+}
+.slide-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
+  background: rgba(10, 15, 26, 0.95);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(124, 58, 237, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; font-family: 'Noto Sans KR', sans-serif;
+}
+.slide-nav-inner {
+  width: 1280px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 60px;
+}
+.slide-nav a {
+  text-decoration: none; font-size: 14px; font-weight: 700;
+  color: #7c3aed; transition: color 0.2s;
+}
+.slide-nav a:hover { color: #a78bfa; }
+.slide-nav .nav-disabled { font-size: 14px; font-weight: 700; color: #484f58; cursor: default; }
+.slide-nav .nav-center a { color: #8b949e; font-size: 13px; font-weight: 400; }
+.slide-nav .nav-center a:hover { color: #e6edf3; }
+body { opacity: 0; animation: fadeIn 0.4s ease forwards; }
+body.fade-out { animation: fadeOut 0.3s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-12px); } }
+
+
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; margin-bottom: 44px; }
+.summary-card { background: rgba(22, 27, 40, 0.8); border: 1px solid rgba(139, 148, 158, 0.1); border-radius: 16px; padding: 32px 24px; text-align: center; position: relative; overflow: hidden; opacity: 0; transform: translateY(20px); animation: cardIn 0.5s ease-out forwards; }
+@keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+.summary-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+.summary-card:nth-child(1) { animation-delay: 0.1s; } .summary-card:nth-child(1)::before { background: #7c3aed; } .summary-card:nth-child(1) .card-name { color: #7c3aed; }
+.summary-card:nth-child(2) { animation-delay: 0.2s; } .summary-card:nth-child(2)::before { background: #38bdf8; } .summary-card:nth-child(2) .card-name { color: #38bdf8; }
+.summary-card:nth-child(3) { animation-delay: 0.3s; } .summary-card:nth-child(3)::before { background: #34d399; } .summary-card:nth-child(3) .card-name { color: #34d399; }
+.summary-card:nth-child(4) { animation-delay: 0.4s; } .summary-card:nth-child(4)::before { background: #f97316; } .summary-card:nth-child(4) .card-name { color: #f97316; }
+.summary-card:nth-child(5) { animation-delay: 0.5s; } .summary-card:nth-child(5)::before { background: #ec4899; } .summary-card:nth-child(5) .card-name { color: #ec4899; }
+.summary-card:nth-child(6) { animation-delay: 0.6s; } .summary-card:nth-child(6)::before { background: #fbbf24; } .summary-card:nth-child(6) .card-name { color: #fbbf24; }
+.card-icon { font-size: 40px; margin-bottom: 14px; display: block; }
+.card-name { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+.card-desc { font-size: 14px; color: #8b949e; line-height: 1.5; }
+.conclusion { text-align: center; padding: 28px 40px; background: rgba(22, 27, 40, 0.6); border: 1px solid rgba(124, 58, 237, 0.2); border-radius: 16px; width: 100%; max-width: 900px; opacity: 0; animation: cardIn 0.8s ease-out forwards 0.8s;}
+.conclusion-line { font-size: 22px; font-weight: 900; line-height: 1.8; background: linear-gradient(90deg, #7c3aed, #38bdf8, #34d399, #f97316, #ec4899, #fbbf24); background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradient-shift 5s ease infinite; }
+@keyframes gradient-shift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="title">요약 및 마무리</h1>
+  
+<div class="summary-grid">
+  <div class="summary-card">
+    <span class="card-icon">🚀</span><div class="card-name">시스템 재설계</div><div class="card-desc">단순 툴 도입이 아닌 비즈니스 병목 해결</div>
+  </div>
+  <div class="summary-card">
+    <span class="card-icon">📈</span><div class="card-name">비즈니스 임팩트</div><div class="card-desc">시간과 비용 등 숫자로 증명하는 가치 창출</div>
+  </div>
+  <div class="summary-card">
+    <span class="card-icon">👑</span><div class="card-name">리더십 결단</div><div class="card-desc">프로세스 이해도와 과감한 Risk Taking</div>
+  </div>
+  <div class="summary-card">
+    <span class="card-icon">🛡️</span><div class="card-name">Harness Engineering</div><div class="card-desc">영구적 통제 규칙으로 퀄리티 보장 및 표준화</div>
+  </div>
+  <div class="summary-card">
+    <span class="card-icon">🤖</span><div class="card-name">Human-on-the-loop</div><div class="card-desc">에이전트가 95% 주도, 인간은 5% 치명적 결정만</div>
+  </div>
+  <div class="summary-card">
+    <span class="card-icon">🔁</span><div class="card-name">자체 피드백 루프</div><div class="card-desc">스스로 실패 원인을 분석하고 개선하는 체계</div>
+  </div>
+</div>
+<div class="conclusion">
+  <div class="conclusion-line">AX는 도입이 아니라 운영이다.</div>
+</div>
+
+</div>
+<nav class="slide-nav">
+  <div class="slide-nav-inner">
+    <div class="nav-left"><a href="04-human-loop.html" onclick="event.preventDefault(); navigateTo(this.href)">&larr; 이전</a></div>
+    <div class="nav-center"><a href="index.html">05 / 05</a></div>
+    <div class="nav-right"><span class="nav-disabled">다음 &rarr;</span></div>
+  </div>
+</nav>
+<script>
+function navigateTo(url) {
+  document.body.classList.add('fade-out');
+  setTimeout(function() { window.location.href = url; }, 300);
+}
+document.addEventListener('keydown', function(e) { if(e.key==='ArrowLeft') navigateTo('04-human-loop.html'); });
+</script>
+</body>
+</html>

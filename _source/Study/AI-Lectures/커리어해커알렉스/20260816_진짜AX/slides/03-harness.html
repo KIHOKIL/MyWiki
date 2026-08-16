@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>통제와 축적의 시스템</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: #e6edf3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+}
+.container {
+  width: 1280px;
+  padding: 44px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.title {
+  font-size: 48px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 44px;
+  line-height: 1.3;
+}
+.slide-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; height: 50px;
+  background: rgba(10, 15, 26, 0.95);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(124, 58, 237, 0.2);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999; font-family: 'Noto Sans KR', sans-serif;
+}
+.slide-nav-inner {
+  width: 1280px; display: flex; align-items: center;
+  justify-content: space-between; padding: 0 60px;
+}
+.slide-nav a {
+  text-decoration: none; font-size: 14px; font-weight: 700;
+  color: #7c3aed; transition: color 0.2s;
+}
+.slide-nav a:hover { color: #a78bfa; }
+.slide-nav .nav-disabled { font-size: 14px; font-weight: 700; color: #484f58; cursor: default; }
+.slide-nav .nav-center a { color: #8b949e; font-size: 13px; font-weight: 400; }
+.slide-nav .nav-center a:hover { color: #e6edf3; }
+body { opacity: 0; animation: fadeIn 0.4s ease forwards; }
+body.fade-out { animation: fadeOut 0.3s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-12px); } }
+
+
+.diagram { width: 100%; max-width: 900px; background: rgba(22, 27, 40, 0.6); border: 1px solid rgba(124, 58, 237, 0.2); border-radius: 20px; padding: 40px; text-align: center; margin-bottom: 30px; opacity: 0; animation: fadeIn 0.8s ease-out forwards 0.2s;}
+.diagram-center { display: inline-block; padding: 16px 32px; border-radius: 12px; background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(56, 189, 248, 0.1)); border: 2px solid #7c3aed; font-size: 24px; font-weight: 900; margin-bottom: 20px; }
+.diagram-arrows { font-size: 28px; color: #7c3aed; margin: 12px 0; }
+.diagram-row { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.diagram-node { background: rgba(139, 148, 158, 0.06); border: 1px solid rgba(139, 148, 158, 0.15); border-radius: 12px; padding: 16px 20px; min-width: 140px; }
+.diagram-node-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: #34d399; }
+.diagram-node-desc { font-size: 13px; color: #8b949e; }
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="title">통제와 축적의 시스템</h1>
+  
+<div class="diagram">
+  <div class="diagram-center">Harness Engineering</div>
+  <div class="diagram-arrows">↓</div>
+  <div class="diagram-row">
+    <div class="diagram-node">
+      <div class="diagram-node-title">영구적 기억 (Memory)</div>
+      <div class="diagram-node-desc">무엇을 하지 말아야 하는지 축적</div>
+    </div>
+    <div class="diagram-node">
+      <div class="diagram-node-title">룰과 맥락 (Context)</div>
+      <div class="diagram-node-desc">객관적으로 확장 가능한 퀄리티 보장</div>
+    </div>
+    <div class="diagram-node">
+      <div class="diagram-node-title">살아있는 시스템 (Living)</div>
+      <div class="diagram-node-desc">모델 진화에 맞춘 지속적 유지보수</div>
+    </div>
+    <div class="diagram-node">
+      <div class="diagram-node-title">전사적 표준화 (Standard)</div>
+      <div class="diagram-node-desc">인프라/플러그인 표준화로 병목 제거</div>
+    </div>
+  </div>
+</div>
+
+</div>
+<nav class="slide-nav">
+  <div class="slide-nav-inner">
+    <div class="nav-left"><a href="02-metrics.html" onclick="event.preventDefault(); navigateTo(this.href)">&larr; 이전</a></div>
+    <div class="nav-center"><a href="index.html">03 / 05</a></div>
+    <div class="nav-right"><a href="04-human-loop.html" onclick="event.preventDefault(); navigateTo(this.href)">다음 &rarr;</a></div>
+  </div>
+</nav>
+<script>
+function navigateTo(url) {
+  document.body.classList.add('fade-out');
+  setTimeout(function() { window.location.href = url; }, 300);
+}
+document.addEventListener('keydown', function(e) { if(e.key==='ArrowLeft') navigateTo('02-metrics.html'); if(e.key==='ArrowRight') navigateTo('04-human-loop.html'); });
+</script>
+</body>
+</html>

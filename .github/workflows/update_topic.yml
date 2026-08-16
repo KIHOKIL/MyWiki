@@ -1,0 +1,56 @@
+name: Update Topic via IssueOps
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  update-topic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        working-directory: _source/Projects/NewsSummarizer
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Update config.json using Gemini
+        working-directory: _source/Projects/NewsSummarizer
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          python update_topic.py --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
+
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "feat: Update news topics from Issue #${{ github.event.issue.number }}"
+          file_pattern: "_source/Projects/NewsSummarizer/config.json"
+
+      - name: Comment on Issue and Close
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            ✅ 처리가 완료되었습니다! `config.json`에 성공적으로 반영되었습니다.
+            에이전트가 이슈의 내용을 분석하여 알맞게 카테고리를 설정했습니다.
+      
+      - name: Close Issue
+        uses: peter-evans/close-issue@v3
+        with:
+          issue-number: ${{ github.event.issue.number }}
+          comment: "자동화 봇이 이슈를 닫았습니다."
