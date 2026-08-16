@@ -11,42 +11,38 @@ sources: []
 
 ### 📊 Mobile Communication Industry
 
-### [Executive Briefing] 글로벌 모바일 통신 및 차세대 네트워크 산업 동향
+### [Global Mobile & Tech Market Intelligence Briefing]
 
 ---
 
-### 1. Pre-6G 및 6G 표준 패권 전쟁과 AI-RAN(인공지능 무선접속망) 전환
-* **상용화 로드맵 가시화 (2029~2030년 목표):** 
-  * 퀄컴(Qualcomm)이 2029년 6G 상용화를 선언하고 빅테크 연합을 강화하는 가운데, 한국·미국·중국 등 주요국 중심의 '6G 기술 주도권 선점' 경쟁이 본격화되고 있습니다.
-  * 한국 정부는 '하이퍼 AI 네트워크' 전략을 통해 전국망 단위 **AI-RAN(AI Native Network)** 구축 및 보안 국제표준(29건 주도)을 선점하여 '제2의 CDMA 신화'를 재현하겠다는 구상을 구체화했습니다.
-* **지정학적 블록화와 표준화 분열 리스크:** 
-  * 6G 표준화는 단순 통신 속도 경쟁을 넘어 AI 및 보안이 결합된 국가 안보 인프라로 격상되었습니다. LG유플러스의 화웨이 장비 이슈와 같이, 미·중 패권 갈등이 차세대 통신 아키텍처 및 공급망 선택에 구조적 리스크로 작용하고 있습니다.
+### 1. 6G 표준화 전쟁 조기 점화 및 ‘AI-RAN’ 주도권 경쟁
+* **상용화 타임라인 가속화 (2029~2030년)**: 퀄컴이 2029년 상용화를 목표로 글로벌 파트너십을 확장하고, 한국 과기정통부가 ‘하이퍼 AI 네트워크’ 전략을 통해 2030년 6G 상용화 로드맵을 확정하는 등 주요국 및 선도 칩셋 업체를 중심으로 6G 주도권 선점 속도가 빨라지고 있습니다.
+* **미·중 기술 패권 및 표준화 각축**: 단순 통신 속도 경쟁을 넘어 **AI-RAN(AI-네이티브 무선망)** 및 **AI·6G 보안 표준**이 핵심 전장으로 부상했습니다. 한국이 6G 보안 표준 29건을 주도하고 유엔젤 등 미들웨어·코어망 기업이 부각되는 가운데, 베트남 등 신흥국 역시 선제적 인프라 정비에 나서며 6G 진영 경쟁이 다극화되고 있습니다.
 
 ---
 
-### 2. 반도체·OEM 생태계: 비(非)스마트폰 영역 및 엣지 AI로의 외연 확장
-* **MediaTek의 파격 행보 (위성 통신 & OpenAI 협력):**
-  * 미디어텍은 **스타링크(Starlink)와 모바일 기기용 긴급 위성 통신(NTN, Non-Terrestrial Network)**을 시연하며 지상망을 넘어선 '우주-모바일 연결성' 비즈니스를 본격화했습니다.
-  * 또한, OpenAI의 첫 스마트폰/엣지 기기용 칩 파트너로 Dimensity 9600이 거론되면서, 전통적 AP 공급업체에서 **‘초거대 AI 엣지 플랫폼 파트너’**로의 질적 도약을 꾀하고 있습니다.
-* **중국 OEM(샤오미·오포)의 칩 내재화 및 원가 압박:**
-  * 부품 단가 상승으로 샤오미 등 중화권 기기 가격이 급등하는 가운데, 샤오미와 오포는 전력관리반도체(PMIC) 스타트업에 공동 투자하며 **전력 효율 최적화 및 칩 내재화**를 가속화하고 있습니다.
-* **Apple & Samsung: 온디바이스 AI 및 생태계 수직계열화:**
-  * 삼성전자는 MWC를 통해 '갤럭시 AI' 중심의 폼팩터/생태계 확장을 과시하고 있으며, 애플은 아이폰 17 라인업 출시를 앞두고 공급망 압박을 통해 수익성 방어 및 독자 AI 반도체 생태계 통제력을 강화하고 있습니다.
+### 2. 모바일 외 비즈니스 확장: 위성 통신(NTN) 및 광대역(Broadband)
+* **MediaTek의 NTN(비지상 네트워크) 확장**: 미디어텍이 스타링크 모바일과 손잡고 스마트폰용 긴급 위성 통신 서비스를 시연하며 지상망 한계를 극복하는 D2D(Direct-to-Device) 생태계 구축에 속도를 내고 있습니다.
+* **화웨이의 인프라 침투와 지정학적 딜레마**: 화웨이는 서방 제재 속에서도 아제르바이잔 전역의 광대역(Broadband)망 구축을 완수하며 신흥국 유선·광통신 시장 점유율을 공격적으로 확대하고 있습니다. 반면, 한국(LGU+) 등 기존 화웨이 장비 도입 사업자들은 여전히 미·중 갈등의 외교·안보적 리스크에 직면해 있습니다.
 
 ---
 
-### 3. 통신 인프라 & 비(非)모바일 비즈니스 다각화 (Broadband & FWA)
-* **화웨이의 비(非)모바일 인프라 확장:** 
-  * 서방의 모바일 5G 제재 속에서도 화웨이는 아제르바이잔 등 유라시아/신흥국을 중심으로 **전국 광대역(Broadband/FTTx) 및 FWA(고정무선접속)** 인프라를 독점 공급하며 비모바일 유선·브로드밴드 시장에서 확고한 수익 기반을 유지하고 있습니다.
+### 3. 반도체·OEM 진영의 재편: AI 하드웨어 융합과 내재화
+* **AI 빅테크 × 칩셋 연합 (OpenAI-MediaTek)**: OpenAI가 차기 AI 디바이스용 프로세서로 미디어텍의 Dimensity 9600 채택을 유력하게 검토하면서, 기존 스마트폰 폼팩터를 넘어선 ‘Edge AI 전용 디바이스’ 시장이 본격 태동하고 있습니다.
+* **중화권 OEM의 반도체 내재화 및 가격 전략 변화**: 샤오미와 오포가 전력관리반도체(PMIC) 스타트업에 공동 투자하며 부품 공급망 자립화에 나섰습니다. 원가 상승 및 프리미엄 전략 전환으로 샤오미 단말기 ASP(평균판매단가)가 급격히 상승하고 있습니다.
+* **스마트폰 3사의 차별화 양상**:
+  * **삼성전자**: MWC26 등을 기점으로 ‘갤럭시 AI’ 생태계를 모바일에서 전방위 기기로 확장하며 온디바이스 AI 시장 주도권 굳히기.
+  * **애플**: 독점적 생태계 기반의 강경한 공급망 압박 전략이 파트너사들과의 마찰 요인으로 대두.
+  * **통신 3사**: 단순 망 제공자에서 탈피해 월드IT쇼 등에서 풀스택 AI(AI Transformation, 보이스 AI 에이전트) 경쟁으로 전환.
 
 ---
 
 ### 💡 오늘의 추천 신규 키워드
 
-1. **AI-RAN (Artificial Intelligence Radio Access Network)**
-   * *선정 이유:* 6G의 핵심 구조로, 무선 기지국 인프라에 AI 워크로드를 통합하여 기지국 자체가 AI 연산 엣지 서버 역할을 수행하는 차세대 네트워크 패러다임입니다.
-2. **Direct-to-Cell NTN (위성-스마트폰 직접 통신)**
-   * *선정 이유:* 미디어텍-스타링크 협업 사례처럼, 별도 장비 없이 스마트폰과 LEO(저궤도 위성)가 직접 통신하는 기술이 5G-Advanced 및 6G 시대의 필수 킬러 서비스로 급부상하고 있습니다.
+1. **AI-RAN (AI-Native Radio Access Network)**
+   * *선정 이유*: 6G 상용화의 핵심 전제 기술이자, 엔비디아·퀄컴·통신사 연합이 주도하는 기지국-AI 융합 아키텍처로 통신 장비 및 반도체 업계의 필수 추적 테마입니다.
+2. **D2D NTN (Direct-to-Device Non-Terrestrial Network)**
+   * *선정 이유*: 스타링크-미디어텍 협력 사례처럼 지상 기지국 없이 저궤도 위성과 스마트폰이 직접 통신하는 기술로, 6G 시대 지·공 통합 네트워크의 핵심 수익 모델로 부상하고 있습니다.
 
 ### 🔗 참고 기사 목록:
 - “6G 규칙 누가 정하나”…미·중 기술패권, ‘표준 전쟁’ 본격화 - 인터내셔널포커스
@@ -64,7 +60,42 @@ sources: []
 
 ### 📊 AI Era: Hardware & Infrastructure
 
-⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요.
+# [Global AI HW & Infra Analyst Report] AI 하드웨어 생태계 동향 및 인프라 리스크 진단
+
+---
+
+###  Executive Summary
+* **파운드리·메모리 공급망 다변화 가속:** TSMC의 첨단 패키징(CoWoS) 병목 심화로 구글 등 빅테크의 차세대 AI 칩 생산 파트너로 삼성전자가 급부상. SK하이닉스는 단순 HBM 공급자를 넘어 종합 AI 인프라 솔루션 기업으로 진화 중.
+* **인프라 병목(Bottleneck)의 이동:** 연산 능력(Compute) 경쟁에서 **‘전력 공급망(Power Grid) 및 자본 부담(Capex Debt)’**으로 병목 축이 이동. SMR(소형모듈원전), 슈퍼커패시터 등 차세대 에너지·전력 인프라가 핵심 밸류체인으로 진입.
+* **HW 벤더의 풀스택(Full-Stack)화:** 엔비디아는 하드웨어 독점을 넘어 AI 모델 및 양자 컴퓨팅 플랫폼(NVIDIA Ising)으로 확장하며 생태계 락인(Lock-in) 강화.
+
+---
+
+### 1. 칩셋·파운드리·메모리: 공급망 다변화와 턴키(Turnkey) 경쟁
+* **TSMC 병목에 따른 구글-삼성전자 연대 가능성:** 빅테크의 자체 AI 가속기(Custom ASIC) 수요가 폭증하는 가운데, TSMC의 캐파 한계로 구글이 차세대 AI 칩 파운드리 대안으로 삼성전자를 적극 검토 중. 이는 메모리(HBM)+파운드리+패키징을 일괄 제공하는 삼성의 ‘턴키 전략’에 중요한 기회 요인으로 작용.
+* **SK하이닉스의 차세대 메모리 주도권 강화:** 세미콘 타이완 등을 기점으로 HBM4 및 CXL 등 차세대 기술 로드맵을 가시화하며, 단순 메모리 벤더에서 글로벌 AI 인프라 파트너로의 입지 공고화.
+* **엔비디아의 포트폴리오 다각화:** 단순 GPU 판매를 넘어 자체 AI 파운데이션 모델 및 양자 시뮬레이션(NVIDIA Ising) 오픈소스를 배포, 연산 HW와 SW 플랫폼 간 결합력을 극대화.
+
+---
+
+### 2. 에너지·인프라 & 빅테크 금융 리스크: 'Power & Capital'의 한계 시험
+* **전력망 위기와 대체 솔루션 급부상:** 초거대 AI 데이터센터 가동을 위한 전력 피크 부하 문제가 심화되면서, 백업 전력용 **슈퍼커패시터(Supercapacitor)** 도입 및 **SMR(소형모듈원전)·스마트 그리드 연계**가 필수 인프라로 부상.
+* **빅테크 Capex 부채 및 지역 수용성 문제 대두:** 데이터센터 증설에 따른 전력·용수 소비로 지역사회 반발이 증가하고 있으며, 막대한 인프라 부채에 대한 금융시장의 감시가 강화됨. 다만 단기적 AI 거품론 완화로 반도체 밸류체인 주가는 기술적 반등세를 유지.
+
+---
+
+### 3. 피지컬 AI 및 엣지 시스템 반도체 확장
+* 로봇 및 드론 등 비(非)데이터센터 환경에서 GPS 없이 자체 위치를 인식하고 연산하는 오프라인 엣지 AI 시스템(Makeware-Nucode 협력 등)과 특화 설계 인재 풀이 확대되며, **데이터센터 중심의 AI 연산이 물리적 단말(Physical AI)로 본격 전이**되는 양상.
+
+---
+
+### 💡 오늘의 추천 신규 키워드
+
+1. **SMR-Powered Data Center (SMR 기반 AI 데이터센터)**
+   * *선정 이유:* AI 전력 수요의 기저부하(Baseload) 해결을 위해 빅테크들이 탄소 배출이 없는 SMR(소형모듈원전)과의 직접 PPA(전력구매계약) 또는 온사이트(On-site) 구축 투자를 본격화하고 있어 장기 인프라 테마로 추적 필요.
+
+2. **Turnkey Advanced Packaging (턴키 첨단 패키징 생태계)**
+   * *선정 이유:* TSMC의 CoWoS 공급 부족으로 인해 파운드리, HBM 제조, 2.5D/3D 패키징을 원스톱으로 처리할 수 있는 통합 턴키 공급 역량이 파운드리 점유율 재편의 핵심 변수로 작용 중.
 
 ### 🔗 참고 기사 목록:
 - Samsung Electronics Emerges as Key Candidate for Google's Next-Generation AI Chip Production - Korea IT Times
@@ -82,12 +113,12 @@ sources: []
 
 ### 📊 AI Era: Software & LLM
 
-⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요.
+⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (Fallback용 OPENAI_API_KEY 없음) 아래 원문 기사 링크를 참고해 주세요.
 
 ### 🔗 참고 기사 목록:
 - [AI로보틱스 트렌드 바로읽기] LLM? RAG? — 피지컬 AI 시대를 이해하는 필수 AI 용어 가이드 - mobiinside.co.kr
   https://news.google.com/rss/articles/CBMif0FVX3lxTFA1TDdnbElUZHdsaXQ2WmlsQ0tYb0lnV1hnbF9CQnhSTE41eFhXRDBza2pONktBRnJ6UGludE85R095UlRoLVA5Yks1ck4weGx0Y1JsbnVqS2lJWUlzQkQ0aUpDZ2h6N0dBQTFaR0lWaV92cTJoWWYxaGFsQktoYlE?oc=5
-- Tech Trends 2030: 생성형 AI의 차세대 혁명 - siemens.com
+- Tech Trends 2030: 생성형 AI의 차세대 혁명 - Siemens
   https://news.google.com/rss/articles/CBMikAFBVV95cUxNTWI3MkpEVHJYXzlkVVRXenBEYmVTWU94VnFhVzZ2cjZFb1FLdkw0dHNIbS12WktEUF9rc21tdkxZdEZpSjR3UVJ6TEdYZDQ2VkswdUxQREVlZG1oenlLUUlwZS1nVXZGS3R6OGlQZG5NTHY4YmJsQWhkeURUeWRIOFBSQ1RWUzRpREhWR3dSNk4?oc=5
 - Advancing NVIDIA End-to-End Stack for Autonomous Driving with Reasoning Vision-Language-Action Models - NVIDIA
   https://news.google.com/rss/articles/CBMicEFVX3lxTFBNRVZVQ0NuZGhVeUNLR2N5NjNsaEcxMkJYbmdRbXJicXpDVHBJSzJLUTJMNk5qZC1xMmx1MWRHQXpaSENQa2lRazNQMXgybVVzOXMwTFZTd2pUOWNOdkFKUDRuMWpyUnM1ZjlfMHZrclg?oc=5
@@ -100,10 +131,10 @@ sources: []
 
 ### 📊 Autonomous Driving & Smart Mobility
 
-⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요.
+⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (Fallback용 OPENAI_API_KEY 없음) 아래 원문 기사 링크를 참고해 주세요.
 
 ### 🔗 참고 기사 목록:
-- Pony.ai and Uber Expand Partnership to Deploy Over 2,000 Robotaxis in Europe - kipost.net
+- Pony.ai and Uber Expand Partnership to Deploy Over 2,000 Robotaxis in Europe - KIPOST
   https://news.google.com/rss/articles/CBMiaEFVX3lxTE5DRi1ZdWdxN2htb3A0YkhJZklzU3RocGdZVGVSZ251VzBtcUhWOG05LS1mS2dJQVFHNzdoa09Hb1E0ZTFyT1ZQZ21sTlQtMXlicHpqS2F3Ml9kY2FWSFJCYUJCSGRfeTMw0gFsQVVfeXFMTWtXRWZlSnQ2OWdvbmdBdC15N05LUUd0M0psVjBmaVMybFdGRmVseDJjRFRfa3dWeFZWVmd2VENIb2s0bTFKX21OMkZkdC1uT01uby1HT3BsSl9mNFYzemRGdUZFaEtZVTAtUzRP?oc=5
 - [Hwang Misun’s Crisis Escape] Trust, Not Sensors, Will Complete Autonomous Driving - 한국강사신문
   https://news.google.com/rss/articles/CBMicEFVX3lxTE45S3J3VzFIcDBWSjBxLUIxTGpuMHgwTHQzc0VKeUZwT05zblJsWmtBRHl6aGpEOVRndVd3ZXJQVEtYOHJyekZPVDA4aENVb3dnN1lBU2xXOGxpRjFHT0Nqc0ViOEhFaXZ0YWViSXdVaDU?oc=5
@@ -118,7 +149,7 @@ sources: []
 
 ### 📊 Smart Factory & Industrial IoT
 
-⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요.
+⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (Fallback용 OPENAI_API_KEY 없음) 아래 원문 기사 링크를 참고해 주세요.
 
 ### 🔗 참고 기사 목록:
 - 스마트 공장 그 이후는? 2026년 제조 AX의 본질적 해법을 묻다 - 헬로티
