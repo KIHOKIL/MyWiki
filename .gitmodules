@@ -1,0 +1,3 @@
+[submodule ".agents/plugins/utils"]
+	path = .agents/plugins/utils
+	url = https://github.com/KIHOKIL/Utils.git
