@@ -5,6 +5,7 @@ from email.message import EmailMessage
 import feedparser
 from google import genai
 from google.genai import types
+from openai import OpenAI
 from dotenv import load_dotenv
 import urllib.parse
 from datetime import datetime
@@ -19,6 +20,7 @@ EMAIL_SENDER = os.getenv("EMAIL_SENDER", "your_email@gmail.com")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "your_app_password").replace('\xa0', '').replace(' ', '')
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "receiver_email@gmail.com")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "your_gemini_api_key")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
 def load_config():
     """config.json 파일에서 카테고리 및 쿼리 설정을 로드합니다."""
@@ -41,12 +43,7 @@ def fetch_google_news(query, max_articles=3):
         })
     return articles
 
-def summarize_news(category_name, focus, articles):
-    """Gemini API를 사용하여 기사들을 심층 분석하고 요약합니다."""
-    if not articles:
-        return f"[{category_name}] 에 대한 최신 뉴스가 수집되지 않았습니다."
-
-    # 애널리스트 시스템 프롬프트 구성
+def _build_prompt_and_instruction(category_name, focus, articles):
     sys_instruction = f"""당신은 IT, 통신, AI 및 반도체 산업의 글로벌 최고 수준 애널리스트입니다.
 아래에 수집된 뉴스 기사들을 바탕으로, **{category_name}** 분야의 최신 동향을 브리핑해 주셔야 합니다.
 
@@ -58,10 +55,18 @@ def summarize_news(category_name, focus, articles):
 
 마지막으로, 오늘 수집된 뉴스들과 최신 글로벌 동향을 바탕으로, 사용자가 앞으로 새롭게 추적하면 좋을 만한 트렌디한 **추천 뉴스 키워드/주제**를 브리핑 맨 마지막에 '💡 오늘의 추천 신규 키워드' 라는 섹션으로 1~2개 정도 제안해주세요.
 """
-
     prompt = "[수집된 뉴스 기사 헤드라인 목록]\n\n"
     for i, article in enumerate(articles, 1):
         prompt += f"{i}. {article['title']}\n"
+    
+    return sys_instruction, prompt
+
+def summarize_news_gemini(category_name, focus, articles):
+    """Gemini API를 사용하여 기사들을 심층 분석하고 요약합니다."""
+    if not articles:
+        return f"[{category_name}] 에 대한 최신 뉴스가 수집되지 않았습니다."
+
+    sys_instruction, prompt = _build_prompt_and_instruction(category_name, focus, articles)
     
     # 예외가 발생하면 tenacity가 재시도할 수 있도록 에러를 그대로 raise합니다.
     client = genai.Client(api_key=GEMINI_API_KEY)
@@ -75,11 +80,34 @@ def summarize_news(category_name, focus, articles):
     )
     return response.text
 
+def summarize_news_openai(category_name, focus, articles):
+    """OpenAI API를 사용하여 기사들을 심층 분석하고 요약합니다."""
+    if not articles:
+        return f"[{category_name}] 에 대한 최신 뉴스가 수집되지 않았습니다."
+        
+    sys_instruction, prompt = _build_prompt_and_instruction(category_name, focus, articles)
+    
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": sys_instruction},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3
+    )
+    return response.choices[0].message.content
+
 @retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
 def safe_summarize_news(category_name, focus, articles):
     """API 제한을 방지하기 위해 지수 백오프(Exponential Backoff)를 적용한 래퍼 함수입니다."""
-    print(f"  [{category_name}] AI 분석을 요청합니다...")
-    return summarize_news(category_name, focus, articles)
+    print(f"  [{category_name}] Gemini 분석을 요청합니다...")
+    return summarize_news_gemini(category_name, focus, articles)
+
+@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+def safe_summarize_news_openai(category_name, focus, articles):
+    print(f"  [{category_name}] OpenAI (Fallback) 분석을 요청합니다...")
+    return summarize_news_openai(category_name, focus, articles)
 
 def send_email(subject, content):
     """요약된 뉴스를 이메일로 전송합니다."""
@@ -159,9 +187,19 @@ def main():
         try:
             summary = safe_summarize_news(cat_name, focus, unique_articles)
         except Exception as e:
-            print(f"[{cat_name}] 최대 재시도 횟수 초과로 요약 실패: {e}")
-            summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요."
-            has_error = True
+            print(f"[{cat_name}] Gemini 최대 재시도 초과 실패: {e}")
+            if OPENAI_API_KEY:
+                print(f"[{cat_name}] OpenAI Fallback 요약을 시도합니다...")
+                try:
+                    summary = safe_summarize_news_openai(cat_name, focus, unique_articles)
+                    print(f"[{cat_name}] OpenAI 요약 완료!")
+                except Exception as oe:
+                    print(f"[{cat_name}] OpenAI 마저 실패: {oe}")
+                    summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요."
+                    has_error = True
+            else:
+                summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (Fallback용 OPENAI_API_KEY 없음) 아래 원문 기사 링크를 참고해 주세요."
+                has_error = True
             
         email_body += f"#"*3 + f" 📊 {cat_name}\n\n"
         email_body += f"{summary}\n\n"
