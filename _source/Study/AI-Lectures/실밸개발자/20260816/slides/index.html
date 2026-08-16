@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>AI 시대 상위 1% 개발자 커리어 팁 — 비주얼 자료</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a; font-family: 'Noto Sans KR', sans-serif;
+  color: #e6edf3; min-height: 100vh; display: flex; justify-content: center;
+  padding: 60px 0 80px;
+}
+.container { width: 1280px; padding: 0 80px; }
+.page-title {
+  font-size: 42px; font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  text-align: center; margin-bottom: 10px;
+}
+.page-subtitle { text-align: center; font-size: 16px; color: #8b949e; margin-bottom: 50px; }
+.section { margin-bottom: 36px; }
+.section-header {
+  font-size: 18px; font-weight: 700; padding: 12px 20px;
+  border-left: 4px solid; margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+}
+.num-range { display: inline-block; font-size: 12px; font-weight: 700; color: white; padding: 3px 10px; border-radius: 10px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.card {
+  display: flex; flex-direction: column; gap: 6px; padding: 18px 20px;
+  background: rgba(139,148,158,0.04); border: 1px solid rgba(139,148,158,0.1);
+  border-radius: 12px; text-decoration: none; transition: all 0.25s ease;
+}
+.card:hover { transform: translateY(-3px); }
+.card .card-num { font-size: 28px; font-weight: 900; }
+.card .card-title { font-size: 14px; font-weight: 700; color: #c9d1d9; }
+.card .card-file { font-size: 11px; color: #484f58; font-family: 'Courier New', monospace; }
+
+.section-intro .section-header { border-color: #7c3aed; color: #a78bfa; }
+.section-intro .num-range { background: #5b21b6; }
+.section-intro .card:hover { border-color: #7c3aed; box-shadow: 0 8px 32px rgba(124, 58, 237, 0.18); }
+.section-intro .card .card-num { color: #7c3aed; }
+.section-1 .section-header { border-color: #38bdf8; color: #7dd3fc; }
+.section-1 .num-range { background: #0369a1; }
+.section-1 .card:hover { border-color: #38bdf8; box-shadow: 0 8px 32px rgba(56, 189, 248, 0.18); }
+.section-1 .card .card-num { color: #38bdf8; }
+.section-2 .section-header { border-color: #34d399; color: #6ee7b7; }
+.section-2 .num-range { background: #047857; }
+.section-2 .card:hover { border-color: #34d399; box-shadow: 0 8px 32px rgba(52, 211, 153, 0.18); }
+.section-2 .card .card-num { color: #34d399; }
+.section-3 .section-header { border-color: #f97316; color: #fdba74; }
+.section-3 .num-range { background: #c2410c; }
+.section-3 .card:hover { border-color: #f97316; box-shadow: 0 8px 32px rgba(249, 115, 22, 0.18); }
+.section-3 .card .card-num { color: #f97316; }
+.section-outro .section-header { border-color: #e879f9; color: #f0abfc; }
+.section-outro .num-range { background: linear-gradient(90deg, #7c3aed, #38bdf8, #34d399, #f97316); }
+.section-outro .card:hover { border-color: #e879f9; box-shadow: 0 8px 32px rgba(232, 121, 249, 0.18); }
+.section-outro .card .card-num { background: linear-gradient(135deg, #7c3aed, #38bdf8, #34d399, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+body { opacity: 0; animation: fadeIn 0.4s ease forwards; }
+body.fade-out { animation: fadeOut 0.3s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-12px); } }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="page-title">AI 시대 상위 1% 개발자 커리어 팁 — 비주얼 자료</h1>
+  <p class="page-subtitle">전체 5개 슬라이드 · 클릭하여 개별 페이지로 이동</p>
+  <div class="section section-intro">
+    <div class="section-header"><span class="num-range">01</span> 인트로</div>
+    <div class="grid">
+      <a class="card" href="01-intro.html" onclick="event.preventDefault(); navigateTo(this.href)">
+        <span class="card-num">01</span><span class="card-title">AI 시대, 우리는 대체될 것인가?</span><span class="card-file">01-intro.html</span>
+      </a>
+    </div>
+  </div>
+  <div class="section section-1">
+    <div class="section-header"><span class="num-range">02</span> 섹션 1</div>
+    <div class="grid">
+      <a class="card" href="02-change.html" onclick="event.preventDefault(); navigateTo(this.href)">
+        <span class="card-num">02</span><span class="card-title">AI 시대의 업무 변화와 적응</span><span class="card-file">02-change.html</span>
+      </a>
+    </div>
+  </div>
+  <div class="section section-2">
+    <div class="section-header"><span class="num-range">03</span> 섹션 2</div>
+    <div class="grid">
+      <a class="card" href="03-core-skills.html" onclick="event.preventDefault(); navigateTo(this.href)">
+        <span class="card-num">03</span><span class="card-title">상위 1%의 필수 역량</span><span class="card-file">03-core-skills.html</span>
+      </a>
+    </div>
+  </div>
+  <div class="section section-3">
+    <div class="section-header"><span class="num-range">04</span> 섹션 3</div>
+    <div class="grid">
+      <a class="card" href="04-mindset.html" onclick="event.preventDefault(); navigateTo(this.href)">
+        <span class="card-num">04</span><span class="card-title">커리어 생존 및 마인드셋</span><span class="card-file">04-mindset.html</span>
+      </a>
+    </div>
+  </div>
+  <div class="section section-outro">
+    <div class="section-header"><span class="num-range">05</span> 아웃트로</div>
+    <div class="grid">
+      <a class="card" href="05-summary.html" onclick="event.preventDefault(); navigateTo(this.href)">
+        <span class="card-num">05</span><span class="card-title">요약 및 마무리</span><span class="card-file">05-summary.html</span>
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+function navigateTo(url) {
+  document.body.classList.add('fade-out');
+  setTimeout(function() { window.location.href = url; }, 300);
+}
+</script>
+</body>
+</html>

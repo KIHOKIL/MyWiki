@@ -56,5 +56,16 @@
       "concepts/harness-engineering.md",
       "entities/career-hacker-alex.md"
     ]
+  },
+  "_source\\Study\\AI-Lectures\\실밸개발자\\20260816\\AI_시대에_상위_1퍼센트가_되는_법.md": {
+    "path": "_source\\Study\\AI-Lectures\\실밸개발자\\20260816\\AI_시대에_상위_1퍼센트가_되는_법.md",
+    "timestamps": {
+      "ingested": "2026-08-16T16:50:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/ai-native-junior.md",
+      "concepts/problem-definition.md",
+      "concepts/harness-engineering.md"
+    ]
   }
 }

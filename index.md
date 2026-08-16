@@ -8,6 +8,7 @@ title: Wiki Index
 
 ## Concepts
 
+- [[ai-native-junior]]
 - [[commit-linked-knowledge]]
 - [[e2e-agentic-engineering-workflow]]
 - [[evidence-driven-engineering]]
@@ -16,6 +17,7 @@ title: Wiki Index
 - [[human-on-the-loop]]
 - [[hw-change-contract]]
 - [[llm-wiki-vs-rag]]
+- [[problem-definition]]
 
 ## Entities
 
