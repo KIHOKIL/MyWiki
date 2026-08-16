@@ -4,6 +4,7 @@ import json
 import argparse
 from google import genai
 from google.genai import types
+from openai import OpenAI
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -64,7 +65,6 @@ Output the final JSON string:
     except Exception as e:
         print(f"Gemini API failed: {e}")
         print("Falling back to OpenAI (gpt-4o-mini)...")
-        from openai import OpenAI
         openai_api_key = os.getenv("OPENAI_API_KEY")
         if not openai_api_key:
             print("Error: OPENAI_API_KEY environment variable is not set for fallback.")
