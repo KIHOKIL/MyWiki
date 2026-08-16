@@ -10,3 +10,4 @@ title: Wiki Log
 - [2026-08-09 18:38] INGEST _source/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md -> weknora.md, xwiki.md, obsidian-llm-plugins.md, llm-wiki-tools-comparison.md
 - [2026-08-09 23:56] INGEST https://github.com/jha0313/skills_repo -> ai-readiness-cartography.md, improve-token-efficiency.md, presentation-slides-generator.md
 - [2026-08-10 00:26] INGEST _source/Projects/HW Change List E2E implementation loop/handoff.md pages_updated=0 pages_created=6 mode=append
+- [2026-08-16 02:24] INGEST _source/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/20260816_진짜AX_학습메모.md -> ax.md, human-on-the-loop.md, harness-engineering.md, career-hacker-alex.md

@@ -44,5 +44,17 @@
     ],
     "source_type": "document",
     "project": "HW Change List E2E implementation loop"
+  },
+  "_source/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/20260816_진짜AX_학습메모.md": {
+    "path": "_source/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/20260816_진짜AX_학습메모.md",
+    "timestamps": {
+      "ingested": "2026-08-16T02:24:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/ax.md",
+      "concepts/human-on-the-loop.md",
+      "concepts/harness-engineering.md",
+      "entities/career-hacker-alex.md"
+    ]
   }
 }

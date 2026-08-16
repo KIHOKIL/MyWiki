@@ -172,10 +172,10 @@ def generate_folder_index(folder: Path) -> None:
 
 
 # ---------------------------------------------------------------------------
-# 4. 마스터 인덱스 (_sources/_index.md) 갱신
+# 4. 마스터 인덱스 (_source/_index.md) 갱신
 # ---------------------------------------------------------------------------
 
-MASTER_HEADER = "# Sources 마스터 인덱스"
+MASTER_HEADER = "# _source 마스터 인덱스"
 FOLDER_SECTION = "## 주제별 폴더 목록"
 
 
