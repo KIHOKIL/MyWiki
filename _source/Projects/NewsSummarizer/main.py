@@ -128,6 +128,7 @@ def main():
     
     today_str = datetime.now().strftime("%Y년 %m월 %d일")
     email_body = f"[{today_str}] 글로벌 산업 동향 심층 브리핑\n\n"
+    has_error = False
     
     for category in config.get("categories", []):
         cat_name = category["name"]
@@ -159,7 +160,8 @@ def main():
             summary = safe_summarize_news(cat_name, focus, unique_articles)
         except Exception as e:
             print(f"[{cat_name}] 최대 재시도 횟수 초과로 요약 실패: {e}")
-            summary = "API 호출 제한(Rate Limit) 등의 문제로 AI 요약 생성에 실패했습니다."
+            summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요."
+            has_error = True
             
         email_body += f"#"*3 + f" 📊 {cat_name}\n\n"
         email_body += f"{summary}\n\n"
@@ -175,7 +177,10 @@ def main():
         time.sleep(5)
     
     print("요약 리포트 생성 완료. 이메일 발송을 준비합니다.")
-    send_email(f"📊 [{today_str}] 글로벌 IT/통신/AI 산업 동향 브리핑", email_body)
+    subject = f"📊 [{today_str}] 글로벌 IT/통신/AI 산업 동향 브리핑"
+    if has_error:
+        subject = f"⚠️ [요약 일부 실패] [{today_str}] 글로벌 IT/통신/AI 산업 동향 브리핑"
+    send_email(subject, email_body)
     
     print("MyWiki 저장소에 Markdown 파일로 저장을 준비합니다.")
     save_to_markdown(today_str, email_body)
