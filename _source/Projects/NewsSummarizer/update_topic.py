@@ -60,11 +60,30 @@ Output the final JSON string:
                 response_mime_type="application/json"
             )
         )
+        new_config_str = response.text.strip()
     except Exception as e:
-        print(f"Error calling Gemini: {e}")
-        sys.exit(1)
-
-    new_config_str = response.text.strip()
+        print(f"Gemini API failed: {e}")
+        print("Falling back to OpenAI (gpt-4o-mini)...")
+        from openai import OpenAI
+        openai_api_key = os.getenv("OPENAI_API_KEY")
+        if not openai_api_key:
+            print("Error: OPENAI_API_KEY environment variable is not set for fallback.")
+            sys.exit(1)
+            
+        openai_client = OpenAI(api_key=openai_api_key)
+        try:
+            response = openai_client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=[
+                    {"role": "system", "content": "You are a JSON generator. Output only valid JSON without markdown formatting. The output must be pure JSON."},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.2
+            )
+            new_config_str = response.choices[0].message.content.strip()
+        except Exception as oe:
+            print(f"Error calling OpenAI fallback: {oe}")
+            sys.exit(1)
     
     # Strip out any potential markdown blocks or SDK warnings appended by the model
     if new_config_str.startswith("```json"):
