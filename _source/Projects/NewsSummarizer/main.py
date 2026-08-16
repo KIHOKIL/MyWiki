@@ -8,6 +8,8 @@ from google.genai import types
 from dotenv import load_dotenv
 import urllib.parse
 from datetime import datetime
+import time
+from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
 # 환경 변수 로드
 load_dotenv()
@@ -61,20 +63,23 @@ def summarize_news(category_name, focus, articles):
     for i, article in enumerate(articles, 1):
         prompt += f"{i}. {article['title']}\n"
     
-    try:
-        client = genai.Client(api_key=GEMINI_API_KEY)
-        response = client.models.generate_content(
-            model='gemini-3.5-flash', # 전문적인 분석을 위해 3.5-flash 모델 사용
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=sys_instruction,
-                temperature=0.3 # 분석의 일관성을 위해 낮은 온도 설정
-            ),
-        )
-        return response.text
-    except Exception as e:
-        print(f"요약 실패: {e}")
-        return "AI 요약 생성 중 오류가 발생했습니다."
+    # 예외가 발생하면 tenacity가 재시도할 수 있도록 에러를 그대로 raise합니다.
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    response = client.models.generate_content(
+        model='gemini-3.5-flash', # 전문적인 분석을 위해 3.5-flash 모델 사용
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            system_instruction=sys_instruction,
+            temperature=0.3 # 분석의 일관성을 위해 낮은 온도 설정
+        ),
+    )
+    return response.text
+
+@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+def safe_summarize_news(category_name, focus, articles):
+    """API 제한을 방지하기 위해 지수 백오프(Exponential Backoff)를 적용한 래퍼 함수입니다."""
+    print(f"  [{category_name}] AI 분석을 요청합니다...")
+    return summarize_news(category_name, focus, articles)
 
 def send_email(subject, content):
     """요약된 뉴스를 이메일로 전송합니다."""
@@ -149,8 +154,13 @@ def main():
         unique_articles = unique_articles[:15]
         
         print(f"총 {len(unique_articles)}개의 고유 기사 수집 완료. AI 분석 중...")
-        summary = summarize_news(cat_name, focus, unique_articles)
         
+        try:
+            summary = safe_summarize_news(cat_name, focus, unique_articles)
+        except Exception as e:
+            print(f"[{cat_name}] 최대 재시도 횟수 초과로 요약 실패: {e}")
+            summary = "API 호출 제한(Rate Limit) 등의 문제로 AI 요약 생성에 실패했습니다."
+            
         email_body += f"#"*3 + f" 📊 {cat_name}\n\n"
         email_body += f"{summary}\n\n"
         
@@ -159,6 +169,10 @@ def main():
         for article in unique_articles[:5]: # 너무 많으면 보기 불편하므로 상위 5개만 노출
             email_body += f"- {article['title']}\n  {article['link']}\n"
         email_body += "\n" + "="*50 + "\n\n"
+        
+        # API Rate Limit (15 RPM) 방지를 위해 카테고리 처리 간 5초 대기
+        print("  API Rate Limit 방지를 위해 5초 대기합니다...")
+        time.sleep(5)
     
     print("요약 리포트 생성 완료. 이메일 발송을 준비합니다.")
     send_email(f"📊 [{today_str}] 글로벌 IT/통신/AI 산업 동향 브리핑", email_body)
