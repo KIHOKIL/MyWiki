@@ -184,8 +184,10 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "2758a6643a13d386",
+  "active": "a762604c2db5c25c",
   "lastOpenFiles": [
+    "concepts/stateless-orientation.md",
+    "concepts/agentic-vault.md",
     "concepts/problem-definition.md",
     "concepts/ai-native-junior.md",
     "_source/Study/AI-Lectures/실밸개발자/20260816/build_slides.py",
@@ -222,8 +224,6 @@
     "무제 2.canvas",
     "entities/career-hacker-alex.md",
     "concepts/harness-engineering.md",
-    "concepts/human-on-the-loop.md",
-    "concepts/ax.md",
     "무제.canvas",
     "temp_obsidian_wiki/extensions/brain-capture/assets/store-screenshot-1280x800.png",
     "temp_obsidian_wiki/extensions/brain-capture/assets/obsidian-brain.png",

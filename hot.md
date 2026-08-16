@@ -18,6 +18,7 @@ updated: 2026-08-16
 
 ## Active Threads
 
+- **2nd Brain Architecture:** Implementing Agentic Vault patterns using hybrid storage (Monorepo for knowledge, Polyrepo for tools) and stateless orientation.
 - **Knowledge Management Strategy:** Exploring the boundaries between dynamic search (RAG) and curated knowledge bases (LLM Wiki).
 - **LLM Wiki Tools Evaluation:** Comparing personal vs enterprise wiki tools (WeKnora, xWiki, Obsidian plugins).
 - **HW Change E2E Engineering:** Transitioning Mobile Modem PHY SW from manual coverage-driven verification to AI-assisted evidence-driven workflows.
@@ -26,6 +27,7 @@ updated: 2026-08-16
 
 ## Key Takeaways
 
+- **Agentic Vault:** AI agents need a hybrid 2nd Brain: a Monorepo for deep personal context and Polyrepo (Git Submodule) for generic skills. They maintain orientation statelessly through files like AGENTS.md and hot.md.
 - **RAG vs Wiki:** RAG is for raw, changing data (e.g., news, regulations) where citation is key. LLM Wiki is for stable, curated knowledge to provide consistent answers. Organizations need strong governance for wikis.
 - **Tool Selection:** Personal setups benefit from Obsidian local plugins; "Wiki Mode" with automated knowledge base building is suited for WeKnora; strict enterprise on-premise environments are best served by xWiki + BYO-LLM.
 - **E2E Agentic Engineering:** Using multi-agent pipelines and commit-linked knowledge to automate low-risk hardware changes and empower human review with structured evidence chains.

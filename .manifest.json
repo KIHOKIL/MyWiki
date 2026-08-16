@@ -67,5 +67,15 @@
       "concepts/problem-definition.md",
       "concepts/harness-engineering.md"
     ]
+  },
+  "agent:research-agent 2nd Brain Architecture Plan (2026-08-16)": {
+    "path": "agent:research-agent 2nd Brain Architecture Plan (2026-08-16)",
+    "timestamps": {
+      "ingested": "2026-08-16T22:49:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/agentic-vault.md",
+      "concepts/stateless-orientation.md"
+    ]
   }
 }

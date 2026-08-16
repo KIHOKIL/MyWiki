@@ -8,6 +8,7 @@ title: Wiki Index
 
 ## Concepts
 
+- [[agentic-vault]]
 - [[ai-native-junior]]
 - [[commit-linked-knowledge]]
 - [[e2e-agentic-engineering-workflow]]
@@ -18,6 +19,7 @@ title: Wiki Index
 - [[hw-change-contract]]
 - [[llm-wiki-vs-rag]]
 - [[problem-definition]]
+- [[stateless-orientation]]
 
 ## Entities
 
