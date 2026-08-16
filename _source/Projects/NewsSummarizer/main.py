@@ -16,7 +16,7 @@ load_dotenv()
 
 # 설정값
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "your_email@gmail.com")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "your_app_password")
+EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "your_app_password").replace('\xa0', '').replace(' ', '')
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "receiver_email@gmail.com")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "your_gemini_api_key")
 
