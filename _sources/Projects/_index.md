@@ -3,8 +3,8 @@
 이 폴더는 Projects 관련 원본 문서들을 모아놓은 디렉토리입니다.
 
 ## 소스 파일 목록
-- [[README.md]] — 📰 Daily News Summarizer
-- [[README.md]] — pytest cache directory #
+- [[README.md]] — PHY SW AI-driven HW Change E2E Engineering
+- [[README.md]] — PHY SW AI-driven HW Change E2E Engineering
 - [[README.md]] — PHY SW AI-driven HW Change E2E Engineering
 - [[handoff.md]] — Handoff Document — PHY SW AI-driven HW Change E2E Engineering
 

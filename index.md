@@ -8,8 +8,14 @@ title: Wiki Index
 
 ## Concepts
 
+- [[action-oriented-ai]]
+- [[active-knowledge-pipeline]]
+- [[active-second-brain]]
+- [[agentic-scaffolding]]
 - [[agentic-vault]]
+- [[ai-agent-reporting]]
 - [[ai-native-junior]]
+- [[cognitive-overload]]
 - [[commit-linked-knowledge]]
 - [[e2e-agentic-engineering-workflow]]
 - [[evidence-driven-engineering]]
@@ -17,12 +23,14 @@ title: Wiki Index
 - [[historical-hw-change-reconstruction]]
 - [[human-on-the-loop]]
 - [[hw-change-contract]]
+- [[issueops]]
 - [[llm-wiki-vs-rag]]
+- [[llm-wiki-workflow]]
+- [[multi-agent-code-review]]
 - [[problem-definition]]
 - [[stateless-orientation]]
-- [[llm-wiki-workflow]]
-- [[action-oriented-ai]]
-- [[ai-agent-reporting]]
+- [[vibe-coding]]
+- [[wiki-layer-architecture]]
 
 ## Entities
 
@@ -46,6 +54,7 @@ title: Wiki Index
 - [[llm-wiki-tools-comparison]]
 ## Journal
 
+- [[digest-2026-08-17-daily]]
 ## Projects
 
 - [[HW Change List E2E]]

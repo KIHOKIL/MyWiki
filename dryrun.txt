@@ -1,0 +1,6 @@
+wiki-lint --consolidate — Dry Run
+
+Planned actions:
+[1] Fix broken link: references/AI-Tools/ai-agent-skills-catalog.md [[ai-readiness-cartography\]] -> [[ai-readiness-cartography]]
+[2] Fix broken link: references/AI-Tools/ai-agent-skills-catalog.md [[improve-token-efficiency\]] -> [[improve-token-efficiency]]
+[3] Fix broken link: references/AI-Tools/ai-agent-skills-catalog.md [[presentation-slides-generator\]] -> [[presentation-slides-generator]]

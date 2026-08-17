@@ -88,5 +88,37 @@
       "concepts/action-oriented-ai.md",
       "concepts/ai-agent-reporting.md"
     ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260817/Agentic_2nd_Brain_Architecture.md": {
+    "path": "_sources/Study/AI-Lectures/편한AI/20260817/Agentic_2nd_Brain_Architecture.md",
+    "timestamps": {
+      "ingested": "2026-08-17T23:18:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/active-second-brain.md",
+      "concepts/wiki-layer-architecture.md"
+    ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260817/big_tech_ai_workflow_proposal.md": {
+    "path": "_sources/Study/AI-Lectures/편한AI/20260817/big_tech_ai_workflow_proposal.md",
+    "timestamps": {
+      "ingested": "2026-08-17T23:18:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/agentic-scaffolding.md",
+      "concepts/multi-agent-code-review.md",
+      "concepts/issueops.md",
+      "concepts/vibe-coding.md"
+    ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260817/lecture_slides.md": {
+    "path": "_sources/Study/AI-Lectures/편한AI/20260817/lecture_slides.md",
+    "timestamps": {
+      "ingested": "2026-08-17T23:18:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/active-knowledge-pipeline.md",
+      "concepts/cognitive-overload.md"
+    ]
   }
 }
