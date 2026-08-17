@@ -8,7 +8,7 @@ on:
 
 jobs:
   run-summarizer:
-    uses: ./.github/workflows/reusable_python_agent.yml
+    uses: ./.github/workflows/tmpl_python_agent.yml
     with:
       working_directory: '_source/Projects/NewsSummarizer'
       script_command: 'python main.py'
