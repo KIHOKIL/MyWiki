@@ -10,8 +10,8 @@ jobs:
   run-summarizer:
     uses: ./.github/workflows/tmpl_python_agent.yml
     with:
-      working_directory: '_source/Projects/NewsSummarizer'
+      working_directory: '_sources/Projects/NewsSummarizer'
       script_command: 'python main.py'
       commit_message: "📝 자동 요약 뉴스 브리핑 추가"
-      file_pattern: "_source/News/Daily_Summaries/*.md"
+      file_pattern: "_sources/News/Daily_Summaries/*.md"
     secrets: inherit

@@ -71,7 +71,7 @@ def summarize_news_gemini(category_name, focus, articles):
     # 예외가 발생하면 tenacity가 재시도할 수 있도록 에러를 그대로 raise합니다.
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
-        model='gemini-flash-latest', # 404/429 에러를 피하기 위해 최신 범용 flash 모델 사용
+        model='gemini-3.1-flash-lite', # 404/429/503 에러를 피하기 위해 안정적인 3.1-flash-lite 모델 사용
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
