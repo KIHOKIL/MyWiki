@@ -76,6 +76,17 @@
     "pages_produced": [
       "concepts/agentic-vault.md",
       "concepts/stateless-orientation.md"
+  },
+  "_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md": {
+    "path": "_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
+    "timestamps": {
+      "ingested": "2026-08-17T13:24:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/llm-wiki-workflow.md",
+      "skills/generate-index.md",
+      "concepts/action-oriented-ai.md",
+      "concepts/ai-agent-reporting.md"
     ]
   }
 }

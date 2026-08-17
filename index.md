@@ -4,7 +4,7 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-08-09*
+*This index is automatically maintained. Last updated: 2026-08-17*
 
 ## Concepts
 
@@ -20,6 +20,9 @@ title: Wiki Index
 - [[llm-wiki-vs-rag]]
 - [[problem-definition]]
 - [[stateless-orientation]]
+- [[llm-wiki-workflow]]
+- [[action-oriented-ai]]
+- [[ai-agent-reporting]]
 
 ## Entities
 
@@ -32,6 +35,8 @@ title: Wiki Index
 - [[xwiki]]
 
 ## Skills
+
+- [[generate-index]]
 
 ## References
 

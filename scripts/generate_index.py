@@ -128,9 +128,9 @@ def generate_folder_index(folder: Path) -> None:
     """폴더 내 .md 파일을 수집하여 _index.md 를 생성/덮어쓰기."""
     folder_name = folder.name
 
-    # 파일명이 _ 로 시작하지 않는 .md 파일만 수집 (오름차순)
+    # 파일명이 _ 로 시작하지 않는 .md 파일만 수집 (오름차순, 하위 폴더 포함)
     md_files = sorted(
-        [f for f in folder.iterdir() if f.is_file() and f.suffix == ".md" and not f.name.startswith("_")],
+        [f for f in folder.rglob("*.md") if f.is_file() and not f.name.startswith("_")],
         key=lambda p: p.name,
     )
 
