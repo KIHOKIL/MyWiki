@@ -16,23 +16,19 @@ on:
         required: true
         type: string
       file_pattern:
-        description: '커밋할 파일 패턴'
+        description: '커밋할 파일 패턴 (Artifact 업로드 시에도 사용됨)'
         required: true
         type: string
 
 jobs:
-  run-python-agent:
+  draft-content:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      issues: write
-      actions: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
@@ -44,13 +40,6 @@ jobs:
 
       - name: Run script
         working-directory: ${{ inputs.working_directory }}
-        # The calling workflow uses `secrets: inherit` so all secrets are available as env vars automatically?
-        # Actually, `secrets: inherit` makes secrets available in the `secrets` context of the reusable workflow,
-        # but NOT automatically as environment variables in the run steps.
-        # However, passing all secrets to the run step env dynamically is not directly supported without listing them,
-        # EXCEPT by dumping the whole secrets context or having the script read from python `os.environ`.
-        # Wait, if the reusable workflow runs the script, the script won't have GEMINI_API_KEY in its env unless mapped.
-        # Let's map the specific secrets used by the python agents.
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -58,6 +47,32 @@ jobs:
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
         run: ${{ inputs.script_command }}
+
+      - name: Upload generated files as Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-draft-output
+          path: ${{ inputs.file_pattern }}
+          retention-days: 1
+          if-no-files-found: ignore
+
+  publish-content:
+    needs: draft-content
+    runs-on: ubuntu-latest
+    environment: human-approval-required # 여기서 깃허브가 사람의 승인을 대기합니다 (설정 필요)
+    permissions:
+      contents: write
+      issues: write
+      actions: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: agent-draft-output
+          path: . # 루트 경로에 다운로드하여 기존 구조 덮어쓰기
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
