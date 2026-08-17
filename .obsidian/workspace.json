@@ -51,7 +51,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "bring up",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -79,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 275.1000061035156
+    "width": 350.16668701171875
   },
   "right": {
     "id": "79c587f50ac6dda9",
@@ -186,9 +186,16 @@
   },
   "active": "a762604c2db5c25c",
   "lastOpenFiles": [
-    "_sources/News/Daily_Summaries/2026-08-17_News_Briefing.md",
+    "_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
+    "_sources/00_Inbox/_index.md",
     "_sources/Study/AI-Lectures/편한AI/20260817/lecture_slides.pdf",
     "_sources/Study/AI-Lectures/편한AI/20260817/lecture_slides.md",
+    "_sources/Study/AI-Lectures/편한AI/20260817/big_tech_ai_workflow_proposal.md",
+    "_sources/Study/AI-Lectures/편한AI/20260817/Agentic_2nd_Brain_Architecture.md",
+    "_sources/Study/AI-활용법/LLM_WiKi/LLM_Wiki와_RAG_비교.md",
+    "_sources/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
+    "concepts/ai-agent-reporting.md",
+    "_sources/News/Daily_Summaries/2026-08-17_News_Briefing.md",
     "concepts/action-oriented-ai.md",
     "skills/generate-index.md",
     "concepts/llm-wiki-workflow.md",
@@ -201,13 +208,9 @@
     "_sources/Study/AI-Lectures/실밸개발자/20260816/slides/04-mindset.html",
     "_sources/Study/AI-Lectures/실밸개발자/20260816/slides/index.html",
     "_sources/Study/AI-Lectures/실밸개발자/20260816/slides/05-summary.html",
-    "_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
     "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/20260816_진짜AX_학습메모.md",
-    "_sources/Study/AI-Lectures/편한AI/20260817/big_tech_ai_workflow_proposal.md",
     "_sources/Study/AI-Lectures/실밸개발자/20260816/AI_시대에_상위_1퍼센트가_되는_법.md",
     "_sources/Projects/HW Change List E2E implementation loop/Presentation/PHY_SW_AI_E2E_Executive_HTML/README.md",
-    "_sources/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
-    "_sources/Study/AI-활용법/LLM_WiKi/LLM_Wiki와_RAG_비교.md",
     "_sources/Projects/NewsSummarizer/README.md",
     "_sources/Projects/HW Change List E2E implementation loop/handoff.md",
     "_sources/News/Daily_Summaries/2026-08-16_News_Briefing.md",
@@ -216,12 +219,8 @@
     "_sources/Clippings/CodeMate transforming developer productivity with on-device AI assistance.md",
     "_sources/Books/_index.md",
     "_sources/99_Templates/_index.md",
-    "_sources/00_Inbox/_index.md",
     "_sources/Work-Ideas/_index.md",
     "_sources/Study/_index.md",
-    "_sources/Projects/_index.md",
-    "_sources/News/_index.md",
-    "_sources/90_MOC/_index.md",
     "무제 1.canvas",
     "무제 2.canvas",
     "무제.canvas",
