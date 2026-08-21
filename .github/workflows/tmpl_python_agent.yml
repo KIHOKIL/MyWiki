@@ -51,6 +51,7 @@ jobs:
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          SUBSCRIBERS_CSV_URL: ${{ secrets.SUBSCRIBERS_CSV_URL }}
         run: ${{ inputs.script_command }}
 
       - name: Upload generated files as Artifacts
