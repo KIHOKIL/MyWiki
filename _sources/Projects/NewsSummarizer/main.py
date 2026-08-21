@@ -38,24 +38,37 @@ def fetch_google_news(query, max_articles=3):
     encoded_query = urllib.parse.quote(query)
     url = f"https://news.google.com/rss/search?q={encoded_query}&hl=ko&gl=KR&ceid=KR:ko"
     
-    try:
-        # GitHub Actions 등 서버 환경에서 봇 차단을 우회하기 위해 User-Agent 설정
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'})
-        with urllib.request.urlopen(req) as response:
-            xml_data = response.read()
-        feed = feedparser.parse(xml_data)
-    except Exception as e:
-        print(f"  [Warning] urllib request failed for {query}: {e}. Fallback to feedparser default.")
-        feed = feedparser.parse(url)
+    feed = None
+    for attempt in range(3):
+        try:
+            # GitHub Actions 등 서버 환경에서 봇 차단을 우회하기 위해 User-Agent 설정
+            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'})
+            with urllib.request.urlopen(req) as response:
+                xml_data = response.read()
+            feed = feedparser.parse(xml_data)
+            # 성공적으로 가져오면 루프 탈출
+            if feed and feed.entries:
+                break
+        except Exception as e:
+            print(f"  [Warning] urllib request failed for '{query}' (Attempt {attempt+1}/3): {e}")
+        
+        # 실패 시 2초 대기 후 재시도
+        time.sleep(2)
     
+    # 재시도에도 불구하고 파싱 실패 시 빈 리스트 반환
+    if not feed or not hasattr(feed, 'entries'):
+        print(f"  [Error] Failed to fetch or parse RSS for '{query}'.")
+        return []
+
     articles = []
     for entry in feed.entries[:max_articles]:
         articles.append({
             "title": entry.title,
             "link": entry.link,
-            "published": entry.published
+            "published": entry.get("published", "")
         })
     return articles
+
 
 def _build_prompt_and_instruction(category_name, focus, articles):
     sys_instruction = f"""당신은 IT, 통신, AI 및 반도체 산업의 글로벌 최고 수준 애널리스트입니다.
@@ -220,6 +233,7 @@ def main():
         for q in queries:
             print(f"  - 검색: {q}")
             all_articles.extend(fetch_google_news(q, max_articles=2)) # 각 키워드별로 2개씩 가져옴
+            time.sleep(1)
             
         # 중복 기사 제거 (제목 기준)
         unique_articles = []
