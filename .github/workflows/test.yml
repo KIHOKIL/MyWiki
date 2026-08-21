@@ -5,4 +5,7 @@ jobs:
     uses: ./.github/workflows/tmpl_test.yml
     with:
       working_directory: '_sources/Projects/NewsSummarizer'
+      script_command: 'echo hello'
+      commit_message: 'Test'
+      file_pattern: '*.md'
     secrets: inherit

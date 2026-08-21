@@ -5,16 +5,60 @@ on:
       working_directory:
         required: true
         type: string
+      script_command:
+        required: true
+        type: string
+      commit_message:
+        required: true
+        type: string
+      file_pattern:
+        required: true
+        type: string
 jobs:
   draft-content:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - run: echo "working directory is ${{ inputs.working_directory }}"
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+      - name: Install dependencies
+        working-directory: ${{ inputs.working_directory }}
+        run: pip install -r requirements.txt
+      - name: Run script
+        working-directory: ${{ inputs.working_directory }}
         env:
           MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: ${{ inputs.script_command }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: draft-content
+          path: ${{ inputs.working_directory }}/${{ inputs.file_pattern }}
+
   publish-content:
     needs: draft-content
     runs-on: ubuntu-latest
     environment: human-approval-required
+    permissions:
+      contents: write
+      issues: write
+      actions: write
     steps:
-      - run: echo "Publishing"
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+      - name: Download draft content
+        uses: actions/download-artifact@v4
+        with:
+          name: draft-content
+          path: ${{ inputs.working_directory }}
+      - name: Commit and Push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: ${{ inputs.commit_message }}
+          file_pattern: ${{ inputs.file_pattern }}
