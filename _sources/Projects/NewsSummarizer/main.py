@@ -37,7 +37,16 @@ def fetch_google_news(query, max_articles=3):
     """주어진 키워드로 Google News RSS를 검색하여 기사를 가져옵니다."""
     encoded_query = urllib.parse.quote(query)
     url = f"https://news.google.com/rss/search?q={encoded_query}&hl=ko&gl=KR&ceid=KR:ko"
-    feed = feedparser.parse(url)
+    
+    try:
+        # GitHub Actions 등 서버 환경에서 봇 차단을 우회하기 위해 User-Agent 설정
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'})
+        with urllib.request.urlopen(req) as response:
+            xml_data = response.read()
+        feed = feedparser.parse(xml_data)
+    except Exception as e:
+        print(f"  [Warning] urllib request failed for {query}: {e}. Fallback to feedparser default.")
+        feed = feedparser.parse(url)
     
     articles = []
     for entry in feed.entries[:max_articles]:
