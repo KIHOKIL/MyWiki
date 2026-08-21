@@ -11,14 +11,10 @@
             "id": "a762604c2db5c25c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "obsidian_llm_wiki_guide"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "그래프 뷰"
             }
           }
         ]
@@ -190,6 +186,12 @@
   },
   "active": "2758a6643a13d386",
   "lastOpenFiles": [
+    "run_log.txt",
+    "_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
+    "log.txt",
+    "_sources/Projects/NewsSummarizer/scratch_test.py",
+    "_sources/News/Daily_Summaries/test.md",
+    "journal/2026-08-19.md",
     "2026-08-19.md",
     "_sources/Study/AI-활용법/LLM_WiKi/LLM Wiki 설치 사이트.md",
     "_sources/Study/AI-활용법/LLM_WiKi/LLM_Wiki와_RAG_비교.md",
@@ -212,11 +214,7 @@
     "CLAUDE.md",
     "AGENTS.md",
     "synthesis/consolidation-2026-08-17.md",
-    "synthesis/llm-wiki-tools-comparison.md",
-    "concepts/cognitive-overload.md",
     "dryrun.txt",
-    "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/20260816_진짜AX_학습메모.md",
-    "_sources/90_MOC/_index.md",
     "_templates",
     "_sources/Study/AI-Lectures/편한AI/20260817/lecture_slides.pdf",
     "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/slides/index.html",
@@ -224,8 +222,6 @@
     "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/slides/04-human-loop.html",
     "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/slides/03-harness.html",
     "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/slides/02-metrics.html",
-    "_sources/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/slides/01-intro.html",
-    "_sources/Study/AI-Lectures/실밸개발자/20260816/slides/04-mindset.html",
     "무제 1.canvas",
     "무제 2.canvas",
     "무제.canvas",
