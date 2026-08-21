@@ -59,7 +59,7 @@ jobs:
   publish-content:
     needs: draft-content
     runs-on: ubuntu-latest
-    environment: human-approval-required # 여기서 깃허브가 사람의 승인을 대기합니다 (설정 필요)
+    environment: human-approval-required
     permissions:
       contents: write
       issues: write
