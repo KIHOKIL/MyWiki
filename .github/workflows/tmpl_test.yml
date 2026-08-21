@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "working directory is ${{ inputs.working_directory }}"
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
   publish-content:
     needs: draft-content
     runs-on: ubuntu-latest
