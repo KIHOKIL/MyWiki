@@ -17,8 +17,6 @@ on:
 jobs:
   draft-content:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -46,10 +44,6 @@ jobs:
     needs: draft-content
     runs-on: ubuntu-latest
     environment: human-approval-required
-    permissions:
-      contents: write
-      issues: write
-      actions: write
     steps:
       - uses: actions/checkout@v4
         with:
