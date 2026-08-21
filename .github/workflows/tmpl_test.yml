@@ -10,3 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "working directory is ${{ inputs.working_directory }}"
+  publish-content:
+    needs: draft-content
+    runs-on: ubuntu-latest
+    environment: human-approval-required
+    steps:
+      - run: echo "Publishing"
