@@ -214,6 +214,11 @@ def main():
         print("  API Rate Limit 방지를 위해 5초 대기합니다...")
         time.sleep(5)
     
+    # 이메일 하단 구독 신청 링크 추가
+    email_body += "📬 **뉴스레터 수신인 추가하기**\n"
+    email_body += "이 브리핑을 다른 분들과 함께 받아보시려면 아래 링크에서 이메일 주소를 등록해 주세요.\n"
+    email_body += "👉 [수신인 추가 구글 폼 링크](https://forms.gle/여기에_실제_구글폼_ID를_넣어주세요)\n\n"
+    
     print("요약 리포트 생성 완료. 이메일 발송을 준비합니다.")
     subject = f"📊 [{today_str}] 글로벌 IT/통신/AI 산업 동향 브리핑"
     if has_error:
