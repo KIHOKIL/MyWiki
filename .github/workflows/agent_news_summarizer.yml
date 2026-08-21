@@ -8,6 +8,10 @@ on:
 
 jobs:
   run-summarizer:
+    permissions:
+      contents: write
+      issues: write
+      actions: write
     uses: ./.github/workflows/tmpl_python_agent.yml
     with:
       working_directory: '_sources/Projects/NewsSummarizer'
