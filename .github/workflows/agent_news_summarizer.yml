@@ -18,4 +18,5 @@ jobs:
       script_command: 'python main.py'
       commit_message: "📝 자동 요약 뉴스 브리핑 추가"
       file_pattern: "_sources/News/Daily_Summaries/*.md"
+      download_path: "_sources/News/Daily_Summaries"
     secrets: inherit
