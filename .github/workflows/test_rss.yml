@@ -1,0 +1,21 @@
+name: Test RSS
+on: [workflow_dispatch]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Test Google News
+        run: |
+          python -c "
+          import urllib.request
+          try:
+              req = urllib.request.Request('https://news.google.com/rss/search?q=AI&hl=ko&gl=KR&ceid=KR:ko', headers={'User-Agent': 'Mozilla/5.0'})
+              with urllib.request.urlopen(req) as response:
+                  print('Success:', len(response.read()))
+          except Exception as e:
+              print('Error:', e)
+          "
