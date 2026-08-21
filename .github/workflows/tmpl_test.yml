@@ -1,0 +1,12 @@
+name: Minimal Reusable
+on:
+  workflow_call:
+    inputs:
+      working_directory:
+        required: true
+        type: string
+jobs:
+  draft-content:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "working directory is ${{ inputs.working_directory }}"
