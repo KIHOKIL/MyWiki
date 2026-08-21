@@ -8,6 +8,10 @@ from google.genai import types
 from openai import OpenAI
 from dotenv import load_dotenv
 import urllib.parse
+import urllib.request
+import csv
+import io
+import re
 from datetime import datetime
 import time
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
@@ -19,6 +23,7 @@ load_dotenv()
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "your_email@gmail.com")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "your_app_password").replace('\xa0', '').replace(' ', '')
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "receiver_email@gmail.com")
+SUBSCRIBERS_CSV_URL = os.getenv("SUBSCRIBERS_CSV_URL", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "your_gemini_api_key")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 
@@ -109,23 +114,59 @@ def safe_summarize_news_openai(category_name, focus, articles):
     print(f"  [{category_name}] OpenAI (Fallback) 분석을 요청합니다...")
     return summarize_news_openai(category_name, focus, articles)
 
+def get_additional_subscribers():
+    """CSV URL(구글 스프레드시트 게시)에서 추가 구독자 이메일을 추출합니다."""
+    if not SUBSCRIBERS_CSV_URL:
+        return []
+    try:
+        req = urllib.request.Request(SUBSCRIBERS_CSV_URL)
+        with urllib.request.urlopen(req) as response:
+            csv_data = response.read().decode('utf-8')
+        
+        emails = set()
+        reader = csv.reader(io.StringIO(csv_data))
+        for row in reader:
+            for cell in row:
+                # 간단한 이메일 정규식 매칭
+                match = re.search(r'[\w\.-]+@[\w\.-]+\.\w+', cell)
+                if match:
+                    emails.add(match.group(0).strip())
+        return list(emails)
+    except Exception as e:
+        print(f"구독자 CSV 가져오기 실패: {e}")
+        return []
+
 def send_email(subject, content):
     """요약된 뉴스를 이메일로 전송합니다."""
     if EMAIL_SENDER == "your_email@gmail.com" or not EMAIL_PASSWORD:
         print("이메일 설정이 되어있지 않아 전송을 건너뜁니다.")
         return
 
+    # 기본 수신자와 추가 구독자 병합
+    receivers = set([e.strip() for e in EMAIL_RECEIVER.split(',') if e.strip()])
+    additional_receivers = get_additional_subscribers()
+    if additional_receivers:
+        print(f"추가 구독자 {len(additional_receivers)}명을 확인했습니다.")
+        receivers.update(additional_receivers)
+    
+    receivers_list = list(receivers)
+    if not receivers_list:
+        print("이메일 수신자가 설정되어 있지 않습니다.")
+        return
+
     msg = EmailMessage()
     msg['Subject'] = subject
     msg['From'] = EMAIL_SENDER
-    msg['To'] = EMAIL_RECEIVER
+    # To는 발신자(본인)로 하고, Bcc(숨은참조)로 모든 구독자 설정하여 개인정보 보호
+    msg['To'] = EMAIL_SENDER
+    msg['Bcc'] = ", ".join(receivers_list)
     msg.set_content(content)
 
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(EMAIL_SENDER, EMAIL_PASSWORD)
             smtp.send_message(msg)
-        print("이메일 전송 성공!")
+        print(f"이메일 전송 성공! (총 {len(receivers_list)}명 발송 완료)")
     except Exception as e:
         print(f"이메일 전송 실패: {e}")
 
