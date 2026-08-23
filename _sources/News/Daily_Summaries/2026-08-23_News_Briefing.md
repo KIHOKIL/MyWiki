@@ -1,13 +1,13 @@
 ---
-title: "[2026-08-22] 산업 동향 심층 브리핑"
+title: "[2026-08-23] 산업 동향 심층 브리핑"
 category: News
 tags: [news, briefing, daily]
-created: 2026-08-22
-updated: 2026-08-22
+created: 2026-08-23
+updated: 2026-08-23
 sources: []
 ---
 
-[2026년 08월 22일] 글로벌 산업 동향 심층 브리핑
+[2026년 08월 23일] 글로벌 산업 동향 심층 브리핑
 
 ### 📊 Mobile Communication Industry
 

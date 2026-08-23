@@ -12,7 +12,7 @@ import urllib.request
 import csv
 import io
 import re
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import time
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
@@ -202,7 +202,8 @@ def save_to_markdown(date_str, content):
         os.makedirs(save_dir, exist_ok=True)
         
     # Obsidian Frontmatter 추가
-    iso_date = datetime.now().strftime("%Y-%m-%d")
+    KST = timezone(timedelta(hours=9))
+    iso_date = datetime.now(KST).strftime("%Y-%m-%d")
     frontmatter = f"---\ntitle: \"[{iso_date}] 산업 동향 심층 브리핑\"\ncategory: News\ntags: [news, briefing, daily]\ncreated: {iso_date}\nupdated: {iso_date}\nsources: []\n---\n\n"
     
     file_path = os.path.join(save_dir, f"{iso_date}_News_Briefing.md")
@@ -217,7 +218,8 @@ def main():
     print("전문가용 심층 뉴스 요약 자동화 시스템 시작...")
     config = load_config()
     
-    today_str = datetime.now().strftime("%Y년 %m월 %d일")
+    KST = timezone(timedelta(hours=9))
+    today_str = datetime.now(KST).strftime("%Y년 %m월 %d일")
     email_body = f"[{today_str}] 글로벌 산업 동향 심층 브리핑\n\n"
     has_error = False
     

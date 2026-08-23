@@ -3,16 +3,16 @@ name: CI - News Summarizer
 on:
   push:
     paths:
-      - '_source/Projects/NewsSummarizer/**'
+      - '_sources/Projects/NewsSummarizer/**'
       - '.github/workflows/sys_news_summarizer_ci.yml'
   pull_request:
     paths:
-      - '_source/Projects/NewsSummarizer/**'
+      - '_sources/Projects/NewsSummarizer/**'
 
 jobs:
   test-news-summarizer:
     uses: ./.github/workflows/tmpl_python_ci.yml
     with:
-      working_directory: '_source/Projects/NewsSummarizer'
+      working_directory: '_sources/Projects/NewsSummarizer'
       python_version: '3.10'
     secrets: inherit
