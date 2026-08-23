@@ -5,9 +5,11 @@
 ## 소스 파일 목록
 - [[2026-08-16_News_Briefing.md]] — [Executive Briefing] AI Era: Hardware & Infrastructure 산업 동향 분석
 - [[2026-08-17_News_Briefing.md]] — [Executive Briefing] AI Era: Software & LLM 산업 동향 및 기술 전략
+- [[2026-08-21_News_Briefing.md]] — 원본 문서 자료
+- [[2026-08-23_News_Briefing.md]] — [Industry Briefing] 글로벌 모바일 통신 산업 동향 분석
 
 ## 관련 위키 페이지
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-08-17*
+*마지막 갱신: 2026-08-23*

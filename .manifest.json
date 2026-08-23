@@ -76,6 +76,7 @@
     "pages_produced": [
       "concepts/agentic-vault.md",
       "concepts/stateless-orientation.md"
+    ]
   },
   "_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md": {
     "path": "_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
@@ -119,6 +120,20 @@
     "pages_produced": [
       "concepts/active-knowledge-pipeline.md",
       "concepts/cognitive-overload.md"
+    ]
+  },
+  "_sources/News/Daily_Summaries/2026-08-23_News_Briefing.md": {
+    "path": "_sources/News/Daily_Summaries/2026-08-23_News_Briefing.md",
+    "timestamps": {
+      "ingested": "2026-08-23T21:28:56.963830+09:00"
+    },
+    "pages_produced": [
+      "concepts/ai-native-ran.md",
+      "concepts/ai-energy-nexus.md",
+      "concepts/physical-ai.md",
+      "concepts/agentic-workflow.md",
+      "entities/optimus.md",
+      "entities/isaac-groot.md"
     ]
   }
 }
