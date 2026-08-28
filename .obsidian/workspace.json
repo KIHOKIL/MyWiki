@@ -51,7 +51,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "AI ran path",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -75,7 +75,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -184,8 +185,9 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "2758a6643a13d386",
+  "active": "3061b960c1c7dcc1",
   "lastOpenFiles": [
+    "index.md",
     "temp_artifact_dir/test.md",
     "temp_artifact_dir/2026-08-17_News_Briefing.md",
     "temp_artifact_dir/2026-08-21_News_Briefing.md",
@@ -215,7 +217,6 @@
     "concepts/ax.md",
     "concepts/active-second-brain.md",
     "concepts/active-knowledge-pipeline.md",
-    "concepts/action-oriented-ai.md",
     "dryrun.txt",
     "_templates",
     "_sources/Study/AI-Lectures/편한AI/20260817/lecture_slides.pdf",
