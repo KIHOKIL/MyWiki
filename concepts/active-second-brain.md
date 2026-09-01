@@ -24,3 +24,9 @@ AI 에이전트가 내 지식을 직접 학습하고, 자동화 파이프라인(
 ## 연관 개념
 - [[wiki-layer-architecture]]
 - [[active-knowledge-pipeline]]
+
+## 🌟 3계층 미래형 융합 아키텍처 (MemGPT + Graph RAG + RLM)
+2026 최신 연구에 따르면, 진정한 능동형 세컨드 브레인은 3가지 기술의 결합으로 완성됩니다:
+1. **Core Memory Layer ([[concepts/memgpt|MemGPT]]):** 현재 집중 중인 실시간 작업 컨텍스트 및 개인화 페르소나 관리.
+2. **Semantic Network Layer ([[concepts/graph-rag|Graph RAG]]):** 방대한 역사적 지식과 업무 데이터(Email, Jira, Confluence, Git)를 개체-관계 그래프로 영구 보관.
+3. **Reflection & Dream Loop (RLM):** 백그라운드 주기에서 지식 중복 제거, 모순 해결 및 새로운 통찰을 생성하는 지능형 정리 루프.

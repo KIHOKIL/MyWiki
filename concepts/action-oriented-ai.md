@@ -6,7 +6,7 @@ tags:
   - ai-agents
   - future-workflows
 sources:
-  - "[[_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
+  - "[[_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
 created: "2026-08-17"
 updated: "2026-08-17"
 summary: 단순 질의응답을 넘어 브라우저와 파일 시스템을 직접 조작하며 업무를 완수하는 행동하는 AI 에이전트 개념.

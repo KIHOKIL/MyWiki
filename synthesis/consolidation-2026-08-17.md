@@ -22,6 +22,6 @@ updated: 2026-08-17T22:56:00
 - Contradiction callouts added: 0
 
 ## Broken Link Fixes
-- `references/AI-Tools/ai-agent-skills-catalog.md` — [[ai-readiness-cartography\]] → [[ai-readiness-cartography]]
-- `references/AI-Tools/ai-agent-skills-catalog.md` — [[improve-token-efficiency\]] → [[improve-token-efficiency]]
-- `references/AI-Tools/ai-agent-skills-catalog.md` — [[presentation-slides-generator\]] → [[presentation-slides-generator]]
+- `references/AI-Tools/ai-agent-skills-catalog.md` — [[ai-readiness-cartography]] → [[ai-readiness-cartography]]
+- `references/AI-Tools/ai-agent-skills-catalog.md` — [[improve-token-efficiency]] → [[improve-token-efficiency]]
+- `references/AI-Tools/ai-agent-skills-catalog.md` — [[presentation-slides-generator]] → [[presentation-slides-generator]]

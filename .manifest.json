@@ -195,5 +195,18 @@
       "concepts/ai-native-ran.md",
       "entities/optimus.md"
     ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260901/Research_report_LLM_2nd_Brain_Seoul (1).md": {
+    "hash": "4c0624c4b2b21e300816b2fc345b9cc03ac609a9b6d6ca61231832d63da94200",
+    "ingested_at": "2026-09-01T19:21:56.318495",
+    "pages_produced": [
+      "concepts/graph-rag.md",
+      "concepts/agentic-rag.md",
+      "concepts/memgpt.md",
+      "concepts/mcp-server.md",
+      "concepts/multi-tier-knowledge-architecture.md",
+      "concepts/active-second-brain.md",
+      "concepts/llm-wiki-vs-rag.md"
+    ]
   }
 }

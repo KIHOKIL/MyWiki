@@ -2,7 +2,7 @@
 title: "Non-Terrestrial Network (NTN)"
 category: Concept
 tags: [6g, telecommunication, satellite, network]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "저궤도 위성 통신과 지상 이동통신망을 결합하여 오지나 해상, 공중에서도 끊김 없는 연결성을 제공하는 6G 비지상 네트워크 기술."
 base_confidence: 0.8
 lifecycle: draft

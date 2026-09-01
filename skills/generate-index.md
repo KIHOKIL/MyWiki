@@ -6,7 +6,7 @@ tags:
   - python
   - indexing
 sources:
-  - "[[_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
+  - "[[_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
 created: "2026-08-17"
 updated: "2026-08-17"
 summary: Obsidian 원본 소스 폴더의 내부 문서를 스캔하여 인덱스 파일(_index.md)을 자동 생성 및 갱신하는 스킬.

@@ -2,7 +2,7 @@
 title: "Sim-to-Real Transfer"
 category: Concept
 tags: [robotics, ai, simulation, embodied-ai]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "가상 시뮬레이션 환경에서 학습된 AI 모델을 실제 물리 로봇 및 디바이스에 적용할 때 발생하는 간극(Gap)을 최소화하는 기술."
 base_confidence: 0.8
 lifecycle: draft

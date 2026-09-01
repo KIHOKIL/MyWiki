@@ -2,7 +2,7 @@
 title: "Agentic Workflow"
 category: Concept
 tags: [ai, llm, workflow, software]
-sources: [[[2026-08-23_News_Briefing]], [[big_tech_ai_workflow_proposal]]]
+sources: ["2026-08-23_News_Briefing]], [[big_tech_ai_workflow_proposal"]
 created: 2026-08-23
 updated: 2026-08-23
 ---

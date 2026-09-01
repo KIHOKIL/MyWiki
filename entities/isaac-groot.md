@@ -2,7 +2,7 @@
 title: "NVIDIA Isaac GR00T"
 category: Entity
 tags: [robotics, ai, platform, nvidia]
-sources: [[[2026-08-23_News_Briefing]]]
+sources: ["2026-08-23_News_Briefing"]
 created: 2026-08-23
 updated: 2026-08-23
 ---

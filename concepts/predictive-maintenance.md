@@ -2,7 +2,7 @@
 title: "AI Predictive Maintenance (예지 보전)"
 category: Concept
 tags: [smart-factory, iiot, ai, maintenance]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "산업용 모터 및 설비의 센서 데이터를 실시간 AI로 분석하여 고장 징후를 사전에 감지하고 가동 중단(Downtime)을 최소화하는 기술."
 base_confidence: 0.8
 lifecycle: draft

@@ -6,7 +6,7 @@ tags:
   - reporting
   - workflows
 sources:
-  - "[[_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
+  - "[[_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
 created: "2026-08-17"
 updated: "2026-08-17"
 summary: JIRA, Confluence 등 실무 플랫폼에서 데이터를 수집하여 임원 보고서 및 현황 대시보드를 자동 작성하는 파이프라인.

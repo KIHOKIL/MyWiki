@@ -2,7 +2,7 @@
 title: "AI Factory"
 category: Concept
 tags: [ai, infrastructure, datacenter, vertical-integration]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "데이터센터 전력 인프라부터 반도체, AI 모델 학습 및 도메인 특화 E2E 서비스 배포까지 수직 계열화된 차세대 AI 생산 인프라 체계."
 base_confidence: 0.8
 lifecycle: draft

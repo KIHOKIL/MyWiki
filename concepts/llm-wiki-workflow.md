@@ -6,7 +6,7 @@ tags:
   - llm-wiki
   - knowledge-management
 sources:
-  - "[[_source/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
+  - "[[_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md]]"
 created: "2026-08-17"
 updated: "2026-08-17"
 summary: LLM 위키에서 데이터를 수집하고 구조화된 지식으로 자동 변환하는 7단계 핵심 작업 흐름.
@@ -38,7 +38,7 @@ LLM 기반 세컨드 브레인(Second Brain) 시스템이 원본 데이터를 �
 에이전트가 단독으로 다음 과정을 백그라운드에서 수행합니다:
 1. **읽기 (Read):** 소스 문서 분석.
 2. **추출 (Extract):** 개념(Concepts), 개체(Entities), 기술(Skills)로 내용 분해.
-3. **병합 (Resolve):** 기존 위키 지식과 충돌 여부를 검사하고 `[[Wikilinks]]`를 형성.
+3. **병합 (Resolve):** 기존 위키 지식과 충돌 여부를 검사하고 위키링크(Wikilinks)를 형성.
 4. **구조화 (Schema):** 적절한 마크다운 파일로 포매팅.
 
 ## 4. 결과물 분류 (Categorization)

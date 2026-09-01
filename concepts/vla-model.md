@@ -2,7 +2,7 @@
 title: "Vision-Language-Action (VLA) Model"
 category: Concept
 tags: [ai, multimodal, robotics, autonomous-driving]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "시각(Vision)과 언어(Language) 정보를 결합하여 물리적 환경에서의 행동(Action)을 직접 제어하는 차세대 AI 모델 아키텍처."
 base_confidence: 0.8
 lifecycle: draft

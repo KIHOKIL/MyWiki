@@ -2,7 +2,7 @@
 title: "End-to-End (E2E) Autonomous Driving"
 category: Concept
 tags: [autonomous-driving, ai, sdv, physical-ai]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "센서 데이터 입력부터 차량의 조향·가감속 제어 출력까지 분절된 모듈 없이 단일 신경망으로 학습 및 구동하는 자율주행 방식."
 base_confidence: 0.8
 lifecycle: draft

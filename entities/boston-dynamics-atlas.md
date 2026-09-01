@@ -2,7 +2,7 @@
 title: "Boston Dynamics All-Electric Atlas"
 category: Entity
 tags: [robotics, humanoid, physical-ai, hyundai]
-sources: [[[2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing]]]
+sources: ["2026-08-29_News_Briefing]], [[2026-08-30_News_Briefing]], [[2026-08-31_News_Briefing"]
 summary: "기존 유압식 구조를 완전 전동식으로 전면 재설계하여 산업 현장의 내구성과 정밀도를 극대화한 현대차그룹 보스턴 다이내믹스의 휴머노이드 로봇."
 base_confidence: 0.8
 lifecycle: draft
