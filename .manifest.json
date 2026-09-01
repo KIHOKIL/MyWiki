@@ -135,5 +135,65 @@
       "entities/optimus.md",
       "entities/isaac-groot.md"
     ]
+  },
+  "_sources/News/Daily_Summaries/2026-08-29_News_Briefing.md": {
+    "path": "_sources/News/Daily_Summaries/2026-08-29_News_Briefing.md",
+    "timestamps": {
+      "ingested": "2026-09-01T14:27:53.382341+09:00"
+    },
+    "pages_produced": [
+      "concepts/vla-model.md",
+      "concepts/sim-to-real-transfer.md",
+      "concepts/ai-factory.md",
+      "concepts/e2e-autonomous-driving.md",
+      "concepts/predictive-maintenance.md",
+      "concepts/non-terrestrial-network.md",
+      "entities/figure-ai.md",
+      "entities/boston-dynamics-atlas.md",
+      "concepts/physical-ai.md",
+      "concepts/ai-energy-nexus.md",
+      "concepts/ai-native-ran.md",
+      "entities/optimus.md"
+    ]
+  },
+  "_sources/News/Daily_Summaries/2026-08-30_News_Briefing.md": {
+    "path": "_sources/News/Daily_Summaries/2026-08-30_News_Briefing.md",
+    "timestamps": {
+      "ingested": "2026-09-01T14:27:53.382341+09:00"
+    },
+    "pages_produced": [
+      "concepts/vla-model.md",
+      "concepts/sim-to-real-transfer.md",
+      "concepts/ai-factory.md",
+      "concepts/e2e-autonomous-driving.md",
+      "concepts/predictive-maintenance.md",
+      "concepts/non-terrestrial-network.md",
+      "entities/figure-ai.md",
+      "entities/boston-dynamics-atlas.md",
+      "concepts/physical-ai.md",
+      "concepts/ai-energy-nexus.md",
+      "concepts/ai-native-ran.md",
+      "entities/optimus.md"
+    ]
+  },
+  "_sources/News/Daily_Summaries/2026-08-31_News_Briefing.md": {
+    "path": "_sources/News/Daily_Summaries/2026-08-31_News_Briefing.md",
+    "timestamps": {
+      "ingested": "2026-09-01T14:27:53.382341+09:00"
+    },
+    "pages_produced": [
+      "concepts/vla-model.md",
+      "concepts/sim-to-real-transfer.md",
+      "concepts/ai-factory.md",
+      "concepts/e2e-autonomous-driving.md",
+      "concepts/predictive-maintenance.md",
+      "concepts/non-terrestrial-network.md",
+      "entities/figure-ai.md",
+      "entities/boston-dynamics-atlas.md",
+      "concepts/physical-ai.md",
+      "concepts/ai-energy-nexus.md",
+      "concepts/ai-native-ran.md",
+      "entities/optimus.md"
+    ]
   }
 }
