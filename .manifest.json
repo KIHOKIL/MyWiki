@@ -208,5 +208,58 @@
       "concepts/active-second-brain.md",
       "concepts/llm-wiki-vs-rag.md"
     ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260903/20260903_학습노트.md": {
+    "hash": "c1a4df0edbf6cf28e0cb964709f400f0531fea09a7ac36789b5ad790c6cc3cb8",
+    "ingested_at": "2026-09-03T15:37:54.663966",
+    "pages_produced": [
+      "concepts/context-compression.md",
+      "concepts/moe-streaming.md",
+      "entities/headroom.md",
+      "entities/slotstream.md",
+      "entities/smolcoder.md",
+      "entities/rhema.md"
+    ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260903/Headroom_심층분석_및_Group_2nd_Brain_연계.md": {
+    "hash": "e18fc7a9ce89314bb2deae977a6310ac52d2cdcaa2e8698d83d7cc0799ed55df",
+    "ingested_at": "2026-09-03T15:37:54.663966",
+    "pages_produced": [
+      "concepts/context-compression.md",
+      "entities/headroom.md",
+      "entities/neo4j.md",
+      "concepts/graph-rag.md"
+    ]
+  },
+  "_sources/Clippings/CodeMate transforming developer productivity with on-device AI assistance.md": {
+    "path": "_sources/Clippings/CodeMate transforming developer productivity with on-device AI assistance.md",
+    "timestamps": {
+      "ingested": "2026-09-04T02:00:00+09:00"
+    },
+    "pages_produced": [
+      "entities/codemate.md"
+    ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260901/20260901_슬라이드_영상제작_워크플로우.md": {
+    "path": "_sources/Study/AI-Lectures/편한AI/20260901/20260901_슬라이드_영상제작_워크플로우.md",
+    "timestamps": {
+      "ingested": "2026-09-04T02:00:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/slide-video-workflow.md",
+      "entities/notebooklm.md",
+      "entities/google-vids.md"
+    ]
+  },
+  "_sources/News/Daily_Summaries/2026-09-01_News_Briefing.md": {
+    "path": "_sources/News/Daily_Summaries/2026-09-01_News_Briefing.md",
+    "timestamps": {
+      "ingested": "2026-09-04T02:00:00+09:00"
+    },
+    "pages_produced": [
+      "entities/unitree.md",
+      "concepts/physical-ai.md",
+      "entities/optimus.md"
+    ]
   }
 }

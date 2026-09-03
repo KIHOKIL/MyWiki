@@ -32,6 +32,6 @@ PC 없이 스마트폰으로 저장소의 설정을 제어할 수 있는 구조.
 4. GitHub Secrets에 `EMAIL_SENDER`, `EMAIL_PASSWORD`, `EMAIL_RECEIVER`, `GEMINI_API_KEY`, `OPENAI_API_KEY` 등록.
 
 ## 연관 개념
-- [[IssueOps]]
-- [[LLM Fallback Architecture]]
-- [[TDD in AI Agents]]
+- [[concepts/issueops|IssueOps]]
+- [[concepts/agentic-workflow|Agentic Workflow (LLM Fallback Architecture)]]
+- [[concepts/harness-engineering|Harness Engineering (TDD in AI Agents)]]

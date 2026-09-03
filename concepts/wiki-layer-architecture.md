@@ -17,7 +17,7 @@ updated: 2026-08-17
 ## Layer 1: 인간 지식 영역 (Knowledge)
 - **목적:** AI가 읽고 답변의 근거로 삼는 **정제된 그라운드 트루스(Ground Truth)**.
 - **주요 폴더:** `concepts/`, `entities/`, `synthesis/`, `journal/`
-- **특징:** RAG(Retrieval-Augmented Generation) 환경에서 AI가 가장 먼저 검색하는 핵심 노드들. 마크다운 양방향 링크(`[[ ]]`)를 통해 강하게 결합됩니다.
+- **특징:** RAG(Retrieval-Augmented Generation) 환경에서 AI가 가장 먼저 검색하는 핵심 노드들. 마크다운 양방향 위키링크(Wikilinks)를 통해 강하게 결합됩니다.
 
 ## Layer 2: AI 행동 영역 (Agents & Skills)
 - **목적:** AI가 텍스트 생성을 넘어 실제 행동(Action)을 수행하게 만드는 팔다리 및 통제 역할.

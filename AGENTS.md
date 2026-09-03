@@ -67,6 +67,8 @@ Skills live in `.skills/<name>/SKILL.md`. Match the user's intent to the right s
 |---|---|
 | "set up my wiki" / "initialize" | `wiki-setup` |
 | "/wiki-history-ingest claude" / "/wiki-history-ingest codex" / "/wiki-history-ingest hermes" / "/wiki-history-ingest pi" | `wiki-history-ingest` |
+| "위키 정리해줘" / "위키 정리" / "/wiki-organize" / "공부한 거 정리해줘" / "전체 정리해줘" / "파이프라인 돌려줘" | `wiki-organize` (자동 3단계: Ingest ➡️ Generate-Index ➡️ Wiki-Lint & Link) |
+| "/prompt-creator" / "프롬프트 만들어줘" / "프롬프트 생성기" / "맞춤형 AI 설계해줘" / "시스템 프롬프트 만들어줘" / "AI 스킬 설계해줘" | `prompt-creator` (범용 AI 에이전트/Gems/GPTs/Skill 6단계 인터뷰 및 주제별 폴더 자동 저장) |
 | "ingest" / "add this to the wiki" / "process these docs" / "process this export" / "ingest this data" / logs, transcripts / "/ingest-url <url>" / "add this URL" / "ingest this link" / "save this page" | `wiki-ingest` |
 | "import my Claude history" / "mine my conversations" | `claude-history-ingest` |
 | "import my Codex history" / "mine my Codex sessions" | `codex-history-ingest` |

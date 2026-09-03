@@ -38,3 +38,9 @@ relationships:
 - **SSG (Static Site Generation):** Obsidian 위키 내부의 페이지를 바탕으로, 코딩 없이 Hugo나 Next.js 기반의 개인 브랜드 블로그(정적 웹사이트)를 자동 빌드 및 배포(`연 $12` 정도의 저비용 구축).
 
 이처럼 LLM Wiki 환경 내에서의 AI 에이전트는 단순히 '글을 써주는 도구'가 아니라 지식의 흐름을 통제하는 '마스터 비서' 역할을 수행합니다.
+
+## 🔗 연관 실증 도구 및 개념
+- [[entities/rhema|Rhema]] — 음성 인식 기반 실시간 방송 송출 자동화
+- [[entities/smolcoder|Smolcoder]] — 로컬 터미널 자율 코딩 에이전트
+- [[concepts/e2e-agentic-engineering-workflow|E2E Agentic Engineering Workflow]]
+- [[concepts/llm-wiki-workflow|LLM Wiki Workflow]]

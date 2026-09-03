@@ -34,3 +34,8 @@ Evidence can be assembled from multiple risk-based sources ^[extracted]:
 - Silicon Evidence
 
 By classifying the risk of a change (e.g., Low, Medium, High, Critical), engineers and AI agents can select the minimum required evidence chain to ensure quality without wasting resources on unnecessary full-coverage simulations ^[inferred].
+
+## Related Projects & Contracts
+- [[projects/HW Change List E2E/HW Change List E2E]]
+- [[concepts/hw-change-contract]]
+- [[concepts/historical-hw-change-reconstruction]]

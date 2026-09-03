@@ -44,4 +44,4 @@ python3 scripts/generate_index.py "특정폴더명"
 
 ## 프롬프트 레퍼런스 (Prompt Reference)
 
-이 스킬의 핵심인 `scripts/generate_index.py` 코드는 AI에게 명확한 규칙(보존, 추출, 파일 갱신 등)을 지시하는 구체적인 프롬프트 엔지니어링을 통해 생성되었습니다. 자세한 프롬프트 원문은 [[obsidian_llm_wiki_guide]] 문서를 참고하십시오.
+이 스킬의 핵심인 `scripts/generate_index.py` 코드는 AI에게 명확한 규칙(보존, 추출, 파일 갱신 등)을 지시하는 구체적인 프롬프트 엔지니어링을 통해 생성되었습니다. 자세한 프롬프트 원문 및 워크플로우는 [[concepts/llm-wiki-workflow]] 문서를 참고하십시오.

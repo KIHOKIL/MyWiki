@@ -35,3 +35,8 @@ relationships:
 
 4. **[[human-on-the-loop|인간 중심의 데이터 검수 (Human-on-the-Loop)]]**
    - 에이전트는 `_raw/` (Inbox) 폴더에 쌓인 거친 데이터를 읽고 정제하여 `concepts/`나 `entities/`로 분류하는 자동화 파이프라인 역할을 수행하고, 인간은 그 결과물을 최종 리뷰 및 승인한다.
+
+## 핵심 내장 스킬 및 워크플로우
+- [[skills/wiki-organize]] — Ingest ➡️ Generate-Index ➡️ Lint & Link 3단계 자동화
+- [[skills/prompt-creator]] — 상용급 맞춤 AI 프롬프트 및 에이전트 설계 스킬
+- [[skills/generate-index]] — 소스 디렉토리 인덱스 동기화 스킬

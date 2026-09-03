@@ -1,20 +1,31 @@
 ---
 title: Hot Cache
-updated: 2026-09-01
+updated: 2026-09-04
 ---
 
 ## Recent Activity
-- Ingested 2nd Brain Deep Research Report (`_sources/Study/AI-Lectures/편한AI/20260901/Research_report_LLM_2nd_Brain_Seoul (1).md`): extracted Graph RAG, Agentic RAG, MemGPT, MCP Server, Multi-Tier Knowledge Architecture.
-- Executed /generate-index to synchronize all _sources/ folder indexes (Study, News, Clippings, etc.).
-- Ingested 3 daily news briefings (2026-08-29 ~ 2026-08-31) covering 6G AI-RAN, VLA Models, Sim-to-Real Transfer, AI Factory, and Humanoid Robotics.
-- Created 8 new concept/entity pages (`vla-model`, `sim-to-real-transfer`, `ai-factory`, `e2e-autonomous-driving`, `predictive-maintenance`, `non-terrestrial-network`, `figure-ai`, `boston-dynamics-atlas`).
-- Updated 4 existing core pages (`physical-ai`, `ai-energy-nexus`, `ai-native-ran`, `optimus`).
+- **Documented `2nd-brain-system-design-blueprint` (2026-09-04):**
+  - Synthesized 5-stage architecture lifecycle: Ingestion ➡️ Multi-Layer Storage (Markdown/Neo4j) ➡️ Hybrid Search (FTS 2gram + Vector + Neo4j) ➡️ Context Compression (Headroom) ➡️ Downstream Presentation/Video (BananaLM 7-styles & Google Vids) ➡️ Self-Evolving Feedback Loop.
+- **Created `slide-video-pipeline` Skill (2026-09-04):**
+  - E2E 13-stage presentation & AI video production workflow.
+  - Features 7 distinct BananaLM / modern style presets (Memphis Flat, Cyberpunk Neon, Swiss Minimal, Warm Editorial, Glassmorphism, Neo-Brutalism, Executive Navy & Gold).
+  - Automatically structures speaker notes for Google Vids / TTS video rendering.
+- **Full Wiki Organize Pipeline Executed (2026-09-04):**
+  - Ingested CodeMate clipping, 20260901 Slide Workflow, 2026-09-01 News Briefing.
+  - Synchronized `_sources/` indexes (34 files / 8 folders) via `generate-index`.
+  - Audited 72 knowledge pages with **0 broken links, 0 orphan pages**.
+
+## 📌 Skills TODO / Revisit Roadmap
+1. **`context-compressor` (Headroom 기반 토큰 압축기):**
+   - *상태:* TODO (추후 보완 설치)
+   - *목적:* 대용량 검색 로그, Git diff, JSON 도구 출력을 LLM 컨텍스트 주입 전 50~80% 압축하는 유틸리티/MCP 프록시.
+   - *연계 대상:* Headroom Python 라이브러리 / 로컬 MCP 서버 연동.
+2. **`graph-rag-architect` (4계층 하이브리드 지식 그래프 검색 설계기):**
+   - *상태:* TODO (추후 보완 설치)
+   - *목적:* [2-gram FTS + Vector + Neo4j Graph Expansion ➡️ RRF ➡️ Cross-Encoder Reranker] 엔터프라이즈 아키텍처 스키마/쿼리 생성기.
+   - *연계 대상:* Neo4j Docker 인스턴스 / KG-MCP 연계.
 
 ## Active Threads
-- **Physical AI & Embodied Robotics:** E2E VLA models, Sim-to-Real transfer technologies, and commercial humanoid deployments (Optimus vs Figure AI vs Atlas).
-- **AI Infrastructure & Energy Nexus:** SMR and power grid integration, AI Factory vertical integration, and next-gen semiconductor memory (CXL, PIM, LPDDR6).
-- **6G & NTN:** AI-Native RAN standardization and Satellite-to-Cell Direct connectivity.
-
-## Key Takeaways
-- Industry focus has definitively shifted from standalone LLM chat interfaces to physical world execution (E2E Physical AI & VLA).
-- Hardware-software-energy vertical integration (AI Factory) is the defining competitive moat for AI leaders in 2026.
+- **Multimodal Video & Content Workflow:** `slide-video-pipeline` (BananaLM 프롬프트 ➡️ Google Vids).
+- **On-Device / Local Edge LLM:** CodeMate, Slotstream, Smolcoder.
+- **Embodied AI & Physical AI:** Unitree H1/G1, Optimus, Atlas, Sim-to-Real transfer.

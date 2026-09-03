@@ -4,10 +4,11 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-09-01*
+*This index is automatically maintained. Last updated: 2026-09-04*
 
 ## Concepts
 
+- [[2nd-brain-system-design-blueprint]]
 - [[action-oriented-ai]]
 - [[active-knowledge-pipeline]]
 - [[active-second-brain]]
@@ -23,6 +24,7 @@ title: Wiki Index
 - [[ax]]
 - [[cognitive-overload]]
 - [[commit-linked-knowledge]]
+- [[context-compression]]
 - [[e2e-agentic-engineering-workflow]]
 - [[e2e-autonomous-driving]]
 - [[evidence-driven-engineering]]
@@ -36,6 +38,7 @@ title: Wiki Index
 - [[llm-wiki-workflow]]
 - [[mcp-server]]
 - [[memgpt]]
+- [[moe-streaming]]
 - [[multi-agent-code-review]]
 - [[multi-tier-knowledge-architecture]]
 - [[non-terrestrial-network]]
@@ -43,6 +46,7 @@ title: Wiki Index
 - [[predictive-maintenance]]
 - [[problem-definition]]
 - [[sim-to-real-transfer]]
+- [[slide-video-workflow]]
 - [[stateless-orientation]]
 - [[vibe-coding]]
 - [[vla-model]]
@@ -53,28 +57,49 @@ title: Wiki Index
 - [[ai-readiness-cartography]]
 - [[boston-dynamics-atlas]]
 - [[career-hacker-alex]]
+- [[codemate]]
 - [[figure-ai]]
+- [[google-vids]]
+- [[headroom]]
 - [[improve-token-efficiency]]
 - [[isaac-groot]]
+- [[neo4j]]
+- [[notebooklm]]
 - [[obsidian-llm-plugins]]
 - [[optimus]]
 - [[presentation-slides-generator]]
+- [[rhema]]
+- [[slotstream]]
+- [[smolcoder]]
+- [[unitree]]
 - [[weknora]]
 - [[xwiki]]
 
 ## Skills
 
 - [[generate-index]]
+- [[prompt-creator]]
+- [[slide-video-pipeline]]
+- [[wiki-organize]]
 
 ## References
 
 - [[ai-agent-skills-catalog]]
+
 ## Synthesis
 
+- [[consolidation-2026-08-17]]
 - [[llm-wiki-tools-comparison]]
-## Journal
 
-- [[digest-2026-08-17-daily]]
 ## Projects
 
 - [[HW Change List E2E]]
+- [[NewsSummarizer]]
+
+## Journal
+
+- [[2026-08-17]]
+- [[2026-08-19]]
+- [[2026-08-24]]
+- [[2026-09-03]]
+- [[digest-2026-08-17-daily]]

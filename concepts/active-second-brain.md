@@ -21,9 +21,12 @@ AI 에이전트가 내 지식을 직접 학습하고, 자동화 파이프라인(
 2. **분업**: 인간은 가치 있는 원본 데이터 수집 및 큐레이션에 집중하고, 정보의 추출(Extraction)과 연결(Graph Resolution)은 AI가 담당합니다.
 3. **행동 지향**: 지식 보관소를 넘어 내 업무를 대신 수행하는 AI 비서의 허브 역할을 합니다.
 
-## 연관 개념
+## 연관 개념 및 종합 분석
+- [[concepts/2nd-brain-system-design-blueprint|2nd Brain System Design Blueprint]]
 - [[wiki-layer-architecture]]
 - [[active-knowledge-pipeline]]
+- [[synthesis/consolidation-2026-08-17]]
+- [[entities/notebooklm]]
 
 ## 🌟 3계층 미래형 융합 아키텍처 (MemGPT + Graph RAG + RLM)
 2026 최신 연구에 따르면, 진정한 능동형 세컨드 브레인은 3가지 기술의 결합으로 완성됩니다:

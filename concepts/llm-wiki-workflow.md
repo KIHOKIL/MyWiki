@@ -60,3 +60,9 @@ LLM 기반 세컨드 브레인(Second Brain) 시스템이 원본 데이터를 �
 
 ## 7. 결과 확인 (Visualization)
 - 사용자는 옵시디언(Obsidian)의 그래프 뷰(Graph View)를 열어, 흩어져 있던 문서들이 어떻게 의미적으로 연결되었는지(Link) 시각적 위상(Topology)을 확인하고 탐험합니다.
+
+## 🔗 연관 개념 및 도구
+- [[concepts/action-oriented-ai|행동 지향적 AI (Action-Oriented AI)]]
+- [[concepts/ai-agent-reporting|AI 에이전트 리포팅 (AI Agent Reporting)]]
+- [[skills/generate-index|Generate Index]]
+- [[concepts/active-knowledge-pipeline|Active Knowledge Pipeline]]

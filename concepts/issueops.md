@@ -20,6 +20,7 @@ AI 에이전트가 단독으로 코드를 검토하거나 이슈를 발견하는
 
 구글이나 애플 같은 기업에서 사내 데이터 유출을 방지하기 위해 로컬/프라이빗 클라우드에 고립된 LLM을 연결하여 활용하는 대표적인 파이프라인 중 하나입니다.
 
-## 연관 개념
+## 연관 개념 및 프로젝트
 - [[agentic-scaffolding]]
 - [[multi-agent-code-review]]
+- [[projects/NewsSummarizer]] — GitHub IssueOps 기반 원격 제어 뉴스 요약 프로젝트

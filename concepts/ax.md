@@ -30,3 +30,8 @@ AX 테크 리드는 딥러닝 모델 지식보다 다음 세 가지가 훨씬 �
 ## 결론
 "AX는 도입이 아니라 운영입니다." 
 AI와 인간이 협력하여 업무를 20배 더 잘하는 방식을 구축하는 것이며, 그 궁극적 지향점은 95%의 결정을 에이전트가 하고 5%의 결정을 사람이 하는 [[human-on-the-loop]] 회사입니다.
+
+## 🔗 관련 인물 및 리소스
+- [[entities/career-hacker-alex|커리어해커 알렉스 (Alex)]]
+- [[concepts/harness-engineering|Harness Engineering]]
+- [[concepts/human-on-the-loop|Human-on-the-Loop]]

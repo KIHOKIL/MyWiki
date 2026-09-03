@@ -19,6 +19,6 @@ updated: 2026-09-01
 - **End-to-End 신경망 제어:** 규칙 기반 로직을 대체하여 센서 입력부터 모터 제어까지 일괄 처리.
 
 ## 주요 적용 분야
-- **휴머노이드 로봇:** 테슬라 [[optimus]], [[figure-ai]], [[boston-dynamics-atlas]], 유니트리 등
+- **휴머노이드 로봇:** 테슬라 [[optimus]], [[figure-ai]], [[boston-dynamics-atlas]], [[entities/unitree|유니트리(Unitree)]] 등
 - **자율주행:** [[e2e-autonomous-driving]]을 통한 복잡 도심 주행
 - **스마트 팩토리:** 지능형 공정 제어 및 [[predictive-maintenance]] (예지 보전)

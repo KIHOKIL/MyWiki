@@ -21,10 +21,12 @@ summary: 실리콘밸리 Meta 소속 Staff Software Engineer이자 200K 유튜�
 
 ## 제공하는 주요 도구 및 개념
 - **Second Brain (Memory):** 자신이 남긴 통찰과 외부 지식(주제, 주장 등)을 연결하는 지식 그래프 시스템. (웹사이트 상에 구현됨)
-- **Prompt Generator:** Alex가 튜닝한 프롬프트 엔진. 회사 실무 진행 시 프롬프트를 작성하는 데 활용할 수 있는 매우 유용한 툴입니다.
+- **Prompt Generator:** Alex가 튜닝한 프롬프트 엔진 (16대 실무 페르소나 및 목표 카탈로그). 우리 볼트의 [[skills/prompt-creator|Prompt Creator 스킬]]의 벤치마크 모델로 적용됨.
+- **Image Prompts Library:** "좋은 프롬프트는 결과물까지 보관합니다"라는 철학 하에 원문과 미세 조정 노트를 분리한 시각 프롬프트 저장소.
 - **[[ax]] 및 [[human-on-the-loop]]:** 단순 AI 툴 도입을 넘어선, 조직 운영 프로세스 전반의 시스템적 재설계 필요성을 강력하게 주장합니다.
 
 ## 관련 링크
 - [공식 홈페이지](https://www.careerhackeralex.com/)
 - [Second Brain (Memory)](https://www.careerhackeralex.com/memory)
 - [프롬프트 만들기 (Prompt Generator)](https://www.careerhackeralex.com/prompt-generator)
+- [이미지 프롬프트 저장소 (Image Prompts)](https://www.careerhackeralex.com/image-prompts)

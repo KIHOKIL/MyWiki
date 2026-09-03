@@ -17,6 +17,12 @@ commands:
   - name: wiki-lint
     description: Audit the wiki for orphans, broken links, stale content.
     skill: .skills/wiki-lint/SKILL.md
+  - name: wiki-organize
+    description: Run the automated 3-step pipeline (ingest -> generate-index -> wiki-lint & link).
+    skill: .agents/skills/wiki-organize/SKILL.md
+  - name: prompt-creator
+    description: Design Gems/Custom GPT system prompts through 6-step interview and auto-save into topic folders.
+    skill: .agents/skills/prompt-creator/SKILL.md
 ---
 
 # Obsidian Wiki — Workflow Registry
