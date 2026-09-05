@@ -16,12 +16,16 @@ from datetime import datetime, timezone, timedelta
 import time
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
-# 환경 변수 로드
+# 환경 변수 로드 (.env 우선순위: 스크립트 위치 .env 및 작업 디렉토리 .env)
+env_path = os.path.join(os.path.dirname(__file__), ".env")
+if os.path.exists(env_path):
+    load_dotenv(dotenv_path=env_path)
 load_dotenv()
 
 # 설정값
 EMAIL_SENDER = os.getenv("EMAIL_SENDER", "your_email@gmail.com")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "your_app_password").replace('\xa0', '').replace(' ', '')
+
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "receiver_email@gmail.com")
 SUBSCRIBERS_CSV_URL = os.getenv("SUBSCRIBERS_CSV_URL", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "your_gemini_api_key")
