@@ -261,5 +261,27 @@
       "concepts/physical-ai.md",
       "entities/optimus.md"
     ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260905/github-trend-2026-09-05.md": {
+    "path": "_sources/Study/AI-Lectures/편한AI/20260905/github-trend-2026-09-05.md",
+    "timestamps": {
+      "ingested": "2026-09-05T23:18:00+09:00"
+    },
+    "pages_produced": [
+      "entities/openhuman.md",
+      "entities/firefly-iii.md",
+      "entities/ecc.md",
+      "synthesis/ai-trends-2026-09-05.md"
+    ]
+  },
+  "_sources/Study/AI-Lectures/편한AI/20260905/OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계.md": {
+    "path": "_sources/Study/AI-Lectures/편한AI/20260905/OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계.md",
+    "timestamps": {
+      "ingested": "2026-09-05T23:45:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/2nd-brain-system-design-blueprint.md",
+      "entities/openhuman.md"
+    ]
   }
 }

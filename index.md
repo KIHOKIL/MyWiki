@@ -58,7 +58,9 @@ title: Wiki Index
 - [[boston-dynamics-atlas]]
 - [[career-hacker-alex]]
 - [[codemate]]
+- [[ecc]]
 - [[figure-ai]]
+- [[firefly-iii]]
 - [[google-vids]]
 - [[headroom]]
 - [[improve-token-efficiency]]
@@ -66,6 +68,7 @@ title: Wiki Index
 - [[neo4j]]
 - [[notebooklm]]
 - [[obsidian-llm-plugins]]
+- [[openhuman]]
 - [[optimus]]
 - [[presentation-slides-generator]]
 - [[rhema]]
@@ -88,6 +91,7 @@ title: Wiki Index
 
 ## Synthesis
 
+- [[ai-trends-2026-09-05]]
 - [[consolidation-2026-08-17]]
 - [[llm-wiki-tools-comparison]]
 
@@ -102,4 +106,5 @@ title: Wiki Index
 - [[2026-08-19]]
 - [[2026-08-24]]
 - [[2026-09-03]]
+- [[2026-09-05]]
 - [[digest-2026-08-17-daily]]

@@ -6,12 +6,13 @@ sources:
   - "[[_sources/Study/AI-Lectures/편한AI/20260901/Research_report_LLM_2nd_Brain_Seoul (1).md]]"
   - "[[_sources/Study/AI-Lectures/편한AI/20260903/Headroom_심층분석_및_Group_2nd_Brain_연계.md]]"
   - "[[_sources/Study/AI-Lectures/편한AI/20260901/20260901_슬라이드_영상제작_워크플로우.md]]"
-summary: 개인 및 엔터프라이즈 세컨드 브레인 구축 시 필수 반영해야 할 5단계 시스템 설계 청사진 (하이브리드 Graph RAG, Headroom 토큰 압축, 텍스트 선행형 슬라이드·영상 제작 파이프라인 및 자가 진화 루프).
+  - "[[_sources/Study/AI-Lectures/편한AI/20260905/OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계.md]]"
+summary: 개인 및 엔터프라이즈 세컨드 브레인 구축 시 필수 반영해야 할 5단계 시스템 설계 청사진 (OpenHuman형 사내 Ingestion/Memory Tree, 하이브리드 Graph RAG, Headroom 토큰 압축, 텍스트 선행형 슬라이드·영상 제작 파이프라인 및 자가 진화 루프).
 base_confidence: 0.98
 lifecycle: reviewed
 tier: core
 created: 2026-09-04
-updated: 2026-09-04
+updated: 2026-09-05
 ---
 
 # 🧠 2nd Brain System Design Blueprint (세컨드 브레인 시스템 설계 청사진)
@@ -24,8 +25,9 @@ updated: 2026-09-04
 
 ```mermaid
 flowchart TD
-    subgraph Phase1 [Phase 1: Ingestion & Triplet Extraction]
-        Raw[1. Raw 소스 수집<br>_raw, _sources, Web, Git] --> Parser[2. 엔티티 & 관계 추출기<br>Markdown Parser / Triplet Extractor]
+    subgraph Phase1 [Phase 1: Ingestion, Preprocessing & Memory Tree]
+        Raw[1. Raw 소스 수집<br>_raw, _sources, 사내 Jira/Confluence/Email] --> Preprocess[2. OpenHuman형 정제 & 구조화<br>TokenJuice 노이즈 제거 ➡️ 3계층 Memory Tree]
+        Preprocess --> Parser[3. 엔티티 & 관계 추출기<br>Markdown Parser / Triplet Extractor]
     end
 
     subgraph Phase2 [Phase 2: Multi-Layer Storage]
@@ -113,6 +115,7 @@ flowchart TD
 
 시스템 구축 단계로 진입할 때 다음 체크리스트를 순서대로 점검합니다:
 
+- [ ] **0. Ingestion Layer:** 사내 Jira/Confluence/Exchange 연동을 위한 OpenHuman 패턴(20분 주기 Auto-fetch + TokenJuice 노이즈 필터링 + 3계층 Memory Tree + 사내 PAT) 데몬 구축.
 - [ ] **1. Storage Layer:** Local Markdown(`MyWiki`)과 Neo4j Graph DB(`KG-MCP`) 간 양방향 동기화 데몬 설정.
 - [ ] **2. Retrieval Core:** SQLite FTS5 2-gram 인덱스 + Vector DB + Neo4j Cypher 쿼리 파이프라인 결합.
 - [ ] **3. Compression Hook:** Headroom Python 라이브러리 / MCP Proxy를 Reranker 출력단에 배치.
@@ -129,6 +132,9 @@ flowchart TD
 - [[concepts/context-compression]]
 - [[concepts/slide-video-workflow]]
 - [[skills/slide-video-pipeline]]
+- [[entities/openhuman]]
+- [[entities/firefly-iii]]
+- [[entities/ecc]]
 - [[entities/headroom]]
 - [[entities/neo4j]]
 - [[entities/notebooklm]]

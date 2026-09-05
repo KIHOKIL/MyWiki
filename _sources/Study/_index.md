@@ -12,10 +12,12 @@
 - [[Headroom_심층분석_및_Group_2nd_Brain_연계.md]] — 🧠 Headroom 심층 분석 및 Group 2nd Brain 아키텍처 구축 가이드
 - [[LLM Wiki 설치 사이트.md]] — 원본 문서 자료
 - [[LLM_Wiki와_RAG_비교.md]] — LLM Wiki와 RAG의 차이 및 구축 전략
+- [[OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계.md]] — 🧠 OpenHuman 심층 분석 및 사내 Group 2nd Brain 연계 구축 전략
 - [[Research_report_LLM_2nd_Brain_Seoul (1).md]] — 🧠 Deep Research Report: 최근 LLM 2nd Brain 구축 방식 및 통합 아키텍처 가이드
 - [[big_tech_ai_workflow_proposal.md]] — 🚀 빅테크 사례 기반 LLM Wiki 워크플로우 제안서 (Agentic Scaffolding)
 - [[cyberpunk_neon_slide_prompt.md]] — ⚡ 사이버펑크 네온 글리터 스타일 슬라이드 생성 프롬프트
 - [[gems_prompt_creator.md]] — 💎 Google Gemini Gems 맞춤형 프롬프트 생성기 (Gems Prompt Creator)
+- [[github-trend-2026-09-05.md]] — 📅 매일 IT 뉴스 및 AI 트렌드 요약 - 2026년 9월 5일
 - [[lecture_slides.md]] — 🧠 Building an Autonomous Second Brain
 - [[memphis_flat_slide_prompt.md]] — 🎨 멤피스 코퍼레이트 플랫 일러스트 슬라이드 생성 프롬프트
 - [[obsidian_llm_wiki_guide.md]] — 🧠 Obsidian LLM Wiki 구축 및 사용 완벽 가이드
@@ -26,4 +28,4 @@
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-09-04*
+*마지막 갱신: 2026-09-05*

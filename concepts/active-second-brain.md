@@ -7,7 +7,7 @@ tags:
 sources:
   - _sources/Study/AI-Lectures/편한AI/20260817/Agentic_2nd_Brain_Architecture.md
 created: 2026-08-17
-updated: 2026-08-17
+updated: 2026-09-05
 ---
 
 # 능동형 세컨드 브레인 (Active Second Brain)
@@ -26,10 +26,14 @@ AI 에이전트가 내 지식을 직접 학습하고, 자동화 파이프라인(
 - [[wiki-layer-architecture]]
 - [[active-knowledge-pipeline]]
 - [[synthesis/consolidation-2026-08-17]]
+- [[synthesis/ai-trends-2026-09-05|2026-09-05 AI 트렌드 및 에코시스템 종합 분석]]
 - [[entities/notebooklm]]
+- [[entities/openhuman|OpenHuman (로컬 워크스페이스 에이전트 허브)]]
+- [[entities/firefly-iii|Firefly III (셀프호스팅 금융 원장 & MCP)]]
+- [[entities/ecc|ECC (코딩 에이전트 하네스)]]
 
 ## 🌟 3계층 미래형 융합 아키텍처 (MemGPT + Graph RAG + RLM)
 2026 최신 연구에 따르면, 진정한 능동형 세컨드 브레인은 3가지 기술의 결합으로 완성됩니다:
 1. **Core Memory Layer ([[concepts/memgpt|MemGPT]]):** 현재 집중 중인 실시간 작업 컨텍스트 및 개인화 페르소나 관리.
-2. **Semantic Network Layer ([[concepts/graph-rag|Graph RAG]]):** 방대한 역사적 지식과 업무 데이터(Email, Jira, Confluence, Git)를 개체-관계 그래프로 영구 보관.
+2. **Semantic Network Layer ([[concepts/graph-rag|Graph RAG]]):** 방대한 역사적 지식과 업무 데이터(Email, Slack, Jira, Confluence, Git - [[entities/openhuman|OpenHuman]] 커넥터 등) 및 개인 금융 데이터([[entities/firefly-iii|Firefly III]])를 개체-관계 그래프로 영구 보관.
 3. **Reflection & Dream Loop (RLM):** 백그라운드 주기에서 지식 중복 제거, 모순 해결 및 새로운 통찰을 생성하는 지능형 정리 루프.
