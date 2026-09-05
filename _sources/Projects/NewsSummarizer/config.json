@@ -1,20 +1,37 @@
 {
+  "github_trend": {
+    "queries": [
+      "topic:second-brain",
+      "code review AI",
+      "codebase intelligence",
+      "coding agent implementation"
+    ],
+    "focus": "2nd Brain 구축 및 Codebase 이해/Code Review/Implementation Loop와 연관성이 높은 전 세계 상위 GitHub 저장소 3개를 선정하여 요약하세요."
+  },
   "categories": [
     {
-      "name": "Mobile Communication Industry",
+      "name": "Group 2nd Brain & Enterprise Agent Architecture",
       "queries": [
-        "6G Standard",
-        "pre-6G tech",
-        "Huawei telecom",
-        "Qualcomm 6G",
-        "MediaTek mobile",
-        "Xiaomi mobile",
-        "Apple telecom",
-        "Samsung mobile networks",
-        "Broadband CPE",
-        "Radar use case mobile"
+        "second brain AI",
+        "enterprise knowledge agent",
+        "RAG enterprise knowledge management",
+        "personal AI local memory",
+        "Obsidian AI LLM wiki",
+        "Jira Confluence AI integration"
       ],
-      "focus": "통신 사업자, UE Vendor, OEM 업체(Apple, Samsung, Huawei, Xiaomi, Qualcomm, MediaTek 등)의 최근 비즈니스 현황 및 동향을 요약하세요. 모바일 외의 비즈니스(CPE, Broadband, Radar 활용 사례)와 pre-6G 및 6G 표준 동향, 비즈니스 확장 계획에 초점을 맞춰 주세요."
+      "focus": "사내 지식 관리, Group 2nd Brain 아키텍처, 로컬 우선(Local-first) 메모리, 이메일/Jira/메신저 데이터 파이프라인 연계, 전사 지식 허브 구축 동향 및 데이터 보안 거버넌스를 심층 요약하세요."
+    },
+    {
+      "name": "Codebase Understanding & Agentic Implementation Loop",
+      "queries": [
+        "AI code review",
+        "codebase understanding LLM",
+        "AI software engineering agent",
+        "automated code review PR",
+        "code intelligence MCP",
+        "test driven development AI agent"
+      ],
+      "focus": "대규모 코드베이스 이해 기법(Graph AST, MCP 기반 인덱싱), AI 기반 코드 리뷰 및 보안 검증 자동화, Implementation Loop(기획-구현-테스트-리뷰 루프)의 실무 적용과 신뢰성 확보 방안을 심층 요약하세요."
     },
     {
       "name": "AI Era: Hardware & Infrastructure",
@@ -24,53 +41,19 @@
         "AI Foundry TSMC Samsung",
         "System semiconductor AI",
         "AI computing hardware GPU",
-        "AI data center energy power",
-        "AI Big Tech finance"
+        "AI data center energy power"
       ],
       "focus": "에너지/전력 수요 현황과 금융/AI 빅테크 기업들의 투자 동향을 분석하세요. 칩셋 및 메모리 제조사, 파운드리, 시스템 반도체, AI 연산 하드웨어(HW)의 주요 발전 흐름 및 사업적 함의를 도출하세요."
     },
     {
-      "name": "AI Era: Software & LLM",
+      "name": "Mobile Communication & Smart Mobility",
       "queries": [
-        "LLM models trend",
-        "AI SW development E2E",
-        "Generative AI tech",
-        "AI ecosystem expansion"
-      ],
-      "focus": "LLM 모델의 최신 아키텍처 및 출시 동향, 소프트웨어(SW) 개발 생태계, E2E(End-to-End) 솔루션 개발 등 AI 소프트웨어 측면의 혁신과 시장 트렌드를 심층 요약하세요."
-    },
-    {
-      "name": "Autonomous Driving & Smart Mobility",
-      "queries": [
-        "Autonomous driving technology",
-        "Self-driving car ADAS",
-        "Lidar Radar autonomous vehicle",
-        "Autonomous vehicle software AI",
-        "Robotaxi autonomous trucking"
-      ],
-      "focus": "자율주행 및 스마트 모빌리티 분야의 최신 기술 동향, ADAS(첨단 운전자 보조 시스템), 센서(Lidar, Radar, 카메라) 기술 발전, 자율주행 소프트웨어 및 AI 알고리즘의 혁신을 요약하세요. 또한 로보택시, 자율주행 트럭 등 상용화 서비스 현황과 주요 기업들의 비즈니스 전략 및 규제 동향에 초점을 맞춰 주세요."
-    },
-    {
-      "name": "Smart Factory & Industrial IoT",
-      "queries": [
-        "Smart factory automation",
-        "Industrial IoT Industry 4.0",
-        "Smart manufacturing AI robotics",
-        "Digital twin factory",
-        "Industrial automation predictive maintenance"
-      ],
-      "focus": "스마트 팩토리 및 산업용 IoT(IIoT) 분야의 최신 기술 동향, 제조 자동화, 디지털 트윈(Digital Twin), 산업용 로봇 및 AI 적용 사례를 요약하세요. 예지 보전(Predictive Maintenance), 스마트 제조 솔루션 도입 현황 및 주요 글로벌 기업들의 비즈니스 전략에 초점을 맞춰 주세요."
-    },
-    {
-      "name": "Humanoid Robotics & Embodied AI",
-      "queries": [
+        "6G Standard telecom",
+        "Autonomous driving technology AI",
         "Humanoid robot development",
-        "Embodied AI robotics",
-        "Tesla Optimus Figure AI",
-        "Boston Dynamics Atlas humanoid",
-        "Humanoid robot commercialization"
+        "Apple Samsung Qualcomm mobile"
       ],
-      "focus": "휴머노이드 로봇 및 Embodied AI(체화된 인공지능) 분야의 최신 기술 동향, 주요 기업(Tesla, Figure, Boston Dynamics 등)의 개발 및 상용화 현황을 요약하세요. 하드웨어 메커니즘(액추에이터, 센서 등)의 발전, AI 제어 알고리즘, 제조 및 서비스 산업으로의 도입 계획 및 비즈니스 전략에 초점을 맞춰 주세요."
+      "focus": "통신 사업자 및 빅테크(Apple, Samsung, Qualcomm 등)의 6G 표준/모바일 비즈니스 확장 동향과 자율주행(스마트 모빌리티), 휴머노이드 로봇 상용화 현황을 요약하세요."
     }
   ]
 }
