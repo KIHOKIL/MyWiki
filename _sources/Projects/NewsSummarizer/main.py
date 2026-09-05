@@ -1,7 +1,9 @@
+import sys
 import os
 import json
 import smtplib
 from email.message import EmailMessage
+
 import feedparser
 from google import genai
 from google.genai import types
@@ -16,7 +18,15 @@ from datetime import datetime, timezone, timedelta
 import time
 from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
 
+# Windows 콘솔 환경(CP949) 이모지 및 유니코드 출력 호환성 보장
+try:
+    sys.stdout.reconfigure(encoding='utf-8')
+    sys.stderr.reconfigure(encoding='utf-8')
+except Exception:
+    pass
+
 # 환경 변수 로드 (.env 우선순위: 스크립트 위치 .env 및 작업 디렉토리 .env)
+
 env_path = os.path.join(os.path.dirname(__file__), ".env")
 if os.path.exists(env_path):
     load_dotenv(dotenv_path=env_path)
