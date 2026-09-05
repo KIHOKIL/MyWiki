@@ -4,7 +4,7 @@ on:
   workflow_call:
     inputs:
       working_directory:
-        description: '테스트할 프로젝트 디렉토리 (예: _source/Projects/NewsSummarizer)'
+        description: '테스트할 프로젝트 디렉토리 (예: _sources/Projects/NewsSummarizer)'
         required: true
         type: string
       python_version:
@@ -33,16 +33,21 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-mock
 
-      - name: 단위 및 통합 테스트 실행 (Logging)
+      - name: 전체 파이프라인 자동 통합 검증 (verify_all)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+          SUBSCRIBERS_CSV_URL: ${{ secrets.SUBSCRIBERS_CSV_URL }}
         run: |
           cd ${{ inputs.working_directory }}
-          echo "## 🧪 테스트 실행 결과 (Logging)" >> $GITHUB_STEP_SUMMARY
-          echo '```text' >> $GITHUB_STEP_SUMMARY
-          # pytest 결과를 화면에도 출력하고, GITHUB_STEP_SUMMARY(마크다운 요약뷰)에도 덧붙입니다.
-          pytest tests/ -v >> $GITHUB_STEP_SUMMARY 2>&1
-          echo '```' >> $GITHUB_STEP_SUMMARY
+          if [ -f "verify_all.py" ]; then
+            python verify_all.py --ci-mode
+          else
+            pytest tests/ -v
+          fi
 
       - name: Create Issue on Failure
         if: failure()

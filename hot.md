@@ -4,6 +4,10 @@ updated: 2026-09-05
 ---
 
 ## Recent Activity
+- **Daily News Summarizer Automated E2E Verification Pipeline (2026-09-06):**
+  - **Automated Verification Engine (`verify_all.py`):** Self-diagnosing orchestrator validating Config schema, RSS live feeds, GitHub Trending APIs & fallbacks, HTML inline templates, SMTP multipart dispatch, and full Pytest suite.
+  - **GitHub Actions CI/CD Integration:** Updated `tmpl_python_ci.yml` and `sys_news_summarizer_ci.yml` with `workflow_dispatch` and automatic Step Summary table reporting on all pushes/PRs.
+  - **Dedicated Email Test Suite (`test_email.py`):** 5 unit tests covering HTML alternative MIME parts, recipient deduplication, and SMTP exception guards (10/10 total tests passing).
 - **Daily News Summarizer Overhaul — Group 2nd Brain, Codebase Loop & AI Frontier (2026-09-06):**
   - **3-Section Report Architecture:** Overhauled `config.json` & `main.py` with:
     - *Section 1 (Executive Summary):* Deep cross-synthesis on Group 2nd Brain, Codebase Loop & Global Big Tech/AI Frontier strategic moves (Core risks, Innovations, Actionable takeaways).

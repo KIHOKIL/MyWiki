@@ -5,9 +5,11 @@ on:
     paths:
       - '_sources/Projects/NewsSummarizer/**'
       - '.github/workflows/sys_news_summarizer_ci.yml'
+      - '.github/workflows/tmpl_python_ci.yml'
   pull_request:
     paths:
       - '_sources/Projects/NewsSummarizer/**'
+  workflow_dispatch: # 수동으로 원클릭 통합 검증 실행 지원
 
 jobs:
   test-news-summarizer:
