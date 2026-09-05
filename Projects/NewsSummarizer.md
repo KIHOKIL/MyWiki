@@ -28,8 +28,10 @@ updated: 2026-09-06
 - **Section 3: 관심 분야별 심층 뉴스**
   - Group 2nd Brain & Enterprise Agent Architecture
   - Codebase Understanding & Agentic Implementation Loop
+  - Global Big Tech & AI Frontier: M&A, Strategy & Capital Flow (OpenAI, Anthropic, xAI, Databricks, CoreWeave 및 빅테크 M&A/자본 동맹)
   - AI Era: Hardware & Infrastructure
   - Mobile Communication & Smart Mobility
+
 
 ### 2. 모던 반응형 HTML 이메일 포맷
 - `EmailMessage.add_alternative(html_body, subtype='html')` 및 텍스트 Fallback 동시 지원.

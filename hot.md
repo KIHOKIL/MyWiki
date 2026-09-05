@@ -4,13 +4,13 @@ updated: 2026-09-05
 ---
 
 ## Recent Activity
-- **Daily News Summarizer Overhaul — Group 2nd Brain & Codebase Loop (2026-09-06):**
+- **Daily News Summarizer Overhaul — Group 2nd Brain, Codebase Loop & AI Frontier (2026-09-06):**
   - **3-Section Report Architecture:** Overhauled `config.json` & `main.py` with:
-    - *Section 1 (Executive Summary):* Deep cross-synthesis on Group 2nd Brain & Codebase understanding (Core risks, Innovations, Actionable takeaways).
+    - *Section 1 (Executive Summary):* Deep cross-synthesis on Group 2nd Brain, Codebase Loop & Global Big Tech/AI Frontier strategic moves (Core risks, Innovations, Actionable takeaways).
     - *Section 2 (GitHub Trending Top 3):* Dynamic discovery and analysis of top 3 global repositories (e.g. `tinyhumansai/openhuman`, `tirth8205/code-review-graph`, `AgriciDaniel/claude-obsidian`).
-    - *Section 3 (Categorized News):* Focused feeds for Enterprise 2nd Brain, Codebase Loop & Review, AI Hardware/Infra, Mobile & Mobility.
+    - *Section 3 (Categorized News):* 5-track feeds covering Enterprise 2nd Brain, Codebase Loop & Review, **Global Big Tech & AI Frontier (M&A, Stargate/Compute Alliances, Acqui-hires)**, AI Hardware/Infra, Mobile & Mobility.
   - **Modern Responsive HTML Email:** Inlined CSS newsletter template with dark navy header, risk/innovation callout cards, GitHub star badges, and multi-part text fallback.
-  - **Verified & Tested:** Full unit test suite updated and passed (5/5 tests in pytest). Updated `README.md` and [[projects/NewsSummarizer]].
+  - **Verified & Tested:** Passed pytest 5/5, GitHub Actions CI & Live Workflow verified. Updated `projects/NewsSummarizer`.
 - **OpenHuman Enterprise 2nd Brain Architecture Integration (2026-09-05):**
   - **In-Depth Study Note:** Documented [[OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계]] linking to 2026-09-03 Group 2nd Brain guide.
   - **Blueprint Enhancement:** Updated [[concepts/2nd-brain-system-design-blueprint]] Phase 1 Ingestion (20-min Auto-fetch + TokenJuice noise filter + 3-tier Memory Tree) and enterprise security checklist (Internal PAT, Exchange/Jira/Confluence on-prem).

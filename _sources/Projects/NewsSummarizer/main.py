@@ -266,27 +266,27 @@ def safe_analyze_github_trending_openai(focus, candidates):
     print("  [GitHub Trending] OpenAI (Fallback) 분석 요청 중...")
     return analyze_github_openai(focus, candidates)
 
-# --- Section 1: Executive Summary (2nd Brain & Codebase Loop 종합) ---
+# --- Section 1: Executive Summary (2nd Brain, Codebase Loop & AI Frontier Strategy 종합) ---
 def _build_executive_prompt(articles_summary_text, github_summary_text):
-    sys_instruction = """당신은 엔터프라이즈 AI 시스템 및 소프트웨어 엔지니어링 수석 부사장(VP of Engineering / AI Architect)입니다.
-오늘 수집된 글로벌 뉴스 및 GitHub 오픈소스 트렌드를 관통 분석하여, 데일리 브리핑 최상단에 위치할 [Executive Summary: 2nd Brain & Codebase Implementation Loop]를 작성하세요.
+    sys_instruction = """당신은 글로벌 엔터프라이즈 AI 시스템 및 소프트웨어 엔지니어링 최고 임원(VP of Engineering & Chief AI Strategist)입니다.
+오늘 수집된 글로벌 뉴스 및 GitHub 오픈소스 트렌드를 관통 분석하여, 데일리 브리핑 최상단에 위치할 [Executive Summary: 2nd Brain, Codebase Loop & Big Tech Strategy]를 작성하세요.
 
-[핵심 분석 렌즈]
-사용자의 핵심 업무 및 관심사는:
+[핵심 분석 3대 렌즈]
 1) **Group 2nd Brain 구축**: 사내 이메일, 메신저, Jira, Confluence 연동을 통한 팀 지식 허브 구축 및 보안/개인정보 거버넌스.
 2) **Codebase 이해 기반 Implementation Loop & Code Review**: 대규모 코드베이스의 구조적 이해, Harness Engineering, TDD 자동화, LLM 기반 정밀 코드 리뷰.
+3) **Global Big Tech & AI Frontier 자본 흐름**: 빅테크(MS, 구글, 메타, 아마존, 애플, 엔비디아) 및 AI 프론티어 랩/유니콘(OpenAI, Anthropic, xAI, Databricks 등)의 M&A, 변형적 인수(Acqui-hire), 대규모 컴퓨팅 동맹(Stargate, 전력/클라우드) 및 생태계 락인(Lock-in) 전략이 기술 판도에 미치는 영향.
 
 [필수 작성 구조]
 반드시 다음 3가지 소제목으로 구성하고 글머리 기호(Bulleted list)를 활용해 명확하게 기술하세요:
 
 ### 🚀 오늘 주목해야 할 핵심 혁신 (Key Innovations)
-- 2nd Brain 아키텍처 및 코드베이스 분석/구현 루프 측면에서 새롭게 부각된 기술적 도약과 모범 사례 요약.
+- 2nd Brain 아키텍처, 코드베이스 분석/구현 루프, 빅테크/AI 프론티어의 전략적 인수 및 인프라 도약 관점에서 오늘 포착된 주요 기술 혁신 요약.
 
 ### ⚠️ 핵심 리스크 및 과제 (Core Risks & Trade-offs)
-- 사내 민감 데이터 연동 시의 보안/개인정보 유출 리스크, LLM Context 한계로 인한 코드베이스 환각(Hallucination), 코드 리뷰 시 정적 분석 누락 및 테스트 하네스 취약성 등 현실적 리스크 지적.
+- 사내 민감 데이터 연동 시의 보안/권한 누수, LLM Context 한계로 인한 코드베이스 환각(Hallucination), 빅테크 플랫폼 종속성(Lock-in) 및 반독점/컴플라이언스 리스크 지적.
 
 ### 🎯 실무 적용 및 설계 시사점 (Actionable Takeaways)
-- 현재 사내 Group 2nd Brain 설계 및 코드 리뷰/구현 루프에 즉시 반영해야 할 실행 지침 2~3가지 제시.
+- 현재 사내 Group 2nd Brain 설계, 코드 리뷰/구현 루프, 그리고 전략적 툴체인 선정에 즉시 반영해야 할 실행 지침 2~3가지 제시.
 """
     prompt = f"""[오늘의 카테고리별 뉴스 분석 내용]
 {articles_summary_text}

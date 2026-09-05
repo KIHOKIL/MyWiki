@@ -34,6 +34,22 @@
       "focus": "대규모 코드베이스 이해 기법(Graph AST, MCP 기반 인덱싱), AI 기반 코드 리뷰 및 보안 검증 자동화, Implementation Loop(기획-구현-테스트-리뷰 루프)의 실무 적용과 신뢰성 확보 방안을 심층 요약하세요."
     },
     {
+      "name": "Global Big Tech & AI Frontier: M&A, Strategy & Capital Flow",
+      "queries": [
+        "OpenAI acquisition funding partnership",
+        "Anthropic Amazon Google strategic investment",
+        "xAI Colossus cluster investment expansion",
+        "Databricks Snowflake AI startup acquisition",
+        "CoreWeave GPU cloud expansion financing",
+        "Big Tech AI startup acqui-hire talent",
+        "Nvidia strategic investment AI ecosystem",
+        "Groq Cerebras AI chip funding deal",
+        "Apple Microsoft Meta AI acquisition M&A",
+        "Sovereign AI infrastructure national deal"
+      ],
+      "focus": "글로벌 빅테크(MS, 구글, 메타, 아마존, 애플, 엔비디아)뿐만 아니라 AI 프론티어 연구소 및 유니콘(OpenAI, Anthropic, xAI, Mistral, Cohere), AI 네오클라우드/인프라(CoreWeave, Groq, Cerebras), 데이터 플랫폼(Databricks, Snowflake, Palantir)의 M&A, 지분 투자, 변형적 인수(Acqui-hire), 초대형 펀딩 및 컴퓨팅 동맹(Compute Alliances)을 심층 분석하세요. 1) 자본과 GPU가 어디로 집중되는지(Stargate, 전력/데이터센터, 온디바이스 에이전트), 2) 엔터프라이즈 AI 해자(Moat)를 구축하기 위한 스타트업 인수 및 기술 독점 전략, 3) 폐쇄형(Closed) vs 오픈가중치(Open-weights) 진영 간의 생태계 헤게모니 싸움과 반독점 규제 영향을 도출하세요."
+    },
+    {
       "name": "AI Era: Hardware & Infrastructure",
       "queries": [
         "AI chip manufacturing",
