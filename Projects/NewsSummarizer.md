@@ -10,7 +10,9 @@ updated: 2026-09-06
 # 📰 Daily News Summarizer
 
 ## 프로젝트 개요
-**Daily News Summarizer**는 관심 있는 IT/통신/AI 산업 트렌드 뉴스를 매일 자동으로 수집하여, 최고 수준의 애널리스트 관점에서 심층 분석 및 요약한 뒤 이메일로 발송하고, 동시에 개인 지식 저장소(Obsidian Wiki)에 아카이빙하는 "초자동화(Hyper-automation) 지식 관리 시스템"이다.
+**Daily News Summarizer**는 관심 있는 IT/통신/AI 산업 트렌드 뉴스 및 재무/매크로 투자 지표를 매일 자동으로 수집하여, 최고 수준의 애널리스트 관점에서 심층 분석 및 요약한 뒤 이메일로 발송하고, 동시에 개인 지식 저장소(Obsidian Wiki)에 아카이빙하는 "초자동화(Hyper-automation) 지식 관리 시스템"이다.
+
+최근 **Tech & Biz Summarizer**와 **Finance (Money Snowball) Summarizer** 독립적인 두 개의 에이전트로 분리(Decoupling)되어, 상호 간섭 없이 각각의 스케줄과 페르소나에 맞춰 동작하는 멀티 에이전트 구조로 진화했다.
 
 ## 🚀 2026-09-06 고도화 (3-Section & HTML Email)
 사용자의 주요 실무 관심사인 **Group 2nd Brain 구축** 및 **Codebase 이해를 통한 구현(Implementation Loop) & 코드 리뷰**에 완벽히 맞추어 3단계 리포트 구조로 개편되었으며, 현대적인 반응형 HTML 이메일 포맷을 전면 도입하였다.
@@ -27,7 +29,7 @@ updated: 2026-09-06
     1. 🧠 `Second-Brain`: 지식 관리, 로컬 메모리, 노트 연결 시스템 (`logseq`, `openhuman` 등)
     2. 🔍 `Code Review AI`: PR 자동화 리뷰, 정적 분석, 보안 검증 (`pr-agent`, `code-review-graph` 등)
     3. 🧭 `Codebase understanding`: 대규모 코드 분석, AST 그래프, MCP 컨텍스트 (`ast-grep`, `codebase-memory-mcp` 등)
-    4. ⚡ `Embedded SW implementation`: HW 가이드라인 기반 설계, 프로토콜 스택, RTOS 실시간 최적화 (`FreeRTOS`, `embassy-rs` 등)
+    4. ⚡ `Embedded SW implementation`: HW block 설계에 대한 깊은 이해를 바탕으로 register, interrupt 등을 기반으로 제어하는 물리 계층(Physical Layer) 및 모뎀 제어 SW. 단순 상위 레이어 SW와 차별화된, HW 변경을 즉각적으로 반영하는 진정한 의미의 임베디드 SW 중심.
   - **균형 큐레이션**: 각 분야별 검증된 '스테디셀러(Star 다수 / All-time Classic)' 1개 + 신흥 '루키(Trending)' 1개 조합 추천.
   - **포맷**: Overview(1~2줄 개요) + Senior's Insight(실무 도입 페인포인트 및 팁). 스팸 및 Awesome-list 자동 필터링.
 - **Section 3: 관심 분야별 심층 뉴스**
@@ -40,6 +42,13 @@ updated: 2026-09-06
     - 셀룰러/모바일 한계 극복을 위한 비-모바일(Non-mobile) 다각화, Custom SoC/ASIC, CPE/FWA, Wi-Fi 7 오프로딩, 위성 NTN(Direct-to-Cell) 분석.
     - 4대 모니터링 타겟군(Broadcom, Qualcomm, Fibocom, Starlink, Ericsson 등) 중심.
     - **4대 표준 출력**: Executive Summary(3줄), Business Impact(BM 변화, SWOT), **벤더 다각화 매트릭스 표**, 후속 심층 질문(`🔍`).
+
+### 2. Finance Summarizer (Money Snowball ❄️)
+- **페르소나**: 10년 이상의 장기 자산 배분(US 주식 ETF, 금, 채권)을 운용하는 '수석 미국 주식 매크로 전략가 (Money Snowball)'.
+- **독립 운영**: Tech 에이전트와 분리되어 30분 간격을 두고 독립적으로 실행 (`agents/finance/main.py`).
+- **주요 모니터링 분야**: US Macro & Policy, ETF & Asset Allocation, Gold, Silver & Commodities, US Treasury Bonds.
+- **포맷**: 객관적 팩트 기반 요약 + 'Money Snowball Insight' (자산 배분 관점의 냉철한 전략적 시사점).
+- **아카이빙**: `_sources/News/Finance_Summaries/` 별도 폴더 관리.
 
 ### 2. 모던 반응형 HTML 이메일 포맷 & 마크다운 테이블 엔진
 - `EmailMessage.add_alternative(html_body, subtype='html')` 및 텍스트 Fallback 동시 지원.
@@ -58,7 +67,9 @@ updated: 2026-09-06
 
 ## 📱 IssueOps (원격 제어 시스템)
 PC 없이 스마트폰으로 저장소의 설정을 제어할 수 있는 구조.
-- GitHub 앱에서 `KIHOKIL/MyWiki` 레포지토리의 Issues 탭에 "양자컴퓨터 주제 추가해줘"라고 작성하면, `update_topic.py`를 통해 `config.json`을 자동 갱신.
+- GitHub 앱에서 `KIHOKIL/MyWiki` 레포지토리의 Issues 탭에 "양자컴퓨터 주제 추가해줘"라고 작성하면, `agents/tech/update_topic.py`를 통해 `agents/tech/config.json`을 자동 갱신.
+- **(안정성 강화)**: 2026년 9월 6일 기준, LLM 503 과부하 에러에 대비하여 자동 재시도 로직 및 OpenAI API 폴백(Fallback) 메커니즘을 적용하여 안정성을 극대화함.
+- **(정책)**: 재무/매크로 투자 분야는 코어나 전략이 쉽게 바뀌지 않으므로, IssueOps 기능은 당분간 **Tech & Biz 에이전트에만 제한적으로 허용(Option B)**.
 
 ## 연관 개념
 - [[concepts/2nd-brain-system-design-blueprint|2nd Brain System Design Blueprint]]
