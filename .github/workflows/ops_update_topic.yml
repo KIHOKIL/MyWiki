@@ -31,16 +31,17 @@ jobs:
         working-directory: _sources/Projects/NewsSummarizer
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_BODY: ${{ github.event.issue.body }}
         run: |
-          python update_topic.py --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
+          python agents/tech/update_topic.py --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
 
       - name: Commit and Push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "feat: Update news topics from Issue #${{ github.event.issue.number }}"
-          file_pattern: "_sources/Projects/NewsSummarizer/config.json"
+          file_pattern: "_sources/Projects/NewsSummarizer/agents/tech/config.json"
 
       - name: Comment on Issue and Close
         uses: peter-evans/create-or-update-comment@v3
@@ -60,5 +61,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh workflow run agent_news_summarizer.yml
+          gh workflow run agent_tech_summarizer.yml
           echo "뉴스 요약 워크플로우를 성공적으로 트리거했습니다."
