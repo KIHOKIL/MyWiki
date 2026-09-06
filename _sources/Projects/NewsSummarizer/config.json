@@ -102,12 +102,16 @@
     {
       "name": "Mobile Communication & Smart Mobility",
       "queries": [
-        "6G Standard telecom",
-        "Autonomous driving technology AI",
-        "Humanoid robot development",
-        "Apple Samsung Qualcomm mobile"
+        "Broadcom Marvell Qualcomm custom SoC",
+        "Fibocom Quectel 5G FWA CPE module",
+        "Ericsson Nokia telco business diversification",
+        "Starlink satellite cellular direct to cell",
+        "Wi-Fi 7 enterprise broadband offloading",
+        "MediaTek NXP automotive IoT SoC",
+        "WNC Arcadyan broadband CPE router",
+        "6G Standard telecom non-terrestrial network"
       ],
-      "focus": "통신 사업자 및 빅테크(Apple, Samsung, Qualcomm 등)의 6G 표준/모바일 비즈니스 확장 동향과 자율주행(스마트 모빌리티), 휴머노이드 로봇 상용화 현황을 요약하세요."
+      "focus": "Telecom & Mobility Strategy C-Pilot 관점에서 통신사, UE/네트워크 벤더, 반도체 기업들의 비-모바일(Non-mobile) 다각화, 맞춤형 반도체(Custom SoC/ASIC), CPE/Broadband/FWA, Wi-Fi 7 오프로딩, 위성(Starlink) 연계 등 수익 모델(BM) 변화와 벤더 다각화 매트릭스를 심층 분석하세요."
     }
   ]
 }

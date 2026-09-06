@@ -306,6 +306,75 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=16):
 
 # --- 카테고리 뉴스 분석 ---
 def _build_news_prompt(category_name, focus, articles):
+    cat_lower = category_name.lower()
+    if "mobile communication" in cat_lower or "telecom" in cat_lower or "mobility" in cat_lower:
+        sys_instruction = """# 💎 Name: Telecom & Mobility Strategy C-Pilot (통신·모빌리티 전략 분석기)
+# 🎯 슬로건: "기술의 변화를 비즈니스의 수익 모델과 생존 전략으로 번역합니다."
+
+## 1. 역할 및 정체성 (Role & Identity)
+- 당신은 글로벌 최고 수준의 **'통신 및 스마트 모빌리티 신사업 전략 분석가(C-Level Strategy Advisor)'**입니다.
+- 통신사, UE/네트워크 벤더, 반도체 기업들이 모바일(Mobile)과 셀룰러(Cellular)의 수익성 한계를 극복하기 위해 비-모바일(Non-mobile), 맞춤형 반도체(Custom SoC), CPE/Broadband, Wi-Fi 오프로딩 등으로 **'사업을 어떻게 다각화하고 있는지'**를 정밀하게 추적하고 분석합니다.
+- 당신의 보고서를 읽는 대상은 **전략 기획 및 신사업 발굴을 담당하는 임원진(C-Level)**입니다. 따라서 기술 용어 자체의 나열보다는 "이 기술이 비즈니스 모델(BM)과 수익성에 어떤 영향을 미치는가(SWOT/위협과 기회)"를 중심으로 보고해야 합니다.
+
+## 2. 핵심 임무 (Core Mission)
+- 수집된 뉴스 기사들을 분석하여 노이즈를 제거하고 핵심 비즈니스 지표만 추출합니다.
+- 분석된 결과를 바탕으로 기업별 다각화 전략 매트릭스가 포함된 **[주간/이슈별 전략 인텔리전스 브리핑]**을 생성하는 것이 유일한 목표입니다.
+- **주요 모니터링 타겟 기업군 (항상 예의주시할 것):**
+  1. 커스텀 SoC/인프라 칩: Broadcom, Marvell, Qualcomm, MediaTek, NXP
+  2. 모듈/CPE/FWA 제조사: Fibocom, Quectel, WNC, Arcadyan, Sierra Wireless
+  3. 네트워크 장비 벤더: Ericsson, Nokia, Cisco, Juniper, Huawei
+  4. 혁신 망/모빌리티: Starlink, Wi-Fi 7 및 UWB 벤더, 전통 통신사업자(Telco)
+
+## 3. 작업 프로세스 (Step-by-Step Workflow)
+사용자의 요청(기사 입력 등)을 받으면 반드시 다음 순서로 사고하고 실행하십시오:
+1. **[필터링 및 팩트 추출]:** 입력된 데이터가 통신/모빌리티 산업의 다각화 전략과 관련이 있는지 검증하고, 주요 팩트(투자 규모, 제휴사, 출시 스펙 등)를 추출합니다.
+2. **[비즈니스 임팩트 번역]:** 추출된 기술적 사실이 벤더의 수익 모델이나 시장 점유율에 미칠 영향을 분석합니다.
+3. **[매트릭스 맵핑]:** 해당 기업의 '기존 주력 사업'과 '신규 다각화 영역'을 비교 분석합니다.
+4. **[출력 및 후속 제안]:** 지정된 마크다운 포맷에 따라 보고서를 출력하고, 심층 분석을 위한 후속 질문 2~3개를 생성합니다.
+
+## 4. 엄격한 규칙 및 제약 (Strict Constraints)
+- ❌ **숫자/재무 지표 환각(Hallucination) 절대 금지:** 기사에 명시되지 않은 매출, 투자 규모, 상세 스펙 등은 절대 임의로 추측하지 않으며, 알 수 없는 경우 "미상(N/A)"으로 표기합니다.
+- ❌ **맥락 없는 기술 용어 나열 금지:** 기술적 사실(예: "Wi-Fi 7 MAC 계층 변경")만 언급하지 말고, 반드시 비즈니스 영향(예: "이로 인해 B2B 망 구축 TCO 절감")을 병기하십시오.
+- 💡 **언어 및 표기법:** 보고서의 기본 언어는 100% 한국어로 작성하되 비즈니스 현장감을 살리기 위해 핵심 고유명사와 전문 용어는 영문을 병기합니다. (예: 고객 구내 설비(CPE), 맞춤형 시스템 반도체(Custom SoC))
+
+## 5. 예외 및 오류 처리 (Edge Case Handling)
+- 만약 수집된 기사 중 통신/모빌리티 사업 다각화와 직접 관련된 기사가 적더라도, 수집된 기사들에서 사업적 다각화 및 기술 변화 시사점을 최대한 도출하여 표준 포맷을 유지하십시오. 기사가 전무한 경우에만 알림을 남기십시오.
+
+## 6. 출력 표준 포맷 (Output Format)
+반드시 아래의 마크다운 구조를 단 한 치의 오차 없이 준수하십시오:
+
+### 📊 [분석 대상 기업명 또는 주요 기술명] 전략 인텔리전스 브리핑
+
+**1. 핵심 요약 (Executive Summary)**
+- [3줄 이내의 Bullet Point로 기사의 가장 핵심적인 비즈니스 동향 요약]
+- [기술 변화가 의미하는 시장의 흐름 요약]
+
+**2. 전략적 임팩트 분석 (Business Impact Analysis)**
+- **수익 모델 변화:** [셀룰러/모바일 한계 극복을 위한 새로운 캐시카우 분석]
+- **시장 위협 및 기회 (SWOT 관점):** [해당 행보가 타 벤더나 통신망 생태계에 미칠 영향]
+
+**3. 벤더 다각화 매트릭스 (Diversification Matrix)**
+| 기업명 | 기존 핵심 캐시카우 (Legacy) | 신규 다각화 영역 (New Growth) | 핵심 파트너십 / 기술 자산 |
+|---|---|---|---|
+| [기업A] | [예: Mobile SoC] | [예: Custom ASIC, AI Infra] | [내용] |
+| [기업B] | [예: Cellular Module] | [예: 5G FWA CPE, Edge AI] | [내용] |
+*(기사에 등장하는 주요 플레이어 중심으로 작성)*
+
+---
+**💡 후속 심층 분석 제안 (Next Steps)**
+*(더 깊게 파고들 수 있는 질문 2~3개를 아래와 같이 제안하십시오)*
+- 🔍 [후속 질문 1]
+- 🔍 [후속 질문 2]
+"""
+        prompt = f"""[특별 분석 포인트]
+{focus}
+
+[수집된 뉴스 기사 헤드라인 목록]
+"""
+        for i, article in enumerate(articles, 1):
+            prompt += f"{i}. {article['title']}\n"
+        return sys_instruction, prompt
+
     sys_instruction = f"""당신은 IT, 통신, AI 및 소프트웨어 엔지니어링 산업의 글로벌 최고 수준 애널리스트입니다.
 아래에 수집된 뉴스 기사들을 바탕으로, **{category_name}** 분야의 최신 동향을 브리핑해 주셔야 합니다.
 
@@ -601,6 +670,8 @@ def markdown_to_clean_html(md_text):
     lines = md_text.strip().split("\n")
     html_lines = []
     in_list = False
+    in_table = False
+    is_table_header = True
 
     for line in lines:
         stripped = line.strip()
@@ -608,6 +679,58 @@ def markdown_to_clean_html(md_text):
             if in_list:
                 html_lines.append("</ul>")
                 in_list = False
+            if in_table:
+                html_lines.append("</tbody></table></div>")
+                in_table = False
+                is_table_header = True
+            continue
+
+        # 마크다운 테이블 처리 (| 로 시작하고 | 로 끝나는 행)
+        if stripped.startswith("|") and stripped.endswith("|") and stripped.count("|") >= 2:
+            if in_list:
+                html_lines.append("</ul>")
+                in_list = False
+            
+            # 구분선 행 (|---|---|...) 감지 시 헤더 종료
+            if re.match(r'^\|[\s\-:|]+\|$', stripped):
+                is_table_header = False
+                continue
+
+            cells = [c.strip() for c in stripped.strip('|').split('|')]
+
+            if not in_table:
+                in_table = True
+                is_table_header = True
+                html_lines.append('<div style="overflow-x:auto; margin:14px 0 16px 0;"><table style="border-collapse:collapse; width:100%; min-width:480px; font-size:13px; border:1px solid #cbd5e1; border-radius:6px; background-color:#ffffff;">')
+                html_lines.append('<thead><tr style="background-color:#f1f5f9;">')
+                for cell in cells:
+                    html_lines.append(f'<th style="padding:10px 12px; border:1px solid #cbd5e1; color:#0f172a; font-size:13px; font-weight:700; text-align:left;">{cell}</th>')
+                html_lines.append('</tr></thead><tbody>')
+            else:
+                if is_table_header:
+                    html_lines.append('<tr style="background-color:#f8fafc;">')
+                    for cell in cells:
+                        html_lines.append(f'<th style="padding:8px 12px; border:1px solid #cbd5e1; color:#0f172a; font-size:13px; font-weight:700; text-align:left;">{cell}</th>')
+                    html_lines.append('</tr>')
+                else:
+                    html_lines.append('<tr>')
+                    for cell in cells:
+                        html_lines.append(f'<td style="padding:8px 12px; border:1px solid #e2e8f0; font-size:13px; color:#334155; line-height:1.5;">{cell}</td>')
+                    html_lines.append('</tr>')
+            continue
+
+        # 테이블 밖으로 벗어난 경우 테이블 닫기
+        if in_table:
+            html_lines.append("</tbody></table></div>")
+            in_table = False
+            is_table_header = True
+
+        # 수평 구분선
+        if stripped in ["---", "***"]:
+            if in_list:
+                html_lines.append("</ul>")
+                in_list = False
+            html_lines.append('<hr style="border:0; border-top:1px dashed #cbd5e1; margin:18px 0;">')
             continue
 
         # 헤더 변환
@@ -641,6 +764,9 @@ def markdown_to_clean_html(md_text):
             elif "시사점" in title or "🎯" in title or "적용" in title:
                 border_color = "#3b82f6"
                 bg_color = "#eff6ff"
+            elif "전략 인텔리전스" in title or "📊" in title or "Telecom" in title or "Mobility" in title:
+                border_color = "#0284c7"
+                bg_color = "#f0f9ff"
 
             html_lines.append(f'<div style="margin:16px 0 8px 0; padding:8px 12px; background-color:{bg_color}; border-left:4px solid {border_color}; border-radius:4px;"><strong style="color:#0f172a; font-size:15px;">{title}</strong></div>')
         elif stripped.startswith("## "):
@@ -678,6 +804,8 @@ def markdown_to_clean_html(md_text):
 
     if in_list:
         html_lines.append("</ul>")
+    if in_table:
+        html_lines.append("</tbody></table></div>")
 
     content_html = "\n".join(html_lines)
 
@@ -686,6 +814,9 @@ def markdown_to_clean_html(md_text):
     # Senior's Insight 및 Overview 뱃지 포인트 스타일링
     content_html = re.sub(r'<strong style="color:#0f172a; font-weight:600;">(Senior\'s Insight:?)</strong>', r'<span style="display:inline-block; background-color:#d1fae5; color:#065f46; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; margin-right:4px;">💡 Senior\'s Insight</span>', content_html)
     content_html = re.sub(r'<strong style="color:#0f172a; font-weight:600;">(Overview:?)</strong>', r'<span style="display:inline-block; background-color:#e0e7ff; color:#3730a3; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; margin-right:4px;">🎯 Overview</span>', content_html)
+    # C-Pilot 뱃지 포인트 스타일링
+    content_html = re.sub(r'<strong style="color:#0f172a; font-weight:600;">(수익 모델 변화:?)</strong>', r'<span style="display:inline-block; background-color:#e0f2fe; color:#0369a1; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; margin-right:4px;">💰 수익 모델 변화</span>', content_html)
+    content_html = re.sub(r'<strong style="color:#0f172a; font-weight:600;">(시장 위협 및 기회 \(SWOT 관점\):?)</strong>', r'<span style="display:inline-block; background-color:#fef3c7; color:#92400e; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; margin-right:4px;">⚖️ SWOT 분석</span>', content_html)
     # 이탤릭 체 처리
     content_html = re.sub(r'(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)', r'<em>\1</em>', content_html)
     # 마크다운 링크 처리

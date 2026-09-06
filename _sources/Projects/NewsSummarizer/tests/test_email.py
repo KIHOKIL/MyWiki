@@ -108,3 +108,55 @@ def test_get_additional_subscribers_regex(mocker):
     assert len(emails) == 2
     assert "hong@test.com" in emails
     assert "lee@test.com" in emails
+
+def test_markdown_to_clean_html_table_parsing():
+    """마크다운 테이블이 인라인 스타일 <table> 태그 및 <th>, <td>로 올바르게 변환되는지 검증"""
+    md_table = """### 📊 Qualcomm 전략 인텔리전스 브리핑
+
+**1. 핵심 요약 (Executive Summary)**
+- 5G 스마트폰 AP 성장 정체에 대응하여 비-모바일 다각화 가속.
+
+**2. 전략적 임팩트 분석 (Business Impact Analysis)**
+- **수익 모델 변화:** FWA CPE 및 오토모티브 디지털 섀시로 새로운 캐시카우 확보.
+- **시장 위협 및 기회 (SWOT 관점):** 장비사와의 사설망 경쟁 심화.
+
+**3. 벤더 다각화 매트릭스 (Diversification Matrix)**
+| 기업명 | 기존 핵심 캐시카우 (Legacy) | 신규 다각화 영역 (New Growth) | 핵심 파트너십 / 기술 자산 |
+|---|---|---|---|
+| Qualcomm | Mobile AP (Snapdragon) | 5G FWA CPE, Automotive Edge AI | 글로벌 통신사, 주요 자동차 OEM |
+| Fibocom | 4G/5G Cellular Module | 5G FWA CPE 라우터 솔루션 | Qualcomm 고성능 칩셋 협력 |
+
+---
+**💡 후속 심층 분석 제안 (Next Steps)**
+- 🔍 "퀄컴의 FWA CPE 칩셋 점유율 추이를 추가 분석할까요?"
+"""
+    html = main.markdown_to_clean_html(md_table)
+    
+    assert "<table" in html
+    assert "<thead" in html
+    assert "<th" in html
+    assert "기업명" in html
+    assert "신규 다각화 영역" in html
+    assert "<tbody" in html
+    assert "<td" in html
+    assert "Qualcomm" in html
+    assert "Fibocom" in html
+    assert "💰 수익 모델 변화" in html
+    assert "⚖️ SWOT 분석" in html
+    assert "<hr" in html
+
+def test_c_pilot_prompt_generation():
+    """Mobile Communication & Smart Mobility 카테고리 요청 시 Telecom & Mobility Strategy C-Pilot 전용 시스템 지침이 생성되는지 검증"""
+    cat_name = "Mobile Communication & Smart Mobility"
+    focus = "테스트 포커스"
+    articles = [{"title": "Broadcom custom ASIC expansion", "link": "https://example.com"}]
+    
+    sys_inst, prompt = main._build_news_prompt(cat_name, focus, articles)
+    
+    assert "Telecom & Mobility Strategy C-Pilot" in sys_inst
+    assert "기술의 변화를 비즈니스의 수익 모델과 생존 전략으로 번역합니다" in sys_inst
+    assert "C-Level Strategy Advisor" in sys_inst
+    assert "벤더 다각화 매트릭스 (Diversification Matrix)" in sys_inst
+    assert "Broadcom" in sys_inst
+    assert "Fibocom" in sys_inst
+    assert "Broadcom custom ASIC expansion" in prompt

@@ -35,12 +35,16 @@ updated: 2026-09-06
   - Codebase Understanding & Agentic Implementation Loop
   - Global Big Tech & AI Frontier: M&A, Strategy & Capital Flow (OpenAI, Anthropic, xAI, Databricks, CoreWeave 및 빅테크 M&A/자본 동맹)
   - AI Era: Hardware & Infrastructure
-  - Mobile Communication & Smart Mobility
+  - **Mobile Communication & Smart Mobility (Telecom & Mobility Strategy C-Pilot)**:
+    - **C-Level Strategy Advisor** 페르소나 적용 (*"기술의 변화를 비즈니스의 수익 모델과 생존 전략으로 번역합니다"*).
+    - 셀룰러/모바일 한계 극복을 위한 비-모바일(Non-mobile) 다각화, Custom SoC/ASIC, CPE/FWA, Wi-Fi 7 오프로딩, 위성 NTN(Direct-to-Cell) 분석.
+    - 4대 모니터링 타겟군(Broadcom, Qualcomm, Fibocom, Starlink, Ericsson 등) 중심.
+    - **4대 표준 출력**: Executive Summary(3줄), Business Impact(BM 변화, SWOT), **벤더 다각화 매트릭스 표**, 후속 심층 질문(`🔍`).
 
-
-### 2. 모던 반응형 HTML 이메일 포맷
+### 2. 모던 반응형 HTML 이메일 포맷 & 마크다운 테이블 엔진
 - `EmailMessage.add_alternative(html_body, subtype='html')` 및 텍스트 Fallback 동시 지원.
 - 딥 네이비/인디고 그라데이션 헤더와 슬레이트/그린/앰버/블루 카드 UI.
+- **마크다운 테이블 파서 탑재**: C-Pilot 벤더 다각화 매트릭스 표(`| ... |`)를 모바일 가로 스크롤 및 인라인 스타일 `<table>`로 변환 렌더링.
 - Gmail, Apple Mail, Outlook 등 주요 메일 클라이언트 인라인 CSS 최적화.
 
 ## 핵심 아키텍처 및 구현체
