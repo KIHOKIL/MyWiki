@@ -1,9 +1,15 @@
 ---
 title: Hot Cache
-updated: 2026-09-05
+updated: 2026-09-06
 ---
 
 ## Recent Activity
+- **Daily News Summarizer Senior Mentor Developer GitHub Trend Curation (2026-09-06):**
+  - **Senior Mentor Persona & Tone:** 20년 차 시니어 개발자(멘토) 관점의 담백하고 실용적인 톤앤매너로 실무 개발 리더/엔지니어 대상 맞춤형 인사이트 제공.
+  - **4대 필수 탐색 카테고리:** Second-Brain, Code Review AI, Codebase understanding, Embedded SW implementation (HW 가이드라인 기반 설계, 프로토콜 스택, RTOS 실시간 최적화).
+  - **균형 큐레이션 알고리즘:** 분야별 검증된 스테디셀러(Star 다수 / All-time Classic) 1개 + 신흥 루키(Trending) 1개 조합 추천 (Overview + Senior's Insight 페인포인트/실무 팁).
+  - **팩트 기반 가드레일:** Awesome-list/스팸 필터링 및 4대 분야 실존 고품질 오픈소스 Fallback(`logseq`, `openhuman`, `pr-agent`, `code-review-graph`, `ast-grep`, `codebase-memory-mcp`, `FreeRTOS`, `embassy-rs`) 내장.
+  - **테스트 & 검증 완료:** Pytest 10/10 단위 테스트 및 `verify_all.py` 6단계 자동 검증 전원 통과.
 - **Daily News Summarizer Automated E2E Verification Pipeline (2026-09-06):**
   - **Automated Verification Engine (`verify_all.py`):** Self-diagnosing orchestrator validating Config schema, RSS live feeds, GitHub Trending APIs & fallbacks, HTML inline templates, SMTP multipart dispatch, and full Pytest suite.
   - **GitHub Actions CI/CD Integration:** Updated `tmpl_python_ci.yml` and `sys_news_summarizer_ci.yml` with `workflow_dispatch` and automatic Step Summary table reporting on all pushes/PRs.

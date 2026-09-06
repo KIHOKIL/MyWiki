@@ -21,10 +21,15 @@ updated: 2026-09-06
   - 🚀 **핵심 혁신 (Key Innovations)**: 에이전트 지식 그래프, AST 기반 코드베이스 사전 인덱싱 등.
   - ⚠️ **핵심 리스크 및 과제 (Core Risks & Trade-offs)**: 사내 이메일/Jira 연동 시 개인정보/보안 유출 위험, LLM Context 한계로 인한 코드 환각(Hallucination), 코드 리뷰 False Negative 위험.
   - 🎯 **실무 적용 시사점 (Actionable Takeaways)**: 사내 Group 2nd Brain 구축 및 개발/리뷰 자동화 루프에 즉시 반영할 아키텍처 가이드.
-- **Section 2: GitHub Trending Top 3 (2nd Brain & Codebase Intelligence)**
-  - GitHub Search/Trending API로 글로벌 상위 오픈소스 저장소 중 사용자의 업무와 연계된 Top 3를 엄선.
-  - 스타 수, 한 줄 목적, 핵심 아키텍처(Local-first, AST, MCP), 실무 활용 가치 분석.
-  - 주요 추적 저장소: `tinyhumansai/openhuman`, `tirth8205/code-review-graph`, `AgriciDaniel/claude-obsidian` 등.
+- **Section 2: 오늘의 GitHub 트렌드 큐레이션 (시니어 멘토 개발자 Pick)**
+  - 20년 차 시니어 개발자(멘토) 관점에서 실무 개발 리더 및 엔지니어에게 전하는 담백하고 실용적인 인사이트.
+  - **4대 필수 탐색 주제**:
+    1. 🧠 `Second-Brain`: 지식 관리, 로컬 메모리, 노트 연결 시스템 (`logseq`, `openhuman` 등)
+    2. 🔍 `Code Review AI`: PR 자동화 리뷰, 정적 분석, 보안 검증 (`pr-agent`, `code-review-graph` 등)
+    3. 🧭 `Codebase understanding`: 대규모 코드 분석, AST 그래프, MCP 컨텍스트 (`ast-grep`, `codebase-memory-mcp` 등)
+    4. ⚡ `Embedded SW implementation`: HW 가이드라인 기반 설계, 프로토콜 스택, RTOS 실시간 최적화 (`FreeRTOS`, `embassy-rs` 등)
+  - **균형 큐레이션**: 각 분야별 검증된 '스테디셀러(Star 다수 / All-time Classic)' 1개 + 신흥 '루키(Trending)' 1개 조합 추천.
+  - **포맷**: Overview(1~2줄 개요) + Senior's Insight(실무 도입 페인포인트 및 팁). 스팸 및 Awesome-list 자동 필터링.
 - **Section 3: 관심 분야별 심층 뉴스**
   - Group 2nd Brain & Enterprise Agent Architecture
   - Codebase Understanding & Agentic Implementation Loop

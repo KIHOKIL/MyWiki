@@ -43,7 +43,7 @@ def test_fallback_logic_in_main(mocker):
     assert "[요약 일부 실패]" not in called_subject
     assert "OpenAI Summary" in called_body
     assert "Section 1: Executive Summary" in called_body
-    assert "Section 2: GitHub Trending Top 3" in called_body
+    assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in called_body
 
 def test_all_api_fail_in_main(mocker):
     """Gemini, OpenAI 모두 실패했을 때 [요약 일부 실패] 에러 핸들링 검증"""
@@ -122,7 +122,7 @@ def test_three_sections_and_html_email_generation(mocker):
     assert "사내 지식 그래프와 로컬 에이전트 결합" in plain_body
     
     # Check Section 2 in plain text & html
-    assert "Section 2: GitHub Trending Top 3" in plain_body
+    assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in plain_body
     assert "tinyhumansai/openhuman" in plain_body
     
     # Check Section 3 in plain text & html
@@ -141,5 +141,5 @@ def test_three_sections_and_html_email_generation(mocker):
     mock_save.assert_called_once()
     saved_content = mock_save.call_args[0][1]
     assert "Section 1: Executive Summary" in saved_content
-    assert "Section 2: GitHub Trending Top 3" in saved_content
+    assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in saved_content
     assert "Section 3: 관심 분야별 심층 뉴스" in saved_content

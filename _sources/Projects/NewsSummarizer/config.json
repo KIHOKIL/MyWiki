@@ -1,12 +1,50 @@
 {
   "github_trend": {
-    "queries": [
-      "topic:second-brain",
-      "code review AI",
-      "codebase intelligence",
-      "coding agent implementation"
-    ],
-    "focus": "2nd Brain 구축 및 Codebase 이해/Code Review/Implementation Loop와 연관성이 높은 전 세계 상위 GitHub 저장소 3개를 선정하여 요약하세요."
+    "persona": "20년 차 시니어 개발자 (멘토)",
+    "focus": "4대 필수 탐색 주제(Second-Brain, Code Review AI, Codebase understanding, Embedded SW implementation)별 검증된 스테디셀러 1개와 신흥 루키 1개를 엄선하여 담백하고 실용적인 멘토링 인사이트를 제공하세요.",
+    "categories": [
+      {
+        "id": "second_brain",
+        "name": "Second-Brain",
+        "icon": "🧠",
+        "queries": [
+          "topic:second-brain",
+          "personal knowledge management AI",
+          "obsidian agent"
+        ]
+      },
+      {
+        "id": "code_review_ai",
+        "name": "Code Review AI",
+        "icon": "🔍",
+        "queries": [
+          "code review AI",
+          "PR agent LLM",
+          "automated code review"
+        ]
+      },
+      {
+        "id": "codebase_understanding",
+        "name": "Codebase understanding",
+        "icon": "🧭",
+        "queries": [
+          "codebase intelligence",
+          "code graph AST",
+          "codebase understanding MCP"
+        ]
+      },
+      {
+        "id": "embedded_sw",
+        "name": "Embedded SW implementation",
+        "icon": "⚡",
+        "queries": [
+          "embedded RTOS",
+          "firmware driver HAL",
+          "embedded software architecture",
+          "real-time embedded"
+        ]
+      }
+    ]
   },
   "categories": [
     {

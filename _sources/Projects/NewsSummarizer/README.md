@@ -5,7 +5,7 @@
 ## ✨ 핵심 기능
 - **📌 3단계 입체 브리핑 구조**:
   1. **Section 1 (Executive Summary)**: 당일 뉴스와 오픈소스 트렌드를 관통하여 **Group 2nd Brain** 및 **Codebase 이해/구현 루프/코드 리뷰** 관점의 핵심 혁신, 보안/환각 리스크, 실무 시사점을 도출합니다.
-  2. **Section 2 (GitHub Trending Top 3)**: 사용자 관심 분야 전 세계 상위 3개 오픈소스 저장소를 엄선하여 아키텍처와 실무 적용 가치를 심층 요약합니다.
+  2. **Section 2 (오늘의 GitHub 트렌드 큐레이션: 시니어 멘토 개발자)**: 20년 차 시니어 개발자의 시선에서 4대 핵심 주제(Second-Brain, Code Review AI, Codebase understanding, Embedded SW implementation)별 스테디셀러와 신흥 루키를 1:1로 엄선하여 실무 페인포인트와 아키텍처 팁(Overview + Senior's Insight)을 큐레이션합니다.
   3. **Section 3 (관심 분야별 심층 뉴스)**: 사내 2nd Brain, 코드 리뷰/에이전틱 루프, AI 반도체/인프라, 모빌리티 등 맞춤 카테고리 뉴스 분석.
 - **✉️ 모던 반응형 HTML 이메일**: 모바일과 데스크톱 메일 클라이언트 모두에서 완벽히 가독성을 보장하는 프리미엄 카드 UI 및 인라인 CSS 템플릿으로 발송됩니다.
 - **🤖 Dual-LLM 안정성**: Google Gemini를 메인 엔진으로 사용하며, 한도 초과 시 OpenAI(GPT-4o-mini)로 자동 Fallback 됩니다.

@@ -28,7 +28,7 @@ def test_generate_html_email_output():
     assert "DAILY INTELLIGENCE & KNOWLEDGE BRIEFING" in html or "DAILY INTELLIGENCE &amp; KNOWLEDGE BRIEFING" in html
     assert "2026년 9월 6일" in html
     assert "Section 1: Executive Summary" in html
-    assert "Section 2: GitHub Trending Top 3" in html
+    assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in html or "Section 2: GitHub Trending" in html
     assert "Section 3: 관심 분야별 심층 뉴스" in html
     assert "tinyhumansai/openhuman" in html
     assert "Group 2nd Brain" in html

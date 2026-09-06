@@ -86,14 +86,158 @@ def fetch_google_news(query, max_articles=2):
         })
     return articles
 
-def fetch_github_trending(queries=None, max_candidates=10):
-    """GitHub Search API를 사용하여 사용자 관심 분야(2nd Brain, Code Review, Codebase)의 최상위 저장소를 수집합니다."""
-    if not queries:
-        queries = ["topic:second-brain", "code review AI", "codebase intelligence", "coding agent implementation"]
-        
+# 4대 필수 탐색 주제별 검증된 실존 레포지토리 (All-time Classics & High-quality Curations)
+DEFAULT_CURATED_REPOS = {
+    "second_brain": {
+        "name": "Second-Brain",
+        "icon": "🧠",
+        "repos": [
+            {
+                "full_name": "logseq/logseq",
+                "html_url": "https://github.com/logseq/logseq",
+                "description": "A privacy-first, open-source platform for knowledge management and collaboration.",
+                "stars": 34200,
+                "language": "Clojure / JavaScript",
+                "category_id": "second_brain",
+                "category_name": "Second-Brain",
+                "category_icon": "🧠",
+                "role_type": "스테디셀러"
+            },
+            {
+                "full_name": "tinyhumansai/openhuman",
+                "html_url": "https://github.com/tinyhumansai/openhuman",
+                "description": "Local-first private memory and agent orchestration for personal/team knowledge bases.",
+                "stars": 39500,
+                "language": "Python / TypeScript",
+                "category_id": "second_brain",
+                "category_name": "Second-Brain",
+                "category_icon": "🧠",
+                "role_type": "루키"
+            }
+        ]
+    },
+    "code_review_ai": {
+        "name": "Code Review AI",
+        "icon": "🔍",
+        "repos": [
+            {
+                "full_name": "qodo-ai/pr-agent",
+                "html_url": "https://github.com/qodo-ai/pr-agent",
+                "description": "An AI-powered tool for automated pull request review, feedback, and suggestions.",
+                "stars": 6500,
+                "language": "Python",
+                "category_id": "code_review_ai",
+                "category_name": "Code Review AI",
+                "category_icon": "🔍",
+                "role_type": "스테디셀러"
+            },
+            {
+                "full_name": "tirth8205/code-review-graph",
+                "html_url": "https://github.com/tirth8205/code-review-graph",
+                "description": "Local-first context reduction graph for PR code review and agentic workflows.",
+                "stars": 31200,
+                "language": "TypeScript / Python",
+                "category_id": "code_review_ai",
+                "category_name": "Code Review AI",
+                "category_icon": "🔍",
+                "role_type": "루키"
+            }
+        ]
+    },
+    "codebase_understanding": {
+        "name": "Codebase understanding",
+        "icon": "🧭",
+        "repos": [
+            {
+                "full_name": "ast-grep/ast-grep",
+                "html_url": "https://github.com/ast-grep/ast-grep",
+                "description": "A CLI tool for code structural search, lint, and rewriting based on abstract syntax tree.",
+                "stars": 11200,
+                "language": "Rust",
+                "category_id": "codebase_understanding",
+                "category_name": "Codebase understanding",
+                "category_icon": "🧭",
+                "role_type": "스테디셀러"
+            },
+            {
+                "full_name": "DeusData/codebase-memory-mcp",
+                "html_url": "https://github.com/DeusData/codebase-memory-mcp",
+                "description": "Zero-dependency C AST graph MCP server providing fast persistent codebase intelligence.",
+                "stars": 42000,
+                "language": "C",
+                "category_id": "codebase_understanding",
+                "category_name": "Codebase understanding",
+                "category_icon": "🧭",
+                "role_type": "루키"
+            }
+        ]
+    },
+    "embedded_sw": {
+        "name": "Embedded SW implementation",
+        "icon": "⚡",
+        "repos": [
+            {
+                "full_name": "FreeRTOS/FreeRTOS-Kernel",
+                "html_url": "https://github.com/FreeRTOS/FreeRTOS-Kernel",
+                "description": "FreeRTOS kernel files and ports for real-time embedded systems architecture.",
+                "stars": 5600,
+                "language": "C",
+                "category_id": "embedded_sw",
+                "category_name": "Embedded SW implementation",
+                "category_icon": "⚡",
+                "role_type": "스테디셀러"
+            },
+            {
+                "full_name": "embassy-rs/embassy",
+                "html_url": "https://github.com/embassy-rs/embassy",
+                "description": "Modern async embedded runtime and HAL drivers in Rust for microcontrollers.",
+                "stars": 5800,
+                "language": "Rust",
+                "category_id": "embedded_sw",
+                "category_name": "Embedded SW implementation",
+                "category_icon": "⚡",
+                "role_type": "루키"
+            }
+        ]
+    }
+}
+
+def is_valid_github_repo(item):
+    """스팸성, 어뷰징 및 알맹이 없는 Awesome-list 저장소를 필터링합니다."""
+    name = (item.get("name") or "").lower()
+    full_name = (item.get("full_name") or "").lower()
+    desc = (item.get("description") or "").lower()
+    
+    # Awesome-list 필터링
+    if name.startswith("awesome-") or full_name.startswith("awesome-") or "awesome list" in desc:
+        return False
+    # 빈 설명 필터링
+    if not desc or len(desc.strip()) < 5:
+        return False
+    return True
+
+def fetch_github_trending(categories_or_queries=None, max_candidates=16):
+    """
+    GitHub Search API를 사용하여 4대 관심 주제별 최상위 오픈소스 저장소를 수집합니다.
+    categories_or_queries: config.json의 카테고리 설정(list of dicts) 또는 쿼리 리스트(list of strings)
+    """
+    default_cat_list = [
+        {"id": "second_brain", "name": "Second-Brain", "icon": "🧠", "queries": ["topic:second-brain", "personal knowledge management AI", "obsidian agent"]},
+        {"id": "code_review_ai", "name": "Code Review AI", "icon": "🔍", "queries": ["code review AI", "PR agent LLM", "automated code review"]},
+        {"id": "codebase_understanding", "name": "Codebase understanding", "icon": "🧭", "queries": ["codebase intelligence", "code graph AST", "codebase understanding MCP"]},
+        {"id": "embedded_sw", "name": "Embedded SW implementation", "icon": "⚡", "queries": ["embedded RTOS", "firmware driver HAL", "embedded software architecture", "real-time embedded"]}
+    ]
+
+    # 입력 형태 판별 (카테고리 딕셔너리 리스트 vs 단순 쿼리 문자열 리스트)
+    if isinstance(categories_or_queries, list) and categories_or_queries and isinstance(categories_or_queries[0], dict):
+        cat_configs = categories_or_queries
+    elif isinstance(categories_or_queries, list) and categories_or_queries and isinstance(categories_or_queries[0], str):
+        cat_configs = [{"id": "custom", "name": "Custom Topic", "icon": "⭐", "queries": categories_or_queries}]
+    else:
+        cat_configs = default_cat_list
+
     candidates = []
     seen_repos = set()
-    
     headers = {
         'User-Agent': 'DailyNewsSummarizer/2.0',
         'Accept': 'application/vnd.github.v3+json'
@@ -101,60 +245,59 @@ def fetch_github_trending(queries=None, max_candidates=10):
     if GITHUB_TOKEN:
         headers['Authorization'] = f"token {GITHUB_TOKEN}"
 
-    for query in queries:
-        try:
-            encoded_query = urllib.parse.quote(query)
-            url = f"https://api.github.com/search/repositories?q={encoded_query}&sort=stars&order=desc&per_page=5"
-            req = urllib.request.Request(url, headers=headers)
-            with urllib.request.urlopen(req, timeout=10) as response:
-                data = json.loads(response.read().decode('utf-8'))
-                for item in data.get("items", []):
-                    full_name = item.get("full_name")
-                    if full_name and full_name not in seen_repos:
-                        seen_repos.add(full_name)
-                        candidates.append({
-                            "full_name": full_name,
-                            "html_url": item.get("html_url", ""),
-                            "description": item.get("description") or "설명 없음",
-                            "stars": item.get("stargazers_count", 0),
-                            "language": item.get("language") or "General",
-                            "topics": item.get("topics", [])
-                        })
-        except Exception as e:
-            print(f"  [Warning] GitHub API 검색 실패 ('{query}'): {e}")
-        time.sleep(1)
+    for cat in cat_configs:
+        cat_id = cat.get("id", "general")
+        cat_name = cat.get("name", "General")
+        cat_icon = cat.get("icon", "⭐")
+        queries = cat.get("queries", [])
+        cat_repos = []
 
-    # API 호출 실패 또는 후보가 없을 때를 대비한 검증된 큐레이션 기본값 (Fallback)
+        for query in queries:
+            try:
+                encoded_query = urllib.parse.quote(query)
+                url = f"https://api.github.com/search/repositories?q={encoded_query}&sort=stars&order=desc&per_page=4"
+                req = urllib.request.Request(url, headers=headers)
+                with urllib.request.urlopen(req, timeout=10) as response:
+                    data = json.loads(response.read().decode('utf-8'))
+                    for item in data.get("items", []):
+                        if not is_valid_github_repo(item):
+                            continue
+                        full_name = item.get("full_name")
+                        if full_name and full_name not in seen_repos:
+                            seen_repos.add(full_name)
+                            repo_obj = {
+                                "full_name": full_name,
+                                "html_url": item.get("html_url", ""),
+                                "description": item.get("description") or "설명 없음",
+                                "stars": item.get("stargazers_count", 0),
+                                "language": item.get("language") or "General",
+                                "topics": item.get("topics", []),
+                                "category_id": cat_id,
+                                "category_name": cat_name,
+                                "category_icon": cat_icon
+                            }
+                            cat_repos.append(repo_obj)
+                            candidates.append(repo_obj)
+            except Exception as e:
+                print(f"  [Warning] GitHub API 검색 실패 ('{query}'): {e}")
+            time.sleep(1)
+
+        # 해당 카테고리 검색 결과가 0건인 경우 검증된 실존 Fallback 추가
+        if not cat_repos and cat_id in DEFAULT_CURATED_REPOS:
+            for fallback_repo in DEFAULT_CURATED_REPOS[cat_id]["repos"]:
+                if fallback_repo["full_name"] not in seen_repos:
+                    seen_repos.add(fallback_repo["full_name"])
+                    candidates.append(fallback_repo)
+
+    # 전체 후보가 전혀 없는 경우 전체 Fallback 통합 주입
     if not candidates:
-        print("  [Notice] GitHub API 결과 부재 또는 요청 제한으로 기본 큐레이션 저장소를 활용합니다.")
-        candidates = [
-            {
-                "full_name": "tinyhumansai/openhuman",
-                "html_url": "https://github.com/tinyhumansai/openhuman",
-                "description": "OpenHuman is an open source personal AI for Mac, Windows and Linux — local-first memory, agent orchestration, and deep research.",
-                "stars": 39400,
-                "language": "Python / TypeScript",
-                "topics": ["second-brain", "local-memory", "agent-orchestration"]
-            },
-            {
-                "full_name": "tirth8205/code-review-graph",
-                "html_url": "https://github.com/tirth8205/code-review-graph",
-                "description": "Local-first code intelligence graph for MCP and CLI. Builds a persistent map of your codebase so AI coding tools read only what matters, with benchmarked context reductions on reviews and large-repo workflows.",
-                "stars": 31200,
-                "language": "TypeScript / Python",
-                "topics": ["code-review", "codebase-graph", "mcp"]
-            },
-            {
-                "full_name": "AgriciDaniel/claude-obsidian",
-                "html_url": "https://github.com/AgriciDaniel/claude-obsidian",
-                "description": "Self-organizing AI second brain for Obsidian + Claude Code. Drop any source and Claude reads, links, and files it into one connected knowledge graph of plain Markdown you own.",
-                "stars": 14600,
-                "language": "Markdown / Shell",
-                "topics": ["obsidian", "second-brain", "pkm", "llm-wiki"]
-            }
-        ]
+        print("  [Notice] GitHub API 결과 부재 또는 요청 제한으로 4대 카테고리 기본 큐레이션 저장소를 활용합니다.")
+        for cat_id, cat_info in DEFAULT_CURATED_REPOS.items():
+            for repo in cat_info["repos"]:
+                if repo["full_name"] not in seen_repos:
+                    seen_repos.add(repo["full_name"])
+                    candidates.append(repo)
 
-    candidates.sort(key=lambda x: x["stars"], reverse=True)
     return candidates[:max_candidates]
 
 # ==========================================
@@ -219,25 +362,129 @@ def safe_summarize_news_openai(category_name, focus, articles):
     print(f"  [{category_name}] OpenAI (Fallback) 분석 요청 중...")
     return summarize_news_openai(category_name, focus, articles)
 
-# --- Section 2: GitHub Trending Top 3 분석 ---
+# --- Section 2: GitHub Trending (시니어 멘토 개발자 4대 분야 큐레이션) ---
 def _build_github_prompt(focus, candidates):
-    sys_instruction = f"""당신은 글로벌 오픈소스 및 AI 아키텍처 수석 연구원입니다.
-수집된 GitHub 후보 저장소 목록 중, 사용자 관심 분야({focus})에 가장 부합하는 **전 세계 Top 3 오픈소스 저장소**를 엄선하여 심층 분석해 주세요.
+    sys_instruction = """# 데일리 GitHub 트렌드 큐레이터: 시니어 멘토 개발자
 
-[분석 및 출력 포맷 가이드]
-선정된 3개 저장소 각각에 대해 아래 양식을 엄격히 준수하여 마크다운으로 출력하세요:
+## 1. 역할 및 정체성 (Role & Identity)
+- 당신은 트렌드에 민감하면서도 실무 적용의 가치를 최우선으로 생각하는 20년 차 시니어 개발자(멘토)입니다.
+- 타겟 오디언스(실무 개발 리더 및 엔지니어)의 눈높이에 맞춰, 과장되지 않고 담백한 기술적 용어와 친근한 조언의 어조("오늘 흥미로운 프로젝트를 발견했습니다", "이 구조는 실무에 참고하기 좋겠네요")로 소통합니다.
 
-### 1위. [저장소명](저장소링크) (★ 스타 수)
-- **🎯 한 줄 정의 및 목적**: 무엇을 해결하는 도구/아키텍처인가?
-- **💡 핵심 기술 및 차별점**: 로컬 우선(Local-first) 메모리, 그래프 AST, MCP 통합, 에이전트 오케스트레이션 등 기술적 포인트.
-- **🛠️ 실무 적용 가치**: Group 2nd Brain 구축 또는 코드베이스 이해/구현 루프(Implementation Loop)/코드 리뷰에 어떻게 활용 가능한가?
+## 2. 핵심 임무 (Core Mission)
+- GitHub Search API 및 최신 데이터를 활용하여 사용자가 지정한 4가지 관심 주제에 부합하는, 인지도 높고 평가가 좋은 오픈소스 프로젝트를 엄선합니다.
+- 매일 아침 이메일로 바로 발송할 수 있는 [카테고리 분류형 뉴스레터 초안]을 작성하는 것이 유일한 목표입니다.
+- **필수 탐색 주제 4가지:**
+  1. Second-Brain (지식 관리, 노트 연결 시스템 등)
+  2. Code Review AI (자동화된 리뷰, 정적 분석, LLM 기반 리뷰어 등)
+  3. Codebase understanding (대규모 코드 분석, 아키텍처 시각화, 컨텍스트 파악 도구 등)
+  4. Embedded SW implementation (HW 가이드라인 기반 설계, 프로토콜 스택, 물리 계층/인터페이스 제어, 실시간(RTOS) 최적화 관련)
 
-(2위와 3위도 동일한 형식으로 순차 작성)
+## 3. 작업 프로세스 (Step-by-Step Workflow)
+1. **[데이터 확보 및 심층 검증]:** 제공된 4대 주제별 후보 저장소를 검토하고 스팸/Awesome-list를 배제합니다.
+2. **[균형 큐레이션]:** 각 카테고리별로 가능하면 이미 검증된 '스테디셀러(Star 다수)' 1개와 최근 떠오르는 '루키(Trending)' 1개를 조합하여 선정합니다.
+3. **[인사이트 도출]:** 단순 Readme 요약이 아닌, "왜 실제 개발자들이 이 프로젝트를 좋게 평가하는가?", "실무 도입 시 어떤 페인포인트(Pain-point)를 해결할 수 있는가?"를 분석합니다.
+4. **[초안 작성]:** 이메일 템플릿에 맞추어 시니어 개발자의 톤으로 본문을 작성합니다.
+
+## 4. 엄격한 규칙 및 제약 (Strict Constraints)
+- ❌ **할루시네이션(환각) 절대 금지:** 제공된 후보 목록에 없는 가짜 GitHub 링크나 임의로 만들어낸 레포지토리 정보는 절대 출력하지 마십시오. 오직 팩트 기반으로 작성합니다.
+- ❌ **버즈워드(Buzzword) 금지:** 지나치게 마케팅적이거나 과장된 표현("혁명적인", "세상을 바꿀")을 피하고, 철저히 개발자 친화적이고 담백한 기술 용어만 사용하십시오.
+- ❌ **주제 이탈 금지:** 설정된 4가지 관심 주제를 벗어난 프로젝트는 아무리 인기가 많아도 절대 추천하지 않습니다.
+
+## 5. 예외 및 오류 처리 (Edge Case Handling)
+- 만약 특정 카테고리에서 오늘 추천할 만한 '새롭거나 퀄리티 높은' 루키를 찾지 못했다면 해당 섹션을 생략하지 마십시오.
+- 대신 해당 분야의 **'불변의 명작(All-time Classic)' 프로젝트**를 소개하되, "이미 아시겠지만, 이 프로젝트의 [특정 아키텍처/코드 패턴]은 다시 볼 가치가 있습니다"라는 새로운 실무적 시각이나 리팩토링 관점의 인사이트를 덧붙여서 제안하십시오.
+
+## 6. 출력 표준 포맷 (Output Format)
+응답은 반드시 아래의 마크다운 구조를 단 한 치의 오차 없이 그대로 준수하여 출력하십시오:
+
+## 📬 오늘의 GitHub 트렌드 큐레이션
+안녕하세요. 오늘 아침 스캐닝한 흥미로운 오픈소스 프로젝트들을 정리해 드립니다. 바쁘시더라도 각 분야별로 실무에 영감을 줄 만한 코드들은 꼭 한 번 살펴보시길 권장합니다.
+
+---
+### 🧠 1. Second-Brain
+**[프로젝트명 A (스테디셀러)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+**[프로젝트명 B (루키)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+### 🔍 2. Code Review AI
+**[프로젝트명 A (스테디셀러)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+**[프로젝트명 B (루키)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+### 🧭 3. Codebase understanding
+**[프로젝트명 A (스테디셀러)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+**[프로젝트명 B (루키)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+### ⚡ 4. Embedded SW implementation
+**[프로젝트명 A (스테디셀러)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+**[프로젝트명 B (루키)]** - [GitHub URL]
+- **Overview:** (1~2줄의 명확하고 기술적인 개요)
+- **Senior's Insight:** (실제 개발자들이 좋게 평가하는 이유 및 실무 적용 팁)
+
+---
+오늘도 버그 없는 하루 되시길 바랍니다!
 """
-    prompt = "[수집된 GitHub 후보 저장소 목록]\n\n"
-    for i, c in enumerate(candidates, 1):
-        prompt += f"{i}. [{c['full_name']}]({c['html_url']}) (Stars: {c['stars']:,}, Lang: {c['language']})\n"
-        prompt += f"   설명: {c['description']}\n\n"
+
+    # 후보군을 4대 카테고리별로 분류/그룹화
+    grouped = {
+        "second_brain": [],
+        "code_review_ai": [],
+        "codebase_understanding": [],
+        "embedded_sw": []
+    }
+    
+    for c in candidates:
+        cat_id = c.get("category_id")
+        if cat_id in grouped:
+            grouped[cat_id].append(c)
+        else:
+            # 카테고리가 명시되지 않은 경우 텍스트 기반 매핑
+            desc = (c.get("description", "") + " " + c.get("full_name", "")).lower()
+            if any(k in desc for k in ["embedded", "rtos", "hal", "firmware", "driver"]):
+                grouped["embedded_sw"].append(c)
+            elif any(k in desc for k in ["review", "pr-agent", "pull request", "linter"]):
+                grouped["code_review_ai"].append(c)
+            elif any(k in desc for k in ["ast", "codebase", "graph", "syntax", "intelligence"]):
+                grouped["codebase_understanding"].append(c)
+            else:
+                grouped["second_brain"].append(c)
+
+    prompt = "[수집된 4대 분야 GitHub 후보 저장소 목록]\n\n"
+    category_meta = [
+        ("second_brain", "🧠 1. Second-Brain"),
+        ("code_review_ai", "🔍 2. Code Review AI"),
+        ("codebase_understanding", "🧭 3. Codebase understanding"),
+        ("embedded_sw", "⚡ 4. Embedded SW implementation")
+    ]
+
+    for cat_id, cat_title in category_meta:
+        repos = grouped[cat_id]
+        if not repos and cat_id in DEFAULT_CURATED_REPOS:
+            repos = DEFAULT_CURATED_REPOS[cat_id]["repos"]
+        
+        prompt += f"### {cat_title}\n"
+        for r in repos[:4]:
+            role = f" ({r['role_type']})" if "role_type" in r else ""
+            prompt += f"- [{r['full_name']}]({r['html_url']}) (Stars: {r.get('stars', 0):,}, Lang: {r.get('language', 'General')}){role}\n"
+            prompt += f"  설명: {r.get('description', '설명 없음')}\n"
+        prompt += "\n"
+
     return sys_instruction, prompt
 
 def analyze_github_gemini(focus, candidates):
@@ -268,12 +515,12 @@ def analyze_github_openai(focus, candidates):
 
 @retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
 def safe_analyze_github_trending(focus, candidates):
-    print("  [GitHub Trending] Gemini 분석 요청 중...")
+    print("  [GitHub Trending] Gemini 4대 분야 분석 요청 중...")
     return analyze_github_gemini(focus, candidates)
 
 @retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
 def safe_analyze_github_trending_openai(focus, candidates):
-    print("  [GitHub Trending] OpenAI (Fallback) 분석 요청 중...")
+    print("  [GitHub Trending] OpenAI (Fallback) 4대 분야 분석 요청 중...")
     return analyze_github_openai(focus, candidates)
 
 # --- Section 1: Executive Summary (2nd Brain, Codebase Loop & AI Frontier Strategy 종합) ---
@@ -281,27 +528,28 @@ def _build_executive_prompt(articles_summary_text, github_summary_text):
     sys_instruction = """당신은 글로벌 엔터프라이즈 AI 시스템 및 소프트웨어 엔지니어링 최고 임원(VP of Engineering & Chief AI Strategist)입니다.
 오늘 수집된 글로벌 뉴스 및 GitHub 오픈소스 트렌드를 관통 분석하여, 데일리 브리핑 최상단에 위치할 [Executive Summary: 2nd Brain, Codebase Loop & Big Tech Strategy]를 작성하세요.
 
-[핵심 분석 3대 렌즈]
+[핵심 분석 4대 렌즈]
 1) **Group 2nd Brain 구축**: 사내 이메일, 메신저, Jira, Confluence 연동을 통한 팀 지식 허브 구축 및 보안/개인정보 거버넌스.
-2) **Codebase 이해 기반 Implementation Loop & Code Review**: 대규모 코드베이스의 구조적 이해, Harness Engineering, TDD 자동화, LLM 기반 정밀 코드 리뷰.
-3) **Global Big Tech & AI Frontier 자본 흐름**: 빅테크(MS, 구글, 메타, 아마존, 애플, 엔비디아) 및 AI 프론티어 랩/유니콘(OpenAI, Anthropic, xAI, Databricks 등)의 M&A, 변형적 인수(Acqui-hire), 대규모 컴퓨팅 동맹(Stargate, 전력/클라우드) 및 생태계 락인(Lock-in) 전략이 기술 판도에 미치는 영향.
+2) **Codebase 이해 기반 Implementation Loop & Code Review**: 대규모 코드베이스의 구조적 이해, AST 그래프, TDD 자동화, LLM 기반 정밀 코드 리뷰.
+3) **Embedded SW Implementation**: HW 가이드라인 기반 설계, 프로토콜 스택, 물리 계층/인터페이스 제어, 실시간(RTOS) 최적화의 에이전틱 전환.
+4) **Global Big Tech & AI Frontier 자본 흐름**: 빅테크 및 AI 프론티어(OpenAI, Anthropic, xAI, Databricks 등)의 M&A, 변형적 인수(Acqui-hire), 대규모 컴퓨팅 동맹 및 생태계 락인(Lock-in) 전략이 미치는 영향.
 
 [필수 작성 구조]
 반드시 다음 3가지 소제목으로 구성하고 글머리 기호(Bulleted list)를 활용해 명확하게 기술하세요:
 
 ### 🚀 오늘 주목해야 할 핵심 혁신 (Key Innovations)
-- 2nd Brain 아키텍처, 코드베이스 분석/구현 루프, 빅테크/AI 프론티어의 전략적 인수 및 인프라 도약 관점에서 오늘 포착된 주요 기술 혁신 요약.
+- 2nd Brain 아키텍처, 코드베이스 분석/구현 루프, 임베디드 SW 최적화, 빅테크/AI 프론티어의 전략적 인수 및 인프라 도약 관점에서 오늘 포착된 주요 기술 혁신 요약.
 
 ### ⚠️ 핵심 리스크 및 과제 (Core Risks & Trade-offs)
-- 사내 민감 데이터 연동 시의 보안/권한 누수, LLM Context 한계로 인한 코드베이스 환각(Hallucination), 빅테크 플랫폼 종속성(Lock-in) 및 반독점/컴플라이언스 리스크 지적.
+- 사내 민감 데이터 연동 시의 보안/권한 누수, LLM Context 한계로 인한 코드베이스/임베디드 환각(Hallucination), 빅테크 플랫폼 종속성(Lock-in) 및 반독점/컴플라이언스 리스크 지적.
 
 ### 🎯 실무 적용 및 설계 시사점 (Actionable Takeaways)
-- 현재 사내 Group 2nd Brain 설계, 코드 리뷰/구현 루프, 그리고 전략적 툴체인 선정에 즉시 반영해야 할 실행 지침 2~3가지 제시.
+- 현재 사내 Group 2nd Brain 설계, 코드 리뷰/구현 루프, 임베디드 및 엔터프라이즈 툴체인 선정에 즉시 반영해야 할 실행 지침 2~3가지 제시.
 """
     prompt = f"""[오늘의 카테고리별 뉴스 분석 내용]
 {articles_summary_text}
 
-[오늘의 GitHub 트렌드 Top 3 분석 내용]
+[오늘의 GitHub 트렌드 큐레이션 내용 (시니어 멘토 개발자)]
 {github_summary_text}
 """
     return sys_instruction, prompt
@@ -372,12 +620,24 @@ def markdown_to_clean_html(md_text):
             # 소제목 아이콘에 따른 포인트 컬러 부여
             border_color = "#4f46e5"
             bg_color = "#f8fafc"
-            if "혁신" in title or "🚀" in title:
+            if "Second-Brain" in title or "🧠" in title:
+                border_color = "#8b5cf6"
+                bg_color = "#f5f3ff"
+            elif "Code Review" in title or "🔍" in title:
+                border_color = "#3b82f6"
+                bg_color = "#eff6ff"
+            elif "Codebase" in title or "🧭" in title:
+                border_color = "#0ea5e9"
+                bg_color = "#f0f9ff"
+            elif "Embedded" in title or "⚡" in title:
+                border_color = "#f59e0b"
+                bg_color = "#fffbeb"
+            elif "혁신" in title or "🚀" in title:
                 border_color = "#10b981"
                 bg_color = "#f0fdf4"
             elif "리스크" in title or "⚠️" in title:
-                border_color = "#f59e0b"
-                bg_color = "#fffbeb"
+                border_color = "#ef4444"
+                bg_color = "#fef2f2"
             elif "시사점" in title or "🎯" in title or "적용" in title:
                 border_color = "#3b82f6"
                 bg_color = "#eff6ff"
@@ -423,6 +683,9 @@ def markdown_to_clean_html(md_text):
 
     # 볼드 체 처리
     content_html = re.sub(r'\*\*(.+?)\*\*', r'<strong style="color:#0f172a; font-weight:600;">\1</strong>', content_html)
+    # Senior's Insight 및 Overview 뱃지 포인트 스타일링
+    content_html = re.sub(r'<strong style="color:#0f172a; font-weight:600;">(Senior\'s Insight:?)</strong>', r'<span style="display:inline-block; background-color:#d1fae5; color:#065f46; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; margin-right:4px;">💡 Senior\'s Insight</span>', content_html)
+    content_html = re.sub(r'<strong style="color:#0f172a; font-weight:600;">(Overview:?)</strong>', r'<span style="display:inline-block; background-color:#e0e7ff; color:#3730a3; font-size:12px; font-weight:700; padding:2px 6px; border-radius:4px; margin-right:4px;">🎯 Overview</span>', content_html)
     # 이탤릭 체 처리
     content_html = re.sub(r'(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)', r'<em>\1</em>', content_html)
     # 마크다운 링크 처리
@@ -506,10 +769,10 @@ def generate_html_email(date_str, executive_summary, github_trending, category_s
                 </div>
               </div>
 
-              <!-- SECTION 2: GITHUB TRENDING TOP 3 -->
+              <!-- SECTION 2: GITHUB TRENDING (SENIOR MENTOR DEVELOPER) -->
               <div style="background-color:#ffffff; border:1px solid #cbd5e1; border-radius:10px; overflow:hidden; margin-bottom:28px;">
                 <div style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color:#ffffff; padding:12px 18px; font-size:15px; font-weight:700;">
-                  ⭐ Section 2: GitHub Trending Top 3 (2nd Brain & Codebase Intelligence)
+                  📬 Section 2: 오늘의 GitHub 트렌드 큐레이션 (시니어 멘토 개발자 Pick)
                 </div>
                 <div style="padding:18px 20px;">
                   {github_html}
@@ -703,17 +966,15 @@ def main():
     combined_category_summary = "\n\n".join(category_summary_texts)
 
     # ----------------------------------------------------
-    # 단계 2: GitHub Trending Top 3 수집 및 분석 (Section 2용)
+    # 단계 2: GitHub Trending 4대 분야 수집 및 심층 큐레이션 (Section 2용)
     # ----------------------------------------------------
-    print("\n--- [Step 2] GitHub Trending Top 3 수집 및 심층 분석 ---")
+    print("\n--- [Step 2] GitHub Trending 4대 분야 수집 및 심층 큐레이션 (시니어 멘토 개발자) ---")
     github_cfg = config.get("github_trend", {})
-    github_queries = github_cfg.get("queries", [
-        "topic:second-brain", "code review AI", "codebase intelligence", "coding agent implementation"
-    ])
-    github_focus = github_cfg.get("focus", "2nd Brain 구축 및 Codebase 이해/Code Review/Implementation Loop 연관 글로벌 상위 저장소 3개 요약")
+    categories_cfg = github_cfg.get("categories") or github_cfg.get("queries")
+    github_focus = github_cfg.get("focus", "4대 필수 탐색 주제별 검증된 스테디셀러 1개와 신흥 루키 1개를 엄선하여 담백한 멘토링 인사이트 제공")
     
-    candidates = fetch_github_trending(github_queries, max_candidates=8)
-    print(f"  총 {len(candidates)}개 GitHub 후보 저장소 수집 완료. Top 3 선별 분석 중...")
+    candidates = fetch_github_trending(categories_cfg, max_candidates=16)
+    print(f"  총 {len(candidates)}개 GitHub 후보 저장소 수집 완료. 4대 분야 심층 큐레이션 중...")
     
     try:
         github_summary = safe_analyze_github_trending(github_focus, candidates)
@@ -764,7 +1025,7 @@ def main():
     markdown_body += f"{exec_summary}\n\n"
     markdown_body += "="*50 + "\n\n"
     
-    markdown_body += "## ⭐ Section 2: GitHub Trending Top 3 (2nd Brain & Codebase Intelligence)\n"
+    markdown_body += "## 📬 Section 2: 오늘의 GitHub 트렌드 큐레이션 (시니어 멘토 개발자 Pick)\n"
     markdown_body += f"{github_summary}\n\n"
     markdown_body += "="*50 + "\n\n"
     

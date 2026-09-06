@@ -101,7 +101,7 @@ class VerificationSuite:
             assert "<!DOCTYPE html>" in html
             assert "max-width:680px" in html
             assert "Section 1: Executive Summary" in html
-            assert "Section 2: GitHub Trending Top 3" in html
+            assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in html or "Section 2: GitHub Trending" in html
             assert "Section 3: 관심 분야별 심층 뉴스" in html
             
             self.record_result("HTML Email Template Rendering", True, f"인라인 CSS 및 680px 반응형 카드 템플릿 정상 생성 ({len(html):,} bytes)")
