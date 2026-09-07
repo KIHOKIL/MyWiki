@@ -1,0 +1,22 @@
+name: Daily Finance Macro Briefing
+
+on:
+  schedule:
+    # 8:30 AM KST = 23:30 UTC
+    - cron: '30 23 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-finance-summarizer:
+    permissions:
+      contents: write
+      issues: write
+      actions: write
+    uses: ./.github/workflows/tmpl_python_agent.yml
+    with:
+      working_directory: '_sources/Projects/NewsSummarizer'
+      script_command: 'python agents/finance/main.py'
+      commit_message: "📈 자동 거시경제 브리핑 추가"
+      file_pattern: "_sources/News/Finance/*.md"
+      download_path: "_sources/News/Finance"
+    secrets: inherit

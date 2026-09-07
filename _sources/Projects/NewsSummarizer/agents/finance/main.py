@@ -37,7 +37,7 @@ def load_config():
 
 def fetch_google_news(query, max_articles=3):
     import feedparser
-    encoded_query = urllib.parse.quote(query)
+    encoded_query = urllib.parse.quote(query + " when:1d")
     url = f"https://news.google.com/rss/search?q={encoded_query}&hl=ko&gl=KR&ceid=KR:ko"
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
@@ -322,7 +322,7 @@ def get_additional_subscribers():
         return []
 
 def send_email(subject, content, html_content=None):
-    if not EMAIL_SENDER or not EMAIL_PASSWORD or not EMAIL_RECEIVER:
+    if not EMAIL_SENDER or EMAIL_SENDER == "your_email@gmail.com" or not EMAIL_PASSWORD:
         print("Email credentials not set. Skipping email.")
         return
         
