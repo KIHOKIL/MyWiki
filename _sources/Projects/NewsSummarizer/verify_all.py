@@ -23,7 +23,8 @@ except Exception:
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, SCRIPT_DIR)
 
-import main
+from agents.tech import main as tech_main
+from agents.finance import main as finance_main
 
 class VerificationSuite:
     def __init__(self, ci_mode=False, send_live_email=False):
@@ -44,7 +45,7 @@ class VerificationSuite:
     def test_config(self):
         """1. config.json 파일 무결성 및 스키마 검증"""
         try:
-            config = main.load_config()
+            config = tech_main.load_config()
             assert "categories" in config, "Missing 'categories' in config"
             assert "github_trend" in config, "Missing 'github_trend' in config"
             
@@ -60,24 +61,34 @@ class VerificationSuite:
                 assert "name" in c and "queries" in c and "focus" in c
                 assert len(c["queries"]) > 0
 
-            self.record_result("Config & Schema Integrity", True, f"총 {len(categories)}개 카테고리 및 github_trend 스키마 정상")
+            # Finance Config Check
+            finance_config = finance_main.load_config()
+            assert "categories" in finance_config
+            finance_categories = finance_config["categories"]
+            assert len(finance_categories) > 0
+
+            self.record_result("Config & Schema Integrity", True, f"총 {len(categories)}개 Tech 카테고리 및 {len(finance_categories)}개 Finance 카테고리 정상")
         except Exception as e:
             self.record_result("Config & Schema Integrity", False, str(e))
 
     def test_rss_fetching(self):
         """2. Google News RSS 실시간 수집 및 파서 검증"""
         try:
-            articles = main.fetch_google_news("AI agent", max_articles=2)
+            articles = tech_main.fetch_google_news("AI agent", max_articles=2)
             assert len(articles) > 0, "기사 수집 결과가 0건입니다."
             assert "title" in articles[0] and "link" in articles[0]
-            self.record_result("Google News RSS Live Fetch", True, f"정상 수집 완료 (첫 번째 기사: {articles[0]['title'][:30]}...)")
+            
+            fin_articles = finance_main.fetch_google_news("Macro", max_articles=2)
+            assert len(fin_articles) > 0, "Finance 기사 수집 결과가 0건입니다."
+            
+            self.record_result("Google News RSS Live Fetch", True, f"정상 수집 완료 (Tech/Finance)")
         except Exception as e:
             self.record_result("Google News RSS Live Fetch", False, str(e))
 
     def test_github_trending(self):
         """3. GitHub Search API 연동 및 Fallback 검증"""
         try:
-            candidates = main.fetch_github_trending(["topic:second-brain"], max_candidates=3)
+            candidates = tech_main.fetch_github_trending(["topic:second-brain"], max_candidates=3)
             assert len(candidates) > 0, "GitHub 후보 저장소가 0건입니다."
             assert "full_name" in candidates[0] and "stars" in candidates[0]
             top_repo = candidates[0]['full_name']
@@ -96,7 +107,7 @@ class VerificationSuite:
                 "summary": "테스트 요약",
                 "articles": [{"title": "기사 A", "link": "https://example.com"}]
             }]
-            html = main.generate_html_email("2026-09-06", test_exec, test_github, test_cats, "https://example.com/form")
+            html = tech_main.generate_html_email("2026-09-06", test_exec, test_github, test_cats, "https://example.com/form")
             
             assert "<!DOCTYPE html>" in html
             assert "max-width:680px" in html
@@ -104,7 +115,11 @@ class VerificationSuite:
             assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in html or "Section 2: GitHub Trending" in html
             assert "Section 3: 관심 분야별 심층 뉴스" in html
             
-            self.record_result("HTML Email Template Rendering", True, f"인라인 CSS 및 680px 반응형 카드 템플릿 정상 생성 ({len(html):,} bytes)")
+            fin_html = finance_main.generate_html_email("2026-09-06", "### 1. Global Macro", "https://example.com/form")
+            assert "<!DOCTYPE html>" in fin_html
+            assert "Money Snowball" in fin_html
+
+            self.record_result("HTML Email Template Rendering", True, f"인라인 CSS 및 680px 반응형 카드 템플릿 정상 생성 (Tech/Finance)")
         except Exception as e:
             self.record_result("HTML Email Template Rendering", False, str(e))
 
@@ -120,14 +135,14 @@ class VerificationSuite:
             try:
                 test_subject = "[통합 검증 자동화] Daily News Summarizer 파이프라인 정상 가동 확인"
                 test_plain = "본 메일은 NewsSummarizer의 자동 통합 검증 시스템에 의해 발송된 테스트 리포트입니다."
-                test_html = main.generate_html_email(
+                test_html = tech_main.generate_html_email(
                     "2026-09-06 (통합 검증)",
                     "### 🚀 자동 검증 완료\n- 모든 파이프라인이 정상 가동 중입니다.",
                     "### 1위. [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) (★ 39,439)\n- **🎯 정의**: 2nd Brain 레퍼런스",
                     [{"name": "통합 검증", "summary": "정상 작동 확인", "articles": [{"title": "검증 완료", "link": "https://github.com/KIHOKIL/MyWiki"}]}],
                     "https://docs.google.com/forms/d/e/1FAIpQLSdPTpkieDY9RNHdJohQjH5cd4VYcQG2lCIfFWeI9dsmnKzcbQ/viewform?usp=dialog"
                 )
-                main.send_email(test_subject, test_plain, html_content=test_html)
+                tech_main.send_email(test_subject, test_plain, html_content=test_html)
                 self.record_result("Email Dispatch (Live SMTP)", True, f"수신자({receiver})에게 실시간 테스트 이메일 발송 성공")
             except Exception as e:
                 self.record_result("Email Dispatch (Live SMTP)", False, f"실발송 실패: {e}")

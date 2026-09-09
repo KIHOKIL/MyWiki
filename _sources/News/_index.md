@@ -13,9 +13,10 @@
 - [[2026-08-30_News_Briefing.md]] — [Global Mobile Communication Industry Briefing] 6G 패권 경쟁과 AI-Native 네트워크로의 전환
 - [[2026-08-31_News_Briefing.md]] — [Global Mobile Communication Industry Briefing] 6G/AI 기반의 차세대 네트워크 패러다임 전환
 - [[2026-09-01_News_Briefing.md]] — [Global Mobile Communication Industry Briefing]
+- [[2026-09-06_News_Briefing.md]] — [2026년 09월 06일] Group 2nd Brain & Tech Horizon 브리핑
 
 ## 관련 위키 페이지
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-09-05*
+*마지막 갱신: 2026-09-06*

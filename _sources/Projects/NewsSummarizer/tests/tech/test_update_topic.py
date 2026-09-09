@@ -9,6 +9,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from agents.tech import update_topic
 
 def test_update_config_gemini_success(mocker):
+    mocker.patch("time.sleep")
     """Gemini API가 Issue를 파싱하여 성공적으로 config.json을 반환하는지 검증"""
     # config.json 읽기/쓰기 Mock
     mocker.patch("builtins.open", mocker.mock_open(read_data='{"categories": []}'))
@@ -30,26 +31,15 @@ def test_update_config_gemini_success(mocker):
     mock_client.models.generate_content.assert_called_once()
     mock_openai.assert_not_called()
     
-def test_update_config_gemini_fail_openai_fallback(mocker, monkeypatch):
-    """Gemini 실패 시 OpenAI로 Fallback 되어 config.json을 반환하는지 검증"""
+def test_update_config_gemini_fail(mocker, monkeypatch):
+    mocker.patch("time.sleep")
+    import pytest
     mocker.patch("builtins.open", mocker.mock_open(read_data='{"categories": []}'))
     
-    # Gemini 강제 실패
     mock_client = MagicMock()
     mock_client.models.generate_content.side_effect = Exception("Gemini Rate Limit")
     mocker.patch("agents.tech.update_topic.genai.Client", return_value=mock_client)
     
-    # OpenAI 응답 Mock
-    mock_openai_client = MagicMock()
-    mock_completion = MagicMock()
-    mock_completion.message.content = '{"categories": [{"name": "Quantum", "queries": ["Quantum"], "focus": "Quantum trends"}]}'
-    mock_openai_client.chat.completions.create.return_value = MagicMock(choices=[mock_completion])
-    
-    mocker.patch("agents.tech.update_topic.OpenAI", return_value=mock_openai_client)
-    
-    # 실행
-    update_topic.update_config("이슈 제목: Quantum 추가", "")
-    
-    # 검증
-    assert mock_client.models.generate_content.call_count == 3
-    mock_openai_client.chat.completions.create.assert_called_once()
+    with pytest.raises(SystemExit):
+        update_topic.update_config("이슈 제목: Quantum 추가", "")
+

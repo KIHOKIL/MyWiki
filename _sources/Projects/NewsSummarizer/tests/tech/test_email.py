@@ -6,7 +6,7 @@ from email.message import EmailMessage
 # Add parent directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import main
+from agents.tech import main
 
 def test_generate_html_email_output():
     """generate_html_email 함수가 680px 너비의 반응형 HTML 및 각 섹션 카드를 올바르게 생성하는지 검증"""
@@ -41,10 +41,10 @@ def test_send_email_multipart_construction(mocker):
     mock_smtp_instance = MagicMock()
     mock_smtp_class.return_value.__enter__.return_value = mock_smtp_instance
 
-    mocker.patch("main.EMAIL_SENDER", "test_sender@gmail.com")
-    mocker.patch("main.EMAIL_PASSWORD", "app_password_1234")
-    mocker.patch("main.EMAIL_RECEIVER", "receiver1@gmail.com, receiver2@gmail.com")
-    mocker.patch("main.get_additional_subscribers", return_value=["receiver3@gmail.com"])
+    mocker.patch("agents.tech.main.EMAIL_SENDER", "test_sender@gmail.com")
+    mocker.patch("agents.tech.main.EMAIL_PASSWORD", "app_password_1234")
+    mocker.patch("agents.tech.main.EMAIL_RECEIVER", "receiver1@gmail.com, receiver2@gmail.com")
+    mocker.patch("agents.tech.main.get_additional_subscribers", return_value=["receiver3@gmail.com"])
 
     subject = "[테스트] 3단계 브리핑 발송"
     plain_content = "플레인 텍스트 본문"
@@ -75,8 +75,8 @@ def test_send_email_multipart_construction(mocker):
 def test_send_email_skips_when_credentials_missing(mocker):
     """이메일 설정(발신자나 비밀번호)이 없을 때 전송을 안전하게 건너뛰는지 검증"""
     mock_smtp_class = mocker.patch("smtplib.SMTP_SSL")
-    mocker.patch("main.EMAIL_SENDER", "your_email@gmail.com")
-    mocker.patch("main.EMAIL_PASSWORD", "")
+    mocker.patch("agents.tech.main.EMAIL_SENDER", "your_email@gmail.com")
+    mocker.patch("agents.tech.main.EMAIL_PASSWORD", "")
 
     main.send_email("테스트 제목", "내용")
     mock_smtp_class.assert_not_called()
@@ -84,9 +84,9 @@ def test_send_email_skips_when_credentials_missing(mocker):
 def test_send_email_handles_smtp_exception(mocker):
     """SMTP 연결 중 예외 발생 시 프로그램이 비정상 종료되지 않고 에러를 안전하게 로깅하는지 검증"""
     mock_smtp_class = mocker.patch("smtplib.SMTP_SSL", side_effect=Exception("SMTP Connection Error"))
-    mocker.patch("main.EMAIL_SENDER", "test@gmail.com")
-    mocker.patch("main.EMAIL_PASSWORD", "pwd")
-    mocker.patch("main.EMAIL_RECEIVER", "rec@gmail.com")
+    mocker.patch("agents.tech.main.EMAIL_SENDER", "test@gmail.com")
+    mocker.patch("agents.tech.main.EMAIL_PASSWORD", "pwd")
+    mocker.patch("agents.tech.main.EMAIL_RECEIVER", "rec@gmail.com")
 
     # 예외가 발생해도 외부로 raise되지 않아야 함
     main.send_email("제목", "내용", html_content="<p>내용</p>")
@@ -96,7 +96,7 @@ def test_get_additional_subscribers_regex(mocker):
     """CSV 데이터로부터 이메일 주소를 정규식으로 정확히 추출하고 중복을 제거하는지 검증"""
     csv_mock_content = "Name,Email,Date\n홍길동,hong@test.com,2026-09-01\n이순신,lee@test.com,2026-09-02\n중복,hong@test.com,2026-09-03"
     
-    mocker.patch("main.SUBSCRIBERS_CSV_URL", "https://example.com/subscribers.csv")
+    mocker.patch("agents.tech.main.SUBSCRIBERS_CSV_URL", "https://example.com/subscribers.csv")
     
     mock_resp = MagicMock()
     mock_resp.read.return_value = csv_mock_content.encode('utf-8')

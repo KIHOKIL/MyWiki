@@ -9,6 +9,7 @@ import csv
 import io
 import re
 from datetime import datetime, timezone, timedelta
+from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
 from google import genai
 from dotenv import load_dotenv
 
@@ -89,7 +90,7 @@ created: "{datetime.now(timezone(timedelta(hours=9))).strftime('%Y-%m-%d %H:%M:%
 (금 가격 동향, 국채 금리 변동 및 채권 시장 시사점)
 """
     response = client.models.generate_content(
-        model='gemini-3.1-flash-lite',
+        model='gemini-3.6-flash',
         contents=prompt
     )
     return response.text

@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/tmpl_python_agent.yml
     with:
       working_directory: '_sources/Projects/NewsSummarizer'
-      script_command: 'python main.py'
+      script_command: 'python agents/tech/main.py'
       commit_message: "📝 자동 요약 뉴스 브리핑 추가"
       file_pattern: "_sources/News/Daily_Summaries/*.md"
       download_path: "_sources/News/Daily_Summaries"

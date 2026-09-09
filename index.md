@@ -4,7 +4,7 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-09-04*
+*This index is automatically maintained. Last updated: 2026-09-06*
 
 ## Concepts
 
@@ -38,6 +38,7 @@ title: Wiki Index
 - [[llm-wiki-workflow]]
 - [[mcp-server]]
 - [[memgpt]]
+- [[memory-tree]]
 - [[moe-streaming]]
 - [[multi-agent-code-review]]
 - [[multi-tier-knowledge-architecture]]
@@ -74,6 +75,7 @@ title: Wiki Index
 - [[rhema]]
 - [[slotstream]]
 - [[smolcoder]]
+- [[tokenjuice]]
 - [[unitree]]
 - [[weknora]]
 - [[xwiki]]

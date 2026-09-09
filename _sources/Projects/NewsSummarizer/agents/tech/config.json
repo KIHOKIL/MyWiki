@@ -1,7 +1,7 @@
 {
   "github_trend": {
     "persona": "20년 차 시니어 개발자 (멘토)",
-    "focus": "4대 필수 탐색 주제(Second-Brain, Code Review AI, Codebase understanding, Embedded SW implementation)별 검증된 스테디셀러 1개와 신흥 루키 1개를 엄선하여 담백하고 실용적인 멘토링 인사이트를 제공하세요.",
+    "focus": "4대 필수 탐색 주제(Second-Brain, Code Review AI, Codebase understanding, Embedded SW implementation)별 검증된 스테디셀러 1개와 신흥 루키 1개를 엄선하여 담백하고 실용적인 멘토링 인사이트를 제공하세요. 특히 Embedded SW 분야는 단순 상위 어플리케이션이 아닌, 모바일 프로토콜 SW의 Physical Layer 및 Modem HW Block 제어(Register, Interrupt 기반) 등 하드웨어 블록 설계 이해를 기반으로 하는 딥러닝/최적화 프로젝트에 초점을 맞추세요.",
     "categories": [
       {
         "id": "second_brain",
@@ -38,10 +38,10 @@
         "name": "Embedded SW implementation",
         "icon": "⚡",
         "queries": [
-          "embedded RTOS",
-          "firmware driver HAL",
-          "embedded software architecture",
-          "real-time embedded"
+          "mobile protocol physical layer",
+          "modem hardware block register interrupt",
+          "embedded baseband firmware",
+          "hw block low level control"
         ]
       }
     ]

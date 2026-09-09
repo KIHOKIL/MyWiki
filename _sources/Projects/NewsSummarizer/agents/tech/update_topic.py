@@ -57,7 +57,7 @@ Output the final JSON string:
     for attempt in range(max_retries):
         try:
             response = client.models.generate_content(
-                model='gemini-3.5-flash',
+                model='gemini-3.6-flash',
                 contents=prompt,
                 config=types.GenerateContentConfig(
                     temperature=0.2,
@@ -72,26 +72,8 @@ Output the final JSON string:
                 print("Retrying in 10 seconds...")
                 time.sleep(10)
             else:
-                print("All retries for Gemini failed. Falling back to OpenAI (gpt-4o-mini)...")
-                openai_api_key = os.getenv("OPENAI_API_KEY")
-                if not openai_api_key:
-                    print("Error: OPENAI_API_KEY environment variable is not set for fallback.")
-                    sys.exit(1)
-                    
-                openai_client = OpenAI(api_key=openai_api_key)
-                try:
-                    response = openai_client.chat.completions.create(
-                        model="gpt-4o-mini",
-                        messages=[
-                            {"role": "system", "content": "You are a JSON generator. Output only valid JSON without markdown formatting. The output must be pure JSON."},
-                            {"role": "user", "content": prompt}
-                        ],
-                        temperature=0.2
-                    )
-                    new_config_str = response.choices[0].message.content.strip()
-                except Exception as oe:
-                    print(f"Error calling OpenAI fallback: {oe}")
-                    sys.exit(1)
+                print("All retries for Gemini failed.")
+                sys.exit(1)
     
     # Strip out any potential markdown blocks or SDK warnings appended by the model
     if new_config_str.startswith("```json"):

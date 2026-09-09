@@ -16,7 +16,7 @@ import io
 import re
 from datetime import datetime, timezone, timedelta
 import time
-from tenacity import retry, wait_exponential, stop_after_attempt, retry_if_exception_type
+from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
 
 # Windows 콘솔 환경(CP949) 이모지 및 유니코드 출력 호환성 보장
 try:
@@ -221,6 +221,25 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=16):
     GitHub Search API를 사용하여 4대 관심 주제별 최상위 오픈소스 저장소를 수집합니다.
     categories_or_queries: config.json의 카테고리 설정(list of dicts) 또는 쿼리 리스트(list of strings)
     """
+    # ----------------------------------------------------
+    # 로컬 캐싱 적용 (24시간)
+    # ----------------------------------------------------
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    raw_dir = os.path.join(base_dir, "_raw")
+    os.makedirs(raw_dir, exist_ok=True)
+    cache_file = os.path.join(raw_dir, "github_cache.json")
+    CACHE_EXPIRY = 24 * 60 * 60
+
+    if os.path.exists(cache_file):
+        try:
+            with open(cache_file, "r", encoding="utf-8") as f:
+                cached_data = json.load(f)
+            if time.time() - cached_data.get("timestamp", 0) < CACHE_EXPIRY:
+                print("  [Notice] 24시간 이내의 GitHub 트렌드 검색 로컬 캐시를 사용합니다.")
+                return cached_data.get("candidates", [])[:max_candidates]
+        except Exception as e:
+            print(f"  [Warning] 캐시 파일 로드 실패: {e}")
+
     default_cat_list = [
         {"id": "second_brain", "name": "Second-Brain", "icon": "🧠", "queries": ["topic:second-brain", "personal knowledge management AI", "obsidian agent"]},
         {"id": "code_review_ai", "name": "Code Review AI", "icon": "🔍", "queries": ["code review AI", "PR agent LLM", "automated code review"]},
@@ -297,6 +316,16 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=16):
                 if repo["full_name"] not in seen_repos:
                     seen_repos.add(repo["full_name"])
                     candidates.append(repo)
+
+    # 검색 또는 Fallback으로 수집된 결과를 로컬 캐시에 저장
+    try:
+        with open(cache_file, "w", encoding="utf-8") as f:
+            json.dump({
+                "timestamp": time.time(),
+                "candidates": candidates
+            }, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"  [Warning] 로컬 캐시 쓰기 실패: {e}")
 
     return candidates[:max_candidates]
 
@@ -397,7 +426,7 @@ def summarize_news_gemini(category_name, focus, articles):
     sys_instruction, prompt = _build_news_prompt(category_name, focus, articles)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
-        model='gemini-3.1-flash-lite',
+        model='gemini-3.6-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -421,12 +450,13 @@ def summarize_news_openai(category_name, focus, articles):
     )
     return response.choices[0].message.content
 
-@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_summarize_news(category_name, focus, articles):
     print(f"  [{category_name}] Gemini 분석 요청 중...")
+    import time; time.sleep(5)
     return summarize_news_gemini(category_name, focus, articles)
 
-@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_summarize_news_openai(category_name, focus, articles):
     print(f"  [{category_name}] OpenAI (Fallback) 분석 요청 중...")
     return summarize_news_openai(category_name, focus, articles)
@@ -560,7 +590,7 @@ def analyze_github_gemini(focus, candidates):
     sys_instruction, prompt = _build_github_prompt(focus, candidates)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
-        model='gemini-3.1-flash-lite',
+        model='gemini-3.6-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -582,12 +612,13 @@ def analyze_github_openai(focus, candidates):
     )
     return response.choices[0].message.content
 
-@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_analyze_github_trending(focus, candidates):
     print("  [GitHub Trending] Gemini 4대 분야 분석 요청 중...")
+    import time; time.sleep(5)
     return analyze_github_gemini(focus, candidates)
 
-@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_analyze_github_trending_openai(focus, candidates):
     print("  [GitHub Trending] OpenAI (Fallback) 4대 분야 분석 요청 중...")
     return analyze_github_openai(focus, candidates)
@@ -627,7 +658,7 @@ def generate_executive_gemini(articles_summary_text, github_summary_text):
     sys_instruction, prompt = _build_executive_prompt(articles_summary_text, github_summary_text)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = client.models.generate_content(
-        model='gemini-3.1-flash-lite',
+        model='gemini-3.6-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -649,12 +680,13 @@ def generate_executive_openai(articles_summary_text, github_summary_text):
     )
     return response.choices[0].message.content
 
-@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_generate_executive_summary(articles_summary_text, github_summary_text):
     print("  [Executive Summary] Gemini 종합 분석 요청 중...")
+    import time; time.sleep(5)
     return generate_executive_gemini(articles_summary_text, github_summary_text)
 
-@retry(wait=wait_exponential(multiplier=2, min=4, max=60), stop=stop_after_attempt(5))
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_generate_executive_summary_openai(articles_summary_text, github_summary_text):
     print("  [Executive Summary] OpenAI (Fallback) 종합 분석 요청 중...")
     return generate_executive_openai(articles_summary_text, github_summary_text)

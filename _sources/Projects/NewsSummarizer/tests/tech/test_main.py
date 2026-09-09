@@ -5,32 +5,32 @@ from unittest.mock import MagicMock
 # Add parent directory to sys.path so we can import main
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-import main
+from agents.tech import main
 
 def test_fallback_logic_in_main(mocker):
     """Gemini API가 5회 재시도 후 최종 실패할 때 OpenAI로 자동 Fallback 되는지 검증"""
-    mocker.patch("main.load_config", return_value={
+    mocker.patch("agents.tech.main.load_config", return_value={
         "categories": [{"name": "Tech", "queries": ["AI"], "focus": "Test"}],
         "github_trend": {"queries": ["test"], "focus": "test focus"}
     })
     
     mock_article = {"title": "Test Title", "link": "http://test.com", "published": "2026-08-16"}
-    mocker.patch("main.fetch_google_news", return_value=[mock_article])
-    mocker.patch("main.fetch_github_trending", return_value=[{
+    mocker.patch("agents.tech.main.fetch_google_news", return_value=[mock_article])
+    mocker.patch("agents.tech.main.fetch_github_trending", return_value=[{
         "full_name": "test/repo", "html_url": "http://github.com/test/repo",
         "description": "test", "stars": 100, "language": "Python", "topics": []
     }])
     
-    mock_gemini = mocker.patch("main.safe_summarize_news", side_effect=Exception("Gemini Rate Limit"))
-    mock_openai = mocker.patch("main.safe_summarize_news_openai", return_value="OpenAI Summary")
+    mock_gemini = mocker.patch("agents.tech.main.safe_summarize_news", side_effect=Exception("Gemini Rate Limit"))
+    mock_openai = mocker.patch("agents.tech.main.safe_summarize_news_openai", return_value="OpenAI Summary")
     
-    mocker.patch("main.safe_analyze_github_trending", return_value="GitHub Trending Analysis")
-    mocker.patch("main.safe_generate_executive_summary", return_value="Executive Summary Analysis")
+    mocker.patch("agents.tech.main.safe_analyze_github_trending", return_value="GitHub Trending Analysis")
+    mocker.patch("agents.tech.main.safe_generate_executive_summary", return_value="Executive Summary Analysis")
     
-    mock_send_email = mocker.patch("main.send_email")
-    mock_save = mocker.patch("main.save_to_markdown")
+    mock_send_email = mocker.patch("agents.tech.main.send_email")
+    mock_save = mocker.patch("agents.tech.main.save_to_markdown")
     mocker.patch("time.sleep")
-    mocker.patch("main.OPENAI_API_KEY", "fake_key")
+    mocker.patch("agents.tech.main.OPENAI_API_KEY", "fake_key")
     
     main.main()
     
@@ -47,21 +47,21 @@ def test_fallback_logic_in_main(mocker):
 
 def test_all_api_fail_in_main(mocker):
     """Gemini, OpenAI 모두 실패했을 때 [요약 일부 실패] 에러 핸들링 검증"""
-    mocker.patch("main.load_config", return_value={
+    mocker.patch("agents.tech.main.load_config", return_value={
         "categories": [{"name": "Tech", "queries": ["AI"], "focus": "Test"}]
     })
-    mocker.patch("main.fetch_google_news", return_value=[{"title": "Fail", "link": "link", "published": "date"}])
-    mocker.patch("main.fetch_github_trending", return_value=[])
+    mocker.patch("agents.tech.main.fetch_google_news", return_value=[{"title": "Fail", "link": "link", "published": "date"}])
+    mocker.patch("agents.tech.main.fetch_github_trending", return_value=[])
     mocker.patch("time.sleep")
     
-    mock_gemini = mocker.patch("main.safe_summarize_news", side_effect=Exception("Gemini Fail"))
-    mock_openai = mocker.patch("main.safe_summarize_news_openai", side_effect=Exception("OpenAI Fail"))
-    mocker.patch("main.safe_analyze_github_trending", return_value="GitHub Trending Analysis")
-    mocker.patch("main.safe_generate_executive_summary", return_value="Executive Summary Analysis")
+    mock_gemini = mocker.patch("agents.tech.main.safe_summarize_news", side_effect=Exception("Gemini Fail"))
+    mock_openai = mocker.patch("agents.tech.main.safe_summarize_news_openai", side_effect=Exception("OpenAI Fail"))
+    mocker.patch("agents.tech.main.safe_analyze_github_trending", return_value="GitHub Trending Analysis")
+    mocker.patch("agents.tech.main.safe_generate_executive_summary", return_value="Executive Summary Analysis")
     
-    mock_send_email = mocker.patch("main.send_email")
-    mocker.patch("main.save_to_markdown")
-    mocker.patch("main.OPENAI_API_KEY", "fake_key")
+    mock_send_email = mocker.patch("agents.tech.main.send_email")
+    mocker.patch("agents.tech.main.save_to_markdown")
+    mocker.patch("agents.tech.main.OPENAI_API_KEY", "fake_key")
     
     main.main()
     
@@ -76,7 +76,7 @@ def test_all_api_fail_in_main(mocker):
 
 def test_three_sections_and_html_email_generation(mocker):
     """Section 1, Section 2, Section 3 및 반응형 HTML 이메일 포맷 생성 검증"""
-    mocker.patch("main.load_config", return_value={
+    mocker.patch("agents.tech.main.load_config", return_value={
         "categories": [
             {"name": "Group 2nd Brain", "queries": ["2nd brain"], "focus": "Brain focus"},
             {"name": "Codebase Understanding", "queries": ["code review"], "focus": "Codebase focus"}
@@ -84,10 +84,10 @@ def test_three_sections_and_html_email_generation(mocker):
         "github_trend": {"queries": ["second-brain"], "focus": "GitHub focus"}
     })
     
-    mocker.patch("main.fetch_google_news", return_value=[
+    mocker.patch("agents.tech.main.fetch_google_news", return_value=[
         {"title": "Sample News Title", "link": "https://sample.com/news", "published": "2026-09-06"}
     ])
-    mocker.patch("main.fetch_github_trending", return_value=[
+    mocker.patch("agents.tech.main.fetch_github_trending", return_value=[
         {
             "full_name": "tinyhumansai/openhuman",
             "html_url": "https://github.com/tinyhumansai/openhuman",
@@ -99,12 +99,12 @@ def test_three_sections_and_html_email_generation(mocker):
     ])
     mocker.patch("time.sleep")
     
-    mocker.patch("main.safe_summarize_news", side_effect=lambda name, focus, arts: f"Summary for {name}")
-    mocker.patch("main.safe_analyze_github_trending", return_value="### 1위. [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) (★ 39,400)\n- **🎯 한 줄 정의**: 오픈소스 개인용 AI")
-    mocker.patch("main.safe_generate_executive_summary", return_value="### 🚀 오늘 주목해야 할 핵심 혁신 (Key Innovations)\n- 사내 지식 그래프와 로컬 에이전트 결합")
+    mocker.patch("agents.tech.main.safe_summarize_news", side_effect=lambda name, focus, arts: f"Summary for {name}")
+    mocker.patch("agents.tech.main.safe_analyze_github_trending", return_value="### 1위. [tinyhumansai/openhuman](https://github.com/tinyhumansai/openhuman) (★ 39,400)\n- **🎯 한 줄 정의**: 오픈소스 개인용 AI")
+    mocker.patch("agents.tech.main.safe_generate_executive_summary", return_value="### 🚀 오늘 주목해야 할 핵심 혁신 (Key Innovations)\n- 사내 지식 그래프와 로컬 에이전트 결합")
     
-    mock_send_email = mocker.patch("main.send_email")
-    mock_save = mocker.patch("main.save_to_markdown")
+    mock_send_email = mocker.patch("agents.tech.main.send_email")
+    mock_save = mocker.patch("agents.tech.main.save_to_markdown")
     
     main.main()
     
