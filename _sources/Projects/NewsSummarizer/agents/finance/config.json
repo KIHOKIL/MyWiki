@@ -1,0 +1,28 @@
+{
+  "categories": [
+    {
+      "name": "US Macro & Policy",
+      "queries": ["Federal Reserve", "US inflation CPI PCE", "US jobs report payrolls", "S&P 500 Nasdaq macro"],
+      "focus": "연준(Fed) 통화 정책, 금리 인상/인하 전망, 인플레이션(CPI/PCE) 및 고용 지표 발표가 미국 거시 경제와 주식 시장 전반에 미치는 영향"
+    },
+    {
+      "name": "US Treasury & Bonds",
+      "queries": ["US Treasury yield 10 year", "US bond market", "yield curve inversion"],
+      "focus": "미 국채 금리(특히 10년물 및 2년물) 변동, 장단기 금리 역전 현상, 채권 시장 자금 흐름 및 연준 정책에 대한 채권 시장의 반응"
+    },
+    {
+      "name": "Gold & Safe Havens",
+      "queries": ["Gold price XAU", "Central bank gold reserves", "safe haven assets macro"],
+      "focus": "인플레이션 헤지 수단으로서의 금 가격 동향, 지정학적 리스크 및 거시 경제 불확실성에 따른 안전 자산 선호도, 글로벌 중앙은행의 금 매입 동향"
+    },
+    {
+      "name": "US Equity ETFs & Sectors",
+      "queries": ["SPY QQQ ETF flows", "US sector rotation", "long-term asset allocation"],
+      "focus": "주요 미국 지수 추종 ETF(SPY, QQQ 등)의 자금 유출입(Fund flows), 섹터 로테이션 동향, 10년 이상의 장기 자산 배분 관점에서의 시장 시사점"
+    }
+  ],
+  "github_trend": {
+    "queries": ["quant finance trading", "macroeconomic data analysis", "portfolio optimization python"],
+    "focus": "퀀트 투자, 백테스팅, 포트폴리오 최적화, 거시 경제 데이터 수집 및 분석에 활용되는 오픈소스 프로젝트 동향"
+  }
+}
