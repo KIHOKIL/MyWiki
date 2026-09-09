@@ -49,6 +49,7 @@ def fetch_google_news(query, max_articles=3):
         print(f"Error fetching {query}: {e}")
         return []
 
+@retry(stop=stop_after_attempt(3), wait=wait_fixed(5), reraise=True)
 def generate_finance_report(news_data):
     client = genai.Client(api_key=GEMINI_API_KEY)
     
