@@ -11,6 +11,10 @@ on:
       - '_sources/Projects/NewsSummarizer/**'
   workflow_dispatch: # 수동으로 원클릭 통합 검증 실행 지원
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   test-news-summarizer:
     uses: ./.github/workflows/tmpl_python_ci.yml
