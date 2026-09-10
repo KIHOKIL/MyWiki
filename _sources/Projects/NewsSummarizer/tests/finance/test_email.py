@@ -90,6 +90,35 @@ def test_get_additional_subscribers_regex(mocker):
     assert "hong@test.com" in emails
     assert "lee@test.com" in emails
 
+def test_get_additional_subscribers_google_sheets_discovery(mocker):
+    """Google Sheets URL(/pub?output=csv 등)에서 pubhtml로 여러 시트 gid를 자동 탐색하여 이메일을 수집하는지 검증"""
+    mocker.patch("agents.finance.main.SUBSCRIBERS_CSV_URL", "https://docs.google.com/spreadsheets/d/e/2PACX-test/pub?output=csv")
+    
+    html_mock = '<html><body><a href="?gid=12345">Sheet1</a><a href="?gid=67890">Sheet2</a></body></html>'
+    csv1_mock = "Name,Email\nUser1,user1@test.com"
+    csv2_mock = "Name,Email\nUser2,user2@test.com"
+
+    def mock_urlopen(req, timeout=10):
+        url = req.full_url if hasattr(req, 'full_url') else req
+        resp = MagicMock()
+        if "pubhtml" in url:
+            resp.read.return_value = html_mock.encode('utf-8')
+        elif "gid=12345" in url:
+            resp.read.return_value = csv1_mock.encode('utf-8')
+        elif "gid=67890" in url:
+            resp.read.return_value = csv2_mock.encode('utf-8')
+        else:
+            resp.read.return_value = b""
+        resp.__enter__.return_value = resp
+        return resp
+
+    mocker.patch("urllib.request.urlopen", side_effect=mock_urlopen)
+
+    emails = main.get_additional_subscribers()
+    assert len(emails) == 2
+    assert "user1@test.com" in emails
+    assert "user2@test.com" in emails
+
 def test_markdown_to_clean_html_table_parsing():
     md_table = """### 📊 다각화 매트릭스
 

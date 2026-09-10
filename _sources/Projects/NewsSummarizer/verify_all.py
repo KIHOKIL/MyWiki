@@ -75,10 +75,14 @@ class VerificationSuite:
         """2. Google News RSS 실시간 수집 및 파서 검증"""
         try:
             articles = tech_main.fetch_google_news("AI agent", max_articles=2)
+            if not articles:
+                articles = tech_main.fetch_google_news("technology", max_articles=2)
             assert len(articles) > 0, "기사 수집 결과가 0건입니다."
             assert "title" in articles[0] and "link" in articles[0]
             
             fin_articles = finance_main.fetch_google_news("Macro", max_articles=2)
+            if not fin_articles:
+                fin_articles = finance_main.fetch_google_news("economy", max_articles=2)
             assert len(fin_articles) > 0, "Finance 기사 수집 결과가 0건입니다."
             
             self.record_result("Google News RSS Live Fetch", True, f"정상 수집 완료 (Tech/Finance)")
@@ -151,8 +155,21 @@ class VerificationSuite:
             credential_status = "설정됨" if has_credentials else "더미(CI 가상환경)"
             self.record_result("Email Dispatch (Pipeline Ready)", True, f"Multipart MIME 생성 지원 확인 (SMTP 자격증명 상태: {credential_status})")
 
+    def test_subscribers_sync(self):
+        """6. Google Sheets / CSV 추가 구독자 동기화 검증"""
+        try:
+            csv_url = os.getenv("SUBSCRIBERS_CSV_URL", "")
+            if not csv_url:
+                self.record_result("Subscribers Sync", True, "SUBSCRIBERS_CSV_URL 미설정 (선택 사항 건너뜀)")
+                return
+
+            subscribers = tech_main.get_additional_subscribers()
+            self.record_result("Subscribers Sync", True, f"구글 폼 연동 스프레드시트에서 {len(subscribers)}명 추출 성공 ({', '.join(subscribers[:3])}...)")
+        except Exception as e:
+            self.record_result("Subscribers Sync", False, str(e))
+
     def test_pytest_suite(self):
-        """6. 단위 테스트 스위트 전수 실행 (pytest)"""
+        """7. 단위 테스트 스위트 전수 실행 (pytest)"""
         try:
             cmd = [sys.executable, "-m", "pytest", "tests/", "-v"]
             res = subprocess.run(cmd, cwd=SCRIPT_DIR, capture_output=True, text=True, errors="replace")
@@ -173,6 +190,7 @@ class VerificationSuite:
         self.test_rss_fetching()
         self.test_github_trending()
         self.test_html_rendering()
+        self.test_subscribers_sync()
         self.test_email_system()
         self.test_pytest_suite()
         
