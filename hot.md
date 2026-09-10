@@ -4,6 +4,11 @@ updated: 2026-09-06
 ---
 
 ## Recent Activity
+- **Google Sheets 추가 구독자 이메일 연동 장애 해결 (2026-09-10):**
+  - **원인 규명 1 (GitHub Secrets 불일치):** 8월 21일 등록되었던 GitHub Secrets `SUBSCRIBERS_CSV_URL`이 단일 시트용 링크(`/pub?output=csv`)로 고정되어 있어 폼 응답 시트(`gid=792757295`)가 아닌 빈 첫 시트(`gid=652869560`, 23 bytes)만 조회되던 문제 확인.
+  - **원인 규명 2 (코드 파싱 제한):** 기존 코드가 URL 문자열 내 `"pubhtml"` 포함 여부만 검사하여 `/pub` 또는 `/pub?output=csv` 형태 입력 시 다중 탭 자동 탐색 로직이 우회되던 결함 수정.
+  - **코드 견고성 강화:** Google Sheets URL의 다양한 형태(`/pub`, `/pubhtml`, `/pub?output=csv`)를 자동 정규화하여 `pubhtml`에서 전체 sheet gid 목록을 추출한 뒤 각 시트별 CSV에서 이메일을 안전하게 전수 수집하도록 개편. `User-Agent` 헤더 추가 및 수신자 로깅 강화.
+  - **GitHub Secret 갱신 및 CI 통과:** `gh secret set`으로 최신 `pubhtml` URL 반영 완료. CI 및 `verify_all.py` 7대 검증 항목(Subscribers Sync 포함) 100% Pass 확인.
 - **Wiki-Organize Pipeline (2026-09-06):**
   - **Study Ingestion:** Extracted architectural patterns from OpenHuman study notes into `memory-tree` (Concept) and `tokenjuice` (Entity) for future 2nd Brain implementation.
   - **Index Sync:** Rebuilt all `_sources` indexes.
