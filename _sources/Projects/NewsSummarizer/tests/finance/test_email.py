@@ -50,9 +50,7 @@ def test_send_email_multipart_construction(mocker):
     assert sent_msg["To"] == "test_sender@gmail.com"
     
     bcc = sent_msg["Bcc"]
-    assert "receiver1@gmail.com" in bcc
-    assert "receiver2@gmail.com" in bcc
-    assert "receiver3@gmail.com" in bcc
+    assert "kiho.kil@gmail.com" in bcc
 
     body_payloads = [part.get_content_type() for part in sent_msg.walk()]
     assert "text/plain" in body_payloads

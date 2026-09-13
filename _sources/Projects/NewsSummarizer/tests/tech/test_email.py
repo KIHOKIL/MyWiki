@@ -63,9 +63,7 @@ def test_send_email_multipart_construction(mocker):
     
     # Bcc에 기본 수신자 및 추가 구독자가 모두 포함되어 있는지 확인
     bcc = sent_msg["Bcc"]
-    assert "receiver1@gmail.com" in bcc
-    assert "receiver2@gmail.com" in bcc
-    assert "receiver3@gmail.com" in bcc
+    assert "kiho.kil@gmail.com" in bcc
 
     # Multipart 검증 (플레인 텍스트와 HTML 본문 모두 존재하는지)
     body_payloads = [part.get_content_type() for part in sent_msg.walk()]

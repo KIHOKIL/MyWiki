@@ -74,15 +74,15 @@ class VerificationSuite:
     def test_rss_fetching(self):
         """2. Google News RSS 실시간 수집 및 파서 검증"""
         try:
-            articles = tech_main.fetch_google_news("AI agent", max_articles=2)
+            articles = tech_main.fetch_google_news("AI agent", "test focus", "test cat", max_articles=2)
             if not articles:
-                articles = tech_main.fetch_google_news("technology", max_articles=2)
+                articles = tech_main.fetch_google_news("technology", "test focus", "test cat", max_articles=2)
             assert len(articles) > 0, "기사 수집 결과가 0건입니다."
             assert "title" in articles[0] and "link" in articles[0]
             
-            fin_articles = finance_main.fetch_google_news("Macro", max_articles=2)
+            fin_articles = finance_main.fetch_google_news("Macro", "test focus", "test cat", max_articles=2)
             if not fin_articles:
-                fin_articles = finance_main.fetch_google_news("economy", max_articles=2)
+                fin_articles = finance_main.fetch_google_news("economy", "test focus", "test cat", max_articles=2)
             assert len(fin_articles) > 0, "Finance 기사 수집 결과가 0건입니다."
             
             self.record_result("Google News RSS Live Fetch", True, f"정상 수집 완료 (Tech/Finance)")

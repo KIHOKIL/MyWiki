@@ -28,8 +28,11 @@ def test_fetch_google_news(mocker):
     mock_resp.read.return_value = mock_xml
     mock_resp.__enter__.return_value = mock_resp
     mocker.patch("urllib.request.urlopen", return_value=mock_resp)
+    
+    # Mock validation so articles aren't discarded
+    mocker.patch("agents.finance.main.validate_source_item", return_value=(True, ""))
 
-    articles = main.fetch_google_news("Macro", max_articles=2)
+    articles = main.fetch_google_news("Macro", "test focus", "test cat", max_articles=2)
     assert len(articles) == 2
     assert articles[0]["title"] == "Test Finance Article 1"
     assert articles[0]["link"] == "https://example.com/finance1"
