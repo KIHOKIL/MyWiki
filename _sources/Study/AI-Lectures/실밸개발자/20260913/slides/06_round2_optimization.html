@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Round 2 · 성능 최적화 ("생성 시간을 절반으로") — 실밸개발자 AI 강의</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #e6edf3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 0.35s ease forwards;
+}
+body.fade-out { animation: fadeOut 0.25s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+.container {
+  width: 1280px;
+  max-width: 95vw;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: #8b949e;
+  text-align: center;
+  max-width: 860px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.card {
+  background: rgba(139, 148, 158, 0.04);
+  border: 1px solid rgba(139, 148, 158, 0.12);
+  border-radius: 16px;
+  padding: 24px 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-2px);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.model-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.model-name { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.model-fable { color: #f43f5e; }
+.model-astra { color: #10b981; }
+.model-pill {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.pill-fable { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.pill-astra { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+.prompt-box {
+  background: #060911;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c9d1d9;
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+  white-space: pre-wrap;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #a78bfa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: #7c3aed; color: #fff; }
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.table-custom th {
+  background: rgba(124, 58, 237, 0.12);
+  color: #e6edf3;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+}
+.table-custom td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #c9d1d9;
+}
+.table-custom tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+.slide-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  background: rgba(10, 15, 26, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(124, 58, 237, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.slide-nav-inner {
+  width: 1280px;
+  max-width: 95vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+.slide-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #7c3aed;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.slide-nav a:hover { color: #38bdf8; }
+.slide-nav .nav-disabled { font-size: 14px; font-weight: 700; color: #484f58; cursor: default; }
+.slide-nav .nav-center { display: flex; align-items: center; gap: 16px; }
+.slide-nav .nav-center a { color: #8b949e; font-size: 13px; font-weight: 500; }
+.slide-nav .nav-center a:hover { color: #e6edf3; }
+.key-hint {
+  font-size: 11px;
+  color: #6e7681;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="badge">06. Round 2</div>
+  <h1 class="title">Round 2 · 성능 최적화 ("생성 시간을 절반으로")</h1>
+  <p class="subtitle">느린 썸네일 생성 파이프라인을 50% 단축하라. 단, 필수 기능을 훼손하지 말고 품질 저하 시 보고서에 명시하라.</p>
+  
+        <div class="prompt-box">
+<button class="copy-btn" onclick="copyPrompt(this)">복사</button>썸네일 생성이 너무 느립니다. 이를 절반(50%)으로 줄여주세요.
+[지켜야 할 규칙]
+1. 기존에 정상적으로 동작하는 필수 기능들은 하나도 변경하거나 누락하지 마세요.
+2. 만약 실행 시간 단축을 위해 이미지/텍스트의 품질을 의도적으로 떨어뜨리는 변경을 했다면, 반드시 최종 보고서에 어떤 품질을 희생했는지 명시하세요.</div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card" style="border-color:rgba(244,63,94,0.3);">
+            <div class="model-header">
+              <div class="model-name model-fable">Fable 5.1 (판정승 🏆)</div>
+              <span class="model-pill pill-fable">$47 · 1시간 30분 소요</span>
+            </div>
+            <ul style="color:#8b949e; font-size:14px; line-height:1.7; padding-left:18px;">
+              <li><strong>성능 개선율:</strong> 시나리오별 2~6% 단축 (P50/P90 20~30초 실질 단축)</li>
+              <li>1시간 30분 동안 집요하게 프로파일링하고 실제 병목 제거</li>
+              <li>품질 저하 없는 정밀한 백엔드/파이프라인 리팩토링 달성</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="model-header">
+              <div class="model-name model-astra">Astra 결과</div>
+              <span class="model-pill pill-astra">$22 · 24분 소요</span>
+            </div>
+            <ul style="color:#8b949e; font-size:14px; line-height:1.7; padding-left:18px;">
+              <li><strong>성능 개선율:</strong> 평균 1% 단축 (~10초 단축에 불과)</li>
+              <li>사람이 체감하기에 기존과 거의 동일한 속도</li>
+              <li>시간을 덜 쓰고 빠르게 끝냈으나 깊이 있는 병목 해소 실패</li>
+            </ul>
+          </div>
+        </div>
+        
+</div>
+
+<nav class="slide-nav">
+  <div class="slide-nav-inner">
+    <div class="nav-left"><a href="javascript:void(0)" onclick="goTo('05_round1_video.html')">← 이전 슬라이드</a></div>
+    <div class="nav-center">
+      <a href="index.html">☰ 전체 목차</a>
+      <span style="color:#484f58;">|</span>
+      <span style="color:#8b949e; font-size:13px;">6 / 12</span>
+      <span class="key-hint">좌우 방향키 [←] [→]</span>
+    </div>
+    <div class="nav-right"><a href="javascript:void(0)" onclick="goTo('07_round3_ui_redesign.html')">다음 슬라이드 →</a></div>
+  </div>
+</nav>
+
+<script>
+function goTo(url) {
+  if(!url) return;
+  document.body.classList.add('fade-out');
+  setTimeout(function() { window.location.href = url; }, 220);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowLeft' && '05_round1_video.html') goTo('05_round1_video.html');
+  if (e.key === 'ArrowRight' && '07_round3_ui_redesign.html') goTo('07_round3_ui_redesign.html');
+  if (e.key === 'Home') goTo('index.html');
+});
+function copyPrompt(btn) {
+  const code = btn.parentElement.innerText.replace('복사', '').trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const orig = btn.innerText;
+    btn.innerText = '복사됨! ✓';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.innerText = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1800);
+  });
+}
+</script>
+</body>
+</html>

@@ -22,11 +22,13 @@ title: Wiki Index
 - [[ai-native-junior]]
 - [[ai-native-ran]]
 - [[ax]]
+- [[bond-laddering]]
 - [[cognitive-overload]]
 - [[commit-linked-knowledge]]
 - [[context-compression]]
 - [[e2e-agentic-engineering-workflow]]
 - [[e2e-autonomous-driving]]
+- [[embedded-software]]
 - [[evidence-driven-engineering]]
 - [[graph-rag]]
 - [[harness-engineering]]
@@ -52,6 +54,9 @@ title: Wiki Index
 - [[vibe-coding]]
 - [[vla-model]]
 - [[wiki-layer-architecture]]
+- [[yield-curve-inversion]]
+
+
 
 ## Entities
 
@@ -60,13 +65,16 @@ title: Wiki Index
 - [[career-hacker-alex]]
 - [[codemate]]
 - [[ecc]]
+- [[fable-5-1]]
 - [[figure-ai]]
 - [[firefly-iii]]
 - [[google-vids]]
+- [[gpt-6-astra]]
 - [[headroom]]
 - [[improve-token-efficiency]]
 - [[isaac-groot]]
 - [[neo4j]]
+- [[news-summarizer]]
 - [[notebooklm]]
 - [[obsidian-llm-plugins]]
 - [[openhuman]]
@@ -79,6 +87,8 @@ title: Wiki Index
 - [[unitree]]
 - [[weknora]]
 - [[xwiki]]
+
+
 
 ## Skills
 

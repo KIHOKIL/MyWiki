@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obsidian LLM Wiki 3종 비교 분석</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --surface-color: rgba(30, 41, 59, 0.7);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-teal: #14b8a6;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 40px;
+        }
+
+        /* Glassmorphism Sidebar */
+        .sidebar {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px 20px;
+            height: calc(100vh - 80px);
+            position: sticky;
+            top: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .sidebar h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .nav-links a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        .content {
+            padding-bottom: 100px;
+        }
+
+        .header-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-card h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(to right, #60a5fa, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0 0 15px 0;
+        }
+
+        .section-card {
+            background: var(--surface-color);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: var(--accent-blue);
+            margin-top: 0;
+            border-bottom: 2px solid rgba(59, 130, 246, 0.2);
+            padding-bottom: 15px;
+        }
+
+        /* Tool Cards Grid */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .tool-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 25px;
+        }
+
+        .tool-card h3 {
+            margin-top: 0;
+            color: var(--accent-purple);
+        }
+
+        .tool-card.openhuman h3 { color: var(--accent-teal); }
+        .tool-card.claude h3 { color: #f43f5e; }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            background: rgba(59, 130, 246, 0.2);
+            color: #93c5fd;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <h3>목차</h3>
+            <div class="nav-links">
+                <a href="#intro" class="active">1. 개요 및 설계 철학</a>
+                <a href="#comparison">2. 핵심 기능 비교</a>
+                <a href="#nextaction">3. Next Action (제언)</a>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="header-card">
+                <span class="badge">Study Report</span>
+                <h1>Obsidian LLM Wiki 3종 비교 분석</h1>
+                <p>로컬 가이드 vs OpenHuman vs Claude-Obsidian 의 아키텍처 및 철학 비교</p>
+            </div>
+
+            <section id="intro" class="section-card">
+                <h2>1. 개요 및 설계 철학</h2>
+                <p>Andrej Karpathy가 제시한 "LLM 기반의 자가 조직 위키" 개념을 바탕으로 구현된 3가지 대표적인 접근 방식을 분석합니다.</p>
+                
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <h3>Local Guide (기본형)</h3>
+                        <p><strong>철학:</strong> 투명하고 직관적인 파이썬 스크립트 기반 자동화.</p>
+                        <ul>
+                            <li>Antigravity IDE 연동</li>
+                            <li>가장 직관적인 구조</li>
+                            <li>완전한 사용자 통제권</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="tool-card openhuman">
+                        <h3>OpenHuman</h3>
+                        <p><strong>철학:</strong> 옵시디언을 뇌로 쓰는 거대 자율 에이전트 플랫폼.</p>
+                        <ul>
+                            <li>TokenJuice 압축 기술</li>
+                            <li>100+ 외부 앱 Auto-fetch</li>
+                            <li>tinyflows/tinyagents 엔진</li>
+                        </ul>
+                    </div>
+
+                    <div class="tool-card claude">
+                        <h3>Claude-Obsidian</h3>
+                        <p><strong>철학:</strong> 철저한 데이터 무결성과 안전한 트랜잭션.</p>
+                        <ul>
+                            <li>롤백(Rollback) 지원</li>
+                            <li>원본 출처 엄격 보존</li>
+                            <li>클레임 린팅(Linting) 검증</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="comparison" class="section-card">
+                <h2>2. 핵심 기능 상세 비교표</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>기능 / 도구</th>
+                            <th>Local Guide</th>
+                            <th>OpenHuman</th>
+                            <th>Claude-Obsidian</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>타겟 유저</strong></td>
+                            <td>일반 파이썬 사용자</td>
+                            <td>자동화 만능주의자</td>
+                            <td>학구적 지식 관리자</td>
+                        </tr>
+                        <tr>
+                            <td><strong>자동화 수준</strong></td>
+                            <td>반자동 (명령어 트리거)</td>
+                            <td>완전 자율 (백그라운드 갱신)</td>
+                            <td>승인 기반 (결정론적)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>외부 연동</strong></td>
+                            <td>Web Clipper 의존</td>
+                            <td>방대한 생태계 직결</td>
+                            <td>로컬 파일 중심</td>
+                        </tr>
+                        <tr>
+                            <td><strong>안정성 설계</strong></td>
+                            <td>직접 수정 (백업 권장)</td>
+                            <td>샌드박스 지원</td>
+                            <td>원자적 트랜잭션 롤백</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="nextaction" class="section-card">
+                <h2>3. Next Action: 사내 도입 제언</h2>
+                <p>우리 조직(C/C++ 레거시 리팩토링 및 통신 프로토콜 그룹)의 특수성을 고려할 때, 다음의 하이브리드 접근을 권장합니다.</p>
+                <ul>
+                    <li><strong>보안 및 무결성:</strong> 기밀 문서를 다루므로 <code>Claude-Obsidian</code>의 <strong>트랜잭션 롤백 모델</strong>과 엄격한 출처 린팅 파이프라인 도입이 1순위입니다.</li>
+                    <li><strong>정보 수집 체계:</strong> Jira나 Confluence 이슈를 자동으로 긁어모으는 <code>OpenHuman</code>의 <strong>Auto-fetch 메커니즘</strong>을 결합하여 지식 최신화를 보장합니다.</li>
+                    <li><strong>데이터 격리:</strong> 외부 LLM 서버로 소스 코드가 유출되지 않도록, Sandbox 환경을 연계하고 필요시 로컬 모델(Ollama 등) 라우팅을 혼합 적용합니다.</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Smooth scrolling and active states for sidebar navigation
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                window.scrollTo({
+                    top: targetSection.offsetTop - 60,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Round 1 · 영상 제작 (온보딩 45초 & 홍보 15초) — 실밸개발자 AI 강의</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #e6edf3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 0.35s ease forwards;
+}
+body.fade-out { animation: fadeOut 0.25s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+.container {
+  width: 1280px;
+  max-width: 95vw;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: #8b949e;
+  text-align: center;
+  max-width: 860px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.card {
+  background: rgba(139, 148, 158, 0.04);
+  border: 1px solid rgba(139, 148, 158, 0.12);
+  border-radius: 16px;
+  padding: 24px 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-2px);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.model-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.model-name { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.model-fable { color: #f43f5e; }
+.model-astra { color: #10b981; }
+.model-pill {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.pill-fable { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.pill-astra { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+.prompt-box {
+  background: #060911;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c9d1d9;
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+  white-space: pre-wrap;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #a78bfa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: #7c3aed; color: #fff; }
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.table-custom th {
+  background: rgba(124, 58, 237, 0.12);
+  color: #e6edf3;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+}
+.table-custom td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #c9d1d9;
+}
+.table-custom tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+.slide-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  background: rgba(10, 15, 26, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(124, 58, 237, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.slide-nav-inner {
+  width: 1280px;
+  max-width: 95vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+.slide-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #7c3aed;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.slide-nav a:hover { color: #38bdf8; }
+.slide-nav .nav-disabled { font-size: 14px; font-weight: 700; color: #484f58; cursor: default; }
+.slide-nav .nav-center { display: flex; align-items: center; gap: 16px; }
+.slide-nav .nav-center a { color: #8b949e; font-size: 13px; font-weight: 500; }
+.slide-nav .nav-center a:hover { color: #e6edf3; }
+.key-hint {
+  font-size: 11px;
+  color: #6e7681;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="badge">05. Round 1</div>
+  <h1 class="title">Round 1 · 영상 제작 (온보딩 45초 & 홍보 15초)</h1>
+  <p class="subtitle">앱을 로컬에서 띄워 직접 사용해보고 제품을 이해한 뒤, 순수 코드로 MP4 영상을 렌더링하도록 지시했습니다.</p>
+  
+        <div class="prompt-box">
+<button class="copy-btn" onclick="copyPrompt(this)">복사</button>당신은 오토클릭(AutoKliq)의 실제 서비스 소스코드를 가지고 있습니다.
+1. 먼저 로컬 환경에서 앱을 직접 띄우고 실제로 사용해 보세요.
+2. 제품의 사용자 경험과 핵심 가치를 파악한 뒤, 다음 두 가지 영상을 순수 코드로 작성하여 MP4 파일로 렌더링하세요.
+   - 제품을 소개하는 온보딩 영상 (45초 분량) 1편
+   - 핵심 기능을 임팩트 있게 보여주는 짧은 컷의 홍보 영상 (15초 분량) 1편</div>
+
+        <div class="grid-2" style="margin-top:16px;">
+          <div class="card">
+            <div class="model-header">
+              <div class="model-name model-fable">Fable 5.1 결과</div>
+              <span style="color:#fb7185; font-size:13px; font-weight:700;">깔끔함 / 무음 (Silent)</span>
+            </div>
+            <ul style="color:#8b949e; font-size:14px; line-height:1.7; padding-left:18px;">
+              <li>스텝 1~6단계 흐름을 시각적으로 정갈하게 렌더링</li>
+              <li>음성 내레이션 및 배경음악이 일절 없는 <strong>무음 비디오</strong></li>
+              <li>화면 전환과 타이포그래피는 매우 안정적</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color:rgba(16,185,129,0.3);">
+            <div class="model-header">
+              <div class="model-name model-astra">Astra 결과 (승리 🏆)</div>
+              <span style="color:#34d399; font-size:13px; font-weight:700;">내레이션 · 자막 · BGM 완비</span>
+            </div>
+            <ul style="color:#8b949e; font-size:14px; line-height:1.7; padding-left:18px;">
+              <li>자연스러운 한국어 TTS 보이스오버 탑재</li>
+              <li>음악과 타이밍이 일치하는 자막 인라인 애니메이션</li>
+              <li>비용은 Fast Mode로 약 2배 소모, 시간은 비슷</li>
+            </ul>
+          </div>
+        </div>
+        
+</div>
+
+<nav class="slide-nav">
+  <div class="slide-nav-inner">
+    <div class="nav-left"><a href="javascript:void(0)" onclick="goTo('04_experiment_setup.html')">← 이전 슬라이드</a></div>
+    <div class="nav-center">
+      <a href="index.html">☰ 전체 목차</a>
+      <span style="color:#484f58;">|</span>
+      <span style="color:#8b949e; font-size:13px;">5 / 12</span>
+      <span class="key-hint">좌우 방향키 [←] [→]</span>
+    </div>
+    <div class="nav-right"><a href="javascript:void(0)" onclick="goTo('06_round2_optimization.html')">다음 슬라이드 →</a></div>
+  </div>
+</nav>
+
+<script>
+function goTo(url) {
+  if(!url) return;
+  document.body.classList.add('fade-out');
+  setTimeout(function() { window.location.href = url; }, 220);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowLeft' && '04_experiment_setup.html') goTo('04_experiment_setup.html');
+  if (e.key === 'ArrowRight' && '06_round2_optimization.html') goTo('06_round2_optimization.html');
+  if (e.key === 'Home') goTo('index.html');
+});
+function copyPrompt(btn) {
+  const code = btn.parentElement.innerText.replace('복사', '').trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const orig = btn.innerText;
+    btn.innerText = '복사됨! ✓';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.innerText = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1800);
+  });
+}
+</script>
+</body>
+</html>

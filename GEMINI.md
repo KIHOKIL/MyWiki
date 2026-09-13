@@ -9,6 +9,18 @@ Your primary role is to act as an active intelligence layer over this Agentic Va
 
 A **skill-based framework** for building and maintaining an Obsidian knowledge base. No scripts or dependencies — everything is markdown instructions that you execute directly.
 
+## 🧑‍💻 User Persona & Domain Context
+**Target Audience / Vault Owner Profile:**
+- **Role:** Group Leader (그룹장), Mobile SW communication protocol design, physical layer embedded SW.
+- **Current Challenge:** Managing legacy SW development/commercialization while driving AI-native workflow efficiency improvements.
+- **Key Interest Areas:**
+  1. Codebase understanding - AST, grep, Graph-RAG, Register map based variable/function/symbol linking for efficient token usage and high code understanding accuracy (2nd Brain for the group).
+  2. Code Review - Dependent on codebase understanding.
+  3. Implementation - AI-native HW design requirement mapping, HW change list automation.
+  4. Issue Analysis Automation - JIRA/Email/Confluence/Messenger integration for issue resolution.
+
+*Agent Instruction:* When synthesizing information, creating action items, or answering technical queries, always tailor the response to the perspective and high-level requirements of this specific engineering domain (Mobile SW / Physical Layer / Hardware-Software Co-design).
+
 ## README Translation Parity
 
 `README.md` and `README_TW.md` are one documentation surface. Keep headings, examples, links, and user-facing behavior aligned between the two translations. The check is advisory and never blocks a PR: the `readme-translation-drift` CI job only reports drift. Run `python tools/check_readme_sync.py` to list commits that changed `README.md` without a later `README_TW.md` update, along with the pending English diff — then translate and backfill those changes into `README_TW.md`. Reviewers assess translation quality.
@@ -106,6 +118,7 @@ Skills live in `.skills/<name>/SKILL.md`. Match the user's intent to the right s
 | "/wiki-stage-commit" / "review staged pages" / "commit staged writes" / "promote staged pages" / "what's waiting in staging" | `wiki-stage-commit` |
 | "restyle Obsidian" / "adjust the vault layout" / "CSS snippet" / "tune tabs/sidebars/graph panes" | `obsidian-layout-adjustment` |
 | "/generate-index" / "generate index" / "update source index" / "rebuild _sources index" / "index my sources" / "sync sources index" / "/generate-index <폴더명>" | `generate-index` |
+| "강의 정리" / "유튜브 강의 요약" / "유튜브 슬라이드" / "/lecture-html-curator" / "영상 HTML 요약" / "강의 슬라이드 만들어줘" | `lecture-html-curator` (유튜브/웹 링크 전수 요약, 프롬프트 추출, 에이전트 분석, 다크테마 HTML 슬라이드/리포트) |
 
 ## Cross-Project Usage
 

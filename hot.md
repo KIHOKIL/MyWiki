@@ -1,9 +1,14 @@
 ---
 title: Hot Cache
-updated: 2026-09-06
+updated: 2026-09-13
 ---
 
 ## Recent Activity
+- **generate-index 실행 (2026-09-13):**
+  - **Index Sync:** `_sources` 하위 6개 폴더(총 49개 파일) 인덱스 갱신 완료.
+- **Wiki-Organize Pipeline (2026-09-13):**
+  - **Ingest:** Extracted concepts (Yield Curve Inversion, Bond Laddering, Embedded Software) and entities (NewsSummarizer, Fable 5.1, GPT-6 Astra).
+  - **Index Sync:** Rebuilt all `_sources` indexes.
 - **Google Sheets 추가 구독자 이메일 연동 장애 해결 (2026-09-10):**
   - **원인 규명 1 (GitHub Secrets 불일치):** 8월 21일 등록되었던 GitHub Secrets `SUBSCRIBERS_CSV_URL`이 단일 시트용 링크(`/pub?output=csv`)로 고정되어 있어 폼 응답 시트(`gid=792757295`)가 아닌 빈 첫 시트(`gid=652869560`, 23 bytes)만 조회되던 문제 확인.
   - **원인 규명 2 (코드 파싱 제한):** 기존 코드가 URL 문자열 내 `"pubhtml"` 포함 여부만 검사하여 `/pub` 또는 `/pub?output=csv` 형태 입력 시 다중 탭 자동 탐색 로직이 우회되던 결함 수정.

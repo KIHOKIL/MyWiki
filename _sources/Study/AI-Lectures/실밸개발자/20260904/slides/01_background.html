@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herdr Slides</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #0a0f1a;
+            color: #e2e8f0;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .slide {
+            background: rgba(139, 148, 158, 0.04);
+            border: 1px solid rgba(139, 148, 158, 0.1);
+            border-radius: 16px;
+            padding: 4rem;
+            width: 80%;
+            max-width: 1000px;
+            height: 60vh;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #7c3aed, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        h2 { color: #38bdf8; font-size: 2rem; }
+        p, li { font-size: 1.5rem; line-height: 1.6; }
+        .nav {
+            position: absolute;
+            bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+        a {
+            color: #fff;
+            text-decoration: none;
+            background: #7c3aed;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        a:hover { background: #38bdf8; }
+        a.disabled { background: #555; pointer-events: none; }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <h2>1. 터미널 멀티플렉서의 귀환</h2>
+                      <ul>
+                        <li>에이전트가 오랫동안 돌기 시작하면서 tmux가 다시 필수품이 됨</li>
+                        <li><strong>치명적 한계</strong>: tmux는 안에서 도는 게 '봇'인지 모름</li>
+                        <li>에이전트가 승인을 기다려도 사람이 못 보면 멈춰 있음 (병목은 인간)</li>
+                      </ul>
+    </div>
+    <div class="nav">
+        <a href="index.html" class="">Prev</a>
+        <a href="02_herdr_features.html" class="">Next</a>
+    </div>
+    <script>
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && '02_herdr_features.html' !== '#') window.location.href = '02_herdr_features.html';
+            if (e.key === 'ArrowLeft' && 'index.html' !== '#') window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

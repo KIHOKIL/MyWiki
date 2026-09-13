@@ -283,5 +283,51 @@
       "concepts/2nd-brain-system-design-blueprint.md",
       "entities/openhuman.md"
     ]
+  },
+  "_raw/embedded-sw-definition.md": {
+    "path": "_raw/embedded-sw-definition.md",
+    "timestamps": {
+      "ingested": "2026-09-13T16:34:08.461750+09:00"
+    },
+    "pages_produced": [
+      "concepts/embedded-software.md"
+    ]
+  },
+  "_raw/news-summarizer-update-20260908.md": {
+    "path": "_raw/news-summarizer-update-20260908.md",
+    "timestamps": {
+      "ingested": "2026-09-13T16:34:08.461750+09:00"
+    },
+    "pages_produced": [
+      "entities/news-summarizer.md"
+    ]
+  },
+  "_sources/Projects/News/Finance_Summaries/Finance_Briefing_2026-09-06.md": {
+    "path": "_sources/Projects/News/Finance_Summaries/Finance_Briefing_2026-09-06.md",
+    "timestamps": {
+      "ingested": "2026-09-13T16:34:08.461750+09:00"
+    },
+    "pages_produced": [
+      "concepts/yield-curve-inversion.md"
+    ]
+  },
+  "_sources/News/Finance/Finance_Briefing_2026-09-09.md": {
+    "path": "_sources/News/Finance/Finance_Briefing_2026-09-09.md",
+    "timestamps": {
+      "ingested": "2026-09-13T16:34:08.461750+09:00"
+    },
+    "pages_produced": [
+      "concepts/bond-laddering.md"
+    ]
+  },
+  "_sources/Study/AI-Lectures/실밸개발자/20260913/Fable_5.1_vs_GPT-6_Astra_실전_비교.md": {
+    "path": "_sources/Study/AI-Lectures/실밸개발자/20260913/Fable_5.1_vs_GPT-6_Astra_실전_비교.md",
+    "timestamps": {
+      "ingested": "2026-09-13T16:34:08.461750+09:00"
+    },
+    "pages_produced": [
+      "entities/fable-5-1.md",
+      "entities/gpt-6-astra.md"
+    ]
   }
 }

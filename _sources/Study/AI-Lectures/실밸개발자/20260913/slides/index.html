@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>메타 시니어 엔지니어의 Fable 5.1 vs GPT-6 Astra 실전 비교 — 슬라이드 허브</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #e6edf3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 0.35s ease forwards;
+}
+body.fade-out { animation: fadeOut 0.25s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+.container {
+  width: 1280px;
+  max-width: 95vw;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: #8b949e;
+  text-align: center;
+  max-width: 860px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.card {
+  background: rgba(139, 148, 158, 0.04);
+  border: 1px solid rgba(139, 148, 158, 0.12);
+  border-radius: 16px;
+  padding: 24px 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-2px);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.model-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.model-name { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.model-fable { color: #f43f5e; }
+.model-astra { color: #10b981; }
+.model-pill {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.pill-fable { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.pill-astra { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+.prompt-box {
+  background: #060911;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c9d1d9;
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+  white-space: pre-wrap;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #a78bfa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: #7c3aed; color: #fff; }
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.table-custom th {
+  background: rgba(124, 58, 237, 0.12);
+  color: #e6edf3;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+}
+.table-custom td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #c9d1d9;
+}
+.table-custom tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+.slide-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  background: rgba(10, 15, 26, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(124, 58, 237, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.slide-nav-inner {
+  width: 1280px;
+  max-width: 95vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+.slide-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #7c3aed;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.slide-nav a:hover { color: #38bdf8; }
+.slide-nav .nav-disabled { font-size: 14px; font-weight: 700; color: #484f58; cursor: default; }
+.slide-nav .nav-center { display: flex; align-items: center; gap: 16px; }
+.slide-nav .nav-center a { color: #8b949e; font-size: 13px; font-weight: 500; }
+.slide-nav .nav-center a:hover { color: #e6edf3; }
+.key-hint {
+  font-size: 11px;
+  color: #6e7681;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hub-card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<div class="container" style="padding-bottom:80px;">
+  <div class="badge">Lecture Deck Hub</div>
+  <h1 class="title">Fable 5.1 vs GPT-6 Astra 실전 비교</h1>
+  <p class="subtitle">
+    실밸개발자 (메타 시니어 엔지니어) 강의 전수 요약 & 에이전틱 엔지니어링 분석 슬라이드 덱 (총 12장)<br>
+    <span style="color:#38bdf8; font-size:14px; font-weight:600;">[Format A: 인터랙티브 슬라이드 세트]</span>
+    &nbsp;&nbsp;|&nbsp;&nbsp;
+    <a href="../lecture_report.html" style="color:#a78bfa; font-size:14px; font-weight:600; text-decoration:underline;">[Format B: 싱글 대시보드 리포트 바로가기]</a>
+  </p>
+
+  <div class="hub-grid">
+    
+    <a href="01_intro.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">01. Introduction</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">이틀 간격의 두 거인: Fable 5.1 vs GPT-6 Astra</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">2026년 9월 초, Anthropic과 OpenAI의 최신 플래그십이 이틀 간격으로 격돌했습니다. 벤치마크 점수가 아닌 실제 프로덕션 서비스에서의 실전 결과를 비교합니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #1</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="02_summary.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">02. Executive Summary</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">핵심 결론 & AI 실전 활용 5대 노하우</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">영상에서 실리콘밸리 메타 엔지니어가 전하고자 한 가장 중요한 결론과 현업 개발자를 위한 AI 활용 법칙입니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #2</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="03_review113.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">03. Community Reality</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">113개 실전 리뷰 분석: 왜 말이 정반대일까?</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">출시 일주일간 레딧, X, 깃허브, 한국 커뮤니티의 113개 리뷰를 전수 조사한 결과, 완전히 상반된 반응이 공존했습니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #3</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="04_experiment_setup.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">04. Methodology</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">실험 설계: herdr 듀얼 Pane 동시 주입</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">인간의 중간 개입과 편향을 100% 배제하기 위해, 동일 프롬프트를 두 프로세스에 Zero-shot으로 동시 브로드캐스트했습니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #4</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="05_round1_video.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">05. Round 1</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Round 1 · 영상 제작 (온보딩 45초 & 홍보 15초)</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">앱을 로컬에서 띄워 직접 사용해보고 제품을 이해한 뒤, 순수 코드로 MP4 영상을 렌더링하도록 지시했습니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #5</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="06_round2_optimization.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">06. Round 2</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Round 2 · 성능 최적화 ("생성 시간을 절반으로")</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">느린 썸네일 생성 파이프라인을 50% 단축하라. 단, 필수 기능을 훼손하지 말고 품질 저하 시 보고서에 명시하라.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #6</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="07_round3_ui_redesign.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">07. Round 3</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Round 3 · UI 전면 리디자인 (사람 & 에이전트 공존 UI)</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">사람도 쓰고 미래의 에이전트도 쓰기 좋게 처음부터 다시 설계하라. 사소한 질문 없이 자율적으로 완수하라.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #7</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="08_round4_3d_repo.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">08. Round 4</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Round 4 · 저장소를 3D 공간으로 걸어다니기</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">복잡한 오토클릭 코드베이스를 신규 온보딩 개발자가 직관적으로 이해할 수 있도록 3D 인터랙티브 공간으로 모델링했습니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #8</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="09_round5_collaboration.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">09. Round 5</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Round 5 · 다중 에이전트 협업의 실체 (천재 둘의 역설)</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">Astra(메인)와 Fable(리뷰어)이 의도 ➔ 플래닝 ➔ 구현 ➔ 검증 ➔ 보고 단계별로 서로의 코드를 상호 검증시켰습니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #9</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="10_agentic_engineering.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">10. Engineering Lessons</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Agentic & Harness Engineering 5대 인사이트</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">단순한 프롬프트 입력을 넘어 프로덕션 레벨에서 에이전트 시스템을 구축할 때 반드시 챙겨야 할 방법론입니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #10</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="11_github_resources.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">11. Resources</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">공유된 핵심 리소스 & 깃허브 아키텍처 분석</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">영상에서 강사가 직접 사용하거나 언급한 핵심 오픈소스 및 공식 레퍼런스 모음입니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #11</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+    <a href="12_next_actions.html" class="card hub-card">
+      <div style="font-size:12px; font-weight:700; color:#a78bfa; margin-bottom:8px;">12. Next Actions</div>
+      <h3 style="font-size:17px; font-weight:800; color:#e6edf3; margin-bottom:8px; line-height:1.4;">Next Actions & Deep Research 추천 소스</h3>
+      <p style="font-size:13px; color:#8b949e; line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">이 강의를 마친 후 실전 역량을 한 단계 끌어올리기 위해 지금 당장 시작해야 할 실행 계획과 추천 리소스입니다.</p>
+      <div style="margin-top:14px; display:flex; align-items:center; justify-content:space-between;">
+        <span style="font-size:12px; color:#6e7681;">Slide #12</span>
+        <span style="font-size:13px; color:#38bdf8; font-weight:700;">보기 →</span>
+      </div>
+    </a>
+    
+  </div>
+
+  <div style="margin-top:40px; text-align:center;">
+    <a href="01_intro.html" style="background:linear-gradient(135deg,#7c3aed,#38bdf8); color:#fff; text-decoration:none; padding:14px 36px; border-radius:9999px; font-weight:800; font-size:16px; box-shadow:0 8px 24px rgba(124,58,237,0.3); display:inline-block;">
+      첫 슬라이드부터 시작하기 ▶
+    </a>
+  </div>
+</div>
+</body>
+</html>

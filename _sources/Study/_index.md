@@ -9,12 +9,16 @@
 - [[20260903_학습노트.md]] — 🚀 [2026-09-03] GitHub 추천 리포 심층 스터디 (Headroom, Slotstream, Smolcoder, Rhema)
 - [[AI_시대에_상위_1퍼센트가_되는_법.md]] — AI 시대에 상위 1%가 되는 법 — 메타 개발자의 커리어 팁 12가지
 - [[Agentic_2nd_Brain_Architecture.md]] — 🧠 AI-Native 2nd Brain 최적화 폴더 구조 가이드
+- [[Fable_5.1_vs_GPT-6_Astra_실전_비교.md]] — 메타 시니어 엔지니어의 Fable 5.1 vs GPT-6 Astra 실전 비교 — 온보딩·최적화·UI 리디자인·3D·협업
 - [[Headroom_심층분석_및_Group_2nd_Brain_연계.md]] — 🧠 Headroom 심층 분석 및 Group 2nd Brain 아키텍처 구축 가이드
+- [[Herdr_에이전트_시대의_터미널.md]] — 에이전트 시대의 터미널 Herdr
 - [[LLM Wiki 설치 사이트.md]] — 원본 문서 자료
 - [[LLM_Wiki와_RAG_비교.md]] — LLM Wiki와 RAG의 차이 및 구축 전략
+- [[Obsidian_LLM_Wiki_Comparison.md]] — 🧠 Obsidian LLM Wiki 3종 구현체 심층 비교 분석
 - [[OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계.md]] — 🧠 OpenHuman 심층 분석 및 사내 Group 2nd Brain 연계 구축 전략
 - [[Research_report_LLM_2nd_Brain_Seoul (1).md]] — 🧠 Deep Research Report: 최근 LLM 2nd Brain 구축 방식 및 통합 아키텍처 가이드
 - [[big_tech_ai_workflow_proposal.md]] — 🚀 빅테크 사례 기반 LLM Wiki 워크플로우 제안서 (Agentic Scaffolding)
+- [[comparison_slides.md]] — 🧠 Obsidian LLM Wiki 3종 비교
 - [[cyberpunk_neon_slide_prompt.md]] — ⚡ 사이버펑크 네온 글리터 스타일 슬라이드 생성 프롬프트
 - [[gems_prompt_creator.md]] — 💎 Google Gemini Gems 맞춤형 프롬프트 생성기 (Gems Prompt Creator)
 - [[github-trend-2026-09-05.md]] — 📅 매일 IT 뉴스 및 AI 트렌드 요약 - 2026년 9월 5일
@@ -28,4 +32,4 @@
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-09-06*
+*마지막 갱신: 2026-09-14*

@@ -13,6 +13,10 @@ from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_t
 from google import genai
 from dotenv import load_dotenv
 
+import requests
+from bs4 import BeautifulSoup
+import feedparser
+
 try:
     sys.stdout.reconfigure(encoding='utf-8')
     sys.stderr.reconfigure(encoding='utf-8')
@@ -36,18 +40,118 @@ def load_config():
     with open(config_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def fetch_google_news(query, max_articles=3):
-    import feedparser
-    encoded_query = urllib.parse.quote(query + " when:1d")
-    url = f"https://news.google.com/rss/search?q={encoded_query}&hl=ko&gl=KR&ceid=KR:ko"
+def safe_generate_content(client, model, contents, max_retries=6):
+    import time
+    for attempt in range(max_retries):
+        try:
+            return client.models.generate_content(model=model, contents=contents)
+        except Exception as e:
+            if '429' in str(e) and attempt < max_retries - 1:
+                sleep_time = 20 + (attempt * 10)
+                print(f"  [Rate Limit] 429 Error, sleeping {sleep_time}s (Attempt {attempt+1}/{max_retries})...")
+                time.sleep(sleep_time)
+            else:
+                raise e
+
+def extract_article_content(url):
     try:
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        resp = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
+        if resp.status_code == 200:
+            soup = BeautifulSoup(resp.content, 'html.parser')
+            text = " ".join([p.get_text(strip=True) for p in soup.find_all('p')])
+            return text[:1500]
+    except Exception:
+        pass
+    return ""
+
+def validate_source_item(title, link, content, focus, cat_name):
+    if not content:
+        content = "본문 추출 실패"
+    prompt = f"""다음 기사가 [{cat_name}] 카테고리의 분석 목적(Focus)에 부합하는지 엄격히 검증하세요.
+분석 목적: {focus}
+
+기사 제목: {title}
+기사 본문(일부): {content}
+
+평가 기준:
+1. 매크로 경제, 연준 정책, 주식/채권/원자재 등 전문적인 금융 내용을 담고 있는가?
+2. 단순 개별 종목 찌라시나 스팸이 아닌가?
+
+결과 형식: 오직 "VALID" 또는 "INVALID: 사유" 로만 응답하세요."""
+    
+    client = genai.Client(api_key=GEMINI_API_KEY)
+    try:
+        response = safe_generate_content(client, 'gemini-3.6-flash', prompt)
+        result = response.text.strip().upper()
+        if result.startswith("VALID"):
+            return True, ""
+        else:
+            return False, result
+    except Exception as e:
+        return False, f"Validation API Error: {e}"
+
+def fetch_google_news(query, focus, cat_name, max_articles=2):
+    articles = []
+    candidates = []
+    
+    # Bing News RSS (DuckDuckGo Search 403 차단 회피용)
+    try:
+        encoded_query = urllib.parse.quote(query)
+        url = f"https://www.bing.com/news/search?q={encoded_query}&format=rss"
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
         with urllib.request.urlopen(req, timeout=10) as response:
             feed = feedparser.parse(response.read())
-        return [{"title": e.title, "link": e.link} for e in feed.entries[:max_articles]]
+            for e in feed.entries[:max_articles*2]:
+                candidates.append({
+                    "title": e.title,
+                    "link": e.link,
+                    "published": e.get("published", ""),
+                    "content": ""
+                })
     except Exception as e:
-        print(f"Error fetching {query}: {e}")
-        return []
+        print(f"  [Warning] Bing News RSS failed for '{query}': {e}")
+        
+    for cand in candidates:
+        if len(articles) >= max_articles:
+            break
+            
+        content = cand.get("content", "")
+        if not content:
+            content = extract_article_content(cand["link"])
+            cand["content"] = content
+            
+        print(f"    - [검증 중] {cand['title'][:30]}...")
+        is_valid, reason = validate_source_item(cand["title"], cand["link"], content, focus, cat_name)
+        if is_valid:
+            print("      -> [통과] (VALID)")
+            
+            # 원본 데이터(Raw Data) 저장 로직
+            try:
+                base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+                sources_dir = os.path.dirname(os.path.dirname(base_dir))
+                from datetime import datetime, timezone, timedelta
+                today_str = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
+                raw_dir = os.path.join(sources_dir, "News", "Raw_data", today_str)
+                os.makedirs(raw_dir, exist_ok=True)
+                
+                safe_title = "".join([c for c in cand["title"] if c.isalpha() or c.isdigit() or c==' ']).rstrip()
+                safe_title = safe_title[:50].replace(" ", "_")
+                if not safe_title: safe_title = "article"
+                
+                file_path = os.path.join(raw_dir, f"finance_{safe_title}.txt")
+                with open(file_path, "w", encoding="utf-8") as rf:
+                    rf.write(f"Title: {cand['title']}\n")
+                    rf.write(f"Link: {cand['link']}\n")
+                    rf.write(f"Published: {cand['published']}\n\n")
+                    rf.write(content)
+            except Exception as e:
+                print(f"      -> [Warning] Failed to save raw data: {e}")
+
+            articles.append(cand)
+        else:
+            print(f"      -> [거절] {reason}")
+
+    return articles[:max_articles]
 
 @retry(stop=stop_after_attempt(3), wait=wait_fixed(5), reraise=True)
 def generate_finance_report(news_data):
@@ -90,10 +194,7 @@ created: "{datetime.now(timezone(timedelta(hours=9))).strftime('%Y-%m-%d %H:%M:%
 ## 4. 🛡️ Safe Havens & Yields (안전 자산 및 채권 금리)
 (금 가격 동향, 국채 금리 변동 및 채권 시장 시사점)
 """
-    response = client.models.generate_content(
-        model='gemini-3.6-flash',
-        contents=prompt
-    )
+    response = safe_generate_content(client, 'gemini-3.6-flash', prompt)
     return response.text
 
 def markdown_to_clean_html(markdown_text):
@@ -366,17 +467,16 @@ def send_email(subject, content, html_content=None):
         print("Email credentials not set. Skipping email.")
         return
         
-    receivers = set([e.strip().lower() for e in EMAIL_RECEIVER.split(',') if e.strip()])
-    additional_receivers = get_additional_subscribers()
-    if additional_receivers:
-        receivers.update(additional_receivers)
+    receivers = set(["kiho.kil@gmail.com"])
+    # additional_receivers = get_additional_subscribers()
+    # if additional_receivers:
+    #     receivers.update(additional_receivers)
     
     receivers_list = list(receivers)
     if not receivers_list:
         print("이메일 수신자가 설정되어 있지 않습니다.")
         return
-
-    print(f"  [발송 준비] 총 {len(receivers_list)}명 수신 대상 (추가 구독자 {len(additional_receivers)}명 포함)")
+    print(f"  [발송 준비] 총 {len(receivers_list)}명 수신 대상")
 
     msg = EmailMessage()
     msg['Subject'] = subject
@@ -406,7 +506,7 @@ def main():
         print(f"Fetching news for {cat_name}...")
         articles = []
         for q in category.get("queries", []):
-            articles.extend(fetch_google_news(q, max_articles=2))
+            articles.extend(fetch_google_news(q, focus=category.get("focus", ""), cat_name=cat_name, max_articles=2))
         news_data[cat_name] = articles
 
     print("Generating report via Gemini...")

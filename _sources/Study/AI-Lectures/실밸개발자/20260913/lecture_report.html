@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fable 5.1 vs GPT-6 Astra 실전 비교 — 인터랙티브 심층 리포트</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  color: #e6edf3;
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+a { color: #38bdf8; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Layout */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+}
+.sidebar {
+  width: 320px;
+  background: #080c15;
+  border-right: 1px solid rgba(124, 58, 237, 0.15);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 32px 24px;
+  overflow-y: auto;
+  z-index: 100;
+}
+.main-content {
+  margin-left: 320px;
+  flex: 1;
+  padding: 48px 64px;
+  max-width: 1100px;
+}
+
+/* Sidebar Elements */
+.side-title {
+  font-size: 16px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+.side-sub {
+  font-size: 12px;
+  color: #8b949e;
+  margin-bottom: 24px;
+}
+.toc-list { list-style: none; }
+.toc-item { margin-bottom: 8px; }
+.toc-link {
+  font-size: 13px;
+  color: #8b949e;
+  display: block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+.toc-link:hover, .toc-link.active {
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Hero Section */
+.hero {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.hero-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-bottom: 16px;
+}
+.hero-title {
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffffff 40%, #8b949e 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-meta {
+  font-size: 14px;
+  color: #8b949e;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Cards & Sections */
+.section {
+  margin-bottom: 64px;
+  scroll-margin-top: 40px;
+}
+.section-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #e6edf3;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-title::before {
+  content: '';
+  width: 4px;
+  height: 24px;
+  background: linear-gradient(to bottom, #7c3aed, #38bdf8);
+  border-radius: 2px;
+}
+
+.report-card {
+  background: rgba(139, 148, 158, 0.04);
+  border: 1px solid rgba(139, 148, 158, 0.12);
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(12px);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Prompt Block */
+.prompt-container {
+  background: #060911;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 10px;
+  padding: 16px 20px;
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #c9d1d9;
+  margin: 16px 0;
+  white-space: pre-wrap;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #a78bfa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: #7c3aed; color: #fff; }
+
+/* Comparison Table */
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.cmp-table th {
+  background: rgba(124, 58, 237, 0.15);
+  color: #e6edf3;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+}
+.cmp-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #c9d1d9;
+}
+.cmp-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+.badge-win {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+</style>
+</head>
+<body>
+<div class="app-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="side-title">실밸개발자 심층 리포트</div>
+    <div class="side-sub">Fable 5.1 vs GPT-6 Astra 실전 분석</div>
+    <div style="margin-bottom:16px;">
+      <a href="slides/index.html" style="display:inline-block; font-size:12px; padding:6px 12px; border-radius:6px; background:rgba(56,189,248,0.15); color:#38bdf8; border:1px solid rgba(56,189,248,0.3); font-weight:700;">
+        📺 슬라이드 모드 (Format A) 열기
+      </a>
+    </div>
+    <ul class="toc-list">
+      <li class="toc-item"><a href="#summary" class="toc-link">1. Executive Summary</a></li>
+      <li class="toc-item"><a href="#reviews" class="toc-link">2. 113개 실전 리뷰 분석</a></li>
+      <li class="toc-item"><a href="#experiment" class="toc-link">3. 실험 환경 및 조건</a></li>
+      <li class="toc-item"><a href="#round1" class="toc-link">4. Round 1: 영상 제작</a></li>
+      <li class="toc-item"><a href="#round2" class="toc-link">5. Round 2: 성능 최적화</a></li>
+      <li class="toc-item"><a href="#round3" class="toc-link">6. Round 3: UI 리디자인</a></li>
+      <li class="toc-item"><a href="#round4" class="toc-link">7. Round 4: 3D 저장소 탐색</a></li>
+      <li class="toc-item"><a href="#round5" class="toc-link">8. Round 5: 다중 에이전트 협업</a></li>
+      <li class="toc-item"><a href="#agentic" class="toc-link">9. Agentic Engineering 인사이트</a></li>
+      <li class="toc-item"><a href="#resources" class="toc-link">10. 핵심 깃허브 & 리소스</a></li>
+      <li class="toc-item"><a href="#next" class="toc-link">11. Next Action & 딥 리서치</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="hero">
+      <span class="hero-badge">Format B: Interactive Single-Page Report</span>
+      <h1 class="hero-title">메타 시니어 엔지니어의 Fable 5.1 vs GPT-6 Astra 실전 비교</h1>
+      <div class="hero-meta">
+        <span>👨‍💻 강사: 실밸개발자 (메타 시니어 엔지니어)</span>
+        <span>📅 정리일: 2026-09-13</span>
+        <span>🎯 검증 대상: AutoKliq 프로덕션 코드</span>
+      </div>
+    </div>
+
+    <!-- 1. Executive Summary -->
+    <section id="summary" class="section">
+      <h2 class="section-title">1. Executive Summary & 핵심 결론</h2>
+      <div class="grid-2">
+        <div class="report-card" style="border-left:4px solid #38bdf8;">
+          <h3 style="color:#38bdf8; font-size:16px; margin-bottom:8px;">💡 핵심 결론 3줄 요약</h3>
+          <p style="font-size:14px; color:#c9d1d9; line-height:1.7;">
+            1. <strong>도메인별 특화 우위:</strong> 창의적 기획, UX 리디자인, 3D 시각화는 <strong>Astra</strong> 압승 / 딥 시스템 프로파일링 및 최적화는 <strong>Fable 5.1</strong> 판정승.<br>
+            2. <strong>하네스의 결정적 영향:</strong> 모델 자체보다 이를 감싸는 하네스(Claude Code vs Codex)의 툴 제어와 피드백 루프가 품질을 좌우함.<br>
+            3. <strong>협업의 역설:</strong> 두 모델 간 자율 협업은 평균으로 퇴보(짬뽕)하며 비용만 폭증. 인간의 단호한 방향 제시가 필수적.
+          </p>
+        </div>
+        <div class="report-card" style="border-left:4px solid #10b981;">
+          <h3 style="color:#10b981; font-size:16px; margin-bottom:8px;">⚡ AI 실전 활용 팁</h3>
+          <ul style="font-size:13px; color:#c9d1d9; line-height:1.8; padding-left:18px;">
+            <li><strong>Effort 레벨:</strong> 무조건 Max 고집하지 말고 Fast/Medium 모드로 비용과 속도 최적화.</li>
+            <li><strong>Negative 가드레일:</strong> "품질 저하 시 보고서 명시", "기존 기능 보존" 제약조건 주입.</li>
+            <li><strong>Dual-User 시각:</strong> 사람뿐 아니라 AI 에이전트가 쓰기 쉬운 아키텍처로 UI 설계.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Reviews -->
+    <section id="reviews" class="section">
+      <h2 class="section-title">2. 일주일간 쏟아진 113개 리뷰 분석</h2>
+      <div class="report-card">
+        <p style="margin-bottom:16px; color:#8b949e; font-size:14px;">
+          레딧, X, 깃허브 등에서 수집한 113개 리뷰 중 같은 모델을 두고 완벽히 대립한 5대 쟁점입니다.
+        </p>
+        <table class="cmp-table">
+          <thead>
+            <tr>
+              <th>쟁점</th>
+              <th style="color:#fb7185;">부정적 / 반대 의견</th>
+              <th style="color:#34d399;">긍정적 / 찬성 의견</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>토큰 소모</strong></td>
+              <td>1시간 만에 주간 할당량 전소</td>
+              <td>동일 작업 기준 Fable 5.1이 5.0보다 훨씬 덜 소모</td>
+            </tr>
+            <tr>
+              <td><strong>Astra 전환</strong></td>
+              <td>기대 이하의 조잡한 수준</td>
+              <td>회사 메인 AI 전면 교체, Fable이 바보처럼 느껴짐</td>
+            </tr>
+            <tr>
+              <td><strong>글쓰기 능력</strong></td>
+              <td>문맥이 복잡해져 가독성 저하</td>
+              <td>기술적 뉘앙스와 구조화 완성도 대폭 개선</td>
+            </tr>
+            <tr>
+              <td><strong>추론 비용</strong></td>
+              <td>Medium만 써도 2턴 만에 한도 도달</td>
+              <td>추론 레벨을 높여야 헛발질이 줄어 실질 비용 감소</td>
+            </tr>
+            <tr>
+              <td><strong>안전성 검사</strong></td>
+              <td>너무 민감하여 Opus로 자꾸 강제 폴백</td>
+              <td>거부 없이 프로덕션급 대규모 리팩토링 완수</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="color:#a78bfa; font-size:13px; margin-top:12px;">
+          📌 <strong>원인:</strong> 서브에이전트 수(10개 이상 vs 단일 세션), 문서 vs 코드, 시스템 프롬프트 차이 등 실험 조건의 격차 + 주관적 체감(말투, 짜증 등)의 개입.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. Experiment Setup -->
+    <section id="experiment" class="section">
+      <h2 class="section-title">3. 실험 환경 및 통제 조건</h2>
+      <div class="report-card">
+        <div class="grid-2">
+          <div>
+            <h4 style="color:#38bdf8; margin-bottom:8px;">🛠️ 도구 및 모델 세팅</h4>
+            <ul style="color:#8b949e; font-size:14px; line-height:1.8; padding-left:18px;">
+              <li><strong>모델 A:</strong> Anthropic Claude Fable 5.1 Max on <code>Claude Code</code></li>
+              <li><strong>모델 B:</strong> OpenAI GPT-6 Astra Max (Fast mode) on <code>Codex CLI</code></li>
+              <li><strong>오케스트레이터:</strong> <code>herdr</code> 멀티 터미널 분할 브로드캐스트</li>
+              <li><strong>주입 방식:</strong> 인간 중간 개입 없는 100% Zero-shot 1회 주입</li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color:#a78bfa; margin-bottom:8px;">🎯 대상 프로젝트</h4>
+            <p style="color:#8b949e; font-size:14px; line-height:1.7;">
+              <strong>AutoKliq:</strong> 메타 엔지니어와 커리어 알렉스(상현)가 3개월간 실제 운영/개발 중인 수만 라인의 AI 유튜브 썸네일 SaaS. 장난감 토이 프로젝트가 아닌 실제 코드베이스.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Round 1 -->
+    <section id="round1" class="section">
+      <h2 class="section-title">4. Round 1 · 온보딩 및 홍보 영상 제작</h2>
+      <div class="report-card">
+        <div class="prompt-container">
+<button class="copy-btn" onclick="copyPrompt(this)">복사</button>당신은 오토클릭(AutoKliq)의 실제 서비스 소스코드를 가지고 있습니다.
+1. 먼저 로컬 환경에서 앱을 직접 띄우고 실제로 사용해 보세요.
+2. 제품의 사용자 경험과 핵심 가치를 파악한 뒤, 다음 두 가지 영상을 순수 코드로 작성하여 MP4 파일로 렌더링하세요.
+   - 제품을 소개하는 온보딩 영상 (45초 분량) 1편
+   - 핵심 기능을 임팩트 있게 보여주는 짧은 컷의 홍보 영상 (15초 분량) 1편</div>
+        <div class="grid-2" style="margin-top:16px;">
+          <div style="background:rgba(244,63,94,0.05); padding:16px; border-radius:10px; border:1px solid rgba(244,63,94,0.2);">
+            <strong style="color:#fb7185;">Fable 5.1 결과:</strong><br>
+            시각적 단계 구성은 매우 훌륭하고 정갈했으나, 오디오/내레이션이 일절 없는 무음 비디오로 렌더링됨.
+          </div>
+          <div style="background:rgba(16,185,129,0.05); padding:16px; border-radius:10px; border:1px solid rgba(16,185,129,0.2);">
+            <strong style="color:#34d399;">Astra 결과 (승리 🏆):</strong><br>
+            자연스러운 한국어 음성(TTS), 자막, 배경음악까지 완벽히 임베딩된 온보딩 영상 렌더링. 비용은 Fast 모드로 2배 소모.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Round 2 -->
+    <section id="round2" class="section">
+      <h2 class="section-title">5. Round 2 · 성능 최적화 ("생성 시간을 절반으로")</h2>
+      <div class="report-card">
+        <div class="prompt-container">
+<button class="copy-btn" onclick="copyPrompt(this)">복사</button>썸네일 생성이 너무 느립니다. 이를 절반(50%)으로 줄여주세요.
+[지켜야 할 규칙]
+1. 기존에 정상적으로 동작하는 필수 기능들은 하나도 변경하거나 누락하지 마세요.
+2. 만약 실행 시간 단축을 위해 이미지/텍스트의 품질을 의도적으로 떨어뜨리는 변경을 했다면, 반드시 최종 보고서에 어떤 품질을 희생했는지 명시하세요.</div>
+        <div class="grid-2" style="margin-top:16px;">
+          <div style="background:rgba(244,63,94,0.05); padding:16px; border-radius:10px; border:1px solid rgba(244,63,94,0.2);">
+            <strong style="color:#fb7185;">Fable 5.1 결과 (판정승 🏆 — $47, 1시간 30분):</strong><br>
+            집요하게 프로파일링하여 시나리오별 2~6% (P50/P90 기준 20~30초 실질 단축) 개선 달성. 실질적인 아키텍처 리팩토링 성공.
+          </div>
+          <div style="background:rgba(16,185,129,0.05); padding:16px; border-radius:10px; border:1px solid rgba(16,185,129,0.2);">
+            <strong style="color:#34d399;">Astra 결과 ($22, 24분):</strong><br>
+            평균 1% 단축(~10초 단축)에 그쳐 체감 불가. 시간을 적게 썼으나 깊이 있는 병목 해결에는 실패.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Round 3 -->
+    <section id="round3" class="section">
+      <h2 class="section-title">6. Round 3 · UI 전면 리디자인</h2>
+      <div class="report-card">
+        <div class="prompt-container">
+<button class="copy-btn" onclick="copyPrompt(this)">복사</button>오토클릭의 UI를 전면적으로 다시 디자인하세요.
+우리가 제품을 완전히 다시 설계한다면 어떤 모습이어야 하는지 확인하고 싶습니다.
+[필수 요구사항]
+1. 사람이 쓰기에도 좋아야 하고, 앞으로 이 화면을 다룰 '에이전트'가 쓰기에도 좋아야 합니다.
+2. 기존에 잘 작동하던 기능이 사라져서는 안 되며, 변경 후 실제로 에러 없이 돌아가는지 철저히 테스트하세요.
+3. 시간제한은 없으며 중간에 질문하지 말고 스스로 판단하여 끝까지 진행하세요.</div>
+        <div class="grid-2" style="margin-top:16px;">
+          <div style="background:rgba(244,63,94,0.05); padding:16px; border-radius:10px;">
+            <strong style="color:#fb7185;">Fable 5.1 (보수적 개선):</strong><br>
+            기존 폼을 3개 영역으로 쪼개고 상단 탭을 정리한 정도의 안전 위주 리팩토링. 혁신적 변화 부재.
+          </div>
+          <div style="background:rgba(16,185,129,0.05); padding:16px; border-radius:10px; border:1px solid rgba(16,185,129,0.3);">
+            <strong style="color:#34d399;">Astra (압도적 압승 🏆 — 비용/시간 동일):</strong><br>
+            1) '아이디어에서 한 장으로' 전용 Home 대시보드 신설.<br>
+            2) 4단계 선형 마법사 (Story ➔ Expression ➔ Asset ➔ Pre-check).<br>
+            3) 이전 작업물을 빠르게 찾는 실시간 검색바 및 상태 필터 추가.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Round 4 -->
+    <section id="round4" class="section">
+      <h2 class="section-title">7. Round 4 · 저장소 3D 공간 탐색 & 총비용</h2>
+      <div class="report-card">
+        <div class="grid-2">
+          <div>
+            <h4 style="color:#f43f5e; margin-bottom:8px;">Fable 5.1 ($11, 29분)</h4>
+            <p style="font-size:13px; color:#8b949e; line-height:1.6;">
+              디스트릭트 구역 분할 및 컴포넌트/API 색상 구분. WASD 조작 지원. 평이한 3D 맵.
+            </p>
+          </div>
+          <div>
+            <h4 style="color:#10b981; margin-bottom:8px;">Astra ($24, 35분 — 압승 🏆)</h4>
+            <p style="font-size:13px; color:#c9d1d9; line-height:1.6;">
+              8개 공간 분할, <strong>건물 높이 = 코드 라인 수</strong> 메타포, '썸네일의 여정' 7단계 가이드 투어 및 조감도 탑재.
+            </p>
+          </div>
+        </div>
+        <div style="margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.08); display:flex; justify-content:space-around; text-align:center;">
+          <div><strong style="color:#f43f5e; font-size:20px;">Fable 총 $125</strong><div style="font-size:12px; color:#8b949e;">4개 과제 합계</div></div>
+          <div><strong style="color:#10b981; font-size:20px;">Astra 총 $134</strong><div style="font-size:12px; color:#8b949e;">4개 과제 합계 (Fast mode)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Round 5 -->
+    <section id="round5" class="section">
+      <h2 class="section-title">8. Round 5 · 다중 에이전트 상호 협업의 실체</h2>
+      <div class="report-card" style="border-left:4px solid #f97316;">
+        <h3 style="color:#fdba74; font-size:16px; margin-bottom:8px;">🚨 천재 둘의 협업이 가져온 역설</h3>
+        <p style="color:#c9d1d9; font-size:14px; line-height:1.7; margin-bottom:14px;">
+          의도(인간 컨펌 1회) ➔ 플래닝 ➔ 구현 ➔ 검증 ➔ 보고 단계별로 Astra(메인)와 Fable(리뷰어)이 상호 리뷰하도록 설계했습니다. 그러나 상호 합의 과정에서 가장 유용했던 <strong>프로젝트 검색바가 사라지고</strong>, 어설픈 '짬뽕' UI로 전락했습니다.
+        </p>
+        <div style="background:#060911; padding:14px; border-radius:8px; font-size:13px; color:#f87171;">
+          💸 단일 과제당 토큰 비용: <strong>$108 (영상), $62 (최적화), $142 (UI)</strong>로 폭증!<br>
+          👉 <strong>교훈:</strong> 명확한 인간의 디렉션이 없으면 에이전트 간 리뷰는 서로의 날카로운 혁신성을 깎아내려 무난하고 진부한 결과물로 수렴함.
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Agentic Engineering -->
+    <section id="agentic" class="section">
+      <h2 class="section-title">9. Agentic & Harness Engineering 핵심 교훈</h2>
+      <div class="grid-2">
+        <div class="report-card">
+          <h4 style="color:#38bdf8; margin-bottom:6px;">하네스 엔지니어링의 위력</h4>
+          <p style="font-size:13px; color:#8b949e; line-height:1.6;">
+            순수 모델 비교는 환상입니다. 툴 호출 규격, 프롬프트 캐싱, 파일 인덱싱 등 하네스의 완성도가 실제 서비스 개발 생산성을 70% 이상 결정합니다.
+          </p>
+        </div>
+        <div class="report-card">
+          <h4 style="color:#a78bfa; margin-bottom:6px;">Human Gatekeeper의 필요성</h4>
+          <p style="font-size:13px; color:#8b949e; line-height:1.6;">
+            Zero-shot 에이전트가 발전할수록 인간은 코더에서 '조타수(Steering Director)'로 변해야 합니다. 최초 의도와 마일스톤별 게이트 검증을 인간이 통제해야 합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Resources -->
+    <section id="resources" class="section">
+      <h2 class="section-title">10. 핵심 깃허브 & 리소스</h2>
+      <div class="report-card">
+        <ul style="list-style:none; font-size:14px; line-height:2;">
+          <li>🔗 <a href="https://github.com/herdrdev/herdr" target="_blank"><strong>herdr (GitHub):</strong></a> 멀티 터미널 CLI 에이전트 오케스트레이터</li>
+          <li>🔗 <a href="https://github.com/openai/codex" target="_blank"><strong>Codex CLI:</strong></a> OpenAI 공식 터미널 자율 코딩 에이전트</li>
+          <li>🔗 <a href="https://claude.com/claude-code" target="_blank"><strong>Claude Code:</strong></a> 엔트로픽 공식 CLI 도구</li>
+          <li>🔗 <a href="https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1" target="_blank"><strong>Anthropic Fable 5.1 Guide:</strong></a> 엔트로픽 공식 프롬프트 가이드</li>
+          <li>🔗 <a href="https://autokliq.com" target="_blank"><strong>AutoKliq:</strong></a> 테스트베드로 사용된 실서비스 썸네일 SaaS</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 11. Next Action -->
+    <section id="next" class="section">
+      <h2 class="section-title">11. Next Actions & 추천 소스</h2>
+      <div class="report-card" style="border-color:rgba(56,189,248,0.3); background:rgba(56,189,248,0.03);">
+        <h4 style="color:#38bdf8; margin-bottom:10px;">📌 그룹장 맞춤형 즉시 실행 과제 (Mobile SW Protocol Design / Physical Layer)</h4>
+        <ol style="font-size:14px; color:#c9d1d9; line-height:1.8; padding-left:20px;">
+          <li><strong>AST + Grep 기반 레지스터 맵 파이프라인 실험:</strong> herdr 로컬 세팅 후 Claude Code와 Codex를 동시 띄워 C/C++ 레거시 코드베이스의 심벌 추출 및 2nd Brain 인덱싱 고도화 테스트.</li>
+          <li><strong>AI-native HW 요구사항 매핑:</strong> 3대 프로덕션 프롬프트 패턴(특히 Negative 제약)을 응용하여 HW 변경 사항 리스트와 JIRA 티켓을 자동 대조/검증하는 에이전트 프롬프트 템플릿 설계.</li>
+          <li><strong>협업 가드레일 기반 코드 리뷰 자동화:</strong> 멀티 에이전트 상호 리뷰 시 "기존 물리 계층 최적화 로직 보존 의무" 등 엄격한 Negative 제약조건 주입을 통한 리뷰 퇴보 방지 훈련.</li>
+        </ol>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+function copyPrompt(btn) {
+  const code = btn.parentElement.innerText.replace('복사', '').trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const orig = btn.innerText;
+    btn.innerText = '복사됨! ✓';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.innerText = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1800);
+  });
+}
+
+// Scrollspy for TOC
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('.section');
+  const links = document.querySelectorAll('.toc-link');
+  let current = '';
+  sections.forEach(sec => {
+    const top = sec.offsetTop;
+    if (pageYOffset >= top - 100) {
+      current = sec.getAttribute('id');
+    }
+  });
+  links.forEach(l => {
+    l.classList.remove('active');
+    if (l.getAttribute('href') === '#' + current) {
+      l.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>

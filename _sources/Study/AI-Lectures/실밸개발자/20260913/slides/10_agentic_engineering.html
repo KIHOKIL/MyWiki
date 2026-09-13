@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Agentic & Harness Engineering 5대 인사이트 — 실밸개발자 AI 강의</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #0a0f1a;
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #e6edf3;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  opacity: 0;
+  animation: fadeIn 0.35s ease forwards;
+}
+body.fade-out { animation: fadeOut 0.25s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+
+.container {
+  width: 1280px;
+  max-width: 95vw;
+  padding: 40px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #7c3aed, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+.subtitle {
+  font-size: 17px;
+  color: #8b949e;
+  text-align: center;
+  max-width: 860px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+
+.card {
+  background: rgba(139, 148, 158, 0.04);
+  border: 1px solid rgba(139, 148, 158, 0.12);
+  border-radius: 16px;
+  padding: 24px 28px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.card:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-2px);
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+}
+
+.model-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+.model-name { font-size: 20px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.model-fable { color: #f43f5e; }
+.model-astra { color: #10b981; }
+.model-pill {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.pill-fable { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+.pill-astra { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+.prompt-box {
+  background: #060911;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c9d1d9;
+  position: relative;
+  width: 100%;
+  margin: 16px 0;
+  white-space: pre-wrap;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: rgba(124, 58, 237, 0.2);
+  border: 1px solid rgba(124, 58, 237, 0.4);
+  color: #a78bfa;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { background: #7c3aed; color: #fff; }
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 14px;
+}
+.table-custom th {
+  background: rgba(124, 58, 237, 0.12);
+  color: #e6edf3;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 2px solid rgba(124, 58, 237, 0.3);
+}
+.table-custom td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #c9d1d9;
+}
+.table-custom tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+.slide-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 54px;
+  background: rgba(10, 15, 26, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(124, 58, 237, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.slide-nav-inner {
+  width: 1280px;
+  max-width: 95vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+.slide-nav a {
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  color: #7c3aed;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.slide-nav a:hover { color: #38bdf8; }
+.slide-nav .nav-disabled { font-size: 14px; font-weight: 700; color: #484f58; cursor: default; }
+.slide-nav .nav-center { display: flex; align-items: center; gap: 16px; }
+.slide-nav .nav-center a { color: #8b949e; font-size: 13px; font-weight: 500; }
+.slide-nav .nav-center a:hover { color: #e6edf3; }
+.key-hint {
+  font-size: 11px;
+  color: #6e7681;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="badge">10. Engineering Lessons</div>
+  <h1 class="title">Agentic & Harness Engineering 5대 인사이트</h1>
+  <p class="subtitle">단순한 프롬프트 입력을 넘어 프로덕션 레벨에서 에이전트 시스템을 구축할 때 반드시 챙겨야 할 방법론입니다.</p>
+  
+        <div class="grid-2">
+          <div class="card">
+            <h4 style="color:#38bdf8; font-size:16px; margin-bottom:8px;">1. 모델과 하네스의 결합성 이해</h4>
+            <p style="color:#8b949e; font-size:13px; line-height:1.6;">
+              우리가 체감하는 AI의 성능은 [모델 + 툴 샌드박스 + 프롬프트 캐싱 + 컨텍스트 압축]의 결합체입니다. 하네스를 고도화하지 않고 모델 탓만 해서는 안 됩니다.
+            </p>
+          </div>
+          <div class="card">
+            <h4 style="color:#a78bfa; font-size:16px; margin-bottom:8px;">2. Negative Constraint (품질 가드레일)</h4>
+            <p style="color:#8b949e; font-size:13px; line-height:1.6;">
+              "품질을 낮췄다면 보고서에 적어라"처럼 AI가 목표 수치를 맞추기 위해 본질을 왜곡하는 편법을 방지하는 투명성 조항이 필수적입니다.
+            </p>
+          </div>
+          <div class="card">
+            <h4 style="color:#34d399; font-size:16px; margin-bottom:8px;">3. Dual-User Framing (사람 + AI)</h4>
+            <p style="color:#8b949e; font-size:13px; line-height:1.6;">
+              앞으로의 모든 소프트웨어는 사람뿐만 아니라 에이전트가 DOM 트리와 API를 통해 쉽게 조작할 수 있는 구조(Accessible & Agentic)로 설계되어야 합니다.
+            </p>
+          </div>
+          <div class="card">
+            <h4 style="color:#f43f5e; font-size:16px; margin-bottom:8px;">4. Human Gatekeeper (Phase Gate)</h4>
+            <p style="color:#8b949e; font-size:13px; line-height:1.6;">
+              전체 루프를 방임하지 말고, <strong>의도 정의(Intent)</strong>와 <strong>최종 배포(Deploy)</strong> 단계에서 인간이 컨펌하는 체크포인트를 두어야 비용과 품질이 보장됩니다.
+            </p>
+          </div>
+        </div>
+        
+</div>
+
+<nav class="slide-nav">
+  <div class="slide-nav-inner">
+    <div class="nav-left"><a href="javascript:void(0)" onclick="goTo('09_round5_collaboration.html')">← 이전 슬라이드</a></div>
+    <div class="nav-center">
+      <a href="index.html">☰ 전체 목차</a>
+      <span style="color:#484f58;">|</span>
+      <span style="color:#8b949e; font-size:13px;">10 / 12</span>
+      <span class="key-hint">좌우 방향키 [←] [→]</span>
+    </div>
+    <div class="nav-right"><a href="javascript:void(0)" onclick="goTo('11_github_resources.html')">다음 슬라이드 →</a></div>
+  </div>
+</nav>
+
+<script>
+function goTo(url) {
+  if(!url) return;
+  document.body.classList.add('fade-out');
+  setTimeout(function() { window.location.href = url; }, 220);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowLeft' && '09_round5_collaboration.html') goTo('09_round5_collaboration.html');
+  if (e.key === 'ArrowRight' && '11_github_resources.html') goTo('11_github_resources.html');
+  if (e.key === 'Home') goTo('index.html');
+});
+function copyPrompt(btn) {
+  const code = btn.parentElement.innerText.replace('복사', '').trim();
+  navigator.clipboard.writeText(code).then(() => {
+    const orig = btn.innerText;
+    btn.innerText = '복사됨! ✓';
+    btn.style.background = '#10b981';
+    btn.style.color = '#fff';
+    setTimeout(() => {
+      btn.innerText = orig;
+      btn.style.background = '';
+      btn.style.color = '';
+    }, 1800);
+  });
+}
+</script>
+</body>
+</html>

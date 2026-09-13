@@ -14,9 +14,16 @@
 - [[2026-08-31_News_Briefing.md]] — [Global Mobile Communication Industry Briefing] 6G/AI 기반의 차세대 네트워크 패러다임 전환
 - [[2026-09-01_News_Briefing.md]] — [Global Mobile Communication Industry Briefing]
 - [[2026-09-06_News_Briefing.md]] — [2026년 09월 06일] Group 2nd Brain & Tech Horizon 브리핑
+- [[2026-09-07_News_Briefing.md]] — [2026년 09월 07일] Group 2nd Brain & Tech Horizon 브리핑
+- [[2026-09-09_News_Briefing.md]] — [2026년 09월 09일] Group 2nd Brain & Tech Horizon 브리핑
+- [[Finance_Briefing_2026-09-06.md]] — 📊 Money Snowball Daily Macro Briefing
+- [[Finance_Briefing_2026-09-07.md]] — 📊 Money Snowball Daily Macro Briefing
+- [[Finance_Briefing_2026-09-08.md]] — 📊 Money Snowball Daily Macro Briefing
+- [[Finance_Briefing_2026-09-09.md]] — 📊 Money Snowball Daily Macro Briefing
+- [[Finance_Briefing_2026-09-13.md]] — 📊 Money Snowball Daily Macro Briefing
 
 ## 관련 위키 페이지
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-09-06*
+*마지막 갱신: 2026-09-14*

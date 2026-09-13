@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에이전트 시대의 터미널 Herdr | Lecture Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0f1a;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-secondary: #38bdf8;
+            --card-bg: rgba(139, 148, 158, 0.04);
+            --card-border: rgba(139, 148, 158, 0.1);
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .toc {
+            flex: 0 0 250px;
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: var(--accent-secondary);
+        }
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+        .toc li {
+            margin-bottom: 0.8rem;
+        }
+        .toc a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .toc a:hover, .toc a.active {
+            color: var(--accent-secondary);
+            font-weight: bold;
+        }
+        .content {
+            flex: 1;
+            padding-left: 3rem;
+        }
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.5rem;
+            margin-top: 3rem;
+            color: var(--accent-secondary);
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .grid-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .matrix-item {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+        }
+        .matrix-item h4 {
+            color: var(--accent-secondary);
+            margin-top: 0;
+        }
+        pre {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            color: #a78bfa;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 0.3rem 0.6rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.3s;
+        }
+        .copy-btn:hover {
+            background: var(--accent-secondary);
+        }
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .content { padding-left: 0; margin-top: 2rem; }
+            .toc { position: relative; top: 0; width: auto; }
+            .grid-matrix { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar TOC -->
+        <nav class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#intro" class="active">1. Executive Summary</a></li>
+                <li><a href="#core-concept">2. 터미널 멀티플렉서의 진화</a></li>
+                <li><a href="#herdr-features">3. Herdr 핵심 강점</a></li>
+                <li><a href="#demo">4. 실무 파이프라인 (데모)</a></li>
+                <li><a href="#analysis">5. Agentic Analysis</a></li>
+                <li><a href="#next-action">6. Next Action</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="content">
+            <header>
+                <h1>에이전트 시대의 터미널 Herdr</h1>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">메타 시니어 엔지니어가 잘때도 에이전트를 돌리는 법</p>
+            </header>
+
+            <section id="intro" class="card">
+                <h2>1. Executive Summary</h2>
+                <p>과거에는 <code>tmux</code>가 개발자의 화면 분할 및 백그라운드 세션 유지를 위해 쓰였다면, 이제는 여러 개의 코딩 에이전트(예: Claude Code, Codex 등)를 동시에 띄워놓고 작업을 지시하는 <strong>'다중 에이전트 오케스트레이션'</strong> 시대입니다.</p>
+                <p>에이전트를 여러 개 띄우다 보면, 어떤 에이전트가 승인을 기다리고 있고 어떤 에이전트가 작업 중인지 파악하기 힘들어 <strong>'병목은 인간'</strong>이 되는 현상이 발생합니다. <strong>Herdr</strong>는 에이전트의 상태(Working, Blocked, Done)를 실시간으로 인식하고 알림을 주는 오픈소스 멀티플렉서입니다.</p>
+            </section>
+
+            <section id="core-concept" class="card">
+                <h2>2. 터미널 멀티플렉서의 귀환과 한계</h2>
+                <div class="grid-matrix">
+                    <div class="matrix-item">
+                        <h4>서버-클라이언트 구조</h4>
+                        <p>터미널 앱, 서버, 프로세스의 3층 구조로, 터미널 앱을 닫아도 서버에서 에이전트는 계속 동작합니다.</p>
+                    </div>
+                    <div class="matrix-item">
+                        <h4>tmux의 부활</h4>
+                        <p>프로세스가 "내가 보지 않는 동안 오래 도는 것"으로 성격이 바뀌면서 tmux의 세션 유지 기능이 필수불가결해졌습니다.</p>
+                    </div>
+                    <div class="matrix-item">
+                        <h4>기존의 치명적 한계</h4>
+                        <p>pane 안에서 뭐가 도는지 모릅니다. 에이전트가 에러로 멈춰서 "승인 대기(Blocked)" 상태여도 사용자가 보지 않으면 멈춰 있습니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="herdr-features" class="card">
+                <h2>3. Herdr: 에이전트를 아는 터미널 (3가지 차별점)</h2>
+                <ul>
+                    <li><strong>에이전트 상태 인식 (5 States)</strong>: 사이드바를 통해 <span style="color: #ef4444;">Blocked</span>, <span style="color: #3b82f6;">Working</span>, <span style="color: #10b981;">Done</span>, <span style="color: #94a3b8;">Idle</span>, Unknown 상태를 직관적으로 표시합니다.</li>
+                    <li><strong>에이전트 주도 조작</strong>: 에이전트가 명령 한 줄로 Herdr의 탭과 Pane을 스스로 쪼개고 조작할 수 있습니다.</li>
+                    <li><strong>세션 및 대화 복원력</strong>: 터미널이나 서버를 닫았다 켜도 <code>claude --resume</code> 등을 통해 에이전트 대화 맥락이 온전히 복원됩니다.</li>
+                </ul>
+            </section>
+
+            <section id="demo" class="card">
+                <h2>4. 실무 파이프라인 (AutoKliq 개발 데모)</h2>
+                <p>한 Claude Code(오케스트레이터)에게 지시하면, 해당 에이전트가 <code>herdr</code> 스킬을 사용하여 직접 <code>worktree</code>를 파고 새로운 <code>pane</code>을 3개 띄워 서브 에이전트들을 기동합니다.</p>
+                <div style="position: relative;">
+                    <pre><code id="code1"># 에이전트가 herdr를 다루는 스킬 명령 (예시)
+herdr split-pane --horizontal
+herdr send-keys -t 1 "claude --resume" Enter</code></pre>
+                    <button class="copy-btn" onclick="copyCode('code1')">Copy</button>
+                </div>
+            </section>
+
+            <section id="analysis" class="card">
+                <h2>5. Agentic Analysis (도구 비교)</h2>
+                <div class="grid-matrix" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="matrix-item">
+                        <h4>Herdr vs Warp / Conductor</h4>
+                        <p>Warp나 Conductor는 모던 터미널 기반 통합 도구지만, "터미널을 끄면 에이전트도 죽는가?"라는 질문에 Herdr는 백그라운드 서버 아키텍처로 완전한 생존을 보장합니다.</p>
+                    </div>
+                    <div class="matrix-item">
+                        <h4>인간 UI vs 가상 OS</h4>
+                        <p>Herdr는 인간을 위한 UI가 아니라, 에이전트가 살아가고 스스로 화면을 통제하는 <strong>'가상 런타임(Runtime)'</strong>이라는 철학적 전환을 꾀했습니다.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="next-action" class="card">
+                <h2>6. Next Action (리더 페르소나 적용)</h2>
+                <h3>🔥 Legacy C/C++ 리팩토링 자동화 파이프라인</h3>
+                <p>통신 프로토콜 레거시 코드 분석 시, 다중 에이전트를 투입하여 Herdr로 관리하세요.</p>
+                <ol>
+                    <li><code>Master Agent</code>가 전체 아키텍처 파악</li>
+                    <li><code>herdr</code> 스킬을 호출해 Pane 분할</li>
+                    <li><code>Sub Agent 1</code>(헤더 추출), <code>Sub Agent 2</code>(레지스터 파싱) 병렬 실행</li>
+                    <li>빌드 에러 시 <code>Blocked</code> 상태가 뜨면 리더가 즉시 사이드바를 보고 컨펌(비동기 최적화)</li>
+                </ol>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Simple scrollspy logic
+        const sections = document.querySelectorAll("section[id]");
+        const navLinks = document.querySelectorAll(".toc a");
+
+        window.addEventListener("scroll", () => {
+            let current = "";
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute("id");
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href").includes(current)) {
+                    link.classList.add("active");
+                }
+            });
+        });
+
+        // Copy to clipboard
+        function copyCode(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("코드가 클립보드에 복사되었습니다.");
+            });
+        }
+    </script>
+</body>
+</html>

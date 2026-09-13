@@ -4,6 +4,12 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-13 16:36] generate-index folders=Books,Clippings,News,Projects,Study,Work-Ideas files=49
+- [2026-09-13 16:34] CHORE: Wiki-Organize Pipeline Execution
+  - Ingested 5 sources into concepts (embedded-software, yield-curve-inversion, bond-laddering) and entities (news-summarizer, fable-5-1, gpt-6-astra).
+  - Moved processed raw drafts to _raw/_archived/
+  - Rebuilt all `_sources/` master indexes via `generate_index.py`.
+  - Validated and updated master `index.md`, `log.md`, `hot.md`, and `.manifest.json`.
 - [2026-09-10 23:03] FIX: Google Sheets Subscriber Synchronization & Secret Update (NewsSummarizer)
   - Issue: Scheduled agent ran and sent emails only to primary receiver (총 1명 발송 완료), missing 7 Google Form response subscribers.
   - Root Cause: GitHub Secret `SUBSCRIBERS_CSV_URL` was registered on Aug 21 with `/pub?output=csv` pointing to empty default sheet (`gid=652869560`). Code also only triggered multi-sheet discovery if URL explicitly contained `pubhtml`.
@@ -131,3 +137,5 @@ title: Wiki Log
 - [2026-09-01] INGEST source=_sources/Study/AI-Lectures/편한AI/20260901/Research_report_LLM_2nd_Brain_Seoul (1).md created=5 (graph-rag, agentic-rag, memgpt, mcp-server, multi-tier-knowledge-architecture) updated=2 (active-second-brain, llm-wiki-vs-rag)- [2026-09-03] INGEST source=_sources/Study/AI-Lectures/편한AI/20260903/ created=7 (context-compression, moe-streaming, headroom, slotstream, smolcoder, rhema, neo4j) updated=1 (graph-rag)
 - [2026-09-03 15:39] generate-index folders=00_Inbox,90_MOC,Books,Clippings,News,Projects,Study,Work-Ideas files=34
 - [2026-09-03 15:41] LINT: Completed wiki vault health audit. 63 wiki pages in scope. 0 broken links. 0 frontmatter issues. Graph integrity verified.
+- [2026-09-14 01:03] generate-index folders=Books,Clippings,News,Projects,Study,Work-Ideas files=60
+- [2026-09-14 01:03] LINT: Completed wiki vault health audit. Graph integrity verified, no broken links found.
