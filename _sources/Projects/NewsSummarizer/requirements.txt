@@ -5,3 +5,5 @@ tenacity
 pytest
 pytest-mock
 openai
+beautifulsoup4
+requests
