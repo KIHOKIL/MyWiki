@@ -100,7 +100,7 @@ def validate_source_item(title, link, content, focus, cat_name):
     
     client = genai.Client(api_key=GEMINI_API_KEY)
     try:
-        response = safe_generate_content(client, 'gemini-3.6-flash', prompt)
+        response = safe_generate_content(client, 'gemini-1.5-flash', prompt)
         result = response.text.strip().upper()
         if result.startswith("VALID"):
             return True, ""
@@ -555,7 +555,7 @@ def summarize_news_gemini(category_name, focus, articles):
     sys_instruction, prompt = _build_news_prompt(category_name, focus, articles)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = safe_generate_content(client,
-        model='gemini-3.6-flash',
+        model='gemini-1.5-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -699,7 +699,7 @@ def analyze_github_gemini(focus, candidates):
     sys_instruction, prompt = _build_github_prompt(focus, candidates)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = safe_generate_content(client,
-        model='gemini-3.6-flash',
+        model='gemini-1.5-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -749,7 +749,7 @@ def generate_executive_gemini(articles_summary_text, github_summary_text):
     sys_instruction, prompt = _build_executive_prompt(articles_summary_text, github_summary_text)
     client = genai.Client(api_key=GEMINI_API_KEY)
     response = safe_generate_content(client,
-        model='gemini-3.6-flash',
+        model='gemini-1.5-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
