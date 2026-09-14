@@ -58,9 +58,12 @@ def safe_generate_content(client, model, contents, config=None, max_retries=6):
             else:
                 return client.models.generate_content(model=model, contents=contents)
         except Exception as e:
-            if '429' in str(e) and attempt < max_retries - 1:
+            err_str = repr(e) + " " + str(e) + " " + str(getattr(e, 'code', ''))
+            err_lower = err_str.lower()
+            is_retryable = any(x in err_lower for x in ['429', '503', 'quota', 'unavailable', 'exhausted', 'overloaded'])
+            if is_retryable and attempt < max_retries - 1:
                 sleep_time = 20 + (attempt * 10)
-                print(f"  [Rate Limit] 429 Error, sleeping {sleep_time}s (Attempt {attempt+1}/{max_retries})...")
+                print(f"  [API Retry] 429/503/Quota Error, sleeping {sleep_time}s (Attempt {attempt+1}/{max_retries})...", flush=True)
                 time.sleep(sleep_time)
             else:
                 raise e
@@ -101,12 +104,14 @@ def validate_source_item(title, link, content, focus, cat_name):
     client = genai.Client(api_key=GEMINI_API_KEY)
     try:
         response = safe_generate_content(client, 'gemini-3.8-flash', prompt)
+        import time; time.sleep(4)  # RPM limit (15 requests/min) 방어
         result = response.text.strip().upper()
         if result.startswith("VALID"):
             return True, ""
         else:
             return False, result
     except Exception as e:
+        import time; time.sleep(4)
         return False, f"Validation API Error: {e}"  # 에러 발생 시 스팸 유입 방지를 위해 거절 처리
 
 def fetch_google_news(query, focus, cat_name, max_articles=2):
