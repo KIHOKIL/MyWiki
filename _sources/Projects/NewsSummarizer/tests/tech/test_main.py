@@ -7,7 +7,43 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from agents.tech import main
 
-
+def test_fallback_logic_in_main(mocker):
+    """Gemini API가 5회 재시도 후 최종 실패할 때 OpenAI로 자동 Fallback 되는지 검증"""
+    mocker.patch("agents.tech.main.load_config", return_value={
+        "categories": [{"name": "Tech", "queries": ["AI"], "focus": "Test"}],
+        "github_trend": {"queries": ["test"], "focus": "test focus"}
+    })
+    
+    mock_article = {"title": "Test Title", "link": "http://test.com", "published": "2026-08-16"}
+    mocker.patch("agents.tech.main.fetch_google_news", return_value=[mock_article])
+    mocker.patch("agents.tech.main.fetch_github_trending", return_value=[{
+        "full_name": "test/repo", "html_url": "http://github.com/test/repo",
+        "description": "test", "stars": 100, "language": "Python", "topics": []
+    }])
+    
+    mock_gemini = mocker.patch("agents.tech.main.safe_summarize_news", side_effect=Exception("Gemini Rate Limit"))
+    mock_openai = mocker.patch("agents.tech.main.safe_summarize_news_openai", return_value="OpenAI Summary")
+    
+    mocker.patch("agents.tech.main.safe_analyze_github_trending", return_value="GitHub Trending Analysis")
+    mocker.patch("agents.tech.main.safe_generate_executive_summary", return_value="Executive Summary Analysis")
+    
+    mock_send_email = mocker.patch("agents.tech.main.send_email")
+    mock_save = mocker.patch("agents.tech.main.save_to_markdown")
+    mocker.patch("time.sleep")
+    mocker.patch("agents.tech.main.OPENAI_API_KEY", "fake_key")
+    
+    main.main()
+    
+    mock_gemini.assert_called_once()
+    mock_openai.assert_called_once()
+    
+    called_subject = mock_send_email.call_args[0][0]
+    called_body = mock_send_email.call_args[0][1]
+    
+    assert "[요약 일부 실패]" not in called_subject
+    assert "OpenAI Summary" in called_body
+    assert "Section 1: Executive Summary" in called_body
+    assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in called_body
 
 def test_all_api_fail_in_main(mocker):
     """Gemini, OpenAI 모두 실패했을 때 [요약 일부 실패] 에러 핸들링 검증"""
@@ -19,15 +55,18 @@ def test_all_api_fail_in_main(mocker):
     mocker.patch("time.sleep")
     
     mock_gemini = mocker.patch("agents.tech.main.safe_summarize_news", side_effect=Exception("Gemini Fail"))
+    mock_openai = mocker.patch("agents.tech.main.safe_summarize_news_openai", side_effect=Exception("OpenAI Fail"))
     mocker.patch("agents.tech.main.safe_analyze_github_trending", return_value="GitHub Trending Analysis")
     mocker.patch("agents.tech.main.safe_generate_executive_summary", return_value="Executive Summary Analysis")
     
     mock_send_email = mocker.patch("agents.tech.main.send_email")
     mocker.patch("agents.tech.main.save_to_markdown")
+    mocker.patch("agents.tech.main.OPENAI_API_KEY", "fake_key")
     
     main.main()
     
     mock_gemini.assert_called_once()
+    mock_openai.assert_called_once()
     
     called_subject = mock_send_email.call_args[0][0]
     called_body = mock_send_email.call_args[0][1]

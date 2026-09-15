@@ -28,11 +28,8 @@ def test_fetch_google_news(mocker):
     mock_resp.read.return_value = mock_xml
     mock_resp.__enter__.return_value = mock_resp
     mocker.patch("urllib.request.urlopen", return_value=mock_resp)
-    
-    # Mock validation so articles aren't discarded
-    mocker.patch("agents.finance.main.validate_source_item", return_value=(True, ""))
 
-    articles = main.fetch_google_news("Macro", "test focus", "test cat", max_articles=2)
+    articles = main.fetch_google_news("Macro", max_articles=2)
     assert len(articles) == 2
     assert articles[0]["title"] == "Test Finance Article 1"
     assert articles[0]["link"] == "https://example.com/finance1"
@@ -56,7 +53,7 @@ def test_generate_finance_report(mocker):
     mock_client.models.generate_content.assert_called_once()
     
     call_args = mock_client.models.generate_content.call_args
-    assert call_args[1]['model'] == 'gemini-3.6-flash'
+    assert call_args[1]['model'] == 'gemini-3.5-flash'
     assert 'Macro news' in call_args[1]['contents']
 
 def test_main_pipeline(mocker):

@@ -7,6 +7,7 @@ from email.message import EmailMessage
 import feedparser
 from google import genai
 from google.genai import types
+from openai import OpenAI
 from dotenv import load_dotenv
 import urllib.parse
 import urllib.request
@@ -16,9 +17,6 @@ import re
 from datetime import datetime, timezone, timedelta
 import time
 from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
-
-import requests
-from bs4 import BeautifulSoup
 
 # Windows 콘솔 환경(CP949) 이모지 및 유니코드 출력 호환성 보장
 try:
@@ -41,6 +39,7 @@ EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD", "your_app_password").replace('\xa0'
 EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER", "receiver_email@gmail.com")
 SUBSCRIBERS_CSV_URL = os.getenv("SUBSCRIBERS_CSV_URL", "")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "your_gemini_api_key")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN", "")
 
 def load_config():
@@ -49,169 +48,43 @@ def load_config():
     with open(config_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def safe_generate_content(client, model, contents, config=None, max_retries=6):
-    import time
-    for attempt in range(max_retries):
-        try:
-            if config:
-                return client.models.generate_content(model=model, contents=contents, config=config)
-            else:
-                return client.models.generate_content(model=model, contents=contents)
-        except Exception as e:
-            err_str = repr(e) + " " + str(e) + " " + str(getattr(e, 'code', ''))
-            err_lower = err_str.lower()
-            is_retryable = any(x in err_lower for x in ['429', '503', 'quota', 'unavailable', 'exhausted', 'overloaded'])
-            if is_retryable and attempt < max_retries - 1:
-                sleep_time = 20 + (attempt * 10)
-                print(f"  [API Retry] 429/503/Quota Error, sleeping {sleep_time}s (Attempt {attempt+1}/{max_retries})...", flush=True)
-                time.sleep(sleep_time)
-            else:
-                raise e
-
 # ==========================================
 # 1. 뉴스 및 GitHub 데이터 수집 모듈
 # ==========================================
 
-def extract_article_content(url):
-    try:
-        resp = requests.get(url, timeout=10, headers={'User-Agent': 'Mozilla/5.0'})
-        if resp.status_code == 200:
-            soup = BeautifulSoup(resp.content, 'html.parser')
-            text = " ".join([p.get_text(strip=True) for p in soup.find_all('p')])
-            return text[:2000]
-    except Exception:
-        pass
-    return ""
-
-def validate_source_item(title, link, content, focus, cat_name):
-    """LLM을 이용해 기사 1건 단위로 연관성 및 퀄리티를 독립 검증합니다."""
-    if not content:
-        content = "본문 추출 실패 (제목으로 평가)"
+def fetch_google_news(query, max_articles=2):
+    """주어진 키워드로 Google News RSS를 검색하여 기사를 가져옵니다."""
+    encoded_query = urllib.parse.quote(query + " when:1d")
+    url = f"https://news.google.com/rss/search?q={encoded_query}&hl=ko&gl=KR&ceid=KR:ko"
     
-    prompt = f"""다음 기사가 [{cat_name}] 카테고리의 분석 목적(Focus)에 부합하는지 엄격히 검증하세요.
-분석 목적: {focus}
-
-기사 제목: {title}
-기사 링크: {link}
-기사 본문(일부): {content}
-
-평가 기준:
-1. 전문적이고 기술적인 내용을 담고 있는가? (단순 낚시성 스팸이나 광고가 아닌가?)
-2. 분석 목적에 직접적인 도움이 되는 정보인가?
-
-결과 형식: 오직 "VALID" 또는 "INVALID: 사유" 로만 응답하세요."""
-    
-    client = genai.Client(api_key=GEMINI_API_KEY)
-    try:
-        response = safe_generate_content(client, 'gemini-3.6-flash', prompt)
-        import time; time.sleep(4)  # RPM limit (15 requests/min) 방어
-        result = response.text.strip().upper()
-        if result.startswith("VALID"):
-            return True, ""
-        else:
-            return False, result
-    except Exception as e:
-        import time; time.sleep(4)
-        return False, f"Validation API Error: {e}"  # 에러 발생 시 스팸 유입 방지를 위해 거절 처리
-
-def fetch_google_news(query, focus, cat_name, max_articles=2):
-    """하이브리드 방식 + 본문 스크래핑 + 개별 소스 검증 루프"""
-    articles = []
-    candidates = []
-    
-    query_lower = query.lower()
-    
-    # 1. 딥리서치 대상 키워드일 경우 arXiv 논문 검색 시도
-    if any(k in query_lower for k in ["physical layer", "3gpp", "neural receiver", "ai-ran", "soc"]):
+    feed = None
+    for attempt in range(3):
         try:
-            import xml.etree.ElementTree as ET
-            arxiv_query = urllib.parse.quote(query)
-            url = f"http://export.arxiv.org/api/query?search_query=all:{arxiv_query}&start=0&max_results=2&sortBy=submittedDate&sortOrder=descending"
-            req = urllib.request.Request(url)
+            req = urllib.request.Request(
+                url, 
+                headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'}
+            )
             with urllib.request.urlopen(req, timeout=10) as response:
                 xml_data = response.read()
-                root = ET.fromstring(xml_data)
-                for entry in root.findall('{http://www.w3.org/2005/Atom}entry'):
-                    title = entry.find('{http://www.w3.org/2005/Atom}title').text.strip()
-                    link = entry.find('{http://www.w3.org/2005/Atom}id').text.strip()
-                    summary = entry.find('{http://www.w3.org/2005/Atom}summary').text.strip()
-                    published = entry.find('{http://www.w3.org/2005/Atom}published').text.strip()
-                    candidates.append({"title": f"[ArXiv] {title}", "link": link, "published": published, "content": summary[:2000]})
+            feed = feedparser.parse(xml_data)
+            if feed and feed.entries:
+                break
         except Exception as e:
-            print(f"  [Warning] ArXiv API failed: {e}")
+            print(f"  [Warning] urllib request failed for '{query}' (Attempt {attempt+1}/3): {e}")
+        time.sleep(2)
+    
+    if not feed or not hasattr(feed, 'entries'):
+        print(f"  [Error] Failed to fetch or parse RSS for '{query}'.")
+        return []
 
-    # 2. 전문 저널 RSS 강제 수집
-    if "soc" in query_lower or "baseband" in query_lower or "modem" in query_lower:
-        try:
-            d = feedparser.parse("https://www.eetimes.com/feed/")
-            for entry in d.entries[:2]:
-                candidates.append({
-                    "title": f"[EE Times] {entry.title}",
-                    "link": entry.link,
-                    "published": entry.get("published", ""),
-                    "content": ""
-                })
-        except Exception as e:
-            pass
-            
-    # 3. Bing News RSS (DuckDuckGo Search 403 차단 회피용)
-    try:
-        encoded_query = urllib.parse.quote(query)
-        url = f"https://www.bing.com/news/search?q={encoded_query}&format=rss"
-        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-        with urllib.request.urlopen(req, timeout=10) as response:
-            feed = feedparser.parse(response.read())
-            for e in feed.entries[:max_articles*2]:
-                candidates.append({
-                    "title": e.title,
-                    "link": e.link,
-                    "published": e.get("published", ""),
-                    "content": ""
-                })
-    except Exception as e:
-        print(f"  [Warning] Bing News RSS failed for '{query}': {e}")
-        
-    # 개별 항목 본문 추출 및 검증
-    for cand in candidates:
-        if len(articles) >= max_articles:
-            break
-            
-        content = cand.get("content", "")
-        if not content:
-            content = extract_article_content(cand["link"])
-            cand["content"] = content
-            
-        print(f"    - [검증 중] {cand['title'][:30]}...")
-        is_valid, reason = validate_source_item(cand["title"], cand["link"], content, focus, cat_name)
-        if is_valid:
-            print("      -> [통과] (VALID)")
-            
-            # 원본 데이터(Raw Data) 저장 로직
-            try:
-                base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-                sources_dir = os.path.dirname(os.path.dirname(base_dir))
-                today_str = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")
-                raw_dir = os.path.join(sources_dir, "News", "Raw_data", today_str)
-                os.makedirs(raw_dir, exist_ok=True)
-                
-                safe_title = "".join([c for c in cand["title"] if c.isalpha() or c.isdigit() or c==' ']).rstrip()
-                safe_title = safe_title[:50].replace(" ", "_")
-                if not safe_title: safe_title = "article"
-                
-                file_path = os.path.join(raw_dir, f"tech_{safe_title}.txt")
-                with open(file_path, "w", encoding="utf-8") as rf:
-                    rf.write(f"Title: {cand['title']}\n")
-                    rf.write(f"Link: {cand['link']}\n")
-                    rf.write(f"Published: {cand['published']}\n\n")
-                    rf.write(content)
-            except Exception as e:
-                print(f"      -> [Warning] Failed to save raw data: {e}")
-
-            articles.append(cand)
-        else:
-            print(f"      -> [거절] {reason}")
-
-    return articles[:max_articles]
+    articles = []
+    for entry in feed.entries[:max_articles]:
+        articles.append({
+            "title": entry.title,
+            "link": entry.link,
+            "published": entry.get("published", "")
+        })
+    return articles
 
 # 4대 필수 탐색 주제별 검증된 실존 레포지토리 (All-time Classics & High-quality Curations)
 DEFAULT_CURATED_REPOS = {
@@ -516,9 +389,6 @@ def _build_news_prompt(category_name, focus, articles):
 | [기업B] | [예: Cellular Module] | [예: 5G FWA CPE, Edge AI] | [내용] |
 *(기사에 등장하는 주요 플레이어 중심으로 작성)*
 
-**📚 Reference**
-- 반드시 기사의 출처를 `[기사 제목](기사 원문 URL)` 형식의 마크다운 링크로 작성하여 남겨주세요.
-
 ---
 **💡 후속 심층 분석 제안 (Next Steps)**
 *(더 깊게 파고들 수 있는 질문 2~3개를 아래와 같이 제안하십시오)*
@@ -531,8 +401,7 @@ def _build_news_prompt(category_name, focus, articles):
 [수집된 뉴스 기사 헤드라인 목록]
 """
         for i, article in enumerate(articles, 1):
-            content_preview = article.get("content", "")[:300].replace("\n", " ")
-            prompt += f"{i}. 제목: {article['title']}\n   URL: {article['link']}\n   본문요약: {content_preview}\n"
+            prompt += f"{i}. {article['title']}\n"
         return sys_instruction, prompt
 
     sys_instruction = f"""당신은 IT, 통신, AI 및 소프트웨어 엔지니어링 산업의 글로벌 최고 수준 애널리스트입니다.
@@ -544,14 +413,11 @@ def _build_news_prompt(category_name, focus, articles):
 단순히 기사를 나열하는 것이 아니라, 여러 기사들 사이의 맥락을 연결하고 위 분석 포인트에 부합하는 가장 중요한 산업적/기술적 의미를 도출해 주세요.
 전문적이고 구조화된 리포트 형식(소제목, 글머리 기호 사용)으로 가독성 있게 작성해 주시고, 분량은 핵심만 압축하여 너무 길지 않게 작성하세요.
 
-리포트 하단에는 반드시 **📚 Reference** 섹션을 만들고 참조한 모든 기사의 출처를 `[기사 제목](기사 원문 URL)` 형식의 마크다운 링크로 작성하여 남겨주세요.
-
 마지막으로, 오늘 수집된 뉴스들과 최신 글로벌 동향을 바탕으로, 사용자가 앞으로 새롭게 추적하면 좋을 만한 트렌디한 **추천 뉴스 키워드/주제**를 브리핑 맨 마지막에 '💡 오늘의 추천 신규 키워드' 라는 섹션으로 1~2개 정도 제안해주세요.
 """
     prompt = "[수집된 뉴스 기사 헤드라인 목록]\n\n"
     for i, article in enumerate(articles, 1):
-        content_preview = article.get("content", "")[:300].replace("\n", " ")
-        prompt += f"{i}. 제목: {article['title']}\n   URL: {article['link']}\n   본문요약: {content_preview}\n"
+        prompt += f"{i}. {article['title']}\n"
     return sys_instruction, prompt
 
 def summarize_news_gemini(category_name, focus, articles):
@@ -559,8 +425,8 @@ def summarize_news_gemini(category_name, focus, articles):
         return f"[{category_name}] 에 대한 최신 뉴스가 수집되지 않았습니다."
     sys_instruction, prompt = _build_news_prompt(category_name, focus, articles)
     client = genai.Client(api_key=GEMINI_API_KEY)
-    response = safe_generate_content(client,
-        model='gemini-3.6-flash',
+    response = client.models.generate_content(
+        model='gemini-3.5-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -569,11 +435,31 @@ def summarize_news_gemini(category_name, focus, articles):
     )
     return response.text
 
+def summarize_news_openai(category_name, focus, articles):
+    if not articles:
+        return f"[{category_name}] 에 대한 최신 뉴스가 수집되지 않았습니다."
+    sys_instruction, prompt = _build_news_prompt(category_name, focus, articles)
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": sys_instruction},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3
+    )
+    return response.choices[0].message.content
+
 @retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_summarize_news(category_name, focus, articles):
     print(f"  [{category_name}] Gemini 분석 요청 중...")
     import time; time.sleep(5)
     return summarize_news_gemini(category_name, focus, articles)
+
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+def safe_summarize_news_openai(category_name, focus, articles):
+    print(f"  [{category_name}] OpenAI (Fallback) 분석 요청 중...")
+    return summarize_news_openai(category_name, focus, articles)
 
 # --- Section 2: GitHub Trending (시니어 멘토 개발자 4대 분야 큐레이션) ---
 def _build_github_prompt(focus, candidates):
@@ -703,8 +589,8 @@ def _build_github_prompt(focus, candidates):
 def analyze_github_gemini(focus, candidates):
     sys_instruction, prompt = _build_github_prompt(focus, candidates)
     client = genai.Client(api_key=GEMINI_API_KEY)
-    response = safe_generate_content(client,
-        model='gemini-3.6-flash',
+    response = client.models.generate_content(
+        model='gemini-3.5-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -713,11 +599,29 @@ def analyze_github_gemini(focus, candidates):
     )
     return response.text
 
+def analyze_github_openai(focus, candidates):
+    sys_instruction, prompt = _build_github_prompt(focus, candidates)
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": sys_instruction},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3
+    )
+    return response.choices[0].message.content
+
 @retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_analyze_github_trending(focus, candidates):
     print("  [GitHub Trending] Gemini 4대 분야 분석 요청 중...")
     import time; time.sleep(5)
     return analyze_github_gemini(focus, candidates)
+
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+def safe_analyze_github_trending_openai(focus, candidates):
+    print("  [GitHub Trending] OpenAI (Fallback) 4대 분야 분석 요청 중...")
+    return analyze_github_openai(focus, candidates)
 
 # --- Section 1: Executive Summary (2nd Brain, Codebase Loop & AI Frontier Strategy 종합) ---
 def _build_executive_prompt(articles_summary_text, github_summary_text):
@@ -753,8 +657,8 @@ def _build_executive_prompt(articles_summary_text, github_summary_text):
 def generate_executive_gemini(articles_summary_text, github_summary_text):
     sys_instruction, prompt = _build_executive_prompt(articles_summary_text, github_summary_text)
     client = genai.Client(api_key=GEMINI_API_KEY)
-    response = safe_generate_content(client,
-        model='gemini-3.6-flash',
+    response = client.models.generate_content(
+        model='gemini-3.5-flash',
         contents=prompt,
         config=types.GenerateContentConfig(
             system_instruction=sys_instruction,
@@ -763,11 +667,29 @@ def generate_executive_gemini(articles_summary_text, github_summary_text):
     )
     return response.text
 
+def generate_executive_openai(articles_summary_text, github_summary_text):
+    sys_instruction, prompt = _build_executive_prompt(articles_summary_text, github_summary_text)
+    client = OpenAI(api_key=OPENAI_API_KEY)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {"role": "system", "content": sys_instruction},
+            {"role": "user", "content": prompt}
+        ],
+        temperature=0.3
+    )
+    return response.choices[0].message.content
+
 @retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
 def safe_generate_executive_summary(articles_summary_text, github_summary_text):
     print("  [Executive Summary] Gemini 종합 분석 요청 중...")
     import time; time.sleep(5)
     return generate_executive_gemini(articles_summary_text, github_summary_text)
+
+@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+def safe_generate_executive_summary_openai(articles_summary_text, github_summary_text):
+    print("  [Executive Summary] OpenAI (Fallback) 종합 분석 요청 중...")
+    return generate_executive_openai(articles_summary_text, github_summary_text)
 
 # ==========================================
 # 3. 이메일 및 마크다운 포맷 생성 모듈
@@ -1125,17 +1047,17 @@ def send_email(subject, content, html_content=None):
         print("이메일 설정이 되어있지 않아 전송을 건너뜁니다.")
         return
 
-    receivers = set(["kiho.kil@gmail.com"])
-    # additional_receivers = get_additional_subscribers()
-    # if additional_receivers:
-    #     receivers.update(additional_receivers)
+    receivers = set([e.strip().lower() for e in EMAIL_RECEIVER.split(',') if e.strip()])
+    additional_receivers = get_additional_subscribers()
+    if additional_receivers:
+        receivers.update(additional_receivers)
     
     receivers_list = list(receivers)
     if not receivers_list:
         print("이메일 수신자가 설정되어 있지 않습니다.")
         return
 
-    print(f"  [발송 준비] 총 {len(receivers_list)}명 수신 대상")
+    print(f"  [발송 준비] 총 {len(receivers_list)}명 수신 대상 (추가 구독자 {len(additional_receivers)}명 포함)")
 
     msg = EmailMessage()
     msg['Subject'] = subject
@@ -1205,7 +1127,7 @@ def main():
         print(f"\n[{cat_name}] 뉴스 기사 수집 중...")
         all_articles = []
         for q in queries:
-            all_articles.extend(fetch_google_news(q, focus, cat_name, max_articles=2))
+            all_articles.extend(fetch_google_news(q, max_articles=2))
             time.sleep(1)
             
         unique_articles = []
@@ -1221,8 +1143,17 @@ def main():
             summary = safe_summarize_news(cat_name, focus, unique_articles)
         except Exception as e:
             print(f"  [{cat_name}] Gemini 재시도 실패: {e}")
-            summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요."
-            has_error = True
+            if OPENAI_API_KEY:
+                try:
+                    summary = safe_summarize_news_openai(cat_name, focus, unique_articles)
+                    print(f"  [{cat_name}] OpenAI Fallback 요약 성공!")
+                except Exception as oe:
+                    print(f"  [{cat_name}] OpenAI Fallback 실패: {oe}")
+                    summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. 아래 원문 기사 링크를 참고해 주세요."
+                    has_error = True
+            else:
+                summary = "⚠️ API 연동 문제로 AI 요약 생성에 실패했습니다. (OPENAI_API_KEY 없음)"
+                has_error = True
                 
         category_results.append({
             "name": cat_name,
@@ -1250,8 +1181,17 @@ def main():
         github_summary = safe_analyze_github_trending(github_focus, candidates)
     except Exception as ge:
         print(f"  [GitHub Trending] Gemini 실패: {ge}")
-        github_summary = "⚠️ GitHub 트렌드 AI 분석에 일시적 오류가 발생했습니다."
-        has_error = True
+        if OPENAI_API_KEY:
+            try:
+                github_summary = safe_analyze_github_trending_openai(github_focus, candidates)
+                print("  [GitHub Trending] OpenAI Fallback 성공!")
+            except Exception as oe:
+                print(f"  [GitHub Trending] OpenAI 마저 실패: {oe}")
+                github_summary = "⚠️ GitHub 트렌드 AI 분석에 일시적 오류가 발생했습니다."
+                has_error = True
+        else:
+            github_summary = "⚠️ GitHub 트렌드 AI 분석에 일시적 오류가 발생했습니다."
+            has_error = True
 
     # ----------------------------------------------------
     # 단계 3: Executive Summary 종합 (Section 1용)
@@ -1261,8 +1201,17 @@ def main():
         exec_summary = safe_generate_executive_summary(combined_category_summary, github_summary)
     except Exception as ee:
         print(f"  [Executive Summary] Gemini 실패: {ee}")
-        exec_summary = "⚠️ Executive Summary 생성에 실패했습니다."
-        has_error = True
+        if OPENAI_API_KEY:
+            try:
+                exec_summary = safe_generate_executive_summary_openai(combined_category_summary, github_summary)
+                print("  [Executive Summary] OpenAI Fallback 성공!")
+            except Exception as oe:
+                print(f"  [Executive Summary] OpenAI 실패: {oe}")
+                exec_summary = "⚠️ Executive Summary 생성에 실패했습니다."
+                has_error = True
+        else:
+            exec_summary = "⚠️ Executive Summary 생성에 실패했습니다."
+            has_error = True
 
     # ----------------------------------------------------
     # 단계 4: 최종 마크다운 및 HTML 본문 조합
