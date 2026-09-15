@@ -84,7 +84,7 @@ def validate_source_item(title, link, content, focus, cat_name):
     
     client = genai.Client(api_key=GEMINI_API_KEY)
     try:
-        response = safe_generate_content(client, 'gemini-2.5-flash', prompt)
+        response = safe_generate_content(client, 'gemini-3.6-flash', prompt)
         import time; time.sleep(4)  # RPM limit (15 requests/min) 방어
         result = response.text.strip().upper()
         if result.startswith("VALID"):
@@ -199,7 +199,7 @@ created: "{datetime.now(timezone(timedelta(hours=9))).strftime('%Y-%m-%d %H:%M:%
 ## 4. 🛡️ Safe Havens & Yields (안전 자산 및 채권 금리)
 (금 가격 동향, 국채 금리 변동 및 채권 시장 시사점)
 """
-    response = safe_generate_content(client, 'gemini-2.5-flash', prompt)
+    response = safe_generate_content(client, 'gemini-3.6-flash', prompt)
     return response.text
 
 def markdown_to_clean_html(markdown_text):
