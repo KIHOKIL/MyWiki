@@ -9,7 +9,7 @@ import csv
 import io
 import re
 from datetime import datetime, timezone, timedelta
-from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
+from tenacity import retry, wait_fixed, wait_exponential, stop_after_attempt, retry_if_exception_type
 from google import genai
 from dotenv import load_dotenv
 import time
@@ -50,7 +50,7 @@ def fetch_google_news(query, max_articles=3):
         print(f"Error fetching {query}: {e}")
         return []
 
-@retry(stop=stop_after_attempt(3), wait=wait_fixed(5), reraise=True)
+@retry(stop=stop_after_attempt(5), wait=wait_exponential(multiplier=2, min=5, max=60), reraise=True)
 def generate_finance_report(news_data):
     client = genai.Client(api_key=GEMINI_API_KEY)
     
@@ -412,7 +412,11 @@ def main():
         news_data[cat_name] = articles
 
     print("Generating report via Gemini...")
-    report_md = generate_finance_report(news_data)
+    try:
+        report_md = generate_finance_report(news_data)
+    except Exception as e:
+        print(f"Failed to generate report: {e}")
+        report_md = f"## 🚨 503 트래픽 초과 오류\n구글 Gemini API 서버 트래픽 폭주로 인하여 일시적으로 요약을 생성할 수 없습니다.\n\nError details: {e}"
     
     # Save to file
     today_str = datetime.now(timezone(timedelta(hours=9))).strftime("%Y-%m-%d")

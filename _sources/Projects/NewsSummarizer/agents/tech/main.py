@@ -16,7 +16,7 @@ import io
 import re
 from datetime import datetime, timezone, timedelta
 import time
-from tenacity import retry, wait_fixed, stop_after_attempt, retry_if_exception_type
+from tenacity import retry, wait_fixed, wait_exponential, stop_after_attempt, retry_if_exception_type
 
 # Windows 콘솔 환경(CP949) 이모지 및 유니코드 출력 호환성 보장
 try:
@@ -450,13 +450,13 @@ def summarize_news_openai(category_name, focus, articles):
     )
     return response.choices[0].message.content
 
-@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+@retry(wait=wait_exponential(multiplier=2, min=5, max=60), stop=stop_after_attempt(5))
 def safe_summarize_news(category_name, focus, articles):
     print(f"  [{category_name}] Gemini 분석 요청 중...")
     import time; time.sleep(5)
     return summarize_news_gemini(category_name, focus, articles)
 
-@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+@retry(wait=wait_exponential(multiplier=2, min=5, max=60), stop=stop_after_attempt(5))
 def safe_summarize_news_openai(category_name, focus, articles):
     print(f"  [{category_name}] OpenAI (Fallback) 분석 요청 중...")
     return summarize_news_openai(category_name, focus, articles)
@@ -612,13 +612,13 @@ def analyze_github_openai(focus, candidates):
     )
     return response.choices[0].message.content
 
-@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+@retry(wait=wait_exponential(multiplier=2, min=5, max=60), stop=stop_after_attempt(5))
 def safe_analyze_github_trending(focus, candidates):
     print("  [GitHub Trending] Gemini 4대 분야 분석 요청 중...")
     import time; time.sleep(5)
     return analyze_github_gemini(focus, candidates)
 
-@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+@retry(wait=wait_exponential(multiplier=2, min=5, max=60), stop=stop_after_attempt(5))
 def safe_analyze_github_trending_openai(focus, candidates):
     print("  [GitHub Trending] OpenAI (Fallback) 4대 분야 분석 요청 중...")
     return analyze_github_openai(focus, candidates)
@@ -680,13 +680,13 @@ def generate_executive_openai(articles_summary_text, github_summary_text):
     )
     return response.choices[0].message.content
 
-@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+@retry(wait=wait_exponential(multiplier=2, min=5, max=60), stop=stop_after_attempt(5))
 def safe_generate_executive_summary(articles_summary_text, github_summary_text):
     print("  [Executive Summary] Gemini 종합 분석 요청 중...")
     import time; time.sleep(5)
     return generate_executive_gemini(articles_summary_text, github_summary_text)
 
-@retry(wait=wait_fixed(10), stop=stop_after_attempt(3))
+@retry(wait=wait_exponential(multiplier=2, min=5, max=60), stop=stop_after_attempt(5))
 def safe_generate_executive_summary_openai(articles_summary_text, github_summary_text):
     print("  [Executive Summary] OpenAI (Fallback) 종합 분석 요청 중...")
     return generate_executive_openai(articles_summary_text, github_summary_text)
