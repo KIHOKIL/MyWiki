@@ -4,10 +4,12 @@ updated: 2026-09-20
 ---
 
 ## Recent Activity
-- **Clang Semantic CodeGraph Indexer Study & Concept (2026-09-20):**
+- **Clang Semantic CodeGraph Indexer & Concept System (2026-09-20):**
   - **도메인 아카이브:** `_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/` 폴더 신설.
-  - **산출물 구축:** 상세 연구 노트(`Semantic_CodeGraph_Indexer_Clang.md`), libclang AST 순회 및 Graph-RAG 연계 실전 파이썬 인덱서(`semantic_codegraph_indexer.py`), 테스트 샘플 그래프 JSON.
-  - **지식 자산화:** [[concepts/semantic-codegraph-indexer|시맨틱 코드그래프 인덱서 (Semantic CodeGraph Indexer)]] 신규 등재.
+  - **산출물 구축:** 전수 연구 노트(`Semantic_CodeGraph_Indexer_Clang.md`), libclang AST 순회 및 Graph-RAG 연계 실전 파이썬 인덱서(`semantic_codegraph_indexer.py`), 테스트 샘플 그래프 JSON(`sample_codegraph.json`).
+  - **지식 자산화:**
+    - [[concepts/clang-codegraph|Clang 코드그래프 (Clang CodeGraph)]]: Tree-sitter vs Clang 상세 비교, 임베디드 추천 스키마, 오픈소스 생태계(`clangd-graph-rag`, `CodeScope`, `codegraph`), 사내 4단계 엔지니어링 파이프라인.
+    - [[concepts/semantic-codegraph-indexer|시맨틱 코드그래프 인덱서 (Semantic CodeGraph Indexer)]]: AST Visitor, compile_commands.json, HW 레지스터 맵 및 비트필드 역추적.
   - **핵심 가치:** 전처리기 매크로(`#ifdef`), 함수 호출 계층(`CALLS`), HW 레지스터/비트필드 직접 접근(`ACCESSES_REG`)을 AST 레벨에서 지식 그래프로 색인하여 Group Leader 도메인(모바일 통신 프로토콜/PHY 계층 C/C++)의 무환각 코드 분석 기반 마련.
 - **Wiki-Organize Pipeline (2026-09-20):**
   - **OPIc Ingestion:** Distilled `_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이.md`.

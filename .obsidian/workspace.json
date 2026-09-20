@@ -191,6 +191,7 @@
   },
   "active": "3061b960c1c7dcc1",
   "lastOpenFiles": [
+    "concepts/clang-codegraph.md",
     "concepts/semantic-codegraph-indexer.md",
     "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/sample_codegraph.json",
     "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/semantic_codegraph_indexer.py",
@@ -236,7 +237,6 @@
     "_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md",
     "_sources/News/Finance/Finance_Briefing_2026-09-19.md",
     "_sources/News/Finance/Finance_Briefing_2026-09-15.md",
-    "_sources/Projects/NewsSummarizer/News/Daily_Summaries/2026-09-15_News_Briefing.md",
     "무제 1.canvas",
     "무제 2.canvas",
     "무제.canvas"

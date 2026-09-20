@@ -43,6 +43,7 @@ summary: "Clang 컴파일러 정적 분석 및 LibTooling/libclang AST를 기반
 ---
 
 ## 🔗 연관 자료 및 개념
+- [[concepts/clang-codegraph|Clang 코드그래프 (Clang CodeGraph)]]
 - [[active-second-brain]]
 - [[vibe-coding]]
 - [[_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang|Clang CodeGraph Indexer 상세 연구 및 파이프라인 가이드]]

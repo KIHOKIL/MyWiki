@@ -24,6 +24,7 @@ title: Wiki Index
 - [[ax]]
 - [[barbell-strategy]]
 - [[bond-laddering]]
+- [[clang-codegraph]]
 - [[cognitive-overload]]
 - [[commit-linked-knowledge]]
 - [[context-compression]]

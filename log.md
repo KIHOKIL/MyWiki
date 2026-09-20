@@ -4,6 +4,12 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-20 23:30] FEAT: Clang-CodeGraph Comprehensive Concept & Study Guide Expansion
+  - Created concept note: [[concepts/clang-codegraph|Clang 코드그래프 (Clang CodeGraph)]] (AST, Call Graph, HW Register Map, Tree-sitter vs Clang comparison, Group 2nd Brain 4-step pipeline).
+  - Expanded `_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang.md` with full open source ecosystem (`clangd-graph-rag`, `CodeScope`, `codegraph`) and embedded graph schema.
+  - Linked bidirectional relations across `concepts/semantic-codegraph-indexer.md`, `concepts/clang-codegraph.md`, and master `index.md`.
+  - Updated `.manifest.json`, `log.md`, and `hot.md`.
+
 - [2026-09-20 22:58] FEAT: Clang Semantic CodeGraph Indexer Study & Concept Integration
   - Established domain archive: `_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/`.
   - Authored comprehensive study note: `Semantic_CodeGraph_Indexer_Clang.md` (AST, LibTooling, `compile_commands.json`, HW Register Map linking, Graph-RAG MCP pipeline).
