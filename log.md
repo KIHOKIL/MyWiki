@@ -4,6 +4,12 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-20 23:42] CHORE: Wiki-Organize 3-Step Pipeline Execution
+  - **Step 1 (Ingest):** Audited prompt assets and latest study notes; verified concepts/entities mapping in `.manifest.json`.
+  - **Step 2 (Generate-Index):** Ran `scripts/generate_index.py` across 6 `_sources/` directories (Study: 33, News: 21, Projects: 11, Clippings: 3) and rebuilt `_sources/_index.md`.
+  - **Step 3 (Wiki-Lint & Link):** Audited vault-wide wikilinks; resolved broken references in Opic, Clang-CodeGraph, and Oh Gun-young notes; confirmed 100% schema & link health.
+  - Synchronized master `index.md`, `log.md`, and `hot.md`.
+
 - [2026-09-20 23:30] FEAT: Clang-CodeGraph Comprehensive Concept & Study Guide Expansion
   - Created concept note: [[concepts/clang-codegraph|Clang 코드그래프 (Clang CodeGraph)]] (AST, Call Graph, HW Register Map, Tree-sitter vs Clang comparison, Group 2nd Brain 4-step pipeline).
   - Expanded `_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang.md` with full open source ecosystem (`clangd-graph-rag`, `CodeScope`, `codegraph`) and embedded graph schema.

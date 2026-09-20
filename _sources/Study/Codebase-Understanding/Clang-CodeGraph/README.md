@@ -22,4 +22,4 @@ C/C++ 코드베이스를 컴파일러 수준에서 정확하게 파싱하여 시
 
 | 날짜 | 주제 | 핵심 산출물 | 링크 |
 | :--- | :--- | :--- | :--- |
-| **2026-09-20** | **Semantic CodeGraph Indexer using Clang Lib Tools and CLI** | 아키텍처 가이드, Clang CLI 명령어, Python `libclang` 인덱서 PoC | [[_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang\|학습 노트]] |
+| **2026-09-20** | **Semantic CodeGraph Indexer using Clang Lib Tools and CLI** | 아키텍처 가이드, Clang CLI 명령어, Python `libclang` 인덱서 PoC | [[Semantic_CodeGraph_Indexer_Clang|학습 노트]] |

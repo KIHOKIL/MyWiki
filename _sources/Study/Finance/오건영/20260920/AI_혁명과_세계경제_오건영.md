@@ -176,5 +176,5 @@ graph TD
 - [[concepts/barbell-strategy|바벨 전략 (Barbell Strategy)]]
 - [[entities/oh-gun-young|오건영 단장 인물 프로필]]
 - [[concepts/vibe-coding|바이브 코딩 (Vibe Coding)]]
-- [[concepts/NewsSummarizer-Architecture|NewsSummarizer 아키텍처]]
-- [[lecture_report.html]]: 오건영 단장 인터뷰 반응형 인터랙티브 HTML 대시보드 리포트
+- [[entities/news-summarizer|NewsSummarizer 아키텍처]]
+- [오건영 단장 인터뷰 반응형 인터랙티브 HTML 대시보드 리포트](lecture_report.html)

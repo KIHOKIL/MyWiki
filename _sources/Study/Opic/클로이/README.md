@@ -34,4 +34,4 @@ summary: 해커스어학원 종로캠퍼스 클로이 강사의 월별 OPIc 기�
 
 | 날짜 | 주제 | 유형 | 핵심 링크 |
 | :--- | :--- | :--- | :--- |
-| **2026-09-20** | **건강 (Health) 돌발 주제** | 인물 묘사 (Healthy Person) | [[_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이\|노트 보기]] / [인터랙티브 대시보드](file:///c:/Users/kihok/내%20드라이브/MyWiki/_sources/Study/Opic/클로이/20260920/opic_study_dashboard.html) |
+| **2026-09-20** | **건강 (Health) 돌발 주제** | 인물 묘사 (Healthy Person) | [[오픽_건강_돌발주제_클로이|노트 보기]] / [인터랙티브 대시보드](file:///c:/Users/kihok/내%20드라이브/MyWiki/_sources/Study/Opic/클로이/20260920/opic_study_dashboard.html) |

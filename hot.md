@@ -4,6 +4,10 @@ updated: 2026-09-20
 ---
 
 ## Recent Activity
+- **Wiki-Organize 3-Step Pipeline (2026-09-20):**
+  - **Prompt Library Expansion:** 7-step Memphis Corporate Flat Illustration slide generation prompt registered in `_sources/Study/AI-Prompt/Slide-Generation/memphis_flat_slide_prompt.md`.
+  - **Source Index Sync:** Re-indexed all 6 `_sources/` subdirectories (Study: 33, News: 21, Projects: 11, Clippings: 3).
+  - **Link Health & Lint:** Inspected 179 pure knowledge markdown files, corrected table escape syntax and internal link references in Opic, Clang-CodeGraph, and Oh Gun-young study notes (0 broken links).
 - **Clang Semantic CodeGraph Indexer & Concept System (2026-09-20):**
   - **도메인 아카이브:** `_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/` 폴더 신설.
   - **산출물 구축:** 전수 연구 노트(`Semantic_CodeGraph_Indexer_Clang.md`), libclang AST 순회 및 Graph-RAG 연계 실전 파이썬 인덱서(`semantic_codegraph_indexer.py`), 테스트 샘플 그래프 JSON(`sample_codegraph.json`).
