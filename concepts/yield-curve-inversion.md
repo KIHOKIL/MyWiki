@@ -28,3 +28,8 @@ provenance:
 - **경기 침체 시그널**: 역사적으로 수익률 곡선 역전은 경기 침체의 가장 강력한 선행 지표 중 하나로 작용해왔습니다.
 - **포트폴리오 리밸런싱**: 이러한 시그널이 나타날 때 장기 투자자는 공격적인 추격 매수보다는 방어적인 자산 재배분이 필요합니다. 현금 비중 확대 및 금(Gold)과 같은 안전 자산 편입이 권장됩니다.
 - **고금리 장기화(Higher for Longer)**: 인플레이션 고착화 시 연준의 고금리 정책이 유지되면서 채권 시장에 압력을 가할 수 있습니다.
+
+## 연관 개념
+- [[concepts/barbell-strategy|바벨 전략 (Barbell Strategy)]]
+- [[concepts/bond-laddering|채권 래더링 (Bond Laddering)]]
+- [[entities/oh-gun-young|오건영 단장 매크로 분석]]

@@ -4,7 +4,7 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-09-06*
+*This index is automatically maintained. Last updated: 2026-09-20*
 
 ## Concepts
 
@@ -22,6 +22,7 @@ title: Wiki Index
 - [[ai-native-junior]]
 - [[ai-native-ran]]
 - [[ax]]
+- [[barbell-strategy]]
 - [[bond-laddering]]
 - [[cognitive-overload]]
 - [[commit-linked-knowledge]]
@@ -54,6 +55,7 @@ title: Wiki Index
 - [[vibe-coding]]
 - [[vla-model]]
 - [[wiki-layer-architecture]]
+- [[yamani-paradox]]
 - [[yield-curve-inversion]]
 
 
@@ -77,6 +79,7 @@ title: Wiki Index
 - [[news-summarizer]]
 - [[notebooklm]]
 - [[obsidian-llm-plugins]]
+- [[oh-gun-young]]
 - [[openhuman]]
 - [[optimus]]
 - [[presentation-slides-generator]]

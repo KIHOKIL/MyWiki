@@ -172,6 +172,9 @@ graph TD
 ---
 
 ## 🔗 연관 지식 및 내부 링크
-- [[vibe-coding]]: 자연어 기반 고속 프로토타이핑과 AI 코딩 효율성
-- [[NewsSummarizer-Architecture]]: 매크로/테크 금융 데이터 수집 자동화 파이프라인
+- [[concepts/yamani-paradox|야마니 패러독스 (Yamani Paradox)]]
+- [[concepts/barbell-strategy|바벨 전략 (Barbell Strategy)]]
+- [[entities/oh-gun-young|오건영 단장 인물 프로필]]
+- [[concepts/vibe-coding|바이브 코딩 (Vibe Coding)]]
+- [[concepts/NewsSummarizer-Architecture|NewsSummarizer 아키텍처]]
 - [[lecture_report.html]]: 오건영 단장 인터뷰 반응형 인터랙티브 HTML 대시보드 리포트

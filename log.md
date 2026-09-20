@@ -4,6 +4,13 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-20 21:25] CHORE: Wiki-Organize Pipeline Execution (Study Finance Ingestion)
+  - Ingested `_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md`.
+  - Created concepts: [[concepts/yamani-paradox|야마니 패러독스 (Yamani Paradox)]], [[concepts/barbell-strategy|바벨 전략 (Barbell Strategy)]].
+  - Created entity: [[entities/oh-gun-young|오건영 (Oh Gun-young)]].
+  - Regenerated all `_sources/` folder indexes via `scripts/generate_index.py` (Study: 27 sources registered).
+  - Executed wiki-lint & cross-linking: bidirectional links with `concepts/yield-curve-inversion`, `concepts/bond-laddering`, `concepts/vibe-coding`, and `concepts/NewsSummarizer-Architecture`.
+  - Updated master `index.md`, `.manifest.json`, `log.md`, and `hot.md`.
 - [2026-09-13 16:36] generate-index folders=Books,Clippings,News,Projects,Study,Work-Ideas files=49
 - [2026-09-13 16:34] CHORE: Wiki-Organize Pipeline Execution
   - Ingested 5 sources into concepts (embedded-software, yield-curve-inversion, bond-laddering) and entities (news-summarizer, fable-5-1, gpt-6-astra).

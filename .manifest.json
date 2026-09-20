@@ -329,5 +329,16 @@
       "entities/fable-5-1.md",
       "entities/gpt-6-astra.md"
     ]
+  },
+  "_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md": {
+    "path": "_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md",
+    "timestamps": {
+      "ingested": "2026-09-20T21:20:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/yamani-paradox.md",
+      "concepts/barbell-strategy.md",
+      "entities/oh-gun-young.md"
+    ]
   }
 }

@@ -4,6 +4,16 @@ updated: 2026-09-20
 ---
 
 ## Recent Activity
+- **Wiki-Organize Pipeline (2026-09-20):**
+  - **Study Ingestion:** Ingested `_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md`.
+  - **Knowledge Artifacts Created:**
+    - Concepts: [[concepts/yamani-paradox|야마니 패러독스 (Yamani Paradox)]], [[concepts/barbell-strategy|바벨 전략 (Barbell Strategy)]].
+    - Entities: [[entities/oh-gun-young|오건영 (Oh Gun-young)]].
+  - **Master & Source Index Sync:** Regenerated all `_sources/` folder indexes via `scripts/generate_index.py` (Study: 27 sources registered) and updated master `index.md`.
+  - **Link & Graph Integrity:** Established bidirectional wikilinks with `concepts/yield-curve-inversion`, `concepts/bond-laddering`, `concepts/vibe-coding`, and `concepts/NewsSummarizer-Architecture`. 100% schema compliance.
+- **NewsSummarizer GitHub Recommendation & Pipeline Diversification (2026-09-20):**
+  - **Deduplication & History Tracking:** Implemented 14-day history tracking in `shared_github_history.json`.
+  - **Source Diversification:** Integrated `jesusiswith.us` daily tech news scraper (`fetch_jesusiswithus_github`) and active query rotation. 26/26 unit tests pass.
 - **Finance Study Ingestion (2026-09-20):**
   - **오건영 단장 매크로 & AI 혁명 심층 분석:** `_sources/Study/Finance/오건영/20260920/` 폴더 신설.
   - **산출물 구축:** 옵시디언 마크다운 노트(`AI_혁명과_세계경제_오건영.md`), 다크테마 반응형 대시보드 리포트(`lecture_report.html`), 키보드 네비게이션 슬라이드 덱(`slides/index.html`), 클린 자막 전수(`clean_transcript.txt`).
