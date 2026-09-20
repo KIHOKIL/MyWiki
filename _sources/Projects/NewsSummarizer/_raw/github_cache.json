@@ -1,5 +1,5 @@
 {
-  "timestamp": 1789907419.0418317,
+  "timestamp": 1789912925.2162957,
   "candidates": [
     {
       "full_name": "fresh-owner/fresh-repo",
@@ -71,6 +71,17 @@
       "description": "Zero-dependency C AST graph MCP server providing fast persistent codebase intelligence.",
       "stars": 42000,
       "language": "C",
+      "category_id": "codebase_understanding",
+      "category_name": "Codebase understanding",
+      "category_icon": "🧭",
+      "role_type": "루키"
+    },
+    {
+      "full_name": "2015xli/clangd-graph-rag",
+      "html_url": "https://github.com/2015xli/clangd-graph-rag",
+      "description": "Clangd and compile_commands based AST code graph generator for C/C++ Graph-RAG.",
+      "stars": 1850,
+      "language": "C++ / Python",
       "category_id": "codebase_understanding",
       "category_name": "Codebase understanding",
       "category_icon": "🧭",

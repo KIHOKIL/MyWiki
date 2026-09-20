@@ -30,7 +30,10 @@
         "queries": [
           "codebase intelligence",
           "code graph AST",
-          "codebase understanding MCP"
+          "codebase understanding MCP",
+          "clang ast code graph",
+          "clangd graph rag",
+          "semantic code graph"
         ]
       },
       {
@@ -41,7 +44,9 @@
           "mobile protocol physical layer",
           "modem hardware block register interrupt",
           "embedded baseband firmware",
-          "hw block low level control"
+          "hw block low level control",
+          "register map bitfield ast",
+          "hardware register abstraction c"
         ]
       }
     ]
@@ -67,9 +72,12 @@
         "AI software engineering agent",
         "automated code review PR",
         "code intelligence MCP",
-        "test driven development AI agent"
+        "test driven development AI agent",
+        "Clang AST code graph",
+        "clangd graph RAG",
+        "semantic code graph indexing"
       ],
-      "focus": "대규모 코드베이스 이해 기법(Graph AST, MCP 기반 인덱싱), AI 기반 코드 리뷰 및 보안 검증 자동화, Implementation Loop(기획-구현-테스트-리뷰 루프)의 실무 적용과 신뢰성 확보 방안을 심층 요약하세요."
+      "focus": "대규모 C/C++ 및 엔터프라이즈 코드베이스 이해 기법(Clang AST, LibTooling, Graph-RAG, MCP 기반 시맨틱 인덱싱, HW 레지스터 맵 및 함수 호출 계층 연결), AI 기반 코드 리뷰 및 보안 검증 자동화, Implementation Loop(기획-구현-테스트-리뷰 루프)의 실무 적용과 신뢰성 확보 방안을 심층 요약하세요."
     },
     {
       "name": "Global Big Tech & AI Frontier: M&A, Strategy & Capital Flow",

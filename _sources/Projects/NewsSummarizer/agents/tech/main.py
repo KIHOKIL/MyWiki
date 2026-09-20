@@ -169,6 +169,17 @@ DEFAULT_CURATED_REPOS = {
                 "category_name": "Codebase understanding",
                 "category_icon": "🧭",
                 "role_type": "루키"
+            },
+            {
+                "full_name": "2015xli/clangd-graph-rag",
+                "html_url": "https://github.com/2015xli/clangd-graph-rag",
+                "description": "Clangd and compile_commands based AST code graph generator for C/C++ Graph-RAG.",
+                "stars": 1850,
+                "language": "C++ / Python",
+                "category_id": "codebase_understanding",
+                "category_name": "Codebase understanding",
+                "category_icon": "🧭",
+                "role_type": "루키"
             }
         ]
     },
@@ -435,8 +446,8 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=24, target_
     default_cat_list = [
         {"id": "second_brain", "name": "Second-Brain", "icon": "🧠", "queries": ["topic:second-brain", "personal knowledge management AI", "obsidian agent"]},
         {"id": "code_review_ai", "name": "Code Review AI", "icon": "🔍", "queries": ["code review AI", "PR agent LLM", "automated code review"]},
-        {"id": "codebase_understanding", "name": "Codebase understanding", "icon": "🧭", "queries": ["codebase intelligence", "code graph AST", "codebase understanding MCP"]},
-        {"id": "embedded_sw", "name": "Embedded SW implementation", "icon": "⚡", "queries": ["mobile protocol physical layer", "modem hardware block register interrupt", "embedded baseband firmware", "hw block low level control"]}
+        {"id": "codebase_understanding", "name": "Codebase understanding", "icon": "🧭", "queries": ["codebase intelligence", "code graph AST", "codebase understanding MCP", "clang ast code graph", "clangd graph rag", "semantic code graph"]},
+        {"id": "embedded_sw", "name": "Embedded SW implementation", "icon": "⚡", "queries": ["mobile protocol physical layer", "modem hardware block register interrupt", "embedded baseband firmware", "hw block low level control", "register map bitfield ast", "hardware register abstraction c"]}
     ]
 
     # 입력 형태 판별 (카테고리 딕셔너리 리스트 vs 단순 쿼리 문자열 리스트)
@@ -853,18 +864,18 @@ def _build_executive_prompt(articles_summary_text, github_summary_text):
 
 [핵심 분석 4대 렌즈]
 1) **Group 2nd Brain 구축**: 사내 이메일, 메신저, Jira, Confluence 연동을 통한 팀 지식 허브 구축 및 보안/개인정보 거버넌스.
-2) **Codebase 이해 기반 Implementation Loop & Code Review**: 대규모 코드베이스의 구조적 이해, AST 그래프, TDD 자동화, LLM 기반 정밀 코드 리뷰.
-3) **Embedded SW Implementation**: HW 가이드라인 기반 설계, 프로토콜 스택, 물리 계층/인터페이스 제어, 실시간(RTOS) 최적화의 에이전틱 전환.
+2) **Codebase 이해 기반 Implementation Loop & Code Review**: 대규모 C/C++ 및 엔터프라이즈 코드베이스의 구조적 이해, Clang AST / LibTooling 정적 분석, compile_commands 기반 심볼 및 HW 레지스터 맵 링크, Graph-RAG 인덱싱, TDD 자동화, LLM 기반 정밀 코드 리뷰.
+3) **Embedded SW Implementation**: HW 가이드라인 기반 설계, 프로토콜 스택(PHY/MAC), 물리 계층/레지스터 제어 인터페이스, 실시간(RTOS) 최적화의 에이전틱 전환.
 4) **Global Big Tech & AI Frontier 자본 흐름**: 빅테크 및 AI 프론티어(OpenAI, Anthropic, xAI, Databricks 등)의 M&A, 변형적 인수(Acqui-hire), 대규모 컴퓨팅 동맹 및 생태계 락인(Lock-in) 전략이 미치는 영향.
 
 [필수 작성 구조]
 반드시 다음 3가지 소제목으로 구성하고 글머리 기호(Bulleted list)를 활용해 명확하게 기술하세요:
 
 ### 🚀 오늘 주목해야 할 핵심 혁신 (Key Innovations)
-- 2nd Brain 아키텍처, 코드베이스 분석/구현 루프, 임베디드 SW 최적화, 빅테크/AI 프론티어의 전략적 인수 및 인프라 도약 관점에서 오늘 포착된 주요 기술 혁신 요약.
+- 2nd Brain 아키텍처, 코드베이스 분석/구현 루프(Clang AST/Graph-RAG/레지스터 맵 링크), 임베디드 SW 최적화, 빅테크/AI 프론티어의 전략적 인수 및 인프라 도약 관점에서 오늘 포착된 주요 기술 혁신 요약.
 
 ### ⚠️ 핵심 리스크 및 과제 (Core Risks & Trade-offs)
-- 사내 민감 데이터 연동 시의 보안/권한 누수, LLM Context 한계로 인한 코드베이스/임베디드 환각(Hallucination), 빅테크 플랫폼 종속성(Lock-in) 및 반독점/컴플라이언스 리스크 지적.
+- 사내 민감 데이터 연동 시의 보안/권한 누수, LLM Context 한계로 인한 C/C++ 코드베이스 및 임베디드 하드웨어 제어 환각(Hallucination), 빅테크 플랫폼 종속성(Lock-in) 및 반독점/컴플라이언스 리스크 지적.
 
 ### 🎯 실무 적용 및 설계 시사점 (Actionable Takeaways)
 - 현재 사내 Group 2nd Brain 설계, 코드 리뷰/구현 루프, 임베디드 및 엔터프라이즈 툴체인 선정에 즉시 반영해야 할 실행 지침 2~3가지 제시.
