@@ -340,5 +340,16 @@
       "concepts/barbell-strategy.md",
       "entities/oh-gun-young.md"
     ]
+  },
+  "_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이.md": {
+    "path": "_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이.md",
+    "timestamps": {
+      "ingested": "2026-09-20T21:40:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/opic-mbc-framework.md",
+      "concepts/fact-and-feeling-technique.md",
+      "entities/hackers-chloe.md"
+    ]
   }
 }

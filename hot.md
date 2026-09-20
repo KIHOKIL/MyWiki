@@ -4,6 +4,12 @@ updated: 2026-09-20
 ---
 
 ## Recent Activity
+- **Wiki-Organize Pipeline (2026-09-20):**
+  - **OPIc Ingestion:** Distilled `_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이.md`.
+  - **Knowledge Artifacts Created:**
+    - Concepts: [[concepts/opic-mbc-framework|MBC 프레임워크 (MBC Speaking Framework)]], [[concepts/fact-and-feeling-technique|Fact + Feeling 기법 (Fact and Feeling Technique)]].
+    - Entities: [[entities/hackers-chloe|해커스 클로이 (Chloe)]].
+  - **Graph Integration:** Established bidirectional wikilinks, validated schema, updated `.manifest.json`, and synced master `index.md`.
 - **OPIc Study Repository & Teacher Chloe Health Lecture (2026-09-20):**
   - **오픽 스터디 체계 구축:** `_sources/Study/Opic/클로이/20260920/` 폴더 신설.
   - **산출물:** 기출유형특강 PDF 자료집 이동, 5종 핵심 슬라이드 캡처(`slides/`), 482줄 클린 자막 전문(`clean_transcript.txt`), 상세 학습 노트(`오픽_건강_돌발주제_클로이.md`), 반응형 웹 발화 훈련 대시보드(`opic_study_dashboard.html`).

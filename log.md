@@ -4,6 +4,12 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-20 21:42] CHORE: Wiki-Organize Pipeline Execution (OPIc Study Ingestion)
+  - Distilled `_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이.md`.
+  - Created concepts: [[concepts/opic-mbc-framework|MBC 프레임워크 (MBC Speaking Framework)]], [[concepts/fact-and-feeling-technique|Fact + Feeling 기법 (Fact and Feeling Technique)]].
+  - Created entity: [[entities/hackers-chloe|해커스 클로이 (Chloe)]].
+  - Cross-linked to Opic study notes and verified bidirectional link graph.
+  - Re-synchronized master `index.md`, `.manifest.json`, `log.md`, and `hot.md`.
 - [2026-09-20 21:30] FEAT: OPIc Study Repository & Teacher Chloe Health Topic Archive
   - Established teacher/date archive architecture: `_sources/Study/Opic/클로이/20260920/`.
   - Moved and linked Hackers Chloe 7-month OPIc special lecture PDF handout.
