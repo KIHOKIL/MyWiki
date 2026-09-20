@@ -1,9 +1,13 @@
 ---
 title: Hot Cache
-updated: 2026-09-13
+updated: 2026-09-20
 ---
 
 ## Recent Activity
+- **Finance Study Ingestion (2026-09-20):**
+  - **오건영 단장 매크로 & AI 혁명 심층 분석:** `_sources/Study/Finance/오건영/20260920/` 폴더 신설.
+  - **산출물 구축:** 옵시디언 마크다운 노트(`AI_혁명과_세계경제_오건영.md`), 다크테마 반응형 대시보드 리포트(`lecture_report.html`), 키보드 네비게이션 슬라이드 덱(`slides/index.html`), 클린 자막 전수(`clean_transcript.txt`).
+  - **핵심 멘탈 모델 정리:** 글로벌 35조 달러 부채 해결 유일 치트키로서의 AI(Too Critical to Fail), 야마니 패러독스와 AI Capex 사이클(반도체 커모디티화 vs 빅테크 자체 ASIC/경량화), 구조적 인플레이션 배송비 이론, 고환율 1,400원 뉴노멀, 바벨(Barbell) 자산배분 전략.
 - **generate-index 실행 (2026-09-13):**
   - **Index Sync:** `_sources` 하위 6개 폴더(총 49개 파일) 인덱스 갱신 완료.
 - **Wiki-Organize Pipeline (2026-09-13):**

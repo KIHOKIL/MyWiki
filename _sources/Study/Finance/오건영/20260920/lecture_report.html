@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 혁명이 실패하는 순간, 세계 경제는 흔들립니다 | 오건영 단장 심층 리포트</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0f1a;
+            --surface-color: #101726;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-secondary: #38bdf8;
+            --accent-amber: #f59e0b;
+            --accent-emerald: #10b981;
+            --accent-rose: #f43f5e;
+            --card-bg: rgba(139, 148, 158, 0.05);
+            --card-border: rgba(139, 148, 158, 0.12);
+            --card-hover-border: rgba(56, 189, 248, 0.35);
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+        .container {
+            display: flex;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem;
+            gap: 2.5rem;
+        }
+        /* Sticky TOC */
+        .toc {
+            flex: 0 0 280px;
+            position: sticky;
+            top: 2rem;
+            height: calc(100vh - 4rem);
+            background: var(--surface-color);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 1.8rem;
+            overflow-y: auto;
+            backdrop-filter: blur(12px);
+        }
+        .toc h3 {
+            margin-top: 0;
+            font-size: 1.15rem;
+            color: var(--accent-secondary);
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 0.8rem;
+            letter-spacing: -0.5px;
+        }
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .toc li {
+            margin-bottom: 0.85rem;
+        }
+        .toc a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.92rem;
+            display: block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        .toc a:hover, .toc a.active {
+            color: #ffffff;
+            background: rgba(56, 189, 248, 0.12);
+            border-left: 3px solid var(--accent-secondary);
+            font-weight: 600;
+        }
+        /* Main Content */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.85rem;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+        .badge-macro {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+        }
+        .badge-finance {
+            background: rgba(56, 189, 248, 0.2);
+            color: #7dd3fc;
+            border: 1px solid rgba(56, 189, 248, 0.4);
+        }
+        h1 {
+            font-size: 2.35rem;
+            font-weight: 900;
+            line-height: 1.3;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0.2rem 0 1rem 0;
+            letter-spacing: -1px;
+        }
+        .meta-bar {
+            display: flex;
+            gap: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .meta-bar span strong {
+            color: var(--text-main);
+        }
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--accent-secondary);
+            margin-top: 3.5rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            letter-spacing: -0.5px;
+        }
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-secondary));
+            border-radius: 4px;
+        }
+        h3 {
+            font-size: 1.22rem;
+            color: #cbd5e1;
+            margin-top: 1.6rem;
+            margin-bottom: 0.6rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+            transition: border-color 0.3s ease;
+        }
+        .card:hover {
+            border-color: var(--card-hover-border);
+        }
+        .card-highlight {
+            background: linear-gradient(145deg, rgba(124, 58, 237, 0.08), rgba(56, 189, 248, 0.04));
+            border-left: 4px solid var(--accent-secondary);
+        }
+        /* Callout */
+        .callout {
+            padding: 1.2rem 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            font-size: 0.96rem;
+            line-height: 1.7;
+        }
+        .callout-quote {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--accent-amber);
+            color: #fef3c7;
+            font-style: italic;
+        }
+        .callout-danger {
+            background: rgba(244, 63, 94, 0.08);
+            border-left: 4px solid var(--accent-rose);
+            color: #ffe4e6;
+        }
+        .callout-success {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid var(--accent-emerald);
+            color: #d1fae5;
+        }
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.94rem;
+        }
+        th, td {
+            padding: 1rem 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+        th {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--accent-secondary);
+            font-weight: 700;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .metric-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .metric-title {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+        .metric-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+        }
+        .metric-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        /* Visual Diagram Flow */
+        .flow-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .flow-step {
+            flex: 1;
+            min-width: 180px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+        .flow-step strong {
+            display: block;
+            color: #f8fafc;
+            margin-bottom: 0.4rem;
+        }
+        .flow-arrow {
+            color: var(--accent-secondary);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        /* Barbell Visual */
+        .barbell-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 2.5rem 0;
+            padding: 1.5rem 0;
+        }
+        .barbell-bar {
+            position: absolute;
+            top: 50%;
+            left: 5%;
+            right: 5%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-secondary));
+            transform: translateY(-50%);
+            z-index: 1;
+            border-radius: 3px;
+        }
+        .barbell-weight {
+            position: relative;
+            z-index: 2;
+            width: 44%;
+            background: var(--surface-color);
+            border: 2px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.6rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .barbell-weight.left {
+            border-color: var(--accent);
+        }
+        .barbell-weight.right {
+            border-color: var(--accent-secondary);
+        }
+        /* Responsiveness */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+            .toc {
+                position: static;
+                height: auto;
+                width: 100%;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .barbell-container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .barbell-bar {
+                display: none;
+            }
+            .barbell-weight {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Left Navigation TOC -->
+    <nav class="toc">
+        <h3>목차 (Contents)</h3>
+        <ul>
+            <li><a href="#summary">Executive Summary</a></li>
+            <li><a href="#debt-dilemma">1. 글로벌 부채와 AI 치트키</a></li>
+            <li><a href="#scenario-matrix">2. AI 성공 vs 실패 시나리오</a></li>
+            <li><a href="#yamani-paradox">3. 야마니 패러독스와 Capex</a></li>
+            <li><a href="#delivery-fee">4. 구조적 인플레이션 (배송비 이론)</a></li>
+            <li><a href="#fx-dynamics">5. 고환율 고착화와 엔 캐리</a></li>
+            <li><a href="#barbell-strategy">6. 실전 자산배분: 바벨 전략</a></li>
+            <li><a href="#engineering-impact">7. 엔지니어링 리더 시사점</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="content">
+        <header>
+            <span class="badge badge-macro">Macroeconomics</span>
+            <span class="badge badge-finance">AI Capex & Investment</span>
+            <h1>AI 혁명이 실패하는 순간,<br>세계 경제는 흔들립니다</h1>
+            <div class="meta-bar">
+                <span>강연자: <strong>오건영 단장 (신한은행 프리미어 패스파인더)</strong></span>
+                <span>출처: <strong>삼프로TV 주말인터뷰</strong></span>
+                <span>작성일: <strong>2026-09-20</strong></span>
+            </div>
+        </header>
+
+        <!-- Section 0: Executive Summary -->
+        <section id="summary" class="card card-highlight">
+            <h2 style="margin-top: 0;">Executive Summary: 4대 거시경제 멘탈 모델</h2>
+            <div class="grid-2">
+                <div class="metric-card">
+                    <div class="metric-title">Too Critical To Fail</div>
+                    <div class="metric-value">부채 치트키</div>
+                    <div class="metric-desc">미국 부채 35조 달러 돌파. 인위적 긴축 대신 분모(GDP)를 키워 부채를 녹여낼 유일한 해법이 AI 초생산성.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Capex Sustainability</div>
+                    <div class="metric-value">야마니 패러독스</div>
+                    <div class="metric-desc">석유값이 과도하면 대체 에너지가 나오듯, 고가 GPU/HBM은 빅테크의 자체 ASIC(NPU) 및 경량화(SLM) 전환을 촉발.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Structural Inflation</div>
+                    <div class="metric-value">배송비 이론</div>
+                    <div class="metric-desc">원자재(자장면) 가격보다 지정학 분절·물류·안보비(배송비)가 구조적으로 올라 과거 0%대 초저금리 복귀 불가능.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">Portfolio Resilience</div>
+                    <div class="metric-value">바벨 자산배분</div>
+                    <div class="metric-desc">승자독식 AI 플랫폼 메가캡 + 확정 고금리 미국 국채/금(Gold)의 양방향 헤지로 불확실성의 안개 돌파.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Debt Dilemma -->
+        <section id="debt-dilemma" class="card">
+            <h2>1. 글로벌 부채와 AI 치트키: 왜 세계는 AI에 목숨을 거는가?</h2>
+            <p>
+                2008년 글로벌 금융위기와 2020년 팬데믹 이후, 주요국 정부는 천문학적인 재정 적자를 화폐 발행으로 지탱해 왔습니다. 
+                현재 미국의 연방정부 부채는 35조 달러를 돌파했으며, 매년 지급해야 하는 국채 이자 비용만 국방비를 상회하고 있습니다.
+            </p>
+            
+            <div class="callout callout-danger">
+                <strong>⚠️ 중국 2013-2015 디레버리징(부채 감축)의 뼈아픈 교훈:</strong><br>
+                2013년 중국 정부는 과도한 지방정부 부채를 줄이기 위해 금리를 올리고 신규 대출을 조였습니다. 
+                결과는 그림자금융의 디폴트 위기, 부동산 연쇄 냉각, 그리고 2015년 주가 대폭락과 대규모 위안화 자본 유출이었습니다. 
+                <strong>신용 화폐 시스템에서 명목 부채(분자)를 강제로 줄이려 하면 전신 마비가 옵니다.</strong>
+            </div>
+
+            <div class="flow-box">
+                <div class="flow-step">
+                    <strong>분자 (부채) 감축 시도</strong>
+                    <span>금리 인상, 대출 억제, 긴축 재정</span>
+                </div>
+                <div class="flow-arrow">➡️</div>
+                <div class="flow-step" style="border-color: var(--accent-rose);">
+                    <strong style="color: var(--accent-rose);">경제 전신 마비</strong>
+                    <span>자산 가격 폭락, 부도 사태, 자본 유출</span>
+                </div>
+                <div class="flow-arrow">OR</div>
+                <div class="flow-step" style="border-color: var(--accent-emerald);">
+                    <strong style="color: var(--accent-emerald);">분모 (GDP) 팽창 (AI)</strong>
+                    <span>초생산성 혁명으로 부채비율 자연 하락</span>
+                </div>
+            </div>
+            <p>
+                오건영 단장은 현대 자본주의가 선택할 수 있는 유일한 탈출구는 <strong>분모(GDP)를 폭발적으로 성장시키는 '총요소생산성(TFP) 혁명'</strong>뿐이며, 
+                그것이 바로 전 세계 정책 당국과 자본 시장이 AI에 사활을 거는 근본적 이유라고 단언합니다.
+            </p>
+        </section>
+
+        <!-- Section 2: Scenario Matrix -->
+        <section id="scenario-matrix" class="card">
+            <h2>2. AI 성공 vs 실패 매크로 시나리오 매트릭스</h2>
+            <p>AI 혁명이 가져올 경제적 귀결은 생산성 혁신의 속도와 비용 절감 효과에 따라 극명하게 갈립니다.</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>구분</th>
+                        <th>경제 성장 (Growth)</th>
+                        <th>물가 (Inflation)</th>
+                        <th>금리 환경 (Rates)</th>
+                        <th>최종 거시경제 귀결</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong style="color: var(--accent-emerald);">AI 혁명 성공</strong></td>
+                        <td><strong>초고성장 (High)</strong><br>기업 생산성 비약적 향상</td>
+                        <td><strong>저물가 (Low)</strong><br>생산비용 1/10화 디플레이션</td>
+                        <td><strong>적정 중립금리</strong><br>정상적 금융 완화 가능</td>
+                        <td><strong>골디락스 (Goldilocks)</strong><br>부채비율 자연 감소, 글로벌 경제 슈퍼사이클</td>
+                    </tr>
+                    <tr>
+                        <td><strong style="color: var(--accent-rose);">AI 혁명 지연/실패</strong></td>
+                        <td><strong>저성장 (Low)</strong><br>Capex 대비 ROI 부재 (캐즘)</td>
+                        <td><strong>고물가 (High)</strong><br>탈세계화 및 안보 비용 고착</td>
+                        <td><strong>고금리 (High)</strong><br>물가로 인해 금리 인하 불가</td>
+                        <td><strong>스태그플레이션 (Stagflation)</strong><br>부채 이자 부담 폭증, 최악의 금융 위기 도래</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 3: Yamani Paradox -->
+        <section id="yamani-paradox" class="card">
+            <h2>3. 야마니 패러독스와 AI Capex 사이클</h2>
+            <div class="callout callout-quote">
+                "석기시대가 끝난 것은 돌이 부족해서가 아니듯, 석유시대의 종말도 석유가 고갈되어서가 아닙니다."<br>
+                <span style="display:block; text-align:right; margin-top:0.5rem; font-weight:bold;">— 아흐메드 자키 야마니 (1970년대 사우디 석유장관)</span>
+            </div>
+            <p>
+                1970년대 오일쇼크 당시 유가가 치솟자 산유국들은 환호했지만, 야마니 장관은 이를 경계했습니다. 
+                유가가 너무 비싸지면 전 세계가 북해·알래스카 유전을 개발하고 원자력과 고효율 엔진을 만들어 석유의 지배력을 무너뜨리기 때문입니다.
+            </p>
+            <h3>반도체 및 빅테크에 던지는 경고</h3>
+            <p>
+                오건영 단장은 이 역사적 교훈이 현재 <strong>엔비디아 GPU 및 고가 HBM(고대역폭 메모리) 생태계</strong>에 그대로 투영된다고 분석합니다.
+            </p>
+            <ul>
+                <li><strong>맞춤형 ASIC(NPU) 가속:</strong> 빅테크(구글 TPU, 아마존 트레니움, 메타 MTIA 등)는 마진 70~80%에 달하는 고가 GPU 독점에 반발하여 자체 실리콘 개발에 천문학적 자금을 투입 중.</li>
+                <li><strong>소프트웨어 최적화:</strong> 무한정 하드웨어를 늘리는 대신, 양자화(Quantization), MoE(전문가 혼합), 경량 온디바이스 모델을 통해 Compute 소모량을 극적으로 절감.</li>
+                <li><strong>최태원 회장 발언의 함의:</strong> "반도체도 커모디티화될 수 있다"는 발언은 독점적 공급자 지위가 영원할 수 없으며, Capex 속도 조절 국면에 대비해야 한다는 산업적 경고.</li>
+            </ul>
+        </section>
+
+        <!-- Section 4: Delivery Fee Theory -->
+        <section id="delivery-fee" class="card">
+            <h2>4. 구조적 인플레이션: '배송비 이론'</h2>
+            <p>
+                많은 시장 참여자들이 "원유 가격이나 공산품 가격이 내려가면 인플레이션이 완전히 종식될 것"이라고 기대합니다. 
+                하지만 오건영 단장은 <strong>'배송비 비유'</strong>로 왜 인플레이션의 하단이 막혀 있는지 설명합니다.
+            </p>
+            <div class="callout callout-quote">
+                "자장면 한 그릇이 10,000원인데 옛날에 2,000원이던 배송비가 10,000원이 되면, 소비자가 내야 하는 돈은 20,000원입니다. 
+                자장면(원자재) 가격이 내려가더라도, 배송비(지정학·물류·안보 비용)가 떨어지지 않으면 물가는 결코 이전 수준으로 돌아갈 수 없습니다."
+            </div>
+            <div class="grid-3">
+                <div class="metric-card">
+                    <div class="metric-title">지정학적 리스크</div>
+                    <strong style="color: var(--accent-amber);">호르무즈·홍해 분쟁</strong>
+                    <div class="metric-desc">수에즈 운하 우회 항로(희망봉) 강제, 해상 운임·용선료·보험료 구조적 상승.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">공급망 재편</div>
+                    <strong style="color: var(--accent-amber);">프렌드쇼어링</strong>
+                    <div class="metric-desc">최저가 생산국(중국) 이탈, 동맹국 중심의 안전 생산 체제로 전환되며 공장 건설 및 인건비 상승.</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-title">인구 구조 역전</div>
+                    <strong style="color: var(--accent-amber);">생산인구 감소</strong>
+                    <div class="metric-desc">베이비부머 은퇴 가속 및 서비스직 노동력 부족으로 임금 상승 압력 지속.</div>
+                </div>
+            </div>
+            <p>
+                결과적으로 미 연준(Fed)은 과거 2010년대처럼 기준금리를 0%대로 낮출 수 없으며, <strong>구조적으로 높은 중립금리($r^*$) 환경('Higher for Longer')</strong>이 장기화됩니다.
+            </p>
+        </section>
+
+        <!-- Section 5: FX Dynamics -->
+        <section id="fx-dynamics" class="card">
+            <h2>5. 고환율 고착화와 엔 캐리 트레이드(Yen Carry) 리스크</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>원/달러 환율의 계단식 하단 상승 (1,400원 뉴노멀)</h3>
+                    <p>
+                        과거 1,100원, 1,200원이던 환율 저항선이 이제는 1,350~1,400원 선에서 지지선을 형성하고 있습니다.
+                    </p>
+                    <ul>
+                        <li>한미 간 구조적 금리 격차 지속</li>
+                        <li>국내 투자자 및 기관의 미국 자산(주식/채권) 매수 수요 구조화</li>
+                        <li>환율 상승이 수입물가 상승을 유발하고, 서민 경제의 실질 구매력을 침식시키는 양극화 심화</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>일본은행(BOJ) 정상화와 엔 캐리 청산 발작</h3>
+                    <p>
+                        수십 년간 0% 금리로 조달되어 글로벌 위험 자산에 투자되었던 엔화 자금이, 일본의 금리 인상 시점에 급격히 환류(Unwind)되는 현상입니다.
+                    </p>
+                    <div class="callout callout-danger" style="margin-top: 1rem;">
+                        <strong>시장 발작의 뇌관:</strong> 엔화 가치가 급등하면 레버리지를 일으켰던 헤지펀드들이 테크 주식 등 위험 자산을 강제 청산해야 하므로, 단기 유동성 쇼크가 언제든 재발할 수 있습니다.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Barbell Strategy -->
+        <section id="barbell-strategy" class="card card-highlight">
+            <h2>6. 실전 자산배분: 불확실성의 안개(Fog of War)를 뚫는 바벨 전략</h2>
+            <p>
+                초기 인터넷 버블 당시 시스코(Cisco), 선마이크로시스템즈 같은 인프라 기업이 장기 최종 승자가 되지 못했던 역사를 기억해야 합니다. 
+                현재 누가 최종 AI 승자가 될지 모르는 상황에서 <strong>단일 자산이나 특정 테크주 몰빵(All-in)은 자살행위</strong>입니다.
+            </p>
+
+            <div class="barbell-container">
+                <div class="barbell-bar"></div>
+                <div class="barbell-weight left">
+                    <h3 style="color: var(--accent); margin-top: 0;">🚀 공격 자산 (성장 추구)</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">승자독식 AI 혁신 생태계 수혜</p>
+                    <ul style="padding-left: 1.2rem; font-size: 0.92rem;">
+                        <li><strong>독점적 해자를 가진 빅테크 메가캡</strong> (잉여현금흐름 FCF 풍부)</li>
+                        <li><strong>AI 플랫폼 & 소프트웨어 선도 기업</strong></li>
+                        <li>Capex 조정 국면에서도 생존 가능한 기술 리더</li>
+                    </ul>
+                </div>
+                <div class="barbell-weight right">
+                    <h3 style="color: var(--accent-secondary); margin-top: 0;">🛡️ 방어 자산 (리스크 헤지)</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">스태그플레이션 & 고금리 방어</p>
+                    <ul style="padding-left: 1.2rem; font-size: 0.92rem;">
+                        <li><strong>미국 단기/중기 국채</strong> (연 4~5%대 무위험 확정 금리)</li>
+                        <li><strong>금 (Gold)</strong> (중앙은행 탈달러화 및 화폐가치 하락 헤지)</li>
+                        <li><strong>달러 현금 흐름</strong> (환율 변동성 완충 및 저가 매수 실탄)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout callout-success">
+                <strong>💡 오건영 단장의 핵심 조언:</strong><br>
+                "예측하려 하지 말고 <strong>대응할 수 있는 구조(Architecture)</strong>를 만들어 두십시오. 
+                바벨의 양 끝단을 쥐고 있으면, AI가 대성공할 때는 성장주가 계좌를 견인하고, 
+                반대로 AI가 흔들리고 고금리가 지속될 때는 국채와 금, 달러가 자산을 지켜줍니다."
+            </div>
+        </section>
+
+        <!-- Section 7: Engineering Impact -->
+        <section id="engineering-impact" class="card">
+            <h2>7. 엔지니어링 리더(Group Leader) 관점의 전략적 시사점</h2>
+            <div class="callout callout-quote" style="border-left-color: var(--accent-secondary); background: rgba(56, 189, 248, 0.08); color: #e0f2fe;">
+                <strong>Domain Context:</strong> Mobile SW Protocol / Physical Layer Embedded SW / HW-SW Co-design 리더십
+            </div>
+
+            <div class="grid-2">
+                <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--card-border);">
+                    <h3 style="color: var(--accent-secondary); margin-top: 0;">1. 하드웨어 제약 기반의 온디바이스(Edge) AI 급부상</h3>
+                    <p style="font-size: 0.92rem;">
+                        서버용 GPU 인프라의 Capex 및 전력 한계(야마니 패러독스)로 인해, 
+                        <strong>단말 모뎀 및 AP 내부에서 실시간으로 동작하는 경량화 AI 알고리즘과 NPU 하드웨어 가속</strong>의 가치가 천문학적으로 높아질 것입니다.
+                    </p>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--card-border);">
+                    <h3 style="color: var(--accent-secondary); margin-top: 0;">2. PHY/MAC 통신 프로토콜과 레지스터 맵 지능화</h3>
+                    <p style="font-size: 0.92rem;">
+                        통신 칩의 복잡한 물리 계층(PHY) 레지스터 맵 제어 및 전력 소모 최적화에 특화된 소형 도메인 에이전트를 도입하여, 
+                        인간 엔지니어의 튜닝 사이클을 1/10로 단축하는 <strong>AI-native HW-SW Co-design</strong> 파이프라인 구축이 필수적입니다.
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 10px; border: 1px solid var(--card-border); margin-top: 1.5rem;">
+                <h3 style="color: var(--accent-amber); margin-top: 0;">3. 레거시 코드베이스 효율화 & AST 기반 2nd Brain 구축</h3>
+                <p style="font-size: 0.92rem;">
+                    거대 외부 LLM API 비용과 레이턴시에 의존하지 않고, 그룹 내부의 방대한 C/C++ 통신 임베디드 소스코드를 
+                    <strong>AST(구문트리), 심볼 맵, Graph-RAG</strong>로 인덱싱하여 검색 및 코드 리뷰 효율을 극대화하는 로컬 엔지니어링 에이전트 구축이 가장 높은 ROI를 제공합니다.
+                </p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    // Smooth scroll and active TOC highlight
+    const navLinks = document.querySelectorAll('.toc a');
+    const sections = document.querySelectorAll('section');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (pageYOffset >= (sectionTop - 150)) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href').includes(current)) {
+                link.classList.add('active');
+            }
+        });
+    });
+</script>
+</body>
+</html>

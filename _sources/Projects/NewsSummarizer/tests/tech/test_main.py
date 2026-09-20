@@ -143,3 +143,117 @@ def test_three_sections_and_html_email_generation(mocker):
     assert "Section 1: Executive Summary" in saved_content
     assert "Section 2: 오늘의 GitHub 트렌드 큐레이션" in saved_content
     assert "Section 3: 관심 분야별 심층 뉴스" in saved_content
+
+
+def test_fetch_jesusiswithus_github_parsing(mocker):
+    """'매일의 IT뉴스' HTML 본문에서 추천 GitHub 저장소가 정상 추출되는지 검증"""
+    mock_html = """
+    <html>
+    <h2 id=오늘의-추천-github-리포>오늘의 추천 GitHub 리포</h2>
+    <h3 id=1-cua--플랫폼>1. cua — 컴퓨터 사용 에이전트 플랫폼</h3>
+    <ul>
+        <li><strong>GitHub</strong>: <a href=https://github.com/trycua/cua target=_blank>trycua/cua</a></li>
+        <li><strong>한 줄 설명</strong>: 컴퓨터 사용 AI 에이전트 학습 플랫폼입니다.</li>
+        <li><strong>수치</strong>: 별 24,000개 · MIT 라이선스</li>
+        <li><strong>어디서/왜</strong>: GitHub 트렌딩 상위 랭크</li>
+    </ul>
+    <h3 id=2-pizza-bot--받은편지함>2. Pizza Bot — 받은편지함</h3>
+    <ul>
+        <li><strong>GitHub</strong>: <a href=https://github.com/pizza-bot-app/pizza-bot target=_blank>pizza-bot-app/pizza-bot</a></li>
+        <li><strong>한 줄 설명</strong>: AI 에이전트를 위한 로컬 인박스 도구입니다.</li>
+        <li><strong>수치</strong>: 별 320개</li>
+    </ul>
+    <h2 id=오늘의-일반사역용-추천-리포>오늘의 일반사역용 추천 리포</h2>
+    </html>
+    """
+    mock_resp = MagicMock()
+    mock_resp.read.return_value = mock_html.encode('utf-8')
+    mock_resp.__enter__.return_value = mock_resp
+    mocker.patch("urllib.request.urlopen", return_value=mock_resp)
+
+    repos = main.fetch_jesusiswithus_github("2026-09-20")
+    assert len(repos) == 2
+    assert repos[0]["full_name"] == "trycua/cua"
+    assert repos[0]["stars"] == 24000
+    assert "컴퓨터 사용" in repos[0]["description"]
+    assert repos[1]["full_name"] == "pizza-bot-app/pizza-bot"
+    assert repos[1]["stars"] == 320
+
+
+def test_fetch_jesusiswithus_github_fallback(mocker):
+    """당일 IT뉴스 404 시 메인 목록에서 최신 일자 포스트를 찾아 Fallback 하는지 검증"""
+    main_html = """
+    <html>
+    <a href="/digest/daily-it-news/2026/2026-09-20/">2026년 9월 20일 IT뉴스</a>
+    </html>
+    """
+    post_html = """
+    <html>
+    <h2 id=오늘의-추천-github-리포>오늘의 추천 GitHub 리포</h2>
+    <h3 id=1-librechat>1. LibreChat</h3>
+    <ul>
+        <li><strong>GitHub</strong>: <a href=https://github.com/danny-avila/LibreChat target=_blank>danny-avila/LibreChat</a></li>
+        <li><strong>한 줄 설명</strong>: 자체 호스팅 오픈소스 챗GPT 대안</li>
+        <li><strong>수치</strong>: 별 44,000개</li>
+    </ul>
+    </html>
+    """
+
+    def mock_urlopen_side_effect(req, timeout=10):
+        url = req.get_full_url() if hasattr(req, "get_full_url") else str(req)
+        mock_resp = MagicMock()
+        mock_resp.__enter__.return_value = mock_resp
+        if "2026-09-25" in url:
+            import urllib.error
+            raise urllib.error.HTTPError(url, 404, "Not Found", {}, None)
+        elif url.endswith("/digest/daily-it-news/"):
+            mock_resp.read.return_value = main_html.encode('utf-8')
+            return mock_resp
+        else:
+            mock_resp.read.return_value = post_html.encode('utf-8')
+            return mock_resp
+
+    mocker.patch("urllib.request.urlopen", side_effect=mock_urlopen_side_effect)
+
+    repos = main.fetch_jesusiswithus_github("2026-09-25")
+    assert len(repos) == 1
+    assert repos[0]["full_name"] == "danny-avila/LibreChat"
+    assert repos[0]["stars"] == 44000
+
+
+def test_shared_github_history_deduplication(tmp_path, mocker):
+    """최근 14일 이내 브리핑에 공유된 저장소는 중복 추천에서 제외되는지 검증"""
+    fake_history_file = str(tmp_path / "shared_github_history.json")
+    mocker.patch("agents.tech.main.get_shared_github_history_file", return_value=fake_history_file)
+
+    # 1. 저장소 기록 저장
+    main.save_shared_github_history(["old-owner/old-repo", "already-seen/repo"])
+
+    # 2. 이력 로드 검증
+    history = main.load_shared_github_history(max_age_days=14)
+    assert "old-owner/old-repo" in history
+    assert "already-seen/repo" in history
+
+    # 3. fetch_github_trending 호출 시 중복 저장소 제외 검증
+    mocker.patch("agents.tech.main.fetch_jesusiswithus_github", return_value=[
+        {"full_name": "already-seen/repo", "html_url": "http://...", "description": "seen", "stars": 100, "category_id": "second_brain", "category_name": "Second-Brain", "category_icon": "🧠"},
+        {"full_name": "fresh-owner/fresh-repo", "html_url": "http://...", "description": "fresh", "stars": 200, "category_id": "second_brain", "category_name": "Second-Brain", "category_icon": "🧠"}
+    ])
+    
+    # GitHub Search API는 빈 리스트 반환
+    mock_resp = MagicMock()
+    mock_resp.read.return_value = b'{"items": []}'
+    mock_resp.__enter__.return_value = mock_resp
+    mocker.patch("urllib.request.urlopen", return_value=mock_resp)
+    mocker.patch("time.sleep")
+
+    # 캐시 무효화
+    real_exists = os.path.exists
+    mocker.patch("os.path.exists", side_effect=lambda p: False if "github_cache.json" in str(p) else real_exists(p))
+
+    candidates = main.fetch_github_trending(categories_or_queries=[{"id": "second_brain", "name": "Second-Brain", "icon": "🧠", "queries": ["query"]}])
+    
+    candidate_names = [c["full_name"] for c in candidates]
+    assert "already-seen/repo" not in candidate_names
+    assert "fresh-owner/fresh-repo" in candidate_names
+

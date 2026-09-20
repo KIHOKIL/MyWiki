@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 혁명과 세계 경제 슬라이드 덱 | 오건영 단장</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0f1a;
+            --surface: #101726;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --accent: #7c3aed;
+            --accent-cyan: #38bdf8;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-emerald: #10b981;
+            --border: rgba(139, 148, 158, 0.15);
+        }
+        * { box-sizing: border-box; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow: hidden;
+        }
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1180px;
+            height: 82vh;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3.5rem 4rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            position: relative;
+            flex-direction: column;
+            justify-content: space-between;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .slide.active {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1.2rem;
+        }
+        .slide-badge {
+            background: rgba(124, 58, 237, 0.2);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+        .slide-number {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 1.5rem 0;
+        }
+        h1 {
+            font-size: 2.7rem;
+            font-weight: 900;
+            line-height: 1.25;
+            background: linear-gradient(135deg, var(--accent), var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 1.2rem;
+        }
+        p.subtitle {
+            font-size: 1.25rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        .card-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.8rem;
+        }
+        .card-box h3 {
+            margin-top: 0;
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+        .card-box ul {
+            padding-left: 1.2rem;
+            margin: 0;
+            color: #cbd5e1;
+            line-height: 1.7;
+        }
+        .callout-box {
+            background: rgba(245, 158, 11, 0.1);
+            border-left: 4px solid var(--accent-amber);
+            padding: 1.2rem 1.6rem;
+            border-radius: 8px;
+            color: #fef3c7;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+        /* Navigation Controls */
+        .controls {
+            position: absolute;
+            bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            z-index: 100;
+        }
+        .btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+        .btn:hover {
+            border-color: var(--accent-cyan);
+            background: rgba(56, 189, 248, 0.15);
+        }
+        .dots {
+            display: flex;
+            gap: 0.6rem;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active {
+            background: var(--accent-cyan);
+            transform: scale(1.25);
+        }
+    </style>
+</head>
+<body>
+
+<div class="presentation">
+    <!-- Slide 1: Cover -->
+    <div class="slide active" data-slide="1">
+        <div class="slide-header">
+            <span class="slide-badge">MACRO & FINANCE CURATION</span>
+            <span class="slide-number">01 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h1>AI 혁명이 실패하는 순간,<br>세계 경제는 흔들립니다</h1>
+            <p class="subtitle">
+                거시경제 관점에서 해부한 AI의 본질과 글로벌 부채 딜레마,<br>
+                그리고 구조적 고환율 시대를 돌파하는 바벨 자산배분 전략
+            </p>
+            <div style="margin-top: 2rem; font-size: 1rem; color: var(--muted);">
+                강연: <strong>오건영 신한은행 프리미어 패스파인더 단장</strong> (삼프로TV 주말인터뷰)
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 2: Debt Dilemma -->
+    <div class="slide" data-slide="2">
+        <div class="slide-header">
+            <span class="slide-badge">KEY CONCEPT 01</span>
+            <span class="slide-number">02 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h2>AI는 전 세계 부채를 녹여낼 유일한 '치트키'</h2>
+            <div class="grid-2">
+                <div class="card-box" style="border-left: 4px solid var(--accent-rose);">
+                    <h3 style="color: var(--accent-rose);">분자(부채)를 줄이는 디레버리징의 위험</h3>
+                    <p style="font-size: 0.95rem; color: #cbd5e1;">
+                        <strong>중국 2013-2015년의 실패:</strong> 금리를 올리고 신규 대출을 조이자 그림자금융 파탄과 2015년 주가 대폭락 및 대규모 자본유출 발생.
+                    </p>
+                    <p style="font-size: 0.95rem; color: #cbd5e1;">
+                        현대 신용화폐 시스템에서 명목 부채를 억지로 갚으려 하면 경제 전신 마비 초래.
+                    </p>
+                </div>
+                <div class="card-box" style="border-left: 4px solid var(--accent-emerald);">
+                    <h3 style="color: var(--accent-emerald);">분모(GDP)를 키우는 AI 생산성 혁명</h3>
+                    <p style="font-size: 0.95rem; color: #cbd5e1;">
+                        미국 국가부채 35조 달러 시대, 채무비율(Debt/GDP)을 정상화하는 유일한 길은 <strong>총요소생산성(TFP) 극대화</strong>.
+                    </p>
+                    <p style="font-size: 0.95rem; color: #cbd5e1;">
+                        AI가 비용을 1/10로 낮추고 폭발적 성장을 견인할 때만 '골디락스'가 완성됨.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Scenario Matrix -->
+    <div class="slide" data-slide="3">
+        <div class="slide-header">
+            <span class="slide-badge">SCENARIO ANALYSIS</span>
+            <span class="slide-number">03 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h2>AI 성공 vs 실패에 따른 세계 경제 운명</h2>
+            <div class="grid-2">
+                <div class="card-box" style="background: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.3);">
+                    <h3 style="color: var(--accent-emerald);">SCENARIO A: AI 혁명 대성공</h3>
+                    <ul>
+                        <li><strong>성장(Growth):</strong> 초고성장 (High)</li>
+                        <li><strong>물가(Inflation):</strong> 저물가 (Low, 생산비용 급감)</li>
+                        <li><strong>금리(Rates):</strong> 적정 중립금리 안착</li>
+                        <li><strong>결과:</strong> <strong>골디락스(Goldilocks)</strong> — 부채 문제 자연 해결, 기업 이익 극대화</li>
+                    </ul>
+                </div>
+                <div class="card-box" style="background: rgba(244, 63, 94, 0.05); border-color: rgba(244, 63, 94, 0.3);">
+                    <h3 style="color: var(--accent-rose);">SCENARIO B: AI 혁명 캐즘 및 실패</h3>
+                    <ul>
+                        <li><strong>성장(Growth):</strong> 저성장 (Low, Capex 회수 실패)</li>
+                        <li><strong>물가(Inflation):</strong> 고물가 (High, 지정학 분절 비용)</li>
+                        <li><strong>금리(Rates):</strong> 고금리 (High, 물가로 금리 인하 불가)</li>
+                        <li><strong>결과:</strong> <strong>스태그플레이션(Stagflation)</strong> — 부채 이자 감당 불가, 파국적 위기</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Yamani Paradox -->
+    <div class="slide" data-slide="4">
+        <div class="slide-header">
+            <span class="slide-badge">KEY CONCEPT 02</span>
+            <span class="slide-number">04 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h2>야마니 패러독스와 반도체 Capex의 지속가능성</h2>
+            <div class="callout-box">
+                "석기시대가 끝난 것은 돌이 부족해서가 아니듯, 석유시대의 종말도 석유 고갈 때문이 아니다."<br>
+                <strong>— 아흐메드 자키 야마니 (1970년대 사우디 석유장관)</strong>
+            </div>
+            <div class="card-box" style="margin-top: 1rem;">
+                <h3>GPU/HBM 독점 체제에 던지는 시사점</h3>
+                <ul>
+                    <li>유가가 폭등하면 북해 유전 개발과 원자력 등 대체 에너지가 나오듯, <strong>칩 가격과 마진(70~80%)이 과도하면 대체재 개발이 급가속됨.</strong></li>
+                    <li><strong>빅테크의 자체 실리콘(ASIC/NPU) 내재화:</strong> 구글 TPU, 메타 MTIA, AWS 트레니움 가속.</li>
+                    <li><strong>알고리즘 효율화:</strong> MoE, 양자화, 소형 온디바이스 모델(SLM)로 Compute 비용 감축 시도.</li>
+                    <li><strong>최태원 회장의 발언:</strong> "반도체도 커모디티화 위험에 대비해야 한다"는 경고와 일맥상통.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Delivery Fee Theory -->
+    <div class="slide" data-slide="5">
+        <div class="slide-header">
+            <span class="slide-badge">KEY CONCEPT 03</span>
+            <span class="slide-number">05 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h2>구조적 인플레이션: '배송비 이론'</h2>
+            <div class="callout-box" style="background: rgba(56, 189, 248, 0.08); border-color: var(--accent-cyan); color: #e0f2fe;">
+                "자장면이 10,000원인데 배송비가 10,000원이면 소비자는 20,000원을 내야 한다.<br>
+                자장면(원자재) 값이 내려와도 <strong>배송비(물류·지정학·안보비)</strong>가 안내려오면 물가는 잡히지 않는다."
+            </div>
+            <div class="grid-2" style="margin-top: 1rem;">
+                <div class="card-box">
+                    <h3>구조적 배송비 상승 원인</h3>
+                    <ul>
+                        <li><strong>호르무즈·홍해 분쟁:</strong> 수에즈 운하 대신 아프리카 희망봉 우회 → 운임/보험료 영구 상승</li>
+                        <li><strong>프렌드쇼어링:</strong> 중국 중심 저가 생산에서 동맹국 안전 생산으로 전환 → 제조 원가 상승</li>
+                    </ul>
+                </div>
+                <div class="card-box">
+                    <h3>매크로 귀결</h3>
+                    <ul>
+                        <li>국제 유가가 일시 하락해도 물가의 하방 경직성 견고</li>
+                        <li>과거 0%대 초저금리(ZIRP) 시대로의 회귀 불가능</li>
+                        <li><strong>중립금리($r^*$) 상향 고착화 ('Higher for Longer')</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Barbell Strategy -->
+    <div class="slide" data-slide="6">
+        <div class="slide-header">
+            <span class="slide-badge">PORTFOLIO ARCHITECTURE</span>
+            <span class="slide-number">06 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h2>실전 자산배분: 바벨(Barbell) 전략</h2>
+            <p class="subtitle" style="font-size: 1.05rem; margin-bottom: 1.5rem;">
+                누가 최종 승자가 될지 모르는 안개 속에서 '올인(All-in)'을 버리고 양극단을 취하라
+            </p>
+            <div class="grid-2">
+                <div class="card-box" style="border-top: 4px solid var(--accent);">
+                    <h3 style="color: #c4b5fd;">🚀 공격 자산 (성장 추구)</h3>
+                    <ul>
+                        <li><strong>초우량 AI 플랫폼 메가캡:</strong> 풍부한 잉여현금흐름(FCF)과 독점적 해자 보유</li>
+                        <li>인프라 출혈 경쟁이 끝나도 최후에 살아남아 가치를 흡수할 소프트웨어/서비스 리더</li>
+                    </ul>
+                </div>
+                <div class="card-box" style="border-top: 4px solid var(--accent-cyan);">
+                    <h3 style="color: var(--accent-cyan);">🛡️ 방어 자산 (리스크 헤지)</h3>
+                    <ul>
+                        <li><strong>미국 단기/중기 국채:</strong> 연 4~5%대 무위험 확정 수익</li>
+                        <li><strong>금(Gold):</strong> 중앙은행 탈달러화 및 화폐가치 방어</li>
+                        <li><strong>달러 현금 흐름:</strong> 환율 1,400원 시대의 완충재 & 저가 매수 실탄</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Engineering Leadership -->
+    <div class="slide" data-slide="7">
+        <div class="slide-header">
+            <span class="slide-badge">ACTIONABLE TAKEAWAY</span>
+            <span class="slide-number">07 / 07</span>
+        </div>
+        <div class="slide-body">
+            <h2>엔지니어링 리더(Group Leader) 관점의 시사점</h2>
+            <div class="card-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent-cyan);">
+                <h3 style="margin-top: 0;">1. 하드웨어 제약 기반의 온디바이스(Edge) AI 급부상</h3>
+                <p style="font-size: 0.95rem; color: #cbd5e1; margin: 0;">
+                    서버 Capex 및 전력 한계로 인해, 모바일 단말 및 모뎀 AP 내부에서 실시간으로 동작하는 초경량 AI 알고리즘과 NPU 하드웨어 가속의 가치가 극대화됨.
+                </p>
+            </div>
+            <div class="card-box" style="margin-bottom: 1rem; border-left: 4px solid var(--accent-amber);">
+                <h3 style="margin-top: 0;">2. 통신 프로토콜 & 레지스터 맵 기반 최적화</h3>
+                <p style="font-size: 0.95rem; color: #cbd5e1; margin: 0;">
+                    물리 계층(PHY)의 복잡한 레지스터 맵 제어 및 전력 소모를 최적화하는 특화 소형 에이전트 도입 → HW-SW Co-design 파이프라인 구축.
+                </p>
+            </div>
+            <div class="card-box" style="border-left: 4px solid var(--accent-emerald);">
+                <h3 style="margin-top: 0;">3. 코드베이스 이해 기반의 2nd Brain 구축</h3>
+                <p style="font-size: 0.95rem; color: #cbd5e1; margin: 0;">
+                    외부 고비용 API 의존 대신, AST/Grep/Graph-RAG 기반의 로컬 코드 이해 엔진을 그룹 내부 2nd Brain으로 자산화하여 엔지니어링 생산성 극대화.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button class="btn" id="prevBtn">◀ 이전</button>
+        <div class="dots" id="dotsContainer"></div>
+        <button class="btn" id="nextBtn">다음 ▶</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('dotsContainer');
+    let currentSlide = 0;
+
+    // Create dots
+    slides.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (idx === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(idx));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            slide.classList.toggle('active', idx === currentSlide);
+        });
+        dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === currentSlide);
+        });
+    }
+
+    function goToSlide(idx) {
+        currentSlide = idx;
+        updateSlides();
+    }
+
+    function nextSlide() {
+        if (currentSlide < slides.length - 1) {
+            currentSlide++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlides();
+        }
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+</script>
+</body>
+</html>

@@ -216,10 +216,193 @@ def is_valid_github_repo(item):
         return False
     return True
 
-def fetch_github_trending(categories_or_queries=None, max_candidates=16):
+def get_shared_github_history_file():
+    """최근 브리핑에 공유된 GitHub 저장소 이력 파일 경로를 반환합니다."""
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    raw_dir = os.path.join(base_dir, "_raw")
+    os.makedirs(raw_dir, exist_ok=True)
+    return os.path.join(raw_dir, "shared_github_history.json")
+
+def load_shared_github_history(max_age_days=14):
     """
-    GitHub Search API를 사용하여 4대 관심 주제별 최상위 오픈소스 저장소를 수집합니다.
-    categories_or_queries: config.json의 카테고리 설정(list of dicts) 또는 쿼리 리스트(list of strings)
+    최근 max_age_days(기본 14일) 동안 브리핑에 공유된 GitHub 저장소 full_name 세트를 반환합니다.
+    """
+    history_file = get_shared_github_history_file()
+    recent_repos = set()
+    if not os.path.exists(history_file):
+        return recent_repos
+    try:
+        with open(history_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        items = data.get("history", [])
+        now = time.time()
+        for item in items:
+            ts = item.get("timestamp", 0)
+            if now - ts <= max_age_days * 86400:
+                full_name = item.get("full_name")
+                if full_name:
+                    recent_repos.add(full_name.strip().lower())
+    except Exception as e:
+        print(f"  [Warning] 공유 이력 파일 읽기 실패: {e}")
+    return recent_repos
+
+def save_shared_github_history(selected_repos_or_names):
+    """
+    오늘 브리핑에 선정된 저장소들을 이력 파일에 추가하고 만료된 항목(30일 이상)을 정리합니다.
+    """
+    history_file = get_shared_github_history_file()
+    data = {"history": []}
+    if os.path.exists(history_file):
+        try:
+            with open(history_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+        except Exception:
+            data = {"history": []}
+    
+    now = time.time()
+    existing_history = data.get("history", [])
+    # 30일 이내 것만 유지
+    filtered_history = [item for item in existing_history if now - item.get("timestamp", 0) <= 30 * 86400]
+    
+    seen_today = set()
+    new_entries = []
+    for item in selected_repos_or_names:
+        if isinstance(item, dict):
+            name = item.get("full_name")
+        else:
+            name = str(item)
+        if name and name.strip().lower() not in seen_today:
+            clean_name = name.strip()
+            seen_today.add(clean_name.lower())
+            new_entries.append({
+                "full_name": clean_name,
+                "timestamp": now,
+                "date": datetime.now().strftime("%Y-%m-%d")
+            })
+            
+    # 오늘 새로 기록된 저장소는 기존 이력에서 중복 제거 후 최신 항목으로 반영
+    updated_history = [item for item in filtered_history if item.get("full_name", "").strip().lower() not in seen_today]
+    updated_history.extend(new_entries)
+    data["history"] = updated_history
+    data["last_updated"] = datetime.now().strftime("%Y-%m-%d")
+    try:
+        with open(history_file, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+        print(f"  [Notice] GitHub 추천 이력 갱신 완료 ({len(seen_today)}개 저장소 기록)")
+    except Exception as e:
+        print(f"  [Warning] 공유 이력 파일 저장 실패: {e}")
+
+def fetch_jesusiswithus_github(target_date_str=None):
+    """
+    '매일의 IT뉴스' (https://jesusiswith.us/digest/daily-it-news/)에서
+    당일(또는 최신 발행일) '오늘의 추천 GitHub 리포'를 파싱하여 반환합니다.
+    """
+    if not target_date_str:
+        target_date_str = datetime.now().strftime("%Y-%m-%d")
+    
+    year = target_date_str.split("-")[0]
+    url = f"https://jesusiswith.us/digest/daily-it-news/{year}/{target_date_str}/"
+    headers = {"User-Agent": "DailyNewsSummarizer/2.0 (Windows NT 10.0; Win64; x64)"}
+    
+    html = ""
+    try:
+        req = urllib.request.Request(url, headers=headers)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            html = resp.read().decode('utf-8')
+    except Exception as e:
+        # 당일 페이지가 없을 경우 (주말/휴일 등) 메인 목록에서 최신 일자 탐색
+        try:
+            main_url = "https://jesusiswith.us/digest/daily-it-news/"
+            req = urllib.request.Request(main_url, headers=headers)
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                main_html = resp.read().decode('utf-8')
+            recent_links = re.findall(r'/digest/daily-it-news/(\d{4})/(\d{4}-\d{2}-\d{2})/', main_html)
+            if recent_links:
+                latest_year, latest_date = recent_links[0]
+                latest_url = f"https://jesusiswith.us/digest/daily-it-news/{latest_year}/{latest_date}/"
+                print(f"  [Notice] 당일 IT뉴스 미발행으로 최신 IT뉴스({latest_date})를 참조합니다.")
+                req2 = urllib.request.Request(latest_url, headers=headers)
+                with urllib.request.urlopen(req2, timeout=10) as resp2:
+                    html = resp2.read().decode('utf-8')
+        except Exception as e2:
+            print(f"  [Warning] IT뉴스 페이지 접속 실패: {e2}")
+            return []
+
+    if not html:
+        return []
+
+    # '오늘의 추천 GitHub 리포' 본문 섹션 찾기 (<h2 id=오늘의-추천-github-리포>)
+    m_h2 = re.search(r'<h2[^>]*id=[\"\']?오늘의-추천-github-리포[\"\']?[^>]*>', html)
+    if not m_h2:
+        m_h2 = re.search(r'<h2[^>]*>.*?오늘의 추천 GitHub.*?</h2>', html)
+    if not m_h2:
+        return []
+
+    start_pos = m_h2.end()
+    section = html[start_pos:start_pos+10000]
+    end_idx = section.find("오늘의-일반사역용-추천-리포")
+    if end_idx != -1:
+        curated_section = section[:end_idx]
+    else:
+        curated_section = section
+
+    repos = []
+    blocks = re.split(r'<h3[^>]*>', curated_section)[1:]
+    for block in blocks:
+        m_link = re.search(r'href=[\"\']?(https://github\.com/([a-zA-Z0-9_\-\.]+/[a-zA-Z0-9_\-\.]+))[\"\']?', block)
+        if not m_link:
+            continue
+        html_url = m_link.group(1)
+        full_name = m_link.group(2)
+        if full_name.lower() in ["trending", "features"]:
+            continue
+            
+        m_desc = re.search(r'<strong>한 줄 설명</strong>:\s*([^<]+)', block)
+        desc = m_desc.group(1).strip() if m_desc else "설명 없음"
+        
+        m_stats = re.search(r'<strong>수치</strong>:\s*([^<]+)', block)
+        stats_text = m_stats.group(1).strip() if m_stats else ""
+        stars = 0
+        m_stars = re.search(r'별\s*([0-9,]+)개', stats_text)
+        if m_stars:
+            stars = int(m_stars.group(1).replace(",", ""))
+
+        m_why = re.search(r'<strong>어디서/왜</strong>:\s*([^<]+)', block)
+        why_text = m_why.group(1).strip() if m_why else ""
+
+        full_desc = f"{desc} ({why_text})" if why_text else desc
+        
+        # 4대 관심 주제에 자동 분류
+        desc_lower = (full_desc + " " + full_name).lower()
+        if any(k in desc_lower for k in ["embedded", "rtos", "hal", "firmware", "driver", "microcontroller", "kernel", "c ", "rust"]):
+            cat_id, cat_name, cat_icon = "embedded_sw", "Embedded SW implementation", "⚡"
+        elif any(k in desc_lower for k in ["review", "pr-agent", "pull request", "linter", "security-review", "code analysis"]):
+            cat_id, cat_name, cat_icon = "code_review_ai", "Code Review AI", "🔍"
+        elif any(k in desc_lower for k in ["ast", "codebase", "code graph", "syntax", "intelligence", "tree-sitter", "mcp", "computer-use", "platform"]):
+            cat_id, cat_name, cat_icon = "codebase_understanding", "Codebase understanding", "🧭"
+        else:
+            cat_id, cat_name, cat_icon = "second_brain", "Second-Brain", "🧠"
+
+        repos.append({
+            "full_name": full_name,
+            "html_url": html_url,
+            "description": full_desc,
+            "stars": stars,
+            "language": "General",
+            "topics": ["it-news-curated"],
+            "category_id": cat_id,
+            "category_name": cat_name,
+            "category_icon": cat_icon,
+            "source": "daily-it-news"
+        })
+
+    print(f"  [Notice] '매일의 IT뉴스'에서 {len(repos)}개의 추천 GitHub 저장소를 확보했습니다.")
+    return repos
+
+def fetch_github_trending(categories_or_queries=None, max_candidates=24, target_date_str=None):
+    """
+    GitHub Search API와 '매일의 IT뉴스'를 결합하여 4대 관심 주제별 오픈소스 후보 저장소를 수집하고,
+    최근 14일 이내 이미 공유된 저장소는 중복 배제합니다.
     """
     # ----------------------------------------------------
     # 로컬 캐싱 적용 (24시간)
@@ -230,13 +413,22 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=16):
     cache_file = os.path.join(raw_dir, "github_cache.json")
     CACHE_EXPIRY = 24 * 60 * 60
 
+    # 최근 14일 이내 이미 공유된 저장소 로드 (중복 추천 방지)
+    recent_shared = load_shared_github_history(max_age_days=14)
+    if recent_shared:
+        print(f"  [Notice] 최근 14일 이내 공유된 {len(recent_shared)}개 저장소는 중복 방지를 위해 제외합니다.")
+
     if os.path.exists(cache_file):
         try:
             with open(cache_file, "r", encoding="utf-8") as f:
                 cached_data = json.load(f)
             if time.time() - cached_data.get("timestamp", 0) < CACHE_EXPIRY:
-                print("  [Notice] 24시간 이내의 GitHub 트렌드 검색 로컬 캐시를 사용합니다.")
-                return cached_data.get("candidates", [])[:max_candidates]
+                raw_candidates = cached_data.get("candidates", [])
+                # 캐시된 데이터에서도 최근 공유된 저장소 제외
+                filtered = [c for c in raw_candidates if c.get("full_name", "").strip().lower() not in recent_shared]
+                if len(filtered) >= 8:
+                    print(f"  [Notice] 24시간 이내 로컬 캐시를 사용합니다. (중복 배제 후 {len(filtered)}개 후보)")
+                    return filtered[:max_candidates]
         except Exception as e:
             print(f"  [Warning] 캐시 파일 로드 실패: {e}")
 
@@ -257,6 +449,15 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=16):
 
     candidates = []
     seen_repos = set()
+
+    # 1. '매일의 IT뉴스' 당일/최신 추천 리포지토리 수집 및 우선 주입
+    it_news_repos = fetch_jesusiswithus_github(target_date_str)
+    for repo in it_news_repos:
+        name_lower = repo["full_name"].strip().lower()
+        if name_lower not in recent_shared and name_lower not in seen_repos:
+            seen_repos.add(name_lower)
+            candidates.append(repo)
+
     headers = {
         'User-Agent': 'DailyNewsSummarizer/2.0',
         'Accept': 'application/vnd.github.v3+json'
@@ -264,60 +465,82 @@ def fetch_github_trending(categories_or_queries=None, max_candidates=16):
     if GITHUB_TOKEN:
         headers['Authorization'] = f"token {GITHUB_TOKEN}"
 
+    # 최근 30일 이내 활성 프로젝트 탐색용 날짜 기준
+    since_date = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
+
+    # 2. GitHub Search API 검색 (스테디셀러 + 최근 활성 트렌딩)
     for cat in cat_configs:
         cat_id = cat.get("id", "general")
         cat_name = cat.get("name", "General")
         cat_icon = cat.get("icon", "⭐")
         queries = cat.get("queries", [])
-        cat_repos = []
+        cat_repos = [c for c in candidates if c.get("category_id") == cat_id]
 
         for query in queries:
-            try:
-                encoded_query = urllib.parse.quote(query)
-                url = f"https://api.github.com/search/repositories?q={encoded_query}&sort=stars&order=desc&per_page=4"
-                req = urllib.request.Request(url, headers=headers)
-                with urllib.request.urlopen(req, timeout=10) as response:
-                    data = json.loads(response.read().decode('utf-8'))
-                    for item in data.get("items", []):
-                        if not is_valid_github_repo(item):
-                            continue
-                        full_name = item.get("full_name")
-                        if full_name and full_name not in seen_repos:
-                            seen_repos.add(full_name)
-                            repo_obj = {
-                                "full_name": full_name,
-                                "html_url": item.get("html_url", ""),
-                                "description": item.get("description") or "설명 없음",
-                                "stars": item.get("stargazers_count", 0),
-                                "language": item.get("language") or "General",
-                                "topics": item.get("topics", []),
-                                "category_id": cat_id,
-                                "category_name": cat_name,
-                                "category_icon": cat_icon
-                            }
-                            cat_repos.append(repo_obj)
-                            candidates.append(repo_obj)
-            except Exception as e:
-                print(f"  [Warning] GitHub API 검색 실패 ('{query}'): {e}")
-            time.sleep(1)
+            # 1) 고전 스테디셀러 검색
+            # 2) 최근 30일 이내 업데이트된 활성 프로젝트 검색 (트렌딩)
+            search_variations = [
+                f"https://api.github.com/search/repositories?q={urllib.parse.quote(query)}&sort=stars&order=desc&per_page=4",
+                f"https://api.github.com/search/repositories?q={urllib.parse.quote(query + f' pushed:>{since_date}')}&sort=updated&order=desc&per_page=3"
+            ]
 
-        # 해당 카테고리 검색 결과가 0건인 경우 검증된 실존 Fallback 추가
-        if not cat_repos and cat_id in DEFAULT_CURATED_REPOS:
+            for url in search_variations:
+                try:
+                    req = urllib.request.Request(url, headers=headers)
+                    with urllib.request.urlopen(req, timeout=10) as response:
+                        data = json.loads(response.read().decode('utf-8'))
+                        for item in data.get("items", []):
+                            if not is_valid_github_repo(item):
+                                continue
+                            full_name = item.get("full_name")
+                            if not full_name:
+                                continue
+                            name_lower = full_name.strip().lower()
+                            
+                            # 최근 14일 이내 이미 브리핑에 공유된 저장소 제외
+                            if name_lower in recent_shared:
+                                continue
+
+                            if name_lower not in seen_repos:
+                                seen_repos.add(name_lower)
+                                repo_obj = {
+                                    "full_name": full_name,
+                                    "html_url": item.get("html_url", ""),
+                                    "description": item.get("description") or "설명 없음",
+                                    "stars": item.get("stargazers_count", 0),
+                                    "language": item.get("language") or "General",
+                                    "topics": item.get("topics", []),
+                                    "category_id": cat_id,
+                                    "category_name": cat_name,
+                                    "category_icon": cat_icon
+                                }
+                                cat_repos.append(repo_obj)
+                                candidates.append(repo_obj)
+                except Exception as e:
+                    print(f"  [Warning] GitHub API 검색 실패 ('{query}'): {e}")
+                time.sleep(1)
+
+        # 해당 카테고리 검색 결과가 부족한 경우 Fallback 추가
+        if len(cat_repos) < 2 and cat_id in DEFAULT_CURATED_REPOS:
             for fallback_repo in DEFAULT_CURATED_REPOS[cat_id]["repos"]:
-                if fallback_repo["full_name"] not in seen_repos:
-                    seen_repos.add(fallback_repo["full_name"])
+                fb_name_lower = fallback_repo["full_name"].strip().lower()
+                if fb_name_lower not in seen_repos:
+                    # 최근 공유 이력에 없으면 추가, 만약 모두 있다면 최소 1개는 포함
+                    seen_repos.add(fb_name_lower)
                     candidates.append(fallback_repo)
+                    cat_repos.append(fallback_repo)
 
-    # 전체 후보가 전혀 없는 경우 전체 Fallback 통합 주입
-    if not candidates:
-        print("  [Notice] GitHub API 결과 부재 또는 요청 제한으로 4대 카테고리 기본 큐레이션 저장소를 활용합니다.")
+    # 전체 후보가 여전히 부족한 경우 Fallback 통합 주입
+    if len(candidates) < 4:
+        print("  [Notice] 검색 결과 보충을 위해 4대 카테고리 기본 큐레이션 저장소를 활용합니다.")
         for cat_id, cat_info in DEFAULT_CURATED_REPOS.items():
             for repo in cat_info["repos"]:
-                if repo["full_name"] not in seen_repos:
-                    seen_repos.add(repo["full_name"])
+                name_lower = repo["full_name"].strip().lower()
+                if name_lower not in seen_repos:
+                    seen_repos.add(name_lower)
                     candidates.append(repo)
 
-    # 검색 또는 Fallback으로 수집된 결과를 로컬 캐시에 저장
+    # 검색 결과를 로컬 캐시에 저장
     try:
         with open(cache_file, "w", encoding="utf-8") as f:
             json.dump({
@@ -1174,7 +1397,7 @@ def main():
     categories_cfg = github_cfg.get("categories") or github_cfg.get("queries")
     github_focus = github_cfg.get("focus", "4대 필수 탐색 주제별 검증된 스테디셀러 1개와 신흥 루키 1개를 엄선하여 담백한 멘토링 인사이트 제공")
     
-    candidates = fetch_github_trending(categories_cfg, max_candidates=16)
+    candidates = fetch_github_trending(categories_cfg, max_candidates=24, target_date_str=today_str)
     print(f"  총 {len(candidates)}개 GitHub 후보 저장소 수집 완료. 4대 분야 심층 큐레이션 중...")
     
     try:
@@ -1192,6 +1415,14 @@ def main():
         else:
             github_summary = "⚠️ GitHub 트렌드 AI 분석에 일시적 오류가 발생했습니다."
             has_error = True
+
+    # 브리핑에 선정된 저장소 이력 자동 기록 (향후 중복 추천 방지)
+    if github_summary and "일시적 오류" not in github_summary:
+        picked_repos = re.findall(r'https://github\.com/([a-zA-Z0-9_\-\.]+/[a-zA-Z0-9_\-\.]+)', github_summary)
+        # 'trending' 등 일반 링크 제외
+        valid_picked = [p for p in picked_repos if p.lower() not in ["trending", "features"]]
+        if valid_picked:
+            save_shared_github_history(valid_picked)
 
     # ----------------------------------------------------
     # 단계 3: Executive Summary 종합 (Section 1용)
