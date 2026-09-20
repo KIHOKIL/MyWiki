@@ -4,6 +4,10 @@ updated: 2026-09-20
 ---
 
 ## Recent Activity
+- **OPIc Study Repository & Teacher Chloe Health Lecture (2026-09-20):**
+  - **오픽 스터디 체계 구축:** `_sources/Study/Opic/클로이/20260920/` 폴더 신설.
+  - **산출물:** 기출유형특강 PDF 자료집 이동, 5종 핵심 슬라이드 캡처(`slides/`), 482줄 클린 자막 전문(`clean_transcript.txt`), 상세 학습 노트(`오픽_건강_돌발주제_클로이.md`), 반응형 웹 발화 훈련 대시보드(`opic_study_dashboard.html`).
+  - **핵심 뼈대:** 건강 돌발 질문(Healthy Person 묘사), 클로이쌤 2회 청취 전략, MBC 프레임워크(M: 이름, B: 체형/음식/운동, C: 결론), 필수 체형 어휘 10선(lean, muscular, stocky, slender 등), Fact+Feeling IH/AL 고득점 발화법.
 - **Wiki-Organize Pipeline (2026-09-20):**
   - **Study Ingestion:** Ingested `_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md`.
   - **Knowledge Artifacts Created:**

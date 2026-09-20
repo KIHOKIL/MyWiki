@@ -4,6 +4,13 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-20 21:30] FEAT: OPIc Study Repository & Teacher Chloe Health Topic Archive
+  - Established teacher/date archive architecture: `_sources/Study/Opic/클로이/20260920/`.
+  - Moved and linked Hackers Chloe 7-month OPIc special lecture PDF handout.
+  - Extracted 482-line clean YouTube subtitle transcript and 5 core lecture slide PNGs.
+  - Created comprehensive study note `오픽_건강_돌발주제_클로이.md` (Question, MBC Framework, 10 body shape expressions, Fact+Feeling method, Model Answer script).
+  - Built interactive dark-theme training dashboard `opic_study_dashboard.html` with TTS playback, 75s speech timer, and vocab flashcards.
+  - Re-indexed `_sources/Study/_index.md` (30 sources) and updated top-level OPIc README.
 - [2026-09-20 21:25] CHORE: Wiki-Organize Pipeline Execution (Study Finance Ingestion)
   - Ingested `_sources/Study/Finance/오건영/20260920/AI_혁명과_세계경제_오건영.md`.
   - Created concepts: [[concepts/yamani-paradox|야마니 패러독스 (Yamani Paradox)]], [[concepts/barbell-strategy|바벨 전략 (Barbell Strategy)]].

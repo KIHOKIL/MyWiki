@@ -17,7 +17,9 @@
 - [[LLM_Wiki와_RAG_비교.md]] — LLM Wiki와 RAG의 차이 및 구축 전략
 - [[Obsidian_LLM_Wiki_Comparison.md]] — 🧠 Obsidian LLM Wiki 3종 구현체 심층 비교 분석
 - [[OpenHuman_심층분석_및_사내_Group_2nd_Brain_연계.md]] — 🧠 OpenHuman 심층 분석 및 사내 Group 2nd Brain 연계 구축 전략
-- [[README.md]] — Finance Study Repository
+- [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
+- [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
+- [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
 - [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
 - [[Research_report_LLM_2nd_Brain_Seoul (1).md]] — 🧠 Deep Research Report: 최근 LLM 2nd Brain 구축 방식 및 통합 아키텍처 가이드
 - [[big_tech_ai_workflow_proposal.md]] — 🚀 빅테크 사례 기반 LLM Wiki 워크플로우 제안서 (Agentic Scaffolding)
@@ -30,6 +32,7 @@
 - [[obsidian_llm_wiki_guide.md]] — 🧠 Obsidian LLM Wiki 구축 및 사용 완벽 가이드
 - [[second_brain_report_prompt.md]] — 📝 복합 소스 기반 초보자 맞춤형 해설 보고서 생성 프롬프트
 - [[suno_ai_songwriter_prompt.md]] — 🎵 Suno AI 감성 싱어송라이터: 당신의 이야기를 노래로 만들어드려요
+- [[오픽_건강_돌발주제_클로이.md]] — 오픽 건강 돌발 주제: 표현 & 답변 구조 총정리 (해커스 클로이)
 
 ## 관련 위키 페이지
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*

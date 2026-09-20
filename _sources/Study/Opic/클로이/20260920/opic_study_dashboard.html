@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPIc 건강 돌발 주제 트레이닝 대시보드 | 해커스 클로이</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: rgba(18, 26, 43, 0.85);
+      --card-border: rgba(36, 52, 84, 0.6);
+      --accent-teal: #10b981;
+      --accent-teal-glow: rgba(16, 185, 129, 0.25);
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-purple: #8b5cf6;
+      --accent-rose: #f43f5e;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      --gold: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.12) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: 'Inter', 'Noto Sans KR', sans-serif;
+      line-height: 1.6;
+      padding: 24px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-topic {
+      background: rgba(16, 185, 129, 0.18);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-grade {
+      background: rgba(245, 158, 11, 0.18);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    h1 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #ffffff;
+    }
+
+    .header-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-meta a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .header-meta a:hover {
+      text-decoration: underline;
+    }
+
+    /* Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ffffff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .card-title .icon {
+      font-size: 1.3rem;
+    }
+
+    /* Question Box */
+    .question-box {
+      background: rgba(15, 23, 42, 0.7);
+      border-left: 4px solid var(--accent-teal);
+      border-radius: 0 12px 12px 0;
+      padding: 18px 20px;
+      margin-bottom: 20px;
+    }
+
+    .question-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent-teal);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #f8fafc;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+
+    .question-ko {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .audio-btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--accent-teal);
+      color: #06261c;
+    }
+
+    .btn-primary:hover {
+      background: #34d399;
+      box-shadow: 0 0 15px var(--accent-teal-glow);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Speech Timer */
+    .timer-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(15, 23, 42, 0.6);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .timer-display {
+      font-size: 2.8rem;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    .timer-progress-bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .timer-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-cyan));
+      transition: width 1s linear;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 12px;
+    }
+
+    .timer-status {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* MBC Structure View */
+    .mbc-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .mbc-block {
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 18px;
+      background: rgba(15, 23, 42, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .mbc-block:hover {
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(15, 23, 42, 0.6);
+    }
+
+    .mbc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .mbc-tag {
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .tag-m { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .tag-b { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .tag-c { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+
+    .mbc-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .mbc-en {
+      font-size: 0.98rem;
+      color: #f1f5f9;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .mbc-ko {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+      display: none;
+    }
+
+    .show-ko .mbc-ko {
+      display: block;
+    }
+
+    /* Highlighting */
+    .hl-vocab {
+      color: #34d399;
+      font-weight: 700;
+      border-bottom: 1px dashed #34d399;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .hl-pattern {
+      color: #f43f5e;
+      font-weight: 700;
+    }
+
+    .hl-filler {
+      color: #93c5fd;
+      font-style: italic;
+    }
+
+    /* Vocab Cards Grid */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .vocab-card {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .vocab-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 6px 15px rgba(6, 182, 212, 0.15);
+    }
+
+    .vocab-word {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+
+    .vocab-meaning {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .vocab-pronounce {
+      font-size: 0.72rem;
+      color: var(--accent-teal);
+      margin-top: 4px;
+    }
+
+    /* Practice Toolbar */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 10px 14px;
+      background: rgba(15, 23, 42, 0.5);
+      border-radius: 8px;
+    }
+
+    /* Slide Gallery */
+    .slide-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .slide-thumb {
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      transition: all 0.2s ease;
+      cursor: pointer;
+      background: #000;
+    }
+
+    .slide-thumb:hover {
+      border-color: var(--accent-teal);
+      transform: scale(1.02);
+    }
+
+    .slide-thumb img {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .slide-label {
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 6px;
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="header-left">
+        <div>
+          <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+            <span class="badge badge-topic">Health 돌발 주제</span>
+            <span class="badge badge-grade">목표: IH ~ AL</span>
+          </div>
+          <h1>오픽 인물 묘사(Healthy Person) 실전 발화 트레이닝</h1>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span>👨‍🏫 강사: 해커스 클로이</span>
+        <span>📅 일자: 2026-09-20</span>
+        <a href="https://www.youtube.com/watch?v=IKZowWrcaog" target="_blank">📺 유튜브 원본</a>
+      </div>
+    </header>
+
+    <!-- Main Grid -->
+    <div class="dashboard-grid">
+
+      <!-- Left Column: Question & Interactive MBC Script -->
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🎙️</span>
+          <span>에바(Eva) 질문 & MBC 실전 발화 스크립트</span>
+        </div>
+
+        <!-- Question Box -->
+        <div class="question-box">
+          <div class="question-title">
+            <span>Question #1 (인물 묘사 유형)</span>
+            <span>현재 시제 | 발화 1분 초반</span>
+          </div>
+          <div class="question-text">
+            "Tell me about a healthy person you know. What does he or she look like? What kinds of food does this person usually eat? Please give me as many details as possible."
+          </div>
+          <div class="question-ko">
+            (당신이 아는 건강한 사람에 대해 말해주세요. 외모와 체형은 어떻고, 주로 어떤 음식을 먹나요? 가능한 한 구체적으로 설명해주세요.)
+          </div>
+          <div class="audio-btn-row">
+            <button class="btn btn-primary" onclick="speakText('Tell me about a healthy person you know. What does he or she look like? What kinds of food does this person usually eat? Please give me as many details as possible.')">
+              🔊 질문 음성 듣기 (TTS)
+            </button>
+            <button class="btn btn-secondary" onclick="alert('💡 클로이쌤 청취 꿀팁:\n1. 첫 번째 들을 때: 인물 묘사(Person Description) 유형 신속 파악!\n2. 두 번째 들을 때: MBC 구조(이름 ➡️ 체형/음식/운동 ➡️ 결론) 키워드 3단 구상!')">
+              💡 2회 청취 전략 보기
+            </button>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+          <div>
+            <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">표시 옵션:</span>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn btn-secondary" id="toggleKoBtn" onclick="toggleKorean()">
+              🇰🇷 한글 해석 토글
+            </button>
+            <button class="btn btn-secondary" onclick="speakFullScript()">
+              ▶ 전체 스크립트 낭독
+            </button>
+          </div>
+        </div>
+
+        <!-- MBC Structure Blocks -->
+        <div class="mbc-container" id="mbcScript">
+
+          <!-- M: Main Idea -->
+          <div class="mbc-block">
+            <div class="mbc-header">
+              <span class="mbc-tag tag-m">M (Main Idea)</span>
+              <span class="mbc-sub">두괄식 대상 지목 & 최상급 패턴</span>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="speakBlock(0)">🔊 재생</button>
+            </div>
+            <div class="mbc-en">
+              <span class="hl-filler">Um...</span> I have quite a lot of friends, but <span class="hl-filler">you know,</span> Joy is <span class="hl-pattern">one of the healthiest people I've ever known</span>.
+            </div>
+            <div class="mbc-ko">
+              음... 제가 친구가 꽤 많은 편인데요, 조이라는 친구가 제가 지금까지 알아온 사람 중 가장 건강한 사람 중 하나예요.
+            </div>
+          </div>
+
+          <!-- B1: Body 1 (Body shape) -->
+          <div class="mbc-block">
+            <div class="mbc-header">
+              <span class="mbc-tag tag-b">B-1 (체형/외모)</span>
+              <span class="mbc-sub">이상적 체형 & 탄탄한 근육질</span>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="speakBlock(1)">🔊 재생</button>
+            </div>
+            <div class="mbc-en">
+              <span class="hl-filler">You know,</span> she has a pretty <span class="hl-vocab" onclick="showWordInfo('ideal body shape')">ideal body shape</span>. She's <span class="hl-vocab" onclick="showWordInfo('lean')">lean</span> and <span class="hl-vocab" onclick="showWordInfo('muscular')">muscular</span>, <span class="hl-filler">you know.</span>
+            </div>
+            <div class="mbc-ko">
+              있잖아요, 그 친구는 체형이 정말 이상적이거든요. 군살 없이 탄탄하고 근육질이에요, 아시죠?
+            </div>
+          </div>
+
+          <!-- B2: Body 2 (Diet) -->
+          <div class="mbc-block">
+            <div class="mbc-header">
+              <span class="mbc-tag tag-b">B-2 (식습관)</span>
+              <span class="mbc-sub">Fact + Feeling (건강식을 즐김)</span>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="speakBlock(2)">🔊 재생</button>
+            </div>
+            <div class="mbc-en">
+              And <span class="hl-filler">you know what?</span> She always eats <span class="hl-pattern">something green, like salads with chicken breast</span>. It's pretty interesting because she actually <span class="hl-pattern">enjoys eating healthy food</span> every single day.
+            </div>
+            <div class="mbc-ko">
+              그리고 그거 아세요? 그 친구는 닭가슴살 샐러드처럼 항상 초록색 야채 위주로 먹어요. 신기한 게 뭐냐면, 매일매일 건강식을 먹는 걸 진심으로 즐기더라고요.
+            </div>
+          </div>
+
+          <!-- B3: Body 3 (Workout) -->
+          <div class="mbc-block">
+            <div class="mbc-header">
+              <span class="mbc-tag tag-b">B-3 (운동 습관)</span>
+              <span class="mbc-sub">바빠도 헬스장 출석 & 매일 1시간</span>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="speakBlock(3)">🔊 재생</button>
+            </div>
+            <div class="mbc-en">
+              And <span class="hl-filler">I'd say</span> her <span class="hl-pattern">biggest secret to maintaining her healthy body is</span> working out. Even though she is <span class="hl-pattern">quite busy with work and studying</span>, she <span class="hl-vocab" onclick="showWordInfo('never skips the gym')">never skips the gym</span>. She works out there for about <span class="hl-filler">like an hour</span> every day. Yeah, she's <span class="hl-pattern">amazing</span>.
+            </div>
+            <div class="mbc-ko">
+              그리고 건강한 몸을 유지하는 가장 큰 비결은 운동인 것 같아요. 일하고 공부하느라 꽤 바쁜데도 불구하고, 헬스장을 절대 빼먹지 않거든요. 매일 거기서 한 시간 정도 운동을 해요. 정말 대단해요.
+            </div>
+          </div>
+
+          <!-- C: Conclusion -->
+          <div class="mbc-block">
+            <div class="mbc-header">
+              <span class="mbc-tag tag-c">C (Conclusion)</span>
+              <span class="mbc-sub">최종 요약 & 강조</span>
+              <button class="btn btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="speakBlock(4)">🔊 재생</button>
+            </div>
+            <div class="mbc-en">
+              <span class="hl-filler">Anyway, yeah,</span> Joy is definitely <span class="hl-pattern">the healthiest friend I know</span>.
+            </div>
+            <div class="mbc-ko">
+              어쨌든 간에, 조이는 제가 아는 사람 중에 가장 건강한 친구임이 확실해요.
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Column: Speech Timer, Vocab Flashcards & Tips -->
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+
+        <!-- 1분 15초 실전 발화 타이머 -->
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">⏱️</span>
+            <span>1분 15초 실전 발화 타이머</span>
+          </div>
+
+          <div class="timer-panel">
+            <div class="timer-display" id="timerDisplay">01:15</div>
+            <div class="timer-progress-bar">
+              <div class="timer-progress-fill" id="timerProgress"></div>
+            </div>
+            <div class="timer-controls">
+              <button class="btn btn-primary" id="startTimerBtn" onclick="startSpeechTimer()">시작 (Start)</button>
+              <button class="btn btn-secondary" onclick="pauseSpeechTimer()">일시정지</button>
+              <button class="btn btn-secondary" onclick="resetSpeechTimer()">리셋</button>
+            </div>
+            <div class="timer-status" id="timerStatus">권장 발화 시간: 1분 ~ 1분 15초</div>
+          </div>
+
+          <div style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.5;">
+            💡 <strong>타이머 연습법:</strong> 질문을 듣고 5초간 브레인스토밍 후 시작 버튼을 누르고, 중간에 멈추더라도 침묵 대신 <em>"Um...", "You know..."</em> 필러를 뱉으며 1분 10초까지 채우는 연습을 진행하세요.
+          </div>
+        </div>
+
+        <!-- 체형 어휘 10선 플래시카드 -->
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🏋️</span>
+            <span>체형 묘사 필수 어휘 10선 (클릭 시 발음/설명)</span>
+          </div>
+
+          <div class="vocab-grid">
+            <div class="vocab-card" onclick="playVocab('lean', '군살 없는, 탄탄한', '기름기 없이 날렵하고 탄탄한 건강미를 칭찬할 때 최고의 단어')">
+              <div class="vocab-word">lean</div>
+              <div class="vocab-meaning">군살 없는, 탄탄한</div>
+              <div class="vocab-pronounce">🔊 [liːn]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('muscular', '근육질의', '운동을 많이 한 탄탄한 체형. 발음 [mʌ́skjulər]')">
+              <div class="vocab-word">muscular</div>
+              <div class="vocab-meaning">근육질의</div>
+              <div class="vocab-pronounce">🔊 [mʌ́skjulər]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('fit', '건강하게 몸이 좋은', '운동으로 다져진 좋은 체력과 균형 잡힌 몸')">
+              <div class="vocab-word">fit</div>
+              <div class="vocab-meaning">몸이 좋은</div>
+              <div class="vocab-pronounce">🔊 [fɪt]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('athletic', '운동선수 체형의', '스포츠를 잘하게 생긴 날렵하고 균형잡힌 체형')">
+              <div class="vocab-word">athletic</div>
+              <div class="vocab-meaning">운동선수 체형</div>
+              <div class="vocab-pronounce">🔊 [æθˈletɪk]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('slender', '날씬하고 매력적인', '가늘고 보기에 매력적인 날씬한 체형')">
+              <div class="vocab-word">slender</div>
+              <div class="vocab-meaning">날씬한</div>
+              <div class="vocab-pronounce">🔊 [ˈslendər]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('slim', '날씬한, 호리호리한', '군살 없는 슬림한 체형')">
+              <div class="vocab-word">slim</div>
+              <div class="vocab-meaning">슬림한</div>
+              <div class="vocab-pronounce">🔊 [slɪm]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('skinny', '앙상하게 마른', '다소 부정적(뼈만 앙상한) 뉘앙스가 있으니 사용 시 주의')">
+              <div class="vocab-word">skinny</div>
+              <div class="vocab-meaning">앙상하게 마른</div>
+              <div class="vocab-pronounce">🔊 [ˈskɪni]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('stocky', '다부진, 체격이 좋은', '키가 크지 않아도 상체와 어깨가 단단하고 다부진 체격')">
+              <div class="vocab-word">stocky</div>
+              <div class="vocab-meaning">다부진 체격</div>
+              <div class="vocab-pronounce">🔊 [ˈstɑːki]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('chubby', '통통한', '귀엽게 살집이 있는 상태. 과거-현재 비교(I used to be chubby)에서 유용')">
+              <div class="vocab-word">chubby</div>
+              <div class="vocab-meaning">통통한</div>
+              <div class="vocab-pronounce">🔊 [ˈtʃʌbi]</div>
+            </div>
+            <div class="vocab-card" onclick="playVocab('overweight', '과체중의', 'fat 대신 정중하게 체중 초과를 지칭하는 매너 단어')">
+              <div class="vocab-word">overweight</div>
+              <div class="vocab-meaning">과체중의</div>
+              <div class="vocab-pronounce">🔊 [ˌoʊvərˈweɪt]</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- IH/AL 고득점 발화 전략 -->
+        <div class="card">
+          <div class="card-title">
+            <span class="icon">🏆</span>
+            <span>클로이쌤의 IH/AL 공략 3대 원칙</span>
+          </div>
+
+          <ul style="padding-left: 20px; font-size: 0.88rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 10px;">
+            <li><strong style="color: #34d399;">Fact + Feeling 기법:</strong> 단순 사실 나열(샐러드 먹는다) 후 반드시 <em>"It's pretty interesting", "She's amazing"</em> 처럼 개인적 느낌을 연결할 것.</li>
+            <li><strong style="color: #60a5fa;">자연스러운 생각 연기:</strong> <em>"for about like an hour"</em> 처럼 숫자를 말할 때 살짝 기억을 더듬는 억양을 넣으면 기계적 암기가 아닌 즉흥 발화로 채점관에게 어필됨.</li>
+            <li><strong style="color: #fbbf24;">3인칭 단수 일치 주의:</strong> <em>She has, She eats, She works out</em> — 긴장하면 자주 틀리는 3인칭 s 발음을 명확히 짚어줄 것.</li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Slide Gallery -->
+    <div class="card" style="margin-top: 24px;">
+      <div class="card-title">
+        <span class="icon">🖼️</span>
+        <span>해커스 클로이 특강 원본 슬라이드 갤러리 (자료집 발췌)</span>
+      </div>
+
+      <div class="slide-gallery">
+        <div class="slide-thumb" onclick="window.open('slides/page_1.png', '_blank')">
+          <img src="slides/page_1.png" alt="슬라이드 1">
+          <div class="slide-label">1. 특강 표지</div>
+        </div>
+        <div class="slide-thumb" onclick="window.open('slides/page_2.png', '_blank')">
+          <img src="slides/page_2.png" alt="슬라이드 2">
+          <div class="slide-label">2. Health 기출분석 & 질문</div>
+        </div>
+        <div class="slide-thumb" onclick="window.open('slides/page_3.png', '_blank')">
+          <img src="slides/page_3.png" alt="슬라이드 3">
+          <div class="slide-label">3. 체형 어휘 & MBC 플롯</div>
+        </div>
+        <div class="slide-thumb" onclick="window.open('slides/page_4.png', '_blank')">
+          <img src="slides/page_4.png" alt="슬라이드 4">
+          <div class="slide-label">4. 모범 답변 컬러 스크립트</div>
+        </div>
+        <div class="slide-thumb" onclick="window.open('slides/page_5.png', '_blank')">
+          <img src="slides/page_5.png" alt="슬라이드 5">
+          <div class="slide-label">5. 섀도잉 클린 스크립트</div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      OPIc Study Vault &bull; 해커스 클로이 건강 돌발 주제 &bull; Created for KIHOKIL Agentic Second Brain
+    </footer>
+  </div>
+
+  <script>
+    // Speech Synthesis
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) {
+        alert('이 브라우저는 음성 합성(TTS)을 지원하지 않습니다.');
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    const scriptBlocks = [
+      "Um... I have quite a lot of friends, but you know, Joy is one of the healthiest people I've ever known.",
+      "You know, she has a pretty ideal body shape. She's lean and muscular, you know.",
+      "And you know what? She always eats something green, like salads with chicken breast. It's pretty interesting because she actually enjoys eating healthy food every single day.",
+      "And I'd say her biggest secret to maintaining her healthy body is working out. Even though she is quite busy with work and studying, she never skips the gym. She works out there for about like an hour every day. Yeah, she's amazing.",
+      "Anyway, yeah, Joy is definitely the healthiest friend I know."
+    ];
+
+    function speakBlock(index) {
+      speakText(scriptBlocks[index]);
+    }
+
+    function speakFullScript() {
+      speakText(scriptBlocks.join(' '));
+    }
+
+    function playVocab(word, meaning, tip) {
+      speakText(word);
+      setTimeout(() => {
+        alert(`📌 [${word}]\n\n• 의미: ${meaning}\n• 해설: ${tip}`);
+      }, 300);
+    }
+
+    function showWordInfo(phrase) {
+      speakText(phrase);
+    }
+
+    // Toggle Korean translations
+    let showKo = false;
+    function toggleKorean() {
+      showKo = !showKo;
+      const container = document.getElementById('mbcScript');
+      if (showKo) {
+        container.classList.add('show-ko');
+        document.getElementById('toggleKoBtn').innerText = '🙈 한글 해석 숨기기';
+      } else {
+        container.classList.remove('show-ko');
+        document.getElementById('toggleKoBtn').innerText = '🇰🇷 한글 해석 토글';
+      }
+    }
+
+    // Speech Timer (75 seconds)
+    const TOTAL_TIME = 75;
+    let timeLeft = TOTAL_TIME;
+    let timerInterval = null;
+
+    function updateTimerUI() {
+      const mins = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      const secs = (timeLeft % 60).toString().padStart(2, '0');
+      document.getElementById('timerDisplay').innerText = `${mins}:${secs}`;
+      
+      const percent = ((TOTAL_TIME - timeLeft) / TOTAL_TIME) * 100;
+      document.getElementById('timerProgress').style.width = `${percent}%`;
+
+      const statusEl = document.getElementById('timerStatus');
+      if (timeLeft <= 0) {
+        statusEl.innerHTML = '<span style="color: #f43f5e; font-weight: 700;">🚨 발화 종료 권장 시간 도달!</span>';
+      } else if (timeLeft <= 15) {
+        statusEl.innerHTML = '<span style="color: #fbbf24; font-weight: 700;">⚠️ 결론(C) 파트로 넘어가 마무리하세요!</span>';
+      } else if (timeLeft <= 45) {
+        statusEl.innerHTML = '<span style="color: #34d399; font-weight: 600;">음식(B2) 및 운동(B3) 발화 중</span>';
+      } else {
+        statusEl.innerText = '도입(M) 및 체형(B1) 발화 중';
+      }
+    }
+
+    function startSpeechTimer() {
+      if (timerInterval) return;
+      document.getElementById('startTimerBtn').innerText = '발화 진행 중...';
+      timerInterval = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerUI();
+        } else {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          document.getElementById('startTimerBtn').innerText = '시작 (Start)';
+        }
+      }, 1000);
+    }
+
+    function pauseSpeechTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        document.getElementById('startTimerBtn').innerText = '재개 (Resume)';
+      }
+    }
+
+    function resetSpeechTimer() {
+      pauseSpeechTimer();
+      timeLeft = TOTAL_TIME;
+      updateTimerUI();
+      document.getElementById('startTimerBtn').innerText = '시작 (Start)';
+      document.getElementById('timerStatus').innerText = '권장 발화 시간: 1분 ~ 1분 15초';
+    }
+  </script>
+</body>
+</html>
