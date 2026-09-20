@@ -51,6 +51,7 @@ title: Wiki Index
 - [[physical-ai]]
 - [[predictive-maintenance]]
 - [[problem-definition]]
+- [[semantic-codegraph-indexer]]
 - [[sim-to-real-transfer]]
 - [[slide-video-workflow]]
 - [[stateless-orientation]]

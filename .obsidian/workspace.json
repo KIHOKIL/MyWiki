@@ -55,7 +55,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "github link",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -79,7 +79,8 @@
               "title": "북마크"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -188,8 +189,17 @@
       "bases:새 베이스 생성하기": false
     }
   },
-  "active": "a762604c2db5c25c",
+  "active": "3061b960c1c7dcc1",
   "lastOpenFiles": [
+    "concepts/semantic-codegraph-indexer.md",
+    "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/sample_codegraph.json",
+    "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/semantic_codegraph_indexer.py",
+    "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang.md",
+    "_sources/Study/Codebase-Understanding/Clang-CodeGraph/README.md",
+    "_sources/Study/Codebase-Understanding/README.md",
+    "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920",
+    "_sources/Study/Codebase-Understanding/Clang-CodeGraph",
+    "_sources/Study/Codebase-Understanding",
     "_sources/Study/AI-Lectures/편한AI/20260901/20260901-backup-guide-v3.md",
     "_sources/Study/AI-Lectures/편한AI/20260901/20260901_슬라이드_영상제작_워크플로우.md",
     "_sources/Study/AI-Lectures/편한AI/20260817/obsidian_llm_wiki_guide.md",
@@ -217,11 +227,6 @@
     "_sources/Study/Opic/클로이/20260920/해커스영어_클로이_7월_오픽기출유형특강_자료집.pdf",
     "_sources/Study/Opic/클로이/20260920/slides",
     "_sources/Study/Opic/클로이/20260920",
-    "_sources/Study/Opic/클로이",
-    "render_pdf.py",
-    "_sources/Study/Opic/extracted_pages",
-    "extract_images.py",
-    "inspect_pdf.py",
     "entities/oh-gun-young.md",
     "concepts/barbell-strategy.md",
     "concepts/yamani-paradox.md",
@@ -232,12 +237,8 @@
     "_sources/News/Finance/Finance_Briefing_2026-09-19.md",
     "_sources/News/Finance/Finance_Briefing_2026-09-15.md",
     "_sources/Projects/NewsSummarizer/News/Daily_Summaries/2026-09-15_News_Briefing.md",
-    "_sources/News/Finance/Finance_Briefing_2026-09-10.md",
     "무제 1.canvas",
     "무제 2.canvas",
-    "무제.canvas",
-    "journal/2026-09-14.md",
-    "무제.md",
-    "무제 1.md"
+    "무제.canvas"
   ]
 }

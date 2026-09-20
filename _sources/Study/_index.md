@@ -21,7 +21,10 @@
 - [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
 - [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
 - [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
+- [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
+- [[README.md]] — 오건영 단장 강연 및 거시경제 스터디 아카이브
 - [[Research_report_LLM_2nd_Brain_Seoul (1).md]] — 🧠 Deep Research Report: 최근 LLM 2nd Brain 구축 방식 및 통합 아키텍처 가이드
+- [[Semantic_CodeGraph_Indexer_Clang.md]] — Semantic CodeGraph Indexer using Clang Lib Tools and CLI
 - [[big_tech_ai_workflow_proposal.md]] — 🚀 빅테크 사례 기반 LLM Wiki 워크플로우 제안서 (Agentic Scaffolding)
 - [[comparison_slides.md]] — 🧠 Obsidian LLM Wiki 3종 비교
 - [[cyberpunk_neon_slide_prompt.md]] — ⚡ 사이버펑크 네온 글리터 스타일 슬라이드 생성 프롬프트

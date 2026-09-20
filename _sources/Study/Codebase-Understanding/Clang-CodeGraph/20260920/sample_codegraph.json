@@ -1,0 +1,120 @@
+{
+  "nodes": [
+    {
+      "id": "file:C:\\Users\\kihok\\내 드라이브\\MyWiki\\sample_phy.c",
+      "label": "File",
+      "properties": {
+        "path": "sample_phy.c",
+        "name": "sample_phy.c"
+      }
+    },
+    {
+      "id": "func:phy_rf_calibrate@9",
+      "label": "Function",
+      "properties": {
+        "name": "phy_rf_calibrate",
+        "line": 9,
+        "file": "sample_phy.c"
+      }
+    },
+    {
+      "id": "func:phy_rf_calibrate",
+      "label": "Function",
+      "properties": {
+        "name": "phy_rf_calibrate",
+        "is_external": true
+      }
+    },
+    {
+      "id": "reg_field:CTRL",
+      "label": "RegisterField",
+      "properties": {
+        "name": "CTRL",
+        "line": 10
+      }
+    },
+    {
+      "id": "func:phy_init@13",
+      "label": "Function",
+      "properties": {
+        "name": "phy_init",
+        "line": 13,
+        "file": "sample_phy.c"
+      }
+    },
+    {
+      "id": "func:phy_init",
+      "label": "Function",
+      "properties": {
+        "name": "phy_init",
+        "is_external": true
+      }
+    },
+    {
+      "id": "reg_field:DATA",
+      "label": "RegisterField",
+      "properties": {
+        "name": "DATA",
+        "line": 15
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "func:phy_rf_calibrate@9",
+      "target": "file:C:\\Users\\kihok\\내 드라이브\\MyWiki\\sample_phy.c",
+      "relationship": "DEFINED_IN",
+      "properties": {}
+    },
+    {
+      "source": "func:phy_rf_calibrate@9",
+      "target": "func:phy_rf_calibrate",
+      "relationship": "CALLS",
+      "properties": {
+        "line": 9
+      }
+    },
+    {
+      "source": "func:phy_rf_calibrate@9",
+      "target": "reg_field:CTRL",
+      "relationship": "ACCESSES_REG",
+      "properties": {
+        "line": 10
+      }
+    },
+    {
+      "source": "func:phy_init@13",
+      "target": "file:C:\\Users\\kihok\\내 드라이브\\MyWiki\\sample_phy.c",
+      "relationship": "DEFINED_IN",
+      "properties": {}
+    },
+    {
+      "source": "func:phy_init@13",
+      "target": "func:phy_init",
+      "relationship": "CALLS",
+      "properties": {
+        "line": 13
+      }
+    },
+    {
+      "source": "func:phy_init@13",
+      "target": "func:phy_rf_calibrate",
+      "relationship": "CALLS",
+      "properties": {
+        "line": 14
+      }
+    },
+    {
+      "source": "func:phy_init@13",
+      "target": "reg_field:DATA",
+      "relationship": "ACCESSES_REG",
+      "properties": {
+        "line": 15
+      }
+    }
+  ],
+  "metadata": {
+    "total_nodes": 7,
+    "total_edges": 7
+  }
+}

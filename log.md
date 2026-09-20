@@ -4,6 +4,14 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-09-20 22:58] FEAT: Clang Semantic CodeGraph Indexer Study & Concept Integration
+  - Established domain archive: `_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/`.
+  - Authored comprehensive study note: `Semantic_CodeGraph_Indexer_Clang.md` (AST, LibTooling, `compile_commands.json`, HW Register Map linking, Graph-RAG MCP pipeline).
+  - Developed executable Python indexer script: `semantic_codegraph_indexer.py` (libclang AST traversal + fallback regex simulation, exports nodes & edges to JSON).
+  - Created concept note: [[concepts/semantic-codegraph-indexer|시맨틱 코드그래프 인덱서 (Semantic CodeGraph Indexer)]].
+  - Updated `_sources/` folder indexes via `scripts/generate_index.py` (Study: 33 sources registered).
+  - Updated master `index.md`, `.manifest.json`, `log.md`, and `hot.md`.
+
 - [2026-09-20 21:42] CHORE: Wiki-Organize Pipeline Execution (OPIc Study Ingestion)
   - Distilled `_sources/Study/Opic/클로이/20260920/오픽_건강_돌발주제_클로이.md`.
   - Created concepts: [[concepts/opic-mbc-framework|MBC 프레임워크 (MBC Speaking Framework)]], [[concepts/fact-and-feeling-technique|Fact + Feeling 기법 (Fact and Feeling Technique)]].

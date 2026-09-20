@@ -351,5 +351,14 @@
       "concepts/fact-and-feeling-technique.md",
       "entities/hackers-chloe.md"
     ]
+  },
+  "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang.md": {
+    "path": "_sources/Study/Codebase-Understanding/Clang-CodeGraph/20260920/Semantic_CodeGraph_Indexer_Clang.md",
+    "timestamps": {
+      "ingested": "2026-09-20T22:58:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/semantic-codegraph-indexer.md"
+    ]
   }
 }
