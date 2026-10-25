@@ -257,3 +257,56 @@ def test_shared_github_history_deduplication(tmp_path, mocker):
     assert "already-seen/repo" not in candidate_names
     assert "fresh-owner/fresh-repo" in candidate_names
 
+
+def test_ministry_related_repo_filter():
+    """사역, 교회, 종교 관련 프로젝트는 필터링되어 추천에서 제외되는지 검증"""
+    ministry_sample_1 = {"full_name": "ChurchApps/Chordo", "description": "찬양 코드 악보 관리 앱", "topics": ["church"]}
+    ministry_sample_2 = {"full_name": "bible-app/reader", "description": "Offline Bible reader", "topics": ["scripture"]}
+    tech_sample = {"full_name": "Nutlope/hallmark", "description": "AI design skill guideline", "topics": ["ai", "design"]}
+
+    assert main.is_ministry_related_repo(ministry_sample_1) is True
+    assert main.is_valid_github_repo(ministry_sample_1) is False
+
+    assert main.is_ministry_related_repo(ministry_sample_2) is True
+    assert main.is_valid_github_repo(ministry_sample_2) is False
+
+    assert main.is_ministry_related_repo(tech_sample) is False
+    assert main.is_valid_github_repo(tech_sample) is True
+
+
+def test_github_knowledge_accumulation(tmp_path, mocker):
+    """추천된 저장소 정보 및 시니어 인사이트가 JSON 지식베이스와 마크다운 아카이브에 영구 누적되는지 검증"""
+    fake_knowledge_file = str(tmp_path / "github_repo_knowledge.json")
+    mocker.patch("agents.tech.main.get_github_knowledge_file", return_value=fake_knowledge_file)
+
+    sample_curated = [
+        {
+            "full_name": "Nutlope/hallmark",
+            "html_url": "https://github.com/Nutlope/hallmark",
+            "category_id": "second_brain",
+            "category": "Second-Brain",
+            "stars": 32000,
+            "language": "TypeScript",
+            "description": "AI design skill",
+            "overview": "AI 디자인 가이드",
+            "senior_insight": "실무 프론트엔드 최적화 팁"
+        }
+    ]
+
+    # 1. 1차 누적
+    main.update_github_knowledge_archive(sample_curated, target_date_str="2026-10-24")
+    db = main.load_github_repo_knowledge()
+    assert "nutlope/hallmark" in db
+    assert db["nutlope/hallmark"]["recommend_count"] == 1
+    assert db["nutlope/hallmark"]["first_recommended_date"] == "2026-10-24"
+    assert db["nutlope/hallmark"]["latest_senior_insight"] == "실무 프론트엔드 최적화 팁"
+
+    # 2. 2차 누적 (재추천 시 count 증가 및 히스토리 누적)
+    sample_curated[0]["senior_insight"] = "새로운 리팩토링 인사이트"
+    main.update_github_knowledge_archive(sample_curated, target_date_str="2026-10-25")
+    db2 = main.load_github_repo_knowledge()
+    assert db2["nutlope/hallmark"]["recommend_count"] == 2
+    assert db2["nutlope/hallmark"]["last_recommended_date"] == "2026-10-25"
+    assert db2["nutlope/hallmark"]["latest_senior_insight"] == "새로운 리팩토링 인사이트"
+    assert len(db2["nutlope/hallmark"]["history"]) == 2
+

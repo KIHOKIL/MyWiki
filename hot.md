@@ -1,10 +1,18 @@
 ---
 title: Hot Cache
-updated: 2026-09-20
+updated: 2026-10-25
 ---
 
 ## Recent Activity
-- **Wiki-Organize 3-Step Pipeline (2026-09-20):**
+- **NewsSummarizer GitHub Curation & Persistent Knowledge Archive (2026-10-25):**
+  - **사역/종교 관련 저장소 원천 차단 (`is_ministry_related_repo`):** 교회/선교/사역 키워드(`church`, `ministry`, `chordo`, `hymn`, `bible`, `worship` 등) 및 조직 차단 필터를 추가하여 기술 브리핑의 엔지니어링 집중도 극대화.
+  - **최신 발행일 자동 추적 (`get_latest_daily_it_news_url`):** `jesusiswith.us`의 RSS 피드(`index.xml`) 파싱을 통해 날짜 하드코딩 없이 매일 최신 발행 페이지를 자동 탐색하고, Hugo SSG 렌더링 변경사항(헤딩 ID 및 리스트 구조)에 대응하는 정규식 업그레이드 완료.
+  - **GitHub 지식 아카이브 영구 누적 체계 (`GitHub_Repository_Archive.md` & `github_repo_knowledge.json`):**
+    - 매일 브리핑에 선정된 저장소의 기술 개요(Overview)와 시니어 개발자 인사이트(Senior's Insight)를 영구 DB(`_raw/github_repo_knowledge.json`)에 일자별 히스토리와 함께 누적.
+    - 옵시디언 4대 카테고리(Second-Brain, Code Review, Codebase Understanding, Embedded SW)별 아카이브 마크다운(`GitHub_Repository_Archive.md`)을 자동 생성/갱신.
+    - 과거 13회차 브리핑에서 8개 엄선 저장소 전수 백필 완료.
+  - **CI/CD 영구 보존 동기화:** `.github/workflows/agent_tech_summarizer.yml`의 `file_pattern`을 확장하여 JSON DB와 마크다운 아카이브가 GitHub Actions 실행 후 레포지토리에 자동 커밋되도록 보장.
+  - **테스트 완료:** 단위 테스트 8/8 All Pass.
   - **Prompt Library Expansion:** 7-step Memphis Corporate Flat Illustration slide generation prompt registered in `_sources/Study/AI-Prompt/Slide-Generation/memphis_flat_slide_prompt.md`.
   - **Source Index Sync:** Re-indexed all 6 `_sources/` subdirectories (Study: 33, News: 21, Projects: 11, Clippings: 3).
   - **Link Health & Lint:** Inspected 179 pure knowledge markdown files, corrected table escape syntax and internal link references in Opic, Clang-CodeGraph, and Oh Gun-young study notes (0 broken links).

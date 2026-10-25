@@ -71,10 +71,21 @@ PC 없이 스마트폰으로 저장소의 설정을 제어할 수 있는 구조.
 - **(안정성 강화)**: 2026년 9월 6일 기준, LLM 503 과부하 에러에 대비하여 자동 재시도 로직 및 OpenAI API 폴백(Fallback) 메커니즘을 적용하여 안정성을 극대화함.
 - **(정책)**: 재무/매크로 투자 분야는 코어나 전략이 쉽게 바뀌지 않으므로, IssueOps 기능은 당분간 **Tech & Biz 에이전트에만 제한적으로 허용(Option B)**.
 
-## 연관 개념
+## 🚀 2026-10-25 고도화 (사역 repo 필터링 & 지식 아카이브 누적 체계)
+1. **사역/종교 관련 저장소 원천 차단 (`is_ministry_related_repo`)**:
+   - `church`, `ministry`, `chordo`, `hymn`, `bible`, `worship` 등 교회/사역 도구 키워드 및 조직 필터링을 구축하여 물리 계층/통신/임베디드 엔지니어링 브리핑의 순도 유지.
+2. **최신 발행일 기준 자동 탐색 (`get_latest_daily_it_news_url`)**:
+   - `jesusiswith.us` 사이트의 RSS 피드(`index.xml`) 파싱을 통해 날짜 하드코딩 없이 매일 최신 발행 페이지를 자동 탐색하고, Hugo SSG 렌더링 변경사항(헤딩 ID 및 리스트 구조)에 대응.
+3. **GitHub 저장소 및 시니어 인사이트 영구 누적 지식베이스**:
+   - 데일리 브리핑에 선정된 저장소의 기술 개요(Overview)와 시니어 인사이트(Senior's Insight)를 영구 DB([`github_repo_knowledge.json`](file:///c:/Users/kihok/내%20드라이브/MyWiki/_sources/Projects/NewsSummarizer/_raw/github_repo_knowledge.json))에 일자별 히스토리로 누적.
+   - 옵시디언 4대 카테고리별 아카이브 마크다운([[references/github-repository-archive|GitHub Repository Knowledge Archive]])을 자동 동기화.
+   - GitHub Actions CI/CD([`agent_tech_summarizer.yml`](file:///c:/Users/kihok/내%20드라이브/MyWiki/.github/workflows/agent_tech_summarizer.yml))에서 DB와 아카이브가 자동 커밋되도록 영구 보존 설정 완료.
+
+## 연관 개념 및 지식
 - [[concepts/2nd-brain-system-design-blueprint|2nd Brain System Design Blueprint]]
 - [[concepts/active-second-brain|Active Second Brain]]
 - [[concepts/harness-engineering|Harness Engineering (TDD in AI Agents)]]
 - [[entities/openhuman|OpenHuman]]
 - [[concepts/issueops|IssueOps]]
+- [[references/github-repository-archive|GitHub Repository Knowledge Archive]]
 

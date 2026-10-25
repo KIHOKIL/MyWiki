@@ -14,6 +14,7 @@ import urllib.request
 import csv
 import io
 import re
+import xml.etree.ElementTree as ET
 from datetime import datetime, timezone, timedelta
 import time
 from tenacity import retry, wait_fixed, wait_exponential, stop_after_attempt, retry_if_exception_type
@@ -213,8 +214,32 @@ DEFAULT_CURATED_REPOS = {
     }
 }
 
+def is_ministry_related_repo(item):
+    """사역, 교회, 종교 관련 프로젝트 여부를 검사하여 추천 및 누적에서 철저히 배제합니다."""
+    text_to_check = ""
+    if isinstance(item, dict):
+        text_to_check += " " + str(item.get("full_name", ""))
+        text_to_check += " " + str(item.get("name", ""))
+        text_to_check += " " + str(item.get("description", ""))
+        text_to_check += " " + str(item.get("title", ""))
+        text_to_check += " " + str(item.get("html_url", ""))
+        topics = item.get("topics", [])
+        if isinstance(topics, list):
+            text_to_check += " " + " ".join([str(t) for t in topics])
+    else:
+        text_to_check = str(item)
+
+    ministry_keywords = [
+        "사역", "교회", "찬양", "예배", "성경", "말씀", "기도", "전도", "목회", "큐티",
+        "성도", "복음", "악보", "주일", "성가대", "성경연구", "말씀카드", "이슬비전도",
+        "church", "bible", "ministry", "worship", "pastor", "sermon", "gospel",
+        "hymn", "scripture", "christian", "christ", "chordo"
+    ]
+    text_lower = text_to_check.lower()
+    return any(kw in text_lower for kw in ministry_keywords)
+
 def is_valid_github_repo(item):
-    """스팸성, 어뷰징 및 알맹이 없는 Awesome-list 저장소를 필터링합니다."""
+    """스팸성, 어뷰징, 알맹이 없는 Awesome-list 및 사역 관련 저장소를 필터링합니다."""
     name = (item.get("name") or "").lower()
     full_name = (item.get("full_name") or "").lower()
     desc = (item.get("description") or "").lower()
@@ -224,6 +249,9 @@ def is_valid_github_repo(item):
         return False
     # 빈 설명 필터링
     if not desc or len(desc.strip()) < 5:
+        return False
+    # 사역 관련 프로젝트 배제
+    if is_ministry_related_repo(item):
         return False
     return True
 
@@ -272,7 +300,6 @@ def save_shared_github_history(selected_repos_or_names):
     
     now = time.time()
     existing_history = data.get("history", [])
-    # 30일 이내 것만 유지
     filtered_history = [item for item in existing_history if now - item.get("timestamp", 0) <= 30 * 86400]
     
     seen_today = set()
@@ -291,7 +318,6 @@ def save_shared_github_history(selected_repos_or_names):
                 "date": datetime.now().strftime("%Y-%m-%d")
             })
             
-    # 오늘 새로 기록된 저장소는 기존 이력에서 중복 제거 후 최신 항목으로 반영
     updated_history = [item for item in filtered_history if item.get("full_name", "").strip().lower() not in seen_today]
     updated_history.extend(new_entries)
     data["history"] = updated_history
@@ -303,62 +329,351 @@ def save_shared_github_history(selected_repos_or_names):
     except Exception as e:
         print(f"  [Warning] 공유 이력 파일 저장 실패: {e}")
 
+# ==========================================
+# GitHub 지식베이스 및 아카이브 누적 모듈
+# ==========================================
+
+def get_github_knowledge_file():
+    """영구 누적되는 GitHub 저장소 지식베이스 JSON 파일 경로를 반환합니다."""
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    raw_dir = os.path.join(base_dir, "_raw")
+    os.makedirs(raw_dir, exist_ok=True)
+    return os.path.join(raw_dir, "github_repo_knowledge.json")
+
+def load_github_repo_knowledge():
+    """누적된 GitHub 저장소 지식베이스를 로드합니다."""
+    kf = get_github_knowledge_file()
+    if not os.path.exists(kf):
+        return {}
+    try:
+        with open(kf, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"  [Warning] GitHub 지식베이스 로드 실패: {e}")
+        return {}
+
+def save_github_repo_knowledge(knowledge_db):
+    """누적된 GitHub 저장소 지식베이스를 JSON 파일에 영구 보존합니다."""
+    kf = get_github_knowledge_file()
+    try:
+        with open(kf, "w", encoding="utf-8") as f:
+            json.dump(knowledge_db, f, ensure_ascii=False, indent=2)
+        print(f"  [Notice] GitHub 저장소 지식베이스 갱신 완료 (총 {len(knowledge_db)}개 누적)")
+    except Exception as e:
+        print(f"  [Warning] GitHub 지식베이스 저장 실패: {e}")
+
+def render_github_archive_markdown(repo_db, updated_date=None):
+    """누적된 저장소 지식베이스를 Obsidian Wiki용 마크다운 카탈로그로 렌더링합니다."""
+    if not updated_date:
+        updated_date = datetime.now().strftime("%Y-%m-%d")
+
+    total_repos = len(repo_db)
+    cat_counts = {}
+    
+    categories = [
+        ("second_brain", "🧠 Second-Brain & PKM"),
+        ("code_review_ai", "🔍 Code Review AI & Verification"),
+        ("codebase_understanding", "🧭 Codebase Understanding & AST / Graph-RAG"),
+        ("embedded_sw", "⚡ Embedded SW & Hardware Interface")
+    ]
+
+    for item in repo_db.values():
+        cat = item.get("category_id", "second_brain")
+        cat_counts[cat] = cat_counts.get(cat, 0) + 1
+
+    md = f"""---
+title: "GitHub Repository Knowledge Archive"
+category: References
+tags: [github, open-source, knowledge-base, second-brain, code-review, codebase-understanding, embedded-sw]
+created: 2026-09-09
+updated: {updated_date}
+sources: ["https://jesusiswith.us/digest/daily-it-news/", "GitHub Search API"]
+---
+
+# 📚 Group 2nd Brain: GitHub Repository Knowledge Archive
+
+> **개요:** 매일 아침 데일리 브리핑에서 엄선된 오픈소스 프로젝트의 기술 개요(Overview)와 시니어 멘토 개발자 인사이트(Senior's Insight)를 영구 누적한 지식 아카이브입니다.
+> 
+> - **총 누적 저장소:** `{total_repos}`개
+> - **최근 업데이트:** `{updated_date}`
+
+---
+
+## 📊 카테고리별 누적 현황
+"""
+    for cat_id, cat_title in categories:
+        count = cat_counts.get(cat_id, 0)
+        md += f"- **{cat_title}:** `{count}`개 프로젝트\n"
+    md += "\n---\n\n"
+
+    for cat_id, cat_title in categories:
+        md += f"## {cat_title}\n\n"
+        cat_repos = [r for r in repo_db.values() if r.get("category_id") == cat_id]
+        cat_repos.sort(key=lambda x: (x.get("last_recommended_date", ""), x.get("stars", 0)), reverse=True)
+
+        if not cat_repos:
+            md += "*아직 등록된 저장소가 없습니다.*\n\n"
+            continue
+
+        for r in cat_repos:
+            fn = r.get("full_name", "")
+            url = r.get("html_url", f"https://github.com/{fn}")
+            stars = f"{r.get('stars', 0):,}"
+            lang = r.get("language", "General")
+            count = r.get("recommend_count", 1)
+            first_d = r.get("first_recommended_date", updated_date)
+            last_d = r.get("last_recommended_date", updated_date)
+            overview = r.get("latest_overview") or r.get("description") or "설명 없음"
+            insight = r.get("latest_senior_insight", "")
+
+            md += f"### [{fn}]({url})\n"
+            md += f"- ⭐️ **Stars:** {stars} | 💻 **언어:** {lang} | 🗓️ **추천:** {count}회 (최초: {first_d} / 최근: {last_d})\n"
+            md += f"- 📝 **기술 개요:** {overview}\n"
+            if insight:
+                md += f"- 💡 **Senior's Insight:** {insight}\n"
+            md += "\n"
+
+        md += "---\n\n"
+
+    return md
+
+def extract_curated_details_from_summary(github_summary_text, candidates=None):
+    """
+    LLM이 작성한 Section 2 마크다운에서 추천된 각 저장소의 상세 설명(Overview, Insight)을 추출하고,
+    후보 저장소 메타데이터(Stars, Language, Category 등)와 결합하여 반환합니다.
+    """
+    candidates_map = {}
+    if candidates and isinstance(candidates, list):
+        for c in candidates:
+            if isinstance(c, dict):
+                fn = c.get("full_name", "").strip().lower()
+                if fn:
+                    candidates_map[fn] = c
+
+    results = []
+    pattern = r'\*\*\[(.*?)\]\*\*\s*-\s*(https://github\.com/([a-zA-Z0-9_\-\.]+/[a-zA-Z0-9_\-\.]+))'
+    matches = list(re.finditer(pattern, github_summary_text))
+    
+    for i, match in enumerate(matches):
+        raw_name = match.group(1).strip()
+        repo_url = match.group(2).strip()
+        full_name = match.group(3).strip()
+        
+        start_idx = match.end()
+        end_idx = matches[i+1].start() if i + 1 < len(matches) else len(github_summary_text)
+        block = github_summary_text[start_idx:end_idx]
+        
+        m_overview = re.search(r'-\s*\*\*Overview:\*\*\s*(.*?)(?=\n-|\n#|\n---|$)', block, re.DOTALL)
+        overview = m_overview.group(1).strip() if m_overview else ""
+        
+        m_insight = re.search(r'-\s*\*\*Senior\'s Insight:\*\*\s*(.*?)(?=\n-|\n#|\n---|$)', block, re.DOTALL)
+        insight = m_insight.group(1).strip() if m_insight else ""
+        
+        preceding_text = github_summary_text[:match.start()]
+        cat_matches = list(re.finditer(r'###\s*([^\n]+)', preceding_text))
+        category_header = cat_matches[-1].group(1).strip() if cat_matches else "General"
+        
+        c_info = candidates_map.get(full_name.lower(), {})
+        
+        # 카테고리 ID 유추
+        cat_id = c_info.get("category_id")
+        if not cat_id:
+            h_lower = category_header.lower()
+            if "review" in h_lower: cat_id = "code_review_ai"
+            elif "codebase" in h_lower: cat_id = "codebase_understanding"
+            elif "embedded" in h_lower: cat_id = "embedded_sw"
+            else: cat_id = "second_brain"
+
+        results.append({
+            "full_name": full_name,
+            "html_url": repo_url,
+            "raw_name": raw_name,
+            "category": c_info.get("category_name", category_header),
+            "category_id": cat_id,
+            "category_icon": c_info.get("category_icon", "⭐"),
+            "stars": c_info.get("stars", 0),
+            "language": c_info.get("language", "General"),
+            "description": c_info.get("description", ""),
+            "overview": overview,
+            "senior_insight": insight
+        })
+        
+    return results
+
+def update_github_knowledge_archive(curated_details, target_date_str=None):
+    """
+    브리핑에 선정된 저장소들의 상세 정보를 JSON 지식베이스에 누적하고 마크다운 아카이브 문서를 갱신합니다.
+    """
+    if not target_date_str:
+        KST = timezone(timedelta(hours=9))
+        target_date_str = datetime.now(KST).strftime("%Y-%m-%d")
+
+    db = load_github_repo_knowledge()
+    
+    for item in curated_details:
+        fn = item.get("full_name")
+        if not fn or is_ministry_related_repo(item):
+            continue
+        key = fn.strip().lower()
+        
+        overview = item.get("overview", "")
+        insight = item.get("senior_insight", "")
+        
+        if key not in db:
+            db[key] = {
+                "full_name": item.get("full_name"),
+                "html_url": item.get("html_url", f"https://github.com/{fn}"),
+                "category_id": item.get("category_id", "second_brain"),
+                "category_name": item.get("category", "Second-Brain"),
+                "stars": item.get("stars", 0),
+                "language": item.get("language", "General"),
+                "description": item.get("description", ""),
+                "latest_overview": overview,
+                "latest_senior_insight": insight,
+                "first_recommended_date": target_date_str,
+                "last_recommended_date": target_date_str,
+                "recommend_count": 1,
+                "history": [{
+                    "date": target_date_str,
+                    "overview": overview,
+                    "senior_insight": insight,
+                    "stars": item.get("stars", 0)
+                }]
+            }
+        else:
+            entry = db[key]
+            entry["recommend_count"] = entry.get("recommend_count", 1) + 1
+            entry["last_recommended_date"] = target_date_str
+            if item.get("stars"):
+                entry["stars"] = item.get("stars")
+            if overview:
+                entry["latest_overview"] = overview
+            if insight:
+                entry["latest_senior_insight"] = insight
+            if "history" not in entry:
+                entry["history"] = []
+            entry["history"].append({
+                "date": target_date_str,
+                "overview": overview,
+                "senior_insight": insight,
+                "stars": item.get("stars", entry.get("stars", 0))
+            })
+
+    # JSON 영구 보존
+    save_github_repo_knowledge(db)
+
+    # 마크다운 아카이브 생성
+    md_content = render_github_archive_markdown(db, target_date_str)
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sources_dir = os.path.dirname(os.path.dirname(base_dir))
+    wiki_root = os.path.dirname(sources_dir)
+    archive_paths = [
+        os.path.join(base_dir, "News", "GitHub_Repository_Archive.md"),
+        os.path.join(sources_dir, "News", "Daily_Summaries", "GitHub_Repository_Archive.md"),
+        os.path.join(wiki_root, "references", "github-repository-archive.md")
+    ]
+    for p in archive_paths:
+        try:
+            os.makedirs(os.path.dirname(p), exist_ok=True)
+            with open(p, "w", encoding="utf-8") as f:
+                f.write(md_content)
+            print(f"  [Notice] GitHub 마크다운 아카이브 갱신: {p}")
+        except Exception as e:
+            print(f"  [Warning] 마크다운 아카이브 저장 실패 ({p}): {e}")
+
+def get_latest_daily_it_news_url():
+    """
+    '매일의 IT뉴스'에서 가장 최신 날짜의 포스트 URL을 반환합니다.
+    1) RSS Feed (https://jesusiswith.us/digest/daily-it-news/index.xml) 우선 조회
+    2) 실패 시 메인 페이지 HTML에서 최신 일자 탐색
+    """
+    headers = {"User-Agent": "DailyNewsSummarizer/2.0 (Windows NT 10.0; Win64; x64)"}
+    rss_url = "https://jesusiswith.us/digest/daily-it-news/index.xml"
+    try:
+        req = urllib.request.Request(rss_url, headers=headers)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            xml_data = resp.read()
+        root = ET.fromstring(xml_data)
+        for item in root.findall("./channel/item"):
+            link_el = item.find("link")
+            if link_el is not None and link_el.text:
+                link = link_el.text.strip()
+                m = re.search(r'/digest/daily-it-news/(\d{4})/(\d{4}-\d{2}-\d{2})/?', link)
+                if m:
+                    return link, m.group(2)
+    except Exception as e:
+        print(f"  [Notice] IT뉴스 RSS 피드 조회 실패, 메인 페이지로 대체: {e}")
+
+    main_url = "https://jesusiswith.us/digest/daily-it-news/"
+    try:
+        req = urllib.request.Request(main_url, headers=headers)
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            html = resp.read().decode('utf-8')
+        links = re.findall(r'href=[\"\']?(/digest/daily-it-news/(\d{4})/(\d{4}-\d{2}-\d{2})/)[\"\']?', html)
+        if links:
+            rel_link, year, date_str = links[0]
+            return f"https://jesusiswith.us{rel_link}", date_str
+    except Exception as e:
+        print(f"  [Warning] IT뉴스 메인 페이지 접속 실패: {e}")
+
+    return None, None
+
 def fetch_jesusiswithus_github(target_date_str=None):
     """
     '매일의 IT뉴스' (https://jesusiswith.us/digest/daily-it-news/)에서
-    당일(또는 최신 발행일) '오늘의 추천 GitHub 리포'를 파싱하여 반환합니다.
+    당일(또는 최신 발행일) '추천 GitHub 리포'를 파싱하여 반환합니다.
+    사역 관련 리포는 완전히 제외됩니다.
     """
-    if not target_date_str:
-        target_date_str = datetime.now().strftime("%Y-%m-%d")
-    
-    year = target_date_str.split("-")[0]
-    url = f"https://jesusiswith.us/digest/daily-it-news/{year}/{target_date_str}/"
     headers = {"User-Agent": "DailyNewsSummarizer/2.0 (Windows NT 10.0; Win64; x64)"}
+    latest_url, latest_date = get_latest_daily_it_news_url()
     
+    if target_date_str:
+        year = target_date_str.split("-")[0]
+        url = f"https://jesusiswith.us/digest/daily-it-news/{year}/{target_date_str}/"
+    else:
+        url = latest_url
+
+    if not url:
+        return []
+
     html = ""
     try:
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=10) as resp:
             html = resp.read().decode('utf-8')
     except Exception as e:
-        # 당일 페이지가 없을 경우 (주말/휴일 등) 메인 목록에서 최신 일자 탐색
-        try:
-            main_url = "https://jesusiswith.us/digest/daily-it-news/"
-            req = urllib.request.Request(main_url, headers=headers)
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                main_html = resp.read().decode('utf-8')
-            recent_links = re.findall(r'/digest/daily-it-news/(\d{4})/(\d{4}-\d{2}-\d{2})/', main_html)
-            if recent_links:
-                latest_year, latest_date = recent_links[0]
-                latest_url = f"https://jesusiswith.us/digest/daily-it-news/{latest_year}/{latest_date}/"
-                print(f"  [Notice] 당일 IT뉴스 미발행으로 최신 IT뉴스({latest_date})를 참조합니다.")
-                req2 = urllib.request.Request(latest_url, headers=headers)
-                with urllib.request.urlopen(req2, timeout=10) as resp2:
-                    html = resp2.read().decode('utf-8')
-        except Exception as e2:
-            print(f"  [Warning] IT뉴스 페이지 접속 실패: {e2}")
+        # 지정 날짜 페이지가 없을 경우 최신 발행 페이지로 Fallback
+        if latest_url and url != latest_url:
+            print(f"  [Notice] 지정일자({target_date_str}) IT뉴스 미발행으로 최신 IT뉴스({latest_date})를 참조합니다.")
+            try:
+                req = urllib.request.Request(latest_url, headers=headers)
+                with urllib.request.urlopen(req, timeout=10) as resp:
+                    html = resp.read().decode('utf-8')
+            except Exception as e2:
+                print(f"  [Warning] IT뉴스 최신 페이지 접속 실패: {e2}")
+                return []
+        else:
             return []
 
     if not html:
         return []
 
-    # '오늘의 추천 GitHub 리포' 본문 섹션 찾기 (<h2 id=오늘의-추천-github-리포>)
-    m_h2 = re.search(r'<h2[^>]*id=[\"\']?오늘의-추천-github-리포[\"\']?[^>]*>', html)
+    # '추천 GitHub 리포' 본문 섹션 찾기 (<h2 id=추천-github-리포> 및 <h2 id=오늘의-추천-github-리포> 모두 지원)
+    m_h2 = re.search(r'<h2[^>]*id=[\"\']?(?:오늘의-)?추천-github-리포[\"\']?[^>]*>.*?</h2>', html, re.IGNORECASE)
     if not m_h2:
-        m_h2 = re.search(r'<h2[^>]*>.*?오늘의 추천 GitHub.*?</h2>', html)
+        m_h2 = re.search(r'<h2[^>]*>.*?추천\s*GitHub\s*리포.*?</h2>', html, re.IGNORECASE)
     if not m_h2:
         return []
 
     start_pos = m_h2.end()
-    section = html[start_pos:start_pos+10000]
-    end_idx = section.find("오늘의-일반사역용-추천-리포")
-    if end_idx != -1:
-        curated_section = section[:end_idx]
-    else:
-        curated_section = section
+    rest_html = html[start_pos:]
+    
+    # 사역 관련 섹션(<h2 id=오늘의-일반사역용-추천-리포>)이나 다음 섹션 직전에서 안전하게 분할
+    end_m = re.search(r'<h2[^>]*id=[\"\']?오늘의-일반사역용-추천-리포|<h2[^>]*>.*?사역.*?</h2>|<h2|<hr|class=[\"\']?row items-start', rest_html, re.IGNORECASE)
+    section = rest_html[:end_m.start()] if end_m else rest_html[:15000]
 
     repos = []
-    blocks = re.split(r'<h3[^>]*>', curated_section)[1:]
+    blocks = re.split(r'<h3[^>]*>', section)[1:]
     for block in blocks:
         m_link = re.search(r'href=[\"\']?(https://github\.com/([a-zA-Z0-9_\-\.]+/[a-zA-Z0-9_\-\.]+))[\"\']?', block)
         if not m_link:
@@ -367,48 +682,58 @@ def fetch_jesusiswithus_github(target_date_str=None):
         full_name = m_link.group(2)
         if full_name.lower() in ["trending", "features"]:
             continue
-            
-        m_desc = re.search(r'<strong>한 줄 설명</strong>:\s*([^<]+)', block)
-        desc = m_desc.group(1).strip() if m_desc else "설명 없음"
-        
-        m_stats = re.search(r'<strong>수치</strong>:\s*([^<]+)', block)
-        stats_text = m_stats.group(1).strip() if m_stats else ""
+
+        # 한 줄 설명 추출: <li>한 줄 설명: ...</li> 또는 <strong>한 줄 설명</strong>
+        m_desc = re.search(r'(?:한\s*줄\s*설명|설명)[^:]*:\s*([^<]+)', block)
+        desc = m_desc.group(1).strip() if m_desc else ""
+
+        # 추천 이유 추출: <li>추천 이유: ...</li> 또는 <strong>어디서/왜</strong>
+        m_why = re.search(r'(?:추천\s*이유|어디서/왜)[^:]*:\s*([^<]+)', block)
+        why_text = m_why.group(1).strip() if m_why else ""
+
+        # 수치 / 별(stars) 추출
         stars = 0
-        m_stars = re.search(r'별\s*([0-9,]+)개', stats_text)
+        m_stars = re.search(r'별\s*(?:약\s*)?([0-9,]+)개', block)
         if m_stars:
             stars = int(m_stars.group(1).replace(",", ""))
 
-        m_why = re.search(r'<strong>어디서/왜</strong>:\s*([^<]+)', block)
-        why_text = m_why.group(1).strip() if m_why else ""
-
         full_desc = f"{desc} ({why_text})" if why_text else desc
-        
-        # 4대 관심 주제에 자동 분류
-        desc_lower = (full_desc + " " + full_name).lower()
-        if any(k in desc_lower for k in ["embedded", "rtos", "hal", "firmware", "driver", "microcontroller", "kernel", "c ", "rust"]):
-            cat_id, cat_name, cat_icon = "embedded_sw", "Embedded SW implementation", "⚡"
-        elif any(k in desc_lower for k in ["review", "pr-agent", "pull request", "linter", "security-review", "code analysis"]):
-            cat_id, cat_name, cat_icon = "code_review_ai", "Code Review AI", "🔍"
-        elif any(k in desc_lower for k in ["ast", "codebase", "code graph", "syntax", "intelligence", "tree-sitter", "mcp", "computer-use", "platform"]):
-            cat_id, cat_name, cat_icon = "codebase_understanding", "Codebase understanding", "🧭"
-        else:
-            cat_id, cat_name, cat_icon = "second_brain", "Second-Brain", "🧠"
+        if not full_desc:
+            full_desc = "설명 없음"
 
-        repos.append({
+        # 사역/교회 관련 프로젝트 배제
+        repo_obj = {
             "full_name": full_name,
             "html_url": html_url,
             "description": full_desc,
             "stars": stars,
             "language": "General",
             "topics": ["it-news-curated"],
-            "category_id": cat_id,
-            "category_name": cat_name,
-            "category_icon": cat_icon,
             "source": "daily-it-news"
-        })
+        }
+        if is_ministry_related_repo(repo_obj):
+            print(f"  [Filter] 사역 관련 프로젝트 제외: {full_name}")
+            continue
+
+        # 4대 관심 주제에 자동 분류
+        desc_lower = (full_desc + " " + full_name).lower()
+        if any(k in desc_lower for k in ["embedded", "rtos", "hal", "firmware", "driver", "microcontroller", "kernel", "linux", "c ", "rust"]):
+            cat_id, cat_name, cat_icon = "embedded_sw", "Embedded SW implementation", "⚡"
+        elif any(k in desc_lower for k in ["review", "pr-agent", "pull request", "linter", "security-review", "code analysis", "audit"]):
+            cat_id, cat_name, cat_icon = "code_review_ai", "Code Review AI", "🔍"
+        elif any(k in desc_lower for k in ["ast", "codebase", "code graph", "syntax", "intelligence", "tree-sitter", "mcp", "terminal", "platform"]):
+            cat_id, cat_name, cat_icon = "codebase_understanding", "Codebase understanding", "🧭"
+        else:
+            cat_id, cat_name, cat_icon = "second_brain", "Second-Brain", "🧠"
+
+        repo_obj["category_id"] = cat_id
+        repo_obj["category_name"] = cat_name
+        repo_obj["category_icon"] = cat_icon
+        repos.append(repo_obj)
 
     print(f"  [Notice] '매일의 IT뉴스'에서 {len(repos)}개의 추천 GitHub 저장소를 확보했습니다.")
     return repos
+
 
 def fetch_github_trending(categories_or_queries=None, max_candidates=24, target_date_str=None):
     """
@@ -1317,22 +1642,24 @@ def send_email(subject, content, html_content=None):
 def save_to_markdown(date_str, content):
     """요약된 내용을 MyWiki 내 Markdown 파일로 저장합니다."""
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    save_dir = os.path.join(base_dir, "News", "Daily_Summaries")
+    save_dirs = [
+        os.path.join(base_dir, "News", "Daily_Summaries"),
+        os.path.join(os.path.dirname(os.path.dirname(base_dir)), "News", "Daily_Summaries")
+    ]
     
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir, exist_ok=True)
-        
     KST = timezone(timedelta(hours=9))
     iso_date = datetime.now(KST).strftime("%Y-%m-%d")
     frontmatter = f"---\ntitle: \"[{iso_date}] Group 2nd Brain & Tech Horizon 브리핑\"\ncategory: News\ntags: [news, briefing, daily, second-brain, code-review]\ncreated: {iso_date}\nupdated: {iso_date}\nsources: []\n---\n\n"
     
-    file_path = os.path.join(save_dir, f"{iso_date}_News_Briefing.md")
-    try:
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(frontmatter + content)
-        print(f"Markdown 파일 저장 완료: {file_path}")
-    except Exception as e:
-        print(f"Markdown 파일 저장 실패: {e}")
+    for save_dir in save_dirs:
+        try:
+            os.makedirs(save_dir, exist_ok=True)
+            file_path = os.path.join(save_dir, f"{iso_date}_News_Briefing.md")
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(frontmatter + content)
+            print(f"Markdown 파일 저장 완료: {file_path}")
+        except Exception as e:
+            print(f"Markdown 파일 저장 실패 ({save_dir}): {e}")
 
 # ==========================================
 # 4. 메인 실행 파이프라인
@@ -1343,7 +1670,9 @@ def main():
     config = load_config()
     
     KST = timezone(timedelta(hours=9))
-    today_str = datetime.now(KST).strftime("%Y년 %m월 %d일")
+    now_kst = datetime.now(KST)
+    today_str = now_kst.strftime("%Y년 %m월 %d일")
+    today_iso = now_kst.strftime("%Y-%m-%d")
     has_error = False
     
     # ----------------------------------------------------
@@ -1427,13 +1756,19 @@ def main():
             github_summary = "⚠️ GitHub 트렌드 AI 분석에 일시적 오류가 발생했습니다."
             has_error = True
 
-    # 브리핑에 선정된 저장소 이력 자동 기록 (향후 중복 추천 방지)
+    # 브리핑에 선정된 저장소 이력 자동 기록 (향후 중복 추천 방지 및 지식베이스 영구 누적)
     if github_summary and "일시적 오류" not in github_summary:
-        picked_repos = re.findall(r'https://github\.com/([a-zA-Z0-9_\-\.]+/[a-zA-Z0-9_\-\.]+)', github_summary)
-        # 'trending' 등 일반 링크 제외
-        valid_picked = [p for p in picked_repos if p.lower() not in ["trending", "features"]]
+        curated_details = extract_curated_details_from_summary(github_summary, candidates)
+        valid_details = [d for d in curated_details if not is_ministry_related_repo(d)]
+        valid_picked = [d["full_name"] for d in valid_details if d.get("full_name", "").lower() not in ["trending", "features"]]
+        if not valid_picked:
+            picked_repos = re.findall(r'https://github\.com/([a-zA-Z0-9_\-\.]+/[a-zA-Z0-9_\-\.]+)', github_summary)
+            valid_picked = [p for p in picked_repos if p.lower() not in ["trending", "features"] and not is_ministry_related_repo(p)]
+            
         if valid_picked:
             save_shared_github_history(valid_picked)
+            update_github_knowledge_archive(valid_details, today_iso)
+
 
     # ----------------------------------------------------
     # 단계 3: Executive Summary 종합 (Section 1용)

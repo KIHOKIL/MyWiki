@@ -4,7 +4,7 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-09-20*
+*This index is automatically maintained. Last updated: 2026-10-25*
 
 ## Concepts
 
@@ -108,6 +108,7 @@ title: Wiki Index
 ## References
 
 - [[ai-agent-skills-catalog]]
+- [[github-repository-archive]]
 
 ## Synthesis
 

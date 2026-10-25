@@ -24,9 +24,10 @@
 - [[Finance_Briefing_2026-09-13.md]] — 📊 Money Snowball Daily Macro Briefing
 - [[Finance_Briefing_2026-09-15.md]] — 🚨 503 트래픽 초과 오류
 - [[Finance_Briefing_2026-09-19.md]] — 📊 Money Snowball Daily Macro Briefing
+- [[GitHub_Repository_Archive.md]] — 📚 Group 2nd Brain: GitHub Repository Knowledge Archive
 
 ## 관련 위키 페이지
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-09-20*
+*마지막 갱신: 2026-10-25*

@@ -1,35 +1,10 @@
 {
   "history": [
     {
-      "full_name": "ast-grep/ast-grep",
-      "timestamp": 1789906262.0,
-      "date": "2026-09-20"
-    },
-    {
-      "full_name": "FreeRTOS/FreeRTOS-Kernel",
-      "timestamp": 1789906262.0,
-      "date": "2026-09-20"
-    },
-    {
-      "full_name": "embassy-rs/embassy",
-      "timestamp": 1789906262.0,
-      "date": "2026-09-20"
-    },
-    {
-      "full_name": "tirth8205/code-review-graph",
-      "timestamp": 1789906262.0,
-      "date": "2026-09-20"
-    },
-    {
-      "full_name": "DeusData/codebase-memory-mcp",
-      "timestamp": 1789906262.0,
-      "date": "2026-09-20"
-    },
-    {
       "full_name": "tinyhumansai/openhuman",
-      "timestamp": 1789912925.1886194,
-      "date": "2026-09-20"
+      "timestamp": 1792937716.2949877,
+      "date": "2026-10-25"
     }
   ],
-  "last_updated": "2026-09-20"
+  "last_updated": "2026-10-25"
 }

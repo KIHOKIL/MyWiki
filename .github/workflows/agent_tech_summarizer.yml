@@ -16,7 +16,11 @@ jobs:
     with:
       working_directory: '_sources/Projects/NewsSummarizer'
       script_command: 'python agents/tech/main.py'
-      commit_message: "📝 자동 요약 뉴스 브리핑 추가"
-      file_pattern: "_sources/News/Daily_Summaries/*.md"
-      download_path: "_sources/News/Daily_Summaries"
+      commit_message: "📝 자동 요약 뉴스 브리핑 및 GitHub 지식베이스 갱신"
+      file_pattern: |
+        _sources/News/Daily_Summaries/*.md
+        _sources/Projects/NewsSummarizer/News/Daily_Summaries/*.md
+        _sources/Projects/NewsSummarizer/News/*.md
+        _sources/Projects/NewsSummarizer/_raw/*.json
+      download_path: "."
     secrets: inherit
