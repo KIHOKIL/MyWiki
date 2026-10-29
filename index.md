@@ -4,7 +4,7 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-10-25*
+*This index is automatically maintained. Last updated: 2026-10-29*
 
 ## Concepts
 
@@ -55,6 +55,7 @@ title: Wiki Index
 - [[semantic-codegraph-indexer]]
 - [[sim-to-real-transfer]]
 - [[slide-video-workflow]]
+- [[spec-driven-development]]
 - [[stateless-orientation]]
 - [[vibe-coding]]
 - [[vla-model]]
@@ -77,7 +78,9 @@ title: Wiki Index
 - [[google-vids]]
 - [[gpt-6-astra]]
 - [[hackers-chloe]]
+- [[harness-framework]]
 - [[headroom]]
+
 - [[improve-token-efficiency]]
 - [[isaac-groot]]
 - [[neo4j]]

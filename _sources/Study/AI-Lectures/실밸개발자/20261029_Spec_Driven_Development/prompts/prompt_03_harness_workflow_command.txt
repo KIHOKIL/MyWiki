@@ -1,0 +1,2 @@
+/harness
+docs/ 하위 문서(PRD, ARCHITECTURE, ADR, CLAUDE.md) 작성을 완료하고, 각 Step이 독립된 세션에서 실행될 수 있도록 Scope 최소화, 자기완결성, AC 실행 커맨드를 포함한 phases/0-mvp/index.json 및 step0.md ~ step4.md 파일들을 생성해 줘.

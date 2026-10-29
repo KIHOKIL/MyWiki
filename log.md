@@ -4,6 +4,18 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-10-29 22:00] FEAT: Spec-Driven Development (SDD) & Harness Framework Deep Ingestion
+  - **Source Material:** YouTube `v6UAPUnOSxA` (실밸개발자, 61분) & GitHub `jha0313/harness_framework`.
+  - **Knowledge Note:** Created `_sources/Study/AI-Lectures/실밸개발자/20261029_Spec_Driven_Development/AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md` (30KB+, 25개 챕터 전수 Zero-Loss 분석, TDD 한계 및 SDD 5단계 루프, 5대 멘탈 모델).
+  - **Harness Framework Analysis:** Deconstructed `CLAUDE.md`, `docs/PRD.md`, `docs/ARCHITECTURE.md`, `docs/ADR.md`, `docs/UI_GUIDE.md` (AI 슬롭 7대 금지), `.claude/commands/harness.md`, and `scripts/execute.py` (claude -p 서브프로세스 격리 오케스트레이터).
+  - **Interactive Deliverables:**
+    - Full clean transcript with 1,506 timestamped cues mapped across all 25 chapters.
+    - 5 official prompts extracted into `prompts/prompt_01~05.txt`.
+    - 10-slide interactive dark-theme deck (`slides/index.html`) & single-page dashboard report (`lecture_report.html`).
+    - Python generator script `build_slides.py`.
+  - **Domain Application:** Formulated HW register-map embedded C/C++ harness & 3GPP hierarchical spec strategy for Group Leader persona.
+  - **Index & Hot Cache:** Re-indexed `_sources/` via `scripts/generate_index.py` (Study: 34 sources) and updated `hot.md`.
+
 - [2026-10-25 23:45] CHORE: Wiki-Organize 3-Step Pipeline & GitHub Knowledge Archive Integration
   - **Step 1 (Ingest & Archive):**
     - Established persistent GitHub knowledge repository: `_raw/github_repo_knowledge.json` and [[references/github-repository-archive|GitHub Repository Knowledge Archive]].

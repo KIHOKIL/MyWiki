@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>좋은 스펙의 5가지 핵심 요소 | SDD Slide 5</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .slide-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 26, 43, 0.9);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-indicator { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="slide-header">
+      <div style="font-size: 0.85rem; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+        Slide 5 of 10
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">좋은 스펙의 5가지 핵심 요소</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">스펙은 길 필요가 없다. 이 5가지만 명확하면 직행한다</p>
+    </div>
+    
+        <div class="card">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;">
+            <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 8px;">
+              <strong style="color: #c4b5fd;">1. Inputs & Outputs (입출력)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">명확한 입력 데이터 구조와 관측 가능한 기대 출력 정의 (예: 프롬프트+이미지 ➡️ 16:9 썸네일 2개)</p>
+            </div>
+            <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 8px;">
+              <strong style="color: #38bdf8;">2. Success Criteria (성공 기준)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">정량적으로 측정 가능한 성공 척도 (예: 응답시간 < 2초, 빌드 에러 0개, 테스트 커버리지)</p>
+            </div>
+            <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 8px;">
+              <strong style="color: #6ee7b7;">3. Constraints (제약 조건)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">보안, 라이브러리 제한, 외부 API 호출 전용 라우트 강제 등 절대 넘지 말아야 할 기술적 경계</p>
+            </div>
+            <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 8px;">
+              <strong style="color: #fcd34d;">4. Scope & Out-of-Scope (범위)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">이번 MVP에서 <strong>"절대 하지 않을 것"</strong>을 명시. AI 특유의 과도한 오버엔지니어링 원천 차단</p>
+            </div>
+            <div style="padding: 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); border-radius: 8px; grid-column: span 2;">
+              <strong style="color: #f87171;">5. Edge Cases (예외 및 에러 핸들링)</strong>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">API Rate Limit, 네트워크 단절, 잘못된 사용자 입력 시의 조건부 재시도 및 UI 폴백 매트릭스</p>
+            </div>
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="slide-nav">
+    <a href='04_five_step_loop.html' class='nav-btn'>&larr; 이전</a>
+    <span class="nav-indicator">5 / 10</span>
+    <a href='06_spec_checklist_hierarchy.html' class='nav-btn'>다음 &rarr;</a>
+    <a href="../lecture_report.html" class="nav-btn" style="border-left: 1px solid var(--card-border); padding-left: 12px; margin-left: 6px; font-size: 0.85rem; color: #38bdf8;">전체 리포트 보기</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && '04_five_step_loop' !== 'None') {
+        window.location.href = '04_five_step_loop.html';
+      } else if (e.key === 'ArrowRight' && '06_spec_checklist_hierarchy' !== 'None') {
+        window.location.href = '06_spec_checklist_hierarchy.html';
+      }
+    });
+  </script>
+</body>
+</html>

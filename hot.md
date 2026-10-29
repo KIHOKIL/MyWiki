@@ -1,10 +1,25 @@
 ---
 title: Hot Cache
-updated: 2026-10-25
+updated: 2026-10-29
 ---
 
 ## Recent Activity
+- **Spec-Driven Development (SDD) & Harness Framework Deep Ingestion (2026-10-29):**
+  - **도메인 아카이브:** `_sources/Study/AI-Lectures/실밸개발자/20261029_Spec_Driven_Development/` 폴더 신설.
+  - **산출물 구축:**
+    - 전수 연구 노트(`AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md`, 30KB+).
+    - 1,506개 발화 25개 챕터 100% 매핑 클린 자막 전문(`clean_transcript.txt`).
+    - 무결점 프롬프트 5종 분할 저장(`prompts/prompt_01~05.txt`).
+    - 반응형 인터랙티브 단일 대시보드 리포트(`lecture_report.html`) 및 10대 슬라이드 세트(`slides/01_intro.html` ~ `slides/index.html`).
+    - 슬라이드 및 리포트 재생성 파이썬 빌더(`build_slides.py`).
+  - **핵심 멘탈 모델 & 아키텍처:**
+    - TDD 한계 극복(모호한 자리에서의 자연어 스펙 선행) 및 엔지니어의 역할 전이(Author ➡️ Reviewer/Architect).
+    - `claude -p` 헤드리스 독립 서브세션을 통한 메인 컨텍스트 오염(Context Bloat) 원천 차폐.
+    - `jha0313/harness_framework` 오픈소스 해부 (PRD/ARCHITECTURE/ADR/UI_GUIDE 4대 문서 + execute.py 자가교정 오케스트레이터).
+    - 그룹장 도메인 적용: HW 레지스터 맵 기반 임베디드 C/C++ 하네스 및 3GPP 프로토콜 계층형 스펙 분할 전략 도출.
+  - **인덱스 동기화:** `_sources/Study/` (34개 파일) 및 `_sources/_index.md` 갱신 완료.
 - **NewsSummarizer GitHub Curation & Persistent Knowledge Archive (2026-10-25):**
+
   - **사역/종교 관련 저장소 원천 차단 (`is_ministry_related_repo`):** 교회/선교/사역 키워드(`church`, `ministry`, `chordo`, `hymn`, `bible`, `worship` 등) 및 조직 차단 필터를 추가하여 기술 브리핑의 엔지니어링 집중도 극대화.
   - **최신 발행일 자동 추적 (`get_latest_daily_it_news_url`):** `jesusiswith.us`의 RSS 피드(`index.xml`) 파싱을 통해 날짜 하드코딩 없이 매일 최신 발행 페이지를 자동 탐색하고, Hugo SSG 렌더링 변경사항(헤딩 ID 및 리스트 구조)에 대응하는 정규식 업그레이드 완료.
   - **GitHub 지식 아카이브 영구 누적 체계 (`GitHub_Repository_Archive.md` & `github_repo_knowledge.json`):**

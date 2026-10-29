@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TDD의 한계 vs SDD (Spec-Driven Development) | SDD Slide 2</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .slide-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 26, 43, 0.9);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-indicator { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="slide-header">
+      <div style="font-size: 0.85rem; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+        Slide 2 of 10
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">TDD의 한계 vs SDD (Spec-Driven Development)</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">언제 TDD를 쓰고, 언제 SDD로 전환해야 하는가?</p>
+    </div>
+    
+        <div class="card">
+          <h3 style="color: #38bdf8; margin-bottom: 14px;">⚖️ 패러다임 비교 매트릭스</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>구분</th>
+                <th>TDD (Test-Driven Development)</th>
+                <th>SDD (Spec-Driven Development)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>작동 전제</strong></td>
+                <td>"어떻게 동작해야 하는가"가 이미 명확한 작업</td>
+                <td><strong>"무엇을 만들어야 하는가"부터 모호한 신규 작업</strong></td>
+              </tr>
+              <tr>
+                <td><strong>최적 적용처</strong></td>
+                <td>단일 함수, 버그 수정, 레거시 인터페이스 리팩토링</td>
+                <td>신규 SaaS, 모듈 아키텍처 기획, 복잡한 통신 프로토콜 설계</td>
+              </tr>
+              <tr>
+                <td><strong>핵심 병목</strong></td>
+                <td>테스트 케이스 선행 작성 및 코드 구현</td>
+                <td><strong>자연어 스펙 정의(Design) 및 에이전트 출력 검토(Review)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>AI와의 관계</strong></td>
+                <td>AI가 테스트 먼저 안 짜고 코드부터 짜서 탈선</td>
+                <td>AI에게 스펙 기반 Step 분할과 자율 교정 루프 위임</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top: 18px; padding: 14px; background: rgba(239, 68, 68, 0.08); border-radius: 8px; border-left: 3px solid #ef4444;">
+            <strong style="color: #fca5a5;">⚠️ TDD의 치명적 약점:</strong>
+            <p style="font-size: 0.88rem; color: #e5e7eb; margin-top: 4px;">새로운 도메인이나 미지의 프로덕트를 시작할 때, 테스트를 먼저 쓰려고 하면 무엇을 검증할지 몰라 개발이 완전히 멈추게 됨. 합의된 스펙(Spec)이 선행되어야 함.</p>
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="slide-nav">
+    <a href='01_intro.html' class='nav-btn'>&larr; 이전</a>
+    <span class="nav-indicator">2 / 10</span>
+    <a href='03_five_mindsets.html' class='nav-btn'>다음 &rarr;</a>
+    <a href="../lecture_report.html" class="nav-btn" style="border-left: 1px solid var(--card-border); padding-left: 12px; margin-left: 6px; font-size: 0.85rem; color: #38bdf8;">전체 리포트 보기</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && '01_intro' !== 'None') {
+        window.location.href = '01_intro.html';
+      } else if (e.key === 'ArrowRight' && '03_five_mindsets' !== 'None') {
+        window.location.href = '03_five_mindsets.html';
+      }
+    });
+  </script>
+</body>
+</html>

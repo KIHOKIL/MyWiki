@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Spec-Driven Development 슬라이드 허브</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+    .slide-item {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      margin-bottom: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+    .slide-item:hover {
+      transform: translateX(6px);
+      border-color: var(--accent-primary);
+      background: rgba(124, 58, 237, 0.08);
+    }
+    .slide-num {
+      font-family: var(--font-mono);
+      font-weight: bold;
+      color: #38bdf8;
+      width: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="margin-bottom: 30px;">
+      <span class="badge">Slide Navigation Deck</span>
+      <h1 style="font-size: 2.4rem; margin: 10px 0;">Spec-Driven Development 슬라이드 목차</h1>
+      <p style="color: var(--text-muted);">실밸개발자 패스트캠퍼스 강의 10대 핵심 슬라이드 세트</p>
+    </div>
+    <div>
+      <a href="01_intro.html" class="slide-item">
+        <span class="slide-num">01</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">AI 시대의 새로운 패러다임: Spec-Driven Development</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">실밸개발자 (메타 시니어 엔지니어) 초청 세미나 핵심 요약</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="02_tdd_vs_sdd.html" class="slide-item">
+        <span class="slide-num">02</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">TDD의 한계 vs SDD (Spec-Driven Development)</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">언제 TDD를 쓰고, 언제 SDD로 전환해야 하는가?</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="03_five_mindsets.html" class="slide-item">
+        <span class="slide-num">03</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">SDD가 작동하기 위한 5가지 사고방식 전환</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">도구를 쥐어줘도 생각이 바뀌지 않으면 과거 방식으로 회귀한다</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="04_five_step_loop.html" class="slide-item">
+        <span class="slide-num">04</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">SDD 5단계 라이프사이클 루프</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">설계 ➡️ 계획 ➡️ 구현 ➡️ 교정 ➡️ 회고의 협업 매트릭스</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="05_good_spec_5elements.html" class="slide-item">
+        <span class="slide-num">05</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">좋은 스펙의 5가지 핵심 요소</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">스펙은 길 필요가 없다. 이 5가지만 명확하면 직행한다</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="06_spec_checklist_hierarchy.html" class="slide-item">
+        <span class="slide-num">06</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">계층형 스펙(Hierarchical Specs) & AI 슬롭 방지</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">프로젝트가 커질 때의 스펙 관리와 시니어 엔지니어의 품격</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="07_harness_framework_architecture.html" class="slide-item">
+        <span class="slide-num">07</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">Harness Framework 구조 및 4대 핵심 문서</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">jha0313/harness_framework 리포지토리 완전 해부</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="08_claude_p_headless_session.html" class="slide-item">
+        <span class="slide-num">08</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">claude -p 헤드리스 모드 & 컨텍스트 격리</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">메인 세션의 컨텍스트 윈도우 오염(Context Bloat)을 극복하는 열쇠</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="09_execute_py_orchestrator.html" class="slide-item">
+        <span class="slide-num">09</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">scripts/execute.py 오케스트레이터 분석</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Preamble 가드레일, 3회 자가교정, 2단계 원자적 커밋</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a><a href="10_domain_takeaways.html" class="slide-item">
+        <span class="slide-num">10</span>
+        <div style="flex: 1;">
+          <strong style="font-size: 1.05rem;">그룹장 실무 적용: 임베디드 SW & PHY 계층 SDD</strong>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">모바일 통신 프로토콜 / PHY Layer C/C++ 하네스 프레임워크 설계</div>
+        </div>
+        <span style="color: #a78bfa;">열기 &rarr;</span>
+      </a>
+    </div>
+    <div style="margin-top: 30px; text-align: center;">
+      <a href="../lecture_report.html" style="color: #38bdf8; text-decoration: none; font-size: 0.95rem;">&larr; 단일 인터랙티브 종합 리포트 보기</a>
+    </div>
+  </div>
+</body>
+</html>

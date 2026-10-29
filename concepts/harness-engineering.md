@@ -4,8 +4,8 @@ category: concepts
 tags: [concept, prompt-engineering, llm, system-design]
 sources: ["_source/Study/AI-Lectures/커리어해커알렉스/20260816_진짜AX/20260816_진짜AX_학습메모.md", "https://www.careerhackeralex.com/blog/ax-faq", "_source/Study/AI-Lectures/실밸개발자/20260816/AI_시대에_상위_1퍼센트가_되는_법.md"]
 created: "2026-08-16"
-updated: "2026-09-05"
-summary: AI 결과물에서 'AI 느낌'을 지우고 조직의 요구사항에 맞추기 위해 Rules, Skills, Context, Hooks 등을 시스템화하여 축적하는 과정입니다.
+updated: "2026-10-29"
+summary: AI 결과물에서 'AI 느낌'을 지우고 조직의 요구사항에 맞추기 위해 Rules, Skills, Context, Hooks 등을 시스템화하여 축적하는 과정이며, 복잡한 스킬 남발보다 명확한 4대 스펙 문서와 헤드리스 격리 세션을 갖춘 경량 오케스트레이터가 가장 효과적입니다.
 ---
 
 # Harness Engineering
@@ -21,11 +21,19 @@ summary: AI 결과물에서 'AI 느낌'을 지우고 조직의 요구사항에 �
 - **지속적인 유지보수:** 새로운 LLM 모델이 나오면 기존 하네스와 충돌할 수 있습니다. 하네스는 한 번 만들고 끝나는 것이 아니라, 모델의 진화와 함께 계속 깎아 나가는 "살아있는 시스템"입니다.
 - **전사적 표준화:** 부서별로 중구난방인 하네스를 쓰면 퀄리티가 낮아집니다. 회사 차원의 공용 하네스 인프라와 플러그인을 구축하는 것이 [[ax]]의 핵심 과제 중 하나입니다.
 
+## 경량화와 컨텍스트 격리 원칙 (실밸개발자 통찰)
+하네스는 복잡할수록 좋은 것이 아닙니다. 30~40개의 복잡한 스킬을 오버엔지니어링하기보다, **명확한 스펙 문서 4종(PRD, Architecture, ADR, UI/Domain Guide)**과 **1개의 경량 오케스트레이터**가 가장 강력합니다.
+- **메인 컨텍스트 보호:** 대화형 세션을 길게 유지하면 컨텍스트 누적(150k 토큰 초과)으로 인해 모델 성능이 급락합니다. 하네스는 각 작업 단위(Step)마다 `claude -p` 같은 **헤드리스 1회용 독립 세션**을 기동하여 메인 컨텍스트를 깨끗하게 유지해야 합니다.
+- **자가 교정(Self-Correction):** 실행 가능한 AC(Acceptance Criteria) 실패 시, 에러 메시지를 다음 프롬프트에 피드백하며 최대 3회까지 스스로 수정하도록 안전망을 둡니다.
+
 ## AI 시대 개발자의 생존 전략 (메타 개발자 통찰)
 AI가 코드를 짜주는 시대에는 개발의 진입 장벽이 현격히 낮아집니다. 이 시점에서 개발자의 핵심 경쟁력은 "얼마나 코딩을 잘하느냐"가 아니라, **"AI가 생성한 코드를 얼마나 잘 검증하고, 리스크 없이 안전하게 서비스로 연결(배포)할 수 있는가"**로 이동합니다. 
 즉, 하네스(Harness) 엔지니어링 역량이 상위 1% 개발자를 가르는 중요한 기준이 됩니다. 단순히 프롬프트를 치는 코더를 넘어, 생성된 결과물 주변에 강력한 안전망과 테스트 파이프라인을 구축하는 설계자가 되어야 합니다.
 
 ## 연결된 개념 및 대표 구현체
+- [[concepts/spec-driven-development|스펙 주도 개발 (Spec-Driven Development)]] — 자연어 스펙 선행 작성과 자율 에이전트 실행의 결합
+- [[entities/harness-framework|Harness Framework (jha0313/harness_framework)]] — 4대 스펙 문서와 헤드리스 격리 세션을 구현한 오픈소스 하네스
 - [[ai-native-junior]] — 단순히 코딩을 넘어서 하네스 엔지니어링 등 시스템 레벨로 AI를 통제하는 역량
 - [[ax]] — 전사적 AI 전환과 하네스 표준화
 - [[entities/ecc|ECC (Everything Claude Code)]] — Rules, 가드레일, TDD 훅, 지속성 메모리를 패키징한 대표적인 에이전트 하네스 프레임워크
+

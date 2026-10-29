@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 시대의 새로운 패러다임: Spec-Driven Development | SDD Slide 1</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .slide-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 26, 43, 0.9);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-indicator { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="slide-header">
+      <div style="font-size: 0.85rem; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+        Slide 1 of 10
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">AI 시대의 새로운 패러다임: Spec-Driven Development</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">실밸개발자 (메타 시니어 엔지니어) 초청 세미나 핵심 요약</p>
+    </div>
+    
+        <div class="card">
+          <div style="margin-bottom: 16px;">
+            <span class="badge">패스트캠퍼스 무료 공개</span>
+            <span class="badge badge-cyan">하네스 프레임워크 실전</span>
+            <span class="badge">러닝타임 61분 전수 분석</span>
+          </div>
+          <h2 style="font-size: 1.8rem; margin-bottom: 16px;">"스펙만 썼는데 AI가 앱을 30분 만에 다 만들었습니다"</h2>
+          <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 24px;">
+            전통적인 TDD의 한계를 극복하고, 자연어 스펙을 선행 작성하여 에이전트가 <strong>계획 ➡️ 구현 ➡️ 자율 교정</strong>까지 완주하도록 지휘하는 AI-Native 엔지니어링 패러다임.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+            <div style="background: rgba(124, 58, 237, 0.08); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-primary);">
+              <h4 style="color: #c4b5fd; margin-bottom: 6px;">🎯 핵심 주제</h4>
+              <p style="font-size: 0.9rem; color: #d1d5db;">TDD가 실패하는 모호한 영역에서 SDD로 자율 소프트웨어 개발 루프 구축</p>
+            </div>
+            <div style="background: rgba(56, 189, 248, 0.08); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
+              <h4 style="color: #7dd3fc; margin-bottom: 6px;">⚙️ 오픈소스 하네스</h4>
+              <p style="font-size: 0.9rem; color: #d1d5db;"><code>jha0313/harness_framework</code> (Claude Code + Python Orchestrator)</p>
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.08); padding: 16px; border-radius: 8px; border-left: 3px solid #10b981;">
+              <h4 style="color: #6ee7b7; margin-bottom: 6px;">🛡️ 메인 컨텍스트 방어</h4>
+              <p style="font-size: 0.9rem; color: #d1d5db;"><code>claude -p</code> 헤드리스 독립 서브세션으로 컨텍스트 블로트 100% 원천 차폐</p>
+            </div>
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="slide-nav">
+    <span style='opacity:0.3;' class='nav-btn'>&larr; 이전</span>
+    <span class="nav-indicator">1 / 10</span>
+    <a href='02_tdd_vs_sdd.html' class='nav-btn'>다음 &rarr;</a>
+    <a href="../lecture_report.html" class="nav-btn" style="border-left: 1px solid var(--card-border); padding-left: 12px; margin-left: 6px; font-size: 0.85rem; color: #38bdf8;">전체 리포트 보기</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && 'None' !== 'None') {
+        window.location.href = 'None.html';
+      } else if (e.key === 'ArrowRight' && '02_tdd_vs_sdd' !== 'None') {
+        window.location.href = '02_tdd_vs_sdd.html';
+      }
+    });
+  </script>
+</body>
+</html>

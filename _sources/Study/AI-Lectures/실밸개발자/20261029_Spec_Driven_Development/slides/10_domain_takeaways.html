@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>그룹장 실무 적용: 임베디드 SW & PHY 계층 SDD | SDD Slide 10</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .slide-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 26, 43, 0.9);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-indicator { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="slide-header">
+      <div style="font-size: 0.85rem; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+        Slide 10 of 10
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">그룹장 실무 적용: 임베디드 SW & PHY 계층 SDD</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">모바일 통신 프로토콜 / PHY Layer C/C++ 하네스 프레임워크 설계</p>
+    </div>
+    
+        <div class="card">
+          <h3 style="color: #38bdf8; margin-bottom: 14px;">📡 모바일 SW 통신 프로토콜 그룹 맞춤 실무 적용</h3>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="background: rgba(124, 58, 237, 0.08); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-primary);">
+              <h4 style="color: #c4b5fd;">1. HW 레지스터 맵 기반 C/C++ 임베디드 하네스 구축</h4>
+              <p style="font-size: 0.88rem; color: #d1d5db; margin-top: 4px;">
+                신규 모뎀/RFIC 레지스터 맵 CSV를 <code>docs/PRD.md</code>(비트필드, 오프셋)로 정의 ➡️ <code>execute.py</code>가 C 구조체 헤더 생성 ➡️ 읽기/쓰기 인라인 함수 ➡️ QEMU/호스트 단위 시뮬레이션 AC 검증까지 자동화.
+              </p>
+            </div>
+            <div style="background: rgba(56, 189, 248, 0.08); padding: 16px; border-radius: 8px; border-left: 3px solid var(--accent-cyan);">
+              <h4 style="color: #7dd3fc;">2. 3GPP 프로토콜 스택의 계층형 스펙(Hierarchical Spec) 분할</h4>
+              <p style="font-size: 0.88rem; color: #d1d5db; margin-top: 4px;">
+                수만 줄의 통신 규격을 통째로 주입하지 않고, Master Spec(전체 아키텍처) 아래 L1 PHY(디코딩), L2 MAC(HARQ), L3 RRC(상태 머신)로 모듈을 분할하여 컨텍스트 압축 없는 정밀 구현.
+              </p>
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.08); padding: 16px; border-radius: 8px; border-left: 3px solid #10b981;">
+              <h4 style="color: #6ee7b7;">3. JIRA / 필드 이슈 분석 자동 회고 루프</h4>
+              <p style="font-size: 0.88rem; color: #d1d5db; margin-top: 4px;">
+                필드 Drop call 또는 CRC 에러 로그를 분석한 뒤, 일회성 패치로 끝내지 않고 <code>docs/ADR.md</code> 및 <code>CLAUDE.md</code>에 동기화 타이밍 제약 규칙을 영구 반영하여 복리 개선.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="slide-nav">
+    <a href='09_execute_py_orchestrator.html' class='nav-btn'>&larr; 이전</a>
+    <span class="nav-indicator">10 / 10</span>
+    <span style='opacity:0.3;' class='nav-btn'>다음 &rarr;</span>
+    <a href="../lecture_report.html" class="nav-btn" style="border-left: 1px solid var(--card-border); padding-left: 12px; margin-left: 6px; font-size: 0.85rem; color: #38bdf8;">전체 리포트 보기</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && '09_execute_py_orchestrator' !== 'None') {
+        window.location.href = '09_execute_py_orchestrator.html';
+      } else if (e.key === 'ArrowRight' && 'None' !== 'None') {
+        window.location.href = 'None.html';
+      }
+    });
+  </script>
+</body>
+</html>

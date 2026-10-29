@@ -361,5 +361,16 @@
       "concepts/semantic-codegraph-indexer.md",
       "concepts/clang-codegraph.md"
     ]
+  },
+  "_sources/Study/AI-Lectures/실밸개발자/20261029_Spec_Driven_Development/AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md": {
+    "path": "_sources/Study/AI-Lectures/실밸개발자/20261029_Spec_Driven_Development/AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md",
+    "timestamps": {
+      "ingested": "2026-10-29T22:10:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/spec-driven-development.md",
+      "concepts/harness-engineering.md",
+      "entities/harness-framework.md"
+    ]
   }
-}
+}

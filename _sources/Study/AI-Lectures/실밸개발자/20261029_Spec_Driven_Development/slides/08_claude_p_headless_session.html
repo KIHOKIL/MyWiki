@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>claude -p 헤드리스 모드 & 컨텍스트 격리 | SDD Slide 8</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .slide-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 26, 43, 0.9);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-indicator { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="slide-header">
+      <div style="font-size: 0.85rem; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+        Slide 8 of 10
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">claude -p 헤드리스 모드 & 컨텍스트 격리</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">메인 세션의 컨텍스트 윈도우 오염(Context Bloat)을 극복하는 열쇠</p>
+    </div>
+    
+        <div class="card">
+          <h3 style="color: #f87171; margin-bottom: 12px;">⚠️ 메인 컨텍스트가 커지는 걸 두려워해야 하는 이유</h3>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+            단일 대화 세션에서 Step 1부터 7까지 계속 구현을 시키면 컨텍스트가 120k~150k로 누적되며 성능이 급격히 붕괴함. Step 6~7에 작성된 코드는 사실상 버려야 할 수준이 됨.
+          </p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.2); padding: 16px; border-radius: 8px;">
+              <strong style="color: #fca5a5;">❌ 대화형 세션 단일 실행 (Bad)</strong>
+              <ul style="font-size: 0.85rem; color: #d1d5db; margin-top: 8px; padding-left: 18px;">
+                <li>Step이 진행될수록 이전 로그와 코드가 누적됨</li>
+                <li>150k 토큰 초과 시 환각 및 규칙 망각 발생</li>
+                <li>비용 폭증 및 응답 속도 극심한 저하</li>
+              </ul>
+            </div>
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.2); padding: 16px; border-radius: 8px;">
+              <strong style="color: #6ee7b7;">✅ claude -p 헤드리스 서브프로세스 (Good)</strong>
+              <ul style="font-size: 0.85rem; color: #d1d5db; margin-top: 8px; padding-left: 18px;">
+                <li>Step마다 깨끗한 1회용 독립 세션 기동</li>
+                <li>이전 Step의 1줄 <code>summary</code>와 핵심 문서만 주입</li>
+                <li>메인 컨텍스트는 0k 유지, 성능 100% 보존</li>
+              </ul>
+            </div>
+          </div>
+          <div class="code-box">
+            <span style="color: #8b949e;"># execute.py 내부 독립 세션 실행 커맨드</span><br>
+            claude -p --dangerously-skip-permissions --output-format json &quot;{preamble + step_prompt}&quot;
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="slide-nav">
+    <a href='07_harness_framework_architecture.html' class='nav-btn'>&larr; 이전</a>
+    <span class="nav-indicator">8 / 10</span>
+    <a href='09_execute_py_orchestrator.html' class='nav-btn'>다음 &rarr;</a>
+    <a href="../lecture_report.html" class="nav-btn" style="border-left: 1px solid var(--card-border); padding-left: 12px; margin-left: 6px; font-size: 0.85rem; color: #38bdf8;">전체 리포트 보기</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && '07_harness_framework_architecture' !== 'None') {
+        window.location.href = '07_harness_framework_architecture.html';
+      } else if (e.key === 'ArrowRight' && '09_execute_py_orchestrator' !== 'None') {
+        window.location.href = '09_execute_py_orchestrator.html';
+      }
+    });
+  </script>
+</body>
+</html>

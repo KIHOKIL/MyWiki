@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDD 5단계 라이프사이클 루프 | SDD Slide 4</title>
+  <style>
+    
+:root {
+  --bg: #0a0f1a;
+  --card-bg: rgba(18, 26, 43, 0.7);
+  --card-border: rgba(139, 148, 158, 0.16);
+  --accent-primary: #7c3aed;
+  --accent-cyan: #38bdf8;
+  --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%);
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --font-sans: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, Monaco, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+.gradient-text {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 24px;
+  backdrop-filter: blur(12px);
+  margin-bottom: 20px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: rgba(124, 58, 237, 0.15);
+  color: #a78bfa;
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  margin-right: 8px;
+}
+
+.badge-cyan {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.code-box {
+  background: #060911;
+  border: 1px solid rgba(139, 148, 158, 0.2);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: #e6edf3;
+  overflow-x: auto;
+  position: relative;
+  margin: 14px 0;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(139, 148, 158, 0.15);
+  border: 1px solid rgba(139, 148, 158, 0.3);
+  color: #c9d1d9;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover {
+  background: var(--accent-primary);
+  color: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+th, td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--card-border);
+}
+th {
+  background: rgba(124, 58, 237, 0.1);
+  color: #c4b5fd;
+  font-weight: 600;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+    .slide-container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 0 20px;
+      min-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .slide-header {
+      margin-bottom: 24px;
+    }
+    .slide-nav {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(18, 26, 43, 0.9);
+      padding: 10px 24px;
+      border-radius: 9999px;
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 6px;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(255,255,255,0.1); }
+    .nav-indicator { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-mono); }
+  </style>
+</head>
+<body>
+  <div class="slide-container">
+    <div class="slide-header">
+      <div style="font-size: 0.85rem; font-weight: 600; color: #a78bfa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">
+        Slide 4 of 10
+      </div>
+      <h1 style="font-size: 2.2rem; margin-bottom: 8px;">SDD 5단계 라이프사이클 루프</h1>
+      <p style="color: var(--text-muted); font-size: 1.1rem;">설계 ➡️ 계획 ➡️ 구현 ➡️ 교정 ➡️ 회고의 협업 매트릭스</p>
+    </div>
+    
+        <div class="card">
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; align-items: center; background: rgba(124, 58, 237, 0.1); padding: 14px; border-radius: 8px;">
+              <div style="width: 120px; font-weight: bold; color: #c4b5fd;">1. 설계 (Design)</div>
+              <div style="width: 140px;"><span class="badge">인간 주도 / AI 보조</span></div>
+              <div style="flex: 1; font-size: 0.88rem; color: #e5e7eb;">무엇을 왜 만드는지, 아키텍처, 기술 결정(ADR), 도메인 조직 제약을 문서화</div>
+            </div>
+            <div style="display: flex; align-items: center; background: rgba(56, 189, 248, 0.1); padding: 14px; border-radius: 8px;">
+              <div style="width: 120px; font-weight: bold; color: #38bdf8;">2. 계획 (Plan)</div>
+              <div style="width: 140px;"><span class="badge badge-cyan">AI 주도 / 인간 승인</span></div>
+              <div style="flex: 1; font-size: 0.88rem; color: #e5e7eb;">스펙 문서를 바탕으로 AI가 작업을 작은 단위의 Step으로 분할하고 계획 수립</div>
+            </div>
+            <div style="display: flex; align-items: center; background: rgba(16, 185, 129, 0.1); padding: 14px; border-radius: 8px;">
+              <div style="width: 120px; font-weight: bold; color: #6ee7b7;">3. 구현 (Execute)</div>
+              <div style="width: 140px;"><span class="badge" style="background:#10b98122; color:#6ee7b7;">AI 전권 자율</span></div>
+              <div style="flex: 1; font-size: 0.88rem; color: #e5e7eb;">각 Step별 독립 헤드리스 세션에서 컴파일 및 AC 테스트 통과 시까지 자율 코딩</div>
+            </div>
+            <div style="display: flex; align-items: center; background: rgba(245, 158, 11, 0.1); padding: 14px; border-radius: 8px;">
+              <div style="width: 120px; font-weight: bold; color: #fcd34d;">4. 교정 (Correct)</div>
+              <div style="width: 140px;"><span class="badge" style="background:#f59e0b22; color:#fcd34d;">인간 주도 피드백</span></div>
+              <div style="flex: 1; font-size: 0.88rem; color: #e5e7eb;">결과물 검토, 에러 처리 매트릭스 확인 및 아키텍처 준수 여부 심사</div>
+            </div>
+            <div style="display: flex; align-items: center; background: rgba(236, 72, 153, 0.1); padding: 14px; border-radius: 8px;">
+              <div style="width: 120px; font-weight: bold; color: #f472b6;">5. 회고 (Reflect)</div>
+              <div style="width: 140px;"><span class="badge" style="background:#ec489922; color:#f472b6;">인간 주도 자산화</span></div>
+              <div style="flex: 1; font-size: 0.88rem; color: #e5e7eb;">AI 반성문에서 도출된 교훈을 CLAUDE.md 규칙 및 하네스 프레임워크로 영구 반영</div>
+            </div>
+          </div>
+        </div>
+        
+  </div>
+
+  <div class="slide-nav">
+    <a href='03_five_mindsets.html' class='nav-btn'>&larr; 이전</a>
+    <span class="nav-indicator">4 / 10</span>
+    <a href='05_good_spec_5elements.html' class='nav-btn'>다음 &rarr;</a>
+    <a href="../lecture_report.html" class="nav-btn" style="border-left: 1px solid var(--card-border); padding-left: 12px; margin-left: 6px; font-size: 0.85rem; color: #38bdf8;">전체 리포트 보기</a>
+  </div>
+
+  <script>
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' && '03_five_mindsets' !== 'None') {
+        window.location.href = '03_five_mindsets.html';
+      } else if (e.key === 'ArrowRight' && '05_good_spec_5elements' !== 'None') {
+        window.location.href = '05_good_spec_5elements.html';
+      }
+    });
+  </script>
+</body>
+</html>
