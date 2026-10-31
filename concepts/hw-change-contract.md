@@ -34,3 +34,8 @@ A complete HW Change Contract includes ^[extracted]:
 
 ## Benefits
 By structuring this data (e.g. in YAML or JSON), AI agents in an [[concepts/e2e-agentic-engineering-workflow|E2E Agentic Engineering Workflow]] can automatically parse the contract, verify SW implementation against the HW intent, and plan required testing ^[inferred].
+
+## Related Concepts
+- [[phy-embedded-code-review]]
+- [[isr-concurrency-verification]]
+- [[farol]]

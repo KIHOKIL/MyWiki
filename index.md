@@ -4,7 +4,7 @@ title: Wiki Index
 
 # Wiki Index
 
-*This index is automatically maintained. Last updated: 2026-10-29*
+*This index is automatically maintained. Last updated: 2026-10-31*
 
 ## Concepts
 
@@ -38,6 +38,8 @@ title: Wiki Index
 - [[historical-hw-change-reconstruction]]
 - [[human-on-the-loop]]
 - [[hw-change-contract]]
+- [[hybrid-rule-agent-review]]
+- [[isr-concurrency-verification]]
 - [[issueops]]
 - [[llm-wiki-vs-rag]]
 - [[llm-wiki-workflow]]
@@ -49,6 +51,7 @@ title: Wiki Index
 - [[multi-tier-knowledge-architecture]]
 - [[non-terrestrial-network]]
 - [[opic-mbc-framework]]
+- [[phy-embedded-code-review]]
 - [[physical-ai]]
 - [[predictive-maintenance]]
 - [[problem-definition]]
@@ -73,6 +76,7 @@ title: Wiki Index
 - [[codemate]]
 - [[ecc]]
 - [[fable-5-1]]
+- [[farol]]
 - [[figure-ai]]
 - [[firefly-iii]]
 - [[google-vids]]
@@ -88,6 +92,8 @@ title: Wiki Index
 - [[notebooklm]]
 - [[obsidian-llm-plugins]]
 - [[oh-gun-young]]
+- [[open-code-review]]
+- [[opencode]]
 - [[openhuman]]
 - [[optimus]]
 - [[presentation-slides-generator]]
@@ -118,6 +124,7 @@ title: Wiki Index
 - [[ai-trends-2026-09-05]]
 - [[consolidation-2026-08-17]]
 - [[llm-wiki-tools-comparison]]
+- [[phy-sw-ai-code-review-strategy]]
 
 ## Projects
 

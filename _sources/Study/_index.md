@@ -3,10 +3,18 @@
 이 폴더는 Study 관련 원본 문서들을 모아놓은 디렉토리입니다.
 
 ## 소스 파일 목록
+- [[00_PHY_SW_Code_Review_Master_Blueprint.md]] — PHY 임베디드 SW 그룹 차세대 AI 코드 리뷰 마스터 블루프린트 (GitHub × OpenCode × DeepSeek/GLM/Qwen × ARM Clang × CMake)
+- [[01_OpenSource_Code_Review_Benchmark.md]] — 25대 오픈소스 코드 리뷰 & 정적/그래프 분석 리포지토리 전수 벤치마크
+- [[01_ipc_interface_rules.md]] — Rulebook 01: Upper-Layer IPC Interface Rules (L2/MAC ↔ L1/PHY)
+- [[02_3gpp_procedure_rules.md]] — Rulebook 02: 3GPP Standard Procedure Layer Rules
+- [[02_PHY_5Layer_Review_Invariants_Catalog.md]] — PHY 임베디드 SW 5-Layer 코드 리뷰 불변조건(Invariants) 카탈로그
+- [[03_device_hal_register_rules.md]] — Rulebook 03: Device & HAL Register Control Rules
+- [[04_isr_event_concurrency_rules.md]] — Rulebook 04: Interrupt (ISR) & Event-Driven Concurrency Rules
 - [[20260816_진짜AX_학습메모.md]] — 진짜 AX 및 Agentic Coding 학습 메모
 - [[20260901-backup-guide-v3.md]] — 20260901 AI 세컨드 브레인 강의 백업 및 활용 가이드 (v3)
 - [[20260901_슬라이드_영상제작_워크플로우.md]] — 🎬 내가 슬라이드형 동영상을 만드는 워크플로우 (청출어람 20260525)
 - [[20260903_학습노트.md]] — 🚀 [2026-09-03] GitHub 추천 리포 심층 스터디 (Headroom, Slotstream, Smolcoder, Rhema)
+- [[AGENTS.md]] — AGENTS.md — PHY Embedded SW Group Code Review Harness Rules
 - [[AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md]] — AI 시대의 새로운 패러다임 | Spec-Driven Development (스펙 주도 개발과 하네스 프레임워크)
 - [[AI_시대에_상위_1퍼센트가_되는_법.md]] — AI 시대에 상위 1%가 되는 법 — 메타 개발자의 커리어 팁 12가지
 - [[AI_혁명과_세계경제_오건영.md]] — AI 혁명이 실패하는 순간, 세계 경제는 흔들립니다 (오건영 단장 분석)
@@ -34,12 +42,17 @@
 - [[lecture_slides.md]] — 🧠 Building an Autonomous Second Brain
 - [[memphis_flat_slide_prompt.md]] — 🎨 멤피스 코퍼레이트 플랫 일러스트 슬라이드 생성 프롬프트
 - [[obsidian_llm_wiki_guide.md]] — 🧠 Obsidian LLM Wiki 구축 및 사용 완벽 가이드
+- [[phy-chief-verifier.md]] — 원본 문서 자료
+- [[phy-ipc-3gpp-auditor.md]] — 원본 문서 자료
+- [[phy-isr-hal-auditor.md]] — 원본 문서 자료
+- [[phy-review.md]] — 원본 문서 자료
 - [[second_brain_report_prompt.md]] — 📝 복합 소스 기반 초보자 맞춤형 해설 보고서 생성 프롬프트
 - [[suno_ai_songwriter_prompt.md]] — 🎵 Suno AI 감성 싱어송라이터: 당신의 이야기를 노래로 만들어드려요
 - [[오픽_건강_돌발주제_클로이.md]] — 오픽 건강 돌발 주제: 표현 & 답변 구조 총정리 (해커스 클로이)
+- [[코드_리뷰가_병목이_되는_이유_메타_시니어_AI_코드_리뷰_실밸개발자.md]] — 코드 리뷰가 병목이 되는 이유 (실밸개발자 강의 전수 분석 & PHY SW 적용)
 
 ## 관련 위키 페이지
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-10-29*
+*마지막 갱신: 2026-11-01*

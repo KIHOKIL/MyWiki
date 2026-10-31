@@ -1,0 +1,104 @@
+{
+  "title": "코드 리뷰가 병목이 되는 이유 | 메타 시니어 엔지니어가 AI 코드 리뷰 하는법",
+  "upload_date": "20260926",
+  "duration": 2303,
+  "description": "👉 AI 코드 리뷰를 직접 자동화해보려면: 클로드 코드 심화편 (Skills·Sub-Agent·Hooks) https://youtu.be/8H3NwQL-Aew\n\nPR 14개가 쌓여 있었습니다. 지금은 새벽에 AI가 다 봅니다 | 코드 리뷰 에이전트 만들기 (패스트캠퍼스 강의 무료 공개)\n\n추석 무료 공개 두 번째 편입니다. 연휴 마지막 날, 가볍게 머리 한번 깨운다는 느낌으로 보세요.\n\nAI가 코드를 훨씬 빨리 쓰기 시작하면 다음 병목은 **리뷰**입니다. 사람이 PR 14개를 붙들고 있는 동안 팀 전체가 기다리죠.\n\n이 영상에서는 저장소의 모든 PR에 자동으로 코멘트가 달리고, 리스크가 낮으면 머지까지 갈 수 있는 코드 리뷰 에이전트 워크플로우를 직접 만듭니다. PR 올리기 전(pre-push 훅)과 올린 후(GitHub Actions), 두 시점 모두 세팅합니다. 사람을 빼는 게 아니라, 사람을 더 중요한 판단에 재배치하는 겁니다.\n\n🎁 패스트캠퍼스 추석 할인 쿠폰\n· 쿠폰 코드: 26추석선물_하재상드림\n· 할인율: 40% (최대 7만원)\n· 사용 기간: 9월 24일(목) ~ 9월 27일(일)\n· 강의 페이지: https://fastcampus.co.kr/data_online_svvibecoding\n\n⏱ 타임스탬프\n00:00 추석 인사 & 무료 공개 안내\n00:53 이번 섹션에서 만들 것: 코드 리뷰 에이전트\n01:45 2024 vs 2026 — 리뷰 풍경이 어떻게 달라지는가\n02:48 AI 리뷰어의 4가지 강점\n04:10 두 갈래 리뷰 시점: PR 전 / PR 후\n06:34 리뷰 유형과 라벨 기반 리뷰 라우팅\n08:32 리스크 점수 루브릭 설계 (0~100)\n11:25 리스크별 액션 매트릭스와 자동 머지 기준\n12:38 사람이 봐야 할 것 vs AI에게 맡길 것\n13:21 도구: /code-review · Ultra Review · Codex 크로스 리뷰\n14:30 도입 전 안전 가드 — 이 섹션에서 가장 중요한 부분\n16:09 실습 ① PR 전 셀프 리뷰 훅 만들기\n21:52 커밋 대신 pre-push 훅으로\n24:30 세션 fork로 테스트하기\n26:18 일부러 버그를 심어 훅이 막는지 확인\n27:41 실습 ② GitHub Actions + GPT PR 리뷰 스크립트\n31:06 API 키가 노출됐다면 — 지우고 새로 만드세요\n34:21 테스트 PR로 risk low 판정 확인\n36:03 숙제 & 정리\n\n📌 영상에서 다루는 내용\n✅ PR 전(예방) / PR 후(정밀) 두 갈래 리뷰를 나누는 이유\n✅ 0~100 리스크 점수 루브릭과 리스크별 액션 매트릭스\n✅ 사람이 봐야 할 것 vs AI에게 맡겨도 되는 것의 경계\n✅ Codex ↔ Claude 크로스 리뷰로 확증 편향 깨기\n✅ 도입 전 안전 가드: 팀 동의, 저위험 PR부터, 보수적 임계치, 드라이런\n✅ pre-push 훅 + GitHub Actions로 실제 동작시키기\n\n🔗 영상에서 소개한 서비스와 자료\n· 1편 — 스펙 주도 개발(SDD): 〔확인: 1편 링크〕\n\n💬 오픈카톡 커뮤니티: https://open.kakao.com/o/g3Os2Lri\n\n🎓 5월 신규 강의 (패스트캠퍼스)\n강의 링크: https://fastcampus.info/4d7RN8I",
+  "chapters": [
+    {
+      "start_time": 0,
+      "title": "추석 인사 & 무료 공개 안내",
+      "end_time": 53
+    },
+    {
+      "start_time": 53,
+      "title": "이번 섹션에서 만들 것: 코드 리뷰 에이전트",
+      "end_time": 105
+    },
+    {
+      "start_time": 105,
+      "title": "2024 vs 2026 — 리뷰 풍경이 어떻게 달라지는가",
+      "end_time": 168
+    },
+    {
+      "start_time": 168,
+      "title": "AI 리뷰어의 4가지 강점",
+      "end_time": 250
+    },
+    {
+      "start_time": 250,
+      "title": "두 갈래 리뷰 시점: PR 전 / PR 후",
+      "end_time": 394
+    },
+    {
+      "start_time": 394,
+      "title": "리뷰 유형과 라벨 기반 리뷰 라우팅",
+      "end_time": 512
+    },
+    {
+      "start_time": 512,
+      "title": "리스크 점수 루브릭 설계 (0~100)",
+      "end_time": 685
+    },
+    {
+      "start_time": 685,
+      "title": "리스크별 액션 매트릭스와 자동 머지 기준",
+      "end_time": 758
+    },
+    {
+      "start_time": 758,
+      "title": "사람이 봐야 할 것 vs AI에게 맡길 것",
+      "end_time": 801
+    },
+    {
+      "start_time": 801,
+      "title": "도구: /code-review · Ultra Review · Codex 크로스 리뷰",
+      "end_time": 870
+    },
+    {
+      "start_time": 870,
+      "title": "도입 전 안전 가드 — 이 섹션에서 가장 중요한 부분",
+      "end_time": 969
+    },
+    {
+      "start_time": 969,
+      "title": "실습 ① PR 전 셀프 리뷰 훅 만들기",
+      "end_time": 1312
+    },
+    {
+      "start_time": 1312,
+      "title": "커밋 대신 pre-push 훅으로",
+      "end_time": 1470
+    },
+    {
+      "start_time": 1470,
+      "title": "세션 fork로 테스트하기",
+      "end_time": 1578
+    },
+    {
+      "start_time": 1578,
+      "title": "일부러 버그를 심어 훅이 막는지 확인",
+      "end_time": 1661
+    },
+    {
+      "start_time": 1661,
+      "title": "실습 ② GitHub Actions + GPT PR 리뷰 스크립트",
+      "end_time": 1866
+    },
+    {
+      "start_time": 1866,
+      "title": "API 키가 노출됐다면 — 지우고 새로 만드세요",
+      "end_time": 2061
+    },
+    {
+      "start_time": 2061,
+      "title": "테스트 PR로 risk low 판정 확인",
+      "end_time": 2163
+    },
+    {
+      "start_time": 2163,
+      "title": "숙제 & 정리",
+      "end_time": 2303
+    }
+  ],
+  "channel": "실밸개발자"
+}

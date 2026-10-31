@@ -28,3 +28,8 @@ updated: 2026-08-17
 ## 연관 개념
 - [[agentic-scaffolding]]
 - [[issueops]]
+- [[hybrid-rule-agent-review]]
+- [[phy-embedded-code-review]]
+- [[open-code-review]]
+- [[opencode]]
+- [[phy-sw-ai-code-review-strategy]]

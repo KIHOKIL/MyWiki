@@ -1,9 +1,13 @@
 ---
 title: Hot Cache
-updated: 2026-10-29
+updated: 2026-10-31
 ---
 
 ## Recent Activity
+- **PHY Embedded SW AI Code Review Deep Research & Lecture Curation (2026-10-31):**
+  - **강의 아카이브 신설 (`_sources/Study/AI-Lectures/실밸개발자/20261031_AI_Code_Review/`):** 실밸개발자 강의(`Be5b6D1IoLI`, 19개 챕터) 전수 연구 노트(`코드_리뷰가_병목이_되는_이유_메타_시니어_AI_코드_리뷰_실밸개발자.md`), 다크테마 리포트(`lecture_report.html`), 슬라이드 덱(`slides/index.html`), 클린 자막(`clean_transcript.txt`), 프롬프트 3종(`prompts/prompt_01~03.txt`) 구축.
+  - **PHY 임베디드 SW 심층 연구 및 PoC 하네스 (`_sources/Study/Code-Review/PHY-Embedded-SW/20261031_Deep_Research/`):** `GitHub + OpenCode + DeepSeek/GLM/Qwen + ARM Clang + CMake` 환경 맞춤형 `00_PHY_SW_Code_Review_Master_Blueprint.md`, 25대 오픈소스 실시간 벤치마크(`01_OpenSource_Code_Review_Benchmark.md`), 5-Layer 불변조건 카탈로그(`02_PHY_5Layer_Review_Invariants_Catalog.md`), 즉시 적용 가능한 PoC 패키지(`03_PHY_Review_Harness_PoC/`) 구축.
+  - **지식 그래프 연결:** [[synthesis/phy-sw-ai-code-review-strategy|PHY 임베디드 SW 하이브리드 AI 코드 리뷰 전략]] 생성 및 `index.md` 동기화.
 - **Spec-Driven Development (SDD) & Harness Framework Deep Ingestion (2026-10-29):**
   - **도메인 아카이브:** `_sources/Study/AI-Lectures/실밸개발자/20261029_Spec_Driven_Development/` 폴더 신설.
   - **산출물 구축:**

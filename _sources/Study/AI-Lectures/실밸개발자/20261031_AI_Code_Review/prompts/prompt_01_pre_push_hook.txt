@@ -1,0 +1,25 @@
+# ==============================================================================
+# [실밸개발자 원본 프롬프트 1] Pre-commit ➡️ Pre-push 코드 리뷰 훅 셋업
+# 출처: 코드 리뷰가 병목이 되는 이유 | 메타 시니어 엔지니어가 AI 코드 리뷰 하는법 (Ch. 09:05 ~ 15:54)
+# ==============================================================================
+
+## 1. 초기 요청 프롬프트 (Pre-commit 훅 탐색)
+"어, pre-commit hook 하나 add 하고 싶어. Claude hook이고, commit 하기 전에 코드 리뷰를 꼭 돌려주는 그 Claude의 '/codereview' 커맨드가 있거든? 그걸 꼭 돌려주는 hook을 설정을 해서 add를 해줘."
+
+## 2. 피벗 프롬프트 (Pre-commit ➡️ Pre-push 훅으로 전환)
+"커밋 전이 아니라 PR 생성 전으로 가자."
+(※ 설계 근거: 커밋할 때마다 LLM 리뷰가 돌면 수십 초씩 블로킹되어 로컬 개발 템포가 끊기므로, `git push` 직전 `pre-push` 훅에서 원격 브랜치 대비 변경 커밋 전체를 한 번에 검사하도록 전환)
+
+## 3. 생성된 `.githooks/pre-push` 핵심 동작 규격
+- `git diff $remote_sha..$local_sha` (신규 브랜치의 경우 `origin/HEAD..$local_sha`) 추출
+- 헤드리스 CLI 호출 (`claude -p` 또는 `opencode run`)
+- 프롬프트 지시사항:
+  - "Review this git diff that is about to be pushed."
+  - "Focus ONLY on issues that should block a PR: bugs, security issues, broken logic, missing error handling at system boundaries, accidental debug code/secrets."
+  - "Skip style nitpicks."
+  - "Keep it concise (under 25 lines)."
+  - "On the VERY LAST LINE output exactly `VERDICT: PASS` or `VERDICT: FAIL` (FAIL only for real bugs/security issues, not warnings)."
+- 판정 처리:
+  - `VERDICT: FAIL` ➡️ 빨간색 경고 출력 후 `exit 1`로 push 차단 (긴급 우회 시 `SKIP_CLAUDE_REVIEW=1 git push` 또는 `--no-verify` 안내)
+  - `VERDICT: PASS` ➡️ 초록색 통과 메시지 출력 후 `exit 0`
+  - CLI 미설치 또는 API 타임아웃 시 ➡️ **Fail-Open** (`exit 0`, 경고만 출력하고 개발자 워크플로우를 영구 차단하지 않음)

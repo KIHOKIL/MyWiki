@@ -93,6 +93,9 @@ graph LR
 
 ## 🔗 연관 개념 및 문서
 - [[concepts/semantic-codegraph-indexer|시맨틱 코드그래프 인덱서 (구현)]]
+- [[concepts/phy-embedded-code-review|PHY 임베디드 코드 리뷰 아키텍처]]
+- [[concepts/isr-concurrency-verification|인터럽트 및 이벤트 구동 동시성 검증]]
+- [[synthesis/phy-sw-ai-code-review-strategy|PHY 임베디드 SW 하이브리드 AI 코드 리뷰 전략]]
 - [[concepts/active-second-brain|Active 2nd Brain]]
 - [[concepts/embedded-software|임베디드 소프트웨어]]
 - [[concepts/graph-rag|Graph-RAG]]

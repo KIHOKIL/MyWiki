@@ -372,5 +372,31 @@
       "concepts/harness-engineering.md",
       "entities/harness-framework.md"
     ]
+  },
+  "_sources/Study/AI-Lectures/실밸개발자/20261031_AI_Code_Review/코드_리뷰가_병목이_되는_이유_메타_시니어_AI_코드_리뷰_실밸개발자.md": {
+    "path": "_sources/Study/AI-Lectures/실밸개발자/20261031_AI_Code_Review/코드_리뷰가_병목이_되는_이유_메타_시니어_AI_코드_리뷰_실밸개발자.md",
+    "timestamps": {
+      "ingested": "2026-11-01T01:38:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/hybrid-rule-agent-review.md",
+      "concepts/phy-embedded-code-review.md",
+      "synthesis/phy-sw-ai-code-review-strategy.md"
+    ]
+  },
+  "_sources/Study/Code-Review/PHY-Embedded-SW/20261031_Deep_Research/00_PHY_SW_Code_Review_Master_Blueprint.md": {
+    "path": "_sources/Study/Code-Review/PHY-Embedded-SW/20261031_Deep_Research/00_PHY_SW_Code_Review_Master_Blueprint.md",
+    "timestamps": {
+      "ingested": "2026-11-01T01:38:00+09:00"
+    },
+    "pages_produced": [
+      "concepts/phy-embedded-code-review.md",
+      "concepts/isr-concurrency-verification.md",
+      "concepts/hybrid-rule-agent-review.md",
+      "entities/open-code-review.md",
+      "entities/opencode.md",
+      "entities/farol.md",
+      "synthesis/phy-sw-ai-code-review-strategy.md"
+    ]
   }
-}
+}

@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+# ==============================================================================
+# PHY Embedded SW Group — Pre-Push 2-Tier Self-Review Gate (.githooks/pre-push)
+# Tier 1: Deterministic AST-Grep 5-Layer Scan (< 1s, 0 tokens)
+# Tier 2: OpenCode Headless Cross-Model Review (DeepSeek-V3/R1)
+# ==============================================================================
+set -u
+
+if [ "${SKIP_PHY_REVIEW:-0}" = "1" ]; then
+  echo "⚠️  [PHY Pre-Push] SKIP_PHY_REVIEW=1 설정으로 로컬 리뷰 게이트를 건너뜁니다."
+  exit 0
+fi
+
+remote="$1"
+url="$2"
+zero_sha="0000000000000000000000000000000000000000"
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  if [ "$local_sha" = "$zero_sha" ]; then
+    continue
+  fi
+
+  if [ "$remote_sha" = "$zero_sha" ]; then
+    base_sha=$(git merge-base origin/main "$local_sha" 2>/dev/null || git rev-parse "${local_sha}~1")
+  else
+    base_sha="$remote_sha"
+  fi
+
+  changed_files=$(git diff --name-only "$base_sha" "$local_sha" -- '*.c' '*.h' '*.cpp' '*.hpp')
+  if [ -z "$changed_files" ]; then
+    echo "✅ [PHY Pre-Push] C/C++ 변경 파일 없음 — 통과합니다."
+    exit 0
+  fi
+
+  echo "🔍 [Tier 1/2] Running deterministic AST-Grep PHY 5-Layer rules..."
+  if command -v ast-grep >/dev/null 2>&1 && [ -f ".ast-grep/rules/phy-hal-isr-rules.yml" ]; then
+    # Scan only changed files
+    if ! echo "$changed_files" | xargs ast-grep scan --rule .ast-grep/rules/phy-hal-isr-rules.yml; then
+      echo "❌ [PHY Pre-Push BLOCKED] 결정론적 AST 규칙 위반(W1C |= 오용, 무한 폴링 루프, ISR 금지 함수 등)이 발견되었습니다."
+      echo "   수정 후 다시 git push 하십시오. (긴급 우회: SKIP_PHY_REVIEW=1 git push)"
+      exit 1
+    fi
+  fi
+
+  echo "🤖 [Tier 2/2] Running OpenCode Headless Cross-Model Self-Review (DeepSeek)..."
+  if ! command -v opencode >/dev/null 2>&1; then
+    echo "⚠️  [PHY Pre-Push] opencode CLI를 찾을 수 없어 Fail-Open으로 통과합니다."
+    exit 0
+  fi
+
+  diff_content=$(git diff -U5 "$base_sha" "$local_sha" -- '*.c' '*.h' '*.cpp' '*.hpp' | head -c 60000)
+
+  review_output=$(opencode run \
+    --model "${PHY_REVIEW_MODEL:-litellm/deepseek-v3}" \
+    --agent phy-chief-verifier \
+    "Review this git diff about to be pushed to PHY Embedded SW repository. Focus ONLY on confirmed blocking defects across our 5 layers (ISR latency/blocking, HAL W1C/volatile/RMW race, IPC alignment & DMB/DSB barriers, 3GPP FSM dead-ends, Device clock/power sequence). Keep output under 35 lines and end with exact final line VERDICT: PASS or VERDICT: FAIL.
+
+\`\`\`diff
+${diff_content}
+\`\`\`" 2>/dev/null) || {
+    echo "⚠️  [PHY Pre-Push] OpenCode 호출 타임아웃/오류 발생 — 개발 블로킹 방지를 위해 Fail-Open으로 통과합니다."
+    exit 0
+  }
+
+  echo "$review_output"
+  verdict=$(echo "$review_output" | grep -E "^VERDICT: (PASS|FAIL)" | tail -n 1)
+
+  if [ "$verdict" = "VERDICT: FAIL" ]; then
+    echo "❌ [PHY Pre-Push BLOCKED] OpenCode 셀프 리뷰에서 치명적 결함(VERDICT: FAIL)이 검출되어 푸시를 중단합니다."
+    echo "   긴급 상황 시 우회 명령어: SKIP_PHY_REVIEW=1 git push"
+    exit 1
+  fi
+
+  echo "✅ [PHY Pre-Push PASSED] 모든 정적/에이전트 게이트를 통과했습니다."
+done
+
+exit 0

@@ -1,0 +1,47 @@
+id: phy-hal-w1c-or-assign
+language: c
+severity: error
+message: "[PHY-HAL-01] Write-1-to-Clear (W1C) 또는 상태 클리어 레지스터에 '|=' 연산을 사용하면 다른 펜딩 인터럽트 비트가 동시에 소거됩니다. 단순 대입('=')을 사용하십시오."
+rule:
+  pattern: $REG |= $VAL
+  constraints:
+    REG:
+      regex: "(W1C|CLR|CLEAR|PEND|IRQ_STAT|INT_STAT)"
+---
+id: phy-isr-unbounded-while-poll
+language: c
+severity: error
+message: "[PHY-ISR-02] 하드웨어 레지스터 폴링 while 루프 내부에 timeout 카운터 감소나 break 탈출 조건이 없습니다. HW 글리치 시 코어 무한 행(Hang)을 유발합니다."
+rule:
+  pattern: |
+    while ($COND) {
+      $$$BODY
+    }
+  not:
+    any:
+      - has:
+          pattern: break;
+      - has:
+          pattern: return $$$;
+      - has:
+           regex: "timeout|retry|cnt|count"
+---
+id: phy-isr-forbidden-blocking-calls
+language: c
+severity: error
+message: "[PHY-ISR-01] ISR 또는 실시간 크리티컬 경로 내에서 블로킹 OS API, 동적 메모리 할당(malloc/free), 무거운 printf 호출은 금지됩니다."
+rule:
+  any:
+    - pattern: malloc($$$)
+    - pattern: calloc($$$)
+    - pattern: free($$$)
+    - pattern: osDelay($$$)
+    - pattern: pthread_mutex_lock($$$)
+    - pattern: xSemaphoreTake($$$)
+---
+id: phy-hal-signed-bit-shift-31
+language: c
+severity: warning
+message: "[PHY-HAL-03] 부호 있는 정수 리터럴 '1 << $SHIFT'는 31비트 시프트 시 Undefined Behavior를 유발합니다. 반드시 '1U << $SHIFT' (Unsigned)를 사용하십시오."
+rule:
+  pattern: 1 << $SHIFT
