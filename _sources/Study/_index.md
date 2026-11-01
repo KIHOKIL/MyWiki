@@ -9,6 +9,7 @@
 - [[02_3gpp_procedure_rules.md]] — Rulebook 02: 3GPP Standard Procedure Layer Rules
 - [[02_PHY_5Layer_Review_Invariants_Catalog.md]] — PHY 임베디드 SW 5-Layer 코드 리뷰 불변조건(Invariants) 카탈로그
 - [[03_device_hal_register_rules.md]] — Rulebook 03: Device & HAL Register Control Rules
+- [[04_Deep_Dive_CodeGraph_and_Context_Engineering.md]] — PHY 임베디드 SW를 위한 Code Graph 구축 및 AI Context Engineering 심층 가이드 (개발 레벨)
 - [[04_isr_event_concurrency_rules.md]] — Rulebook 04: Interrupt (ISR) & Event-Driven Concurrency Rules
 - [[20260816_진짜AX_학습메모.md]] — 진짜 AX 및 Agentic Coding 학습 메모
 - [[20260901-backup-guide-v3.md]] — 20260901 AI 세컨드 브레인 강의 백업 및 활용 가이드 (v3)
