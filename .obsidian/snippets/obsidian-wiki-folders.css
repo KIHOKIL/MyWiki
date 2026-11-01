@@ -1,0 +1,9 @@
+/* Written by obsidian-wiki setup: one color per wiki category, matching the graph view. */
+.nav-folder-title[data-path^="concepts"] { color: #4f8ef7; }
+.nav-folder-title[data-path^="entities"] { color: #f2a541; }
+.nav-folder-title[data-path^="skills"] { color: #3cc48a; }
+.nav-folder-title[data-path^="references"] { color: #9b8cf2; }
+.nav-folder-title[data-path^="synthesis"] { color: #ef5d7a; }
+.nav-folder-title[data-path^="journal"] { color: #7fb8c9; }
+.nav-folder-title[data-path^="projects"] { color: #c9a227; }
+.nav-folder-title[data-path^="_"] { opacity: 0.55; }
