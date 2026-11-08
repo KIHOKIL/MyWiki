@@ -168,3 +168,4 @@ sp_sub.font.color.rgb = TEXT_WHITE
 
 prs.save(out_pptx)
 print(f"Successfully generated Presenton-style presentation: {out_pptx}")
+
