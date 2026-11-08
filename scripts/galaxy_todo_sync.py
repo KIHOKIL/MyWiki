@@ -170,6 +170,50 @@ def add_task(title: str, notes: Optional[str] = None, due_time: Optional[str] = 
         print(f"❌ 작업 등록 실패: {err}")
 
 
+def complete_tasks(queries: List[str]):
+    """
+    Complete one or more tasks by their 1-based list index or title keyword substring.
+    """
+    creds = get_credentials()
+    service = get_tasks_service(creds)
+    try:
+        results = service.tasks().list(tasklist="@default", showCompleted=False).execute()
+        items = results.get("items", [])
+        if not items:
+            print("📋 현재 완료 처리할 미완료 할 일이 없습니다.")
+            return
+
+        matched_tasks = []
+        for q in queries:
+            q_str = q.strip()
+            # Check if q_str is a 1-based index from list_today_tasks
+            if q_str.isdigit():
+                idx = int(q_str) - 1
+                if 0 <= idx < len(items):
+                    matched_tasks.append(items[idx])
+                    continue
+            # Otherwise match by title substring (case-insensitive)
+            for item in items:
+                if q_str.lower() in item.get("title", "").lower() and item not in matched_tasks:
+                    matched_tasks.append(item)
+
+        if not matched_tasks:
+            print(f"⚠️ 일치하는 미완료 할 일을 찾지 못했습니다: {queries}")
+            return
+
+        for task in matched_tasks:
+            task["status"] = "completed"
+            updated = service.tasks().update(
+                tasklist="@default",
+                task=task["id"],
+                body=task
+            ).execute()
+            print(f"✔️ [완료 처리됨] {updated.get('title')}")
+
+    except HttpError as err:
+        print(f"❌ 완료 처리 실패: {err}")
+
+
 def main():
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
@@ -187,6 +231,10 @@ def main():
     add_p.add_argument("--time", "-t", help="마감 또는 실행 시간 (예: 15:30 또는 2026-11-08T15:30:00)")
     add_p.add_argument("--alarm", "-a", action="store_true", help="스마트폰 캘린더 팝업 알림 동시 등록")
 
+    # Complete command
+    done_p = subparsers.add_parser("done", help="할 일 완료 체크 (번호 또는 제목 키워드)")
+    done_p.add_argument("queries", nargs="+", help="완료할 작업의 목록 번호 또는 제목 키워드")
+
     # Auth check command
     subparsers.add_parser("auth", help="OAuth 인증 테스트 및 토큰 생성")
 
@@ -196,6 +244,8 @@ def main():
         list_today_tasks()
     elif args.command == "add":
         add_task(args.title, notes=args.notes, due_time=args.time, add_calendar_alarm=args.alarm)
+    elif args.command == "done":
+        complete_tasks(args.queries)
     elif args.command == "auth":
         get_credentials()
         print("✅ 인증 및 토큰 검증이 완료되었습니다.")

@@ -4,6 +4,10 @@ updated: 2026-11-08
 ---
 
 ## Recent Activity
+- **Meta Astryx (`meta/astryx`) Agent-Native Architecture & Knowledge Contracts Study (2026-11-08):**
+  - **연구 노트 및 엔티티 신설:** `_sources/Study/Agentic-Engineering/Meta-Astryx/20261108_Meta_Astryx_Architecture.md` 및 [[entities/meta-astryx|Meta Astryx (meta/astryx)]] 생성.
+  - **핵심 아키텍처 해부:** (1) 파이프(`|`) 구분자 기반 초고밀도 `AGENTS.md` 및 500ms 부트스트랩 `--dense`/`--skeleton` CLI, (2) 스펙-코드 양방향 링커 `pnpm specs:for <path>` 및 `authority: draft | current | archived` 상태 머신, (3) `review-applicability:v1` 시맨틱 트리거 리뷰 라우팅, (4) `internal/vibe-tests` 5대 공정 평가 불변조건 및 `/vibe-test --degradation` 10턴 문맥 열화 곡선 측정 체계 도출 및 모바일 PHY 임베디드 SW 그룹 적용 전략 수립.
+  - **Google Tasks 동기화 (`galaxy_todo_sync.py done`):** 할 일 #1(실밸개발자 2nd Brain & Eval), #5(Meta Astryx 살펴보기), #7(오피스 문서 툴 설치 및 테스트) 3건 완료 체크 처리 (잔여 미완료 4건).
 - **Meta Senior SWE Second Brain & Eval Full Lecture Study & Multi-Format Suite (2026-11-08):**
   - **강의 아카이브 신설 (`_sources/Study/AI-Lectures/실밸개발자/20261108_2ndBrain_and_Eval/`):** 실밸개발자(하재상, Meta 시니어 엔지니어) 1시간 17분 풀 세미나(`AyKq4zFfrlc`) 36,179자 전수 자막(`clean_transcript.txt`, `yt_sub_AyKq4zFfrlc.ko.vtt`) 추출 및 타임라인별 심화 분석 완료.
   - **6대 비주얼 산출물 & 강사 원본 슬라이드 CV 추출 파이프라인 구축 (`doc-visualizer-suite` & `lecture-html-curator` 전 스킬 반영):**

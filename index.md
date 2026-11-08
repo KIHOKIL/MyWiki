@@ -87,6 +87,7 @@ title: Wiki Index
 
 - [[improve-token-efficiency]]
 - [[isaac-groot]]
+- [[meta-astryx]]
 - [[neo4j]]
 - [[news-summarizer]]
 - [[notebooklm]]

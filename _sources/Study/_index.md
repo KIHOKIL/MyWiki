@@ -17,6 +17,7 @@
 - [[20260901-backup-guide-v3.md]] — 20260901 AI 세컨드 브레인 강의 백업 및 활용 가이드 (v3)
 - [[20260901_슬라이드_영상제작_워크플로우.md]] — 🎬 내가 슬라이드형 동영상을 만드는 워크플로우 (청출어람 20260525)
 - [[20260903_학습노트.md]] — 🚀 [2026-09-03] GitHub 추천 리포 심층 스터디 (Headroom, Slotstream, Smolcoder, Rhema)
+- [[20261108_Meta_Astryx_Architecture.md]] — Meta Astryx (`meta/astryx`) 심층 해부 — Agent-Ready 아키텍처와 Knowledge Contracts
 - [[AGENTS.md]] — AGENTS.md — PHY Embedded SW Group Code Review Harness Rules
 - [[AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md]] — AI 시대의 새로운 패러다임 | Spec-Driven Development (스펙 주도 개발과 하네스 프레임워크)
 - [[AI_시대에_상위_1퍼센트가_되는_법.md]] — AI 시대에 상위 1%가 되는 법 — 메타 개발자의 커리어 팁 12가지

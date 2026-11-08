@@ -4,6 +4,12 @@ title: Wiki Log
 
 # Wiki Log
 
+- [2026-11-08 21:10] FEAT: Meta Astryx (`meta/astryx`) Deep Architecture Analysis & 2nd Brain / Eval Full Suite
+  - **Meta Astryx Study & Entity:** Created `_sources/Study/Agentic-Engineering/Meta-Astryx/20261108_Meta_Astryx_Architecture.md` and [[entities/meta-astryx|Meta Astryx (meta/astryx)]] analyzing its 4 Agent-Native pillars: pipe-delimited ultra-dense `AGENTS.md` + `--dense` CLI, `pnpm specs:for <path>` bidirectional Knowledge Contracts (`authority: draft | current | archived`), semantic trigger review routing (`review-applicability:v1`), and `internal/vibe-tests` (5 Checker Protocol invariants + 10-turn context degradation curve `/vibe-test --degradation`).
+  - **Meta Senior 2nd Brain & Eval Lecture Suite (`AyKq4zFfrlc`):** Built 8-format study suite in `_sources/Study/AI-Lectures/실밸개발자/20261108_2ndBrain_and_Eval/` including Bento Grid PPTX (`08_Bento_Grid_Presentation.pptx` with concentric rounded rectangle curved accent bars & COM visual QA) and CV-extracted Instructor Original Slidebook (`09_Instructor_Original_Slides_Book.pdf` & `10_Instructor_Original_Slides_Deck.pptx`, 68 slides).
+  - **Skill Ecosystem Upgrade:** Integrated Bento curved PPTX, PowerPoint COM visual QA, and CV slide extraction across `doc-visualizer-suite`, `lecture-html-curator`, `youtube-summarizer`, `presentation-slides`, and `slide-video-pipeline`.
+  - **Galaxy To-Do Sync:** Added `done` subcommand to `scripts/galaxy_todo_sync.py` and marked Tasks #1, #5, and #7 as completed in Google Tasks.
+
 - [2026-10-29 22:00] FEAT: Spec-Driven Development (SDD) & Harness Framework Deep Ingestion
   - **Source Material:** YouTube `v6UAPUnOSxA` (실밸개발자, 61분) & GitHub `jha0313/harness_framework`.
   - **Knowledge Note:** Created `_sources/Study/AI-Lectures/실밸개발자/20261029_Spec_Driven_Development/AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자.md` (30KB+, 25개 챕터 전수 Zero-Loss 분석, TDD 한계 및 SDD 5단계 루프, 5대 멘탈 모델).
