@@ -4,6 +4,7 @@
 
 ## 소스 파일 목록
 - [[00_PHY_SW_Code_Review_Master_Blueprint.md]] — PHY 임베디드 SW 그룹 차세대 AI 코드 리뷰 마스터 블루프린트 (GitHub × OpenCode × DeepSeek/GLM/Qwen × ARM Clang × CMake)
+- [[01_Meta_Senior_2ndBrain_and_Eval_Notes.md]] — 🧠 메타 시니어 엔지니어 세미나: AI 에이전트를 위한 2nd Brain과 Eval
 - [[01_OpenSource_Code_Review_Benchmark.md]] — 25대 오픈소스 코드 리뷰 & 정적/그래프 분석 리포지토리 전수 벤치마크
 - [[01_ipc_interface_rules.md]] — Rulebook 01: Upper-Layer IPC Interface Rules (L2/MAC ↔ L1/PHY)
 - [[02_3gpp_procedure_rules.md]] — Rulebook 02: 3GPP Standard Procedure Layer Rules
@@ -56,4 +57,4 @@
 *아직 인제스트되지 않았습니다. wiki-ingest를 실행하여 지식을 wiki로 변환하세요.*
 
 ---
-*마지막 갱신: 2026-11-01*
+*마지막 갱신: 2026-11-08*

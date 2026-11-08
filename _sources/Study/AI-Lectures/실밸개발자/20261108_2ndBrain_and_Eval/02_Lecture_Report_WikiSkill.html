@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>실밸개발자 세미나: AI 에이전트를 위한 2nd Brain & Eval 프레임워크</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: rgba(139, 148, 158, 0.2);
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --green: #3fb950;
+    --purple: #bc8cff;
+    --orange: #f0883e;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    display: flex;
+    min-height: 100vh;
+  }
+  aside.toc {
+    width: 260px;
+    background: #090d13;
+    border-right: 1px solid var(--border);
+    position: fixed;
+    top: 0; bottom: 0; left: 0;
+    padding: 24px 16px;
+    overflow-y: auto;
+  }
+  aside.toc h3 { font-size: 11px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.08em; }
+  aside.toc a { display: block; color: var(--muted); text-decoration: none; font-size: 13px; padding: 6px 10px; border-radius: 6px; margin-bottom: 2px; }
+  aside.toc a:hover, aside.toc a.active { background: rgba(88, 166, 255, 0.12); color: var(--accent); font-weight: 600; }
+  main { margin-left: 260px; flex: 1; padding: 36px 48px; max-width: 1100px; }
+  header {
+    background: linear-gradient(135deg, #161b22 0%, #1e1b4b 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+  h1 { font-size: 26px; color: #fff; margin-bottom: 10px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; background: rgba(88, 166, 255, 0.15); color: var(--accent); margin-right: 6px; }
+  section.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 24px;
+  }
+  h2 { font-size: 20px; color: #fff; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  h3 { font-size: 16px; color: var(--accent); margin: 20px 0 10px; }
+  p { font-size: 14.5px; color: #cbd5e1; margin-bottom: 12px; }
+  ul { margin-left: 20px; color: #cbd5e1; font-size: 14px; margin-bottom: 14px; }
+  li { margin-bottom: 6px; }
+  .callout { background: rgba(0,0,0,0.3); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 13.5px; }
+  .callout.green { border-left-color: var(--green); }
+  .callout.purple { border-left-color: var(--purple); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .box h4 { font-size: 14px; color: #fff; margin-bottom: 8px; }
+</style>
+</head>
+<body>
+
+<aside class="toc">
+  <h3>Meta Senior Seminar</h3>
+  <a href="#summary" class="active">Overview & 핵심 테제</a>
+  <a href="#bottleneck">1. 패러다임 변화 (하네스)</a>
+  <a href="#secondbrain">2. 2nd Brain (Graph + Memory)</a>
+  <a href="#eval">3. Eval (EDD 검증 파이프라인)</a>
+  <a href="#action">4. 실무 액션 플랜</a>
+</aside>
+
+<main>
+  <header id="summary">
+    <span class="badge">Meta Senior 8-Year Tech Lead</span>
+    <span class="badge">Second Brain</span>
+    <span class="badge">Eval-Driven Dev</span>
+    <h1>AI 에이전트를 위한 2nd Brain과 Eval 프레임워크</h1>
+    <p style="color: #94a3b8; font-size: 14.5px;">
+      실밸개발자 세미나 전수 분석: 코드를 짜는 속도가 아니라, <strong>컨텍스트(2nd Brain)를 먹이고 결과물을 검증(Eval)하는 시스템 하네스</strong>가 개발자의 진짜 경쟁력입니다.
+    </p>
+  </header>
+
+  <section id="bottleneck" class="card">
+    <h2>1. AI 시대의 진짜 병목과 하네스(Harness) 전환</h2>
+    <p>AI 코딩 도입 이후 코드 작성은 초고속화되었으나, 그로 인해 <strong>대형 PR 범람, 버그 추적 부담, 리뷰 병목</strong>이 수배로 증가했습니다.</p>
+    <div class="callout green">
+      <strong>핵심 통찰:</strong> 에이전트에게 매번 프롬프트를 깎아서 주는 것은 아마추어 방식입니다. <strong>컨텍스트 주입과 검증을 자동으로 수행하는 '하네스' 시스템</strong>을 구축해야 에이전트에게 일을 완전히 위임할 수 있습니다.
+    </div>
+  </section>
+
+  <section id="secondbrain" class="card">
+    <h2>2. 개발자용 세컨드 브레인: 2대 핵심 기둥</h2>
+    <div class="grid-2">
+      <div class="box">
+        <h4>🕸️ 기둥 1: Codebase Graph (지도)</h4>
+        <ul>
+          <li>단순 텍스트 검색(grep)이나 벡터 RAG의 한계 극복</li>
+          <li>컴파일러 AST 기반 함수 호출망 및 심볼 링킹</li>
+          <li>$k$-Hop 그래프를 통해 코드 변경 시 영향 반경(Blast Radius) 자동 계산</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h4>🧠 기둥 2: Code Memory (역사/맥락)</h4>
+        <ul>
+          <li>코드 자체에는 없는 "왜 이렇게 설계했는가?"(Why) 축적</li>
+          <li>과거 버그 회고록, 커밋 의사결정 히스토리</li>
+          <li>에이전트가 신임 시니어 개발자처럼 프로젝트 맥락을 즉시 온보딩</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="eval" class="card">
+    <h2>3. Eval: 에이전트 품질을 증명하는 정량적 검증</h2>
+    <p>테스트 코드 없이 프로덕션에 배포할 수 없듯이, <strong>Eval 없는 AI 에이전트와 스킬은 실무에 쓸 수 없습니다.</strong></p>
+    <ul>
+      <li><strong>Trigger 검증:</strong> 스킬과 에이전트가 필요한 순간에만 정확히 호출되는가?</li>
+      <li><strong>품질 향상 증명:</strong> 기존 대비 성능과 정확도가 객관적 지표로 향상되었는가?</li>
+      <li><strong>Side-Effect 방지:</strong> 새로운 프롬프트나 스킬이 다른 기존 정상 동작을 망가뜨리지 않았는가?</li>
+      <li><strong>CI 파이프라인 결합:</strong> 개발자 PC에서만 돌리는 것이 아니라 GitHub Actions PR 검사 단계에서 자동 실행</li>
+    </ul>
+  </section>
+
+  <section id="action" class="card">
+    <h2>4. 우리 볼트(Brain) 및 실무 적용 시사점</h2>
+    <div class="callout purple">
+      <strong>우리의 실천 과제:</strong> 우리가 구축한 <code>ARM Clang Code Graph</code>와 <code>OpenCode 5-Layer 불변조건 검증기</code>를 GitHub CI 상의 정량적 Eval 체계와 결합하여, 인간 시니어 엔지니어의 리뷰 부담을 80% 줄이는 진정한 2nd Brain을 완성합니다.
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
