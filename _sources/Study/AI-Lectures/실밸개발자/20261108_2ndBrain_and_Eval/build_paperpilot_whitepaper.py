@@ -224,3 +224,4 @@ if os.path.exists(chart_path):
 # Build Document
 doc.build(story, canvasmaker=NumberedCanvas)
 print(f"PaperPilot-standard Executive Whitepaper successfully built: {pdf_path}")
+
