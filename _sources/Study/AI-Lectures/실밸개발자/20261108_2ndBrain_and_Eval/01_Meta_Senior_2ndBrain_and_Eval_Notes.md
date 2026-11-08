@@ -80,3 +80,4 @@ flowchart TD
    * 이미 우리가 구축한 `ARM Clang .clangd 정규화 + Property Graph (ISR Distance)`가 메타 시니어가 말한 Codebase Graph의 정석 구현체임.
 2. **Eval 파이프라인 도입:**
    * 코드 리뷰 에이전트(`phy-chief-verifier`)의 반증(Disproving) 패스를 GitHub CI에 태워 오탐율(False Positive)을 $0\%$로 제어하는 Eval 체계 완성 필요.
+

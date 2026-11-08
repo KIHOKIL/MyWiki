@@ -12,6 +12,7 @@
 - [[03_device_hal_register_rules.md]] — Rulebook 03: Device & HAL Register Control Rules
 - [[04_Deep_Dive_CodeGraph_and_Context_Engineering.md]] — PHY 임베디드 SW를 위한 Code Graph 구축 및 AI Context Engineering 심층 가이드 (개발 레벨)
 - [[04_isr_event_concurrency_rules.md]] — Rulebook 04: Interrupt (ISR) & Event-Driven Concurrency Rules
+- [[05_Office_Tools_Deep_Benchmark.md]] — 🚀 차세대 오피스/문서 자동화 3대 오픈소스 심층 비교 & 벤치마킹 리포트
 - [[20260816_진짜AX_학습메모.md]] — 진짜 AX 및 Agentic Coding 학습 메모
 - [[20260901-backup-guide-v3.md]] — 20260901 AI 세컨드 브레인 강의 백업 및 활용 가이드 (v3)
 - [[20260901_슬라이드_영상제작_워크플로우.md]] — 🎬 내가 슬라이드형 동영상을 만드는 워크플로우 (청출어람 20260525)
