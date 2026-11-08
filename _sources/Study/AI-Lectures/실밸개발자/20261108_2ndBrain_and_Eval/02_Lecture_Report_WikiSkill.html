@@ -269,13 +269,57 @@
 
   <!-- Section 6 -->
   <section class="card" id="sandbox-maturity">
-    <h2>6. 샌드박스 무균 격리 & 메타의 Eval 성숙도 5단계</h2>
-    <h3>6.1 Sandbox Isolation (무균 격리 원칙)</h3>
+    <h2>6. 샌드박스 무균 격리 4대 원칙 &amp; 메타의 Eval 성숙도 6단계</h2>
+    <h3>6.1 에이전트 스킬 평가(Skill Evaluation)에서 4가지를 원천 차단하는 이유</h3>
     <p>
-      에이전트가 정답 파일(Ground Truth)을 미리 읽거나 로컬의 전역 설정(<code>~/.claude/settings.json</code>)에 오염되지 않도록 매 평가 실행마다 독립된 임시 컨테이너에서 무균 실행합니다.
+      에이전트 스킬 평가에서 아래 4가지를 차단하는 핵심 이유는 <strong>데이터 오염(Data Contamination) 및 컨텍스트 누수를 방지하고, 오직 테스트 대상 스킬의 순수한 효용성만을 객관적으로 검증하기 위함</strong>입니다.
+      LLM 기반 에이전트는 목표를 달성하기 위해 가용한 모든 파일 시스템과 도구를 적극적으로 탐색하려는 특성(<strong>Reward Hacking / 보상 해킹</strong>)이 있기 때문에, 격리된 샌드박스 환경을 강제하지 않으면 평가 결과가 심각하게 왜곡됩니다.
     </p>
+    <ul>
+      <li><strong>1. 원본 Repo 차단 (스킬 개발 소스 및 메타데이터 격리):</strong> 스킬이 개발된 원본 저장소의 테스트 생성 스크립트, 출제 의도, <code>git log</code> / <code>git diff</code> 등 컨닝 페이퍼를 차단하고, 실제 배포 환경(패키징된 스킬 폴더만 존재하는 APFS clone)을 그대로 모사합니다.</li>
+      <li><strong>2. 정답 차단 (Ground Truth / Golden Patch 은닉):</strong> 에이전트가 <code>find</code>나 <code>grep</code>으로 정답 파일(<code>answer-keys/FA01.json</code>, <code>expected_output.json</code>)이나 채점 스크립트를 찾아 베끼는 <strong>Reward Hacking 및 역설계(Reverse Engineering)</strong>를 차단합니다. 정답 접근 시도 적발 시 0점이 아닌 <code>outcome: invalid</code>(실행 무효)로 처리합니다.</li>
+      <li><strong>3. <code>~/.claude</code> 차단 (로컬 글로벌 환경 및 개인화 격리):</strong> 사용자의 전역 <code>CLAUDE.md</code>, 개인 설치 스킬, 커스텀 슬래시 커맨드, MCP 서버, 자동 메모리(<code>MEMORY.md</code>)가 개입하여 베이스라인이 오염되는 것을 막고, 매 trial마다 빈 <code>CLAUDE_CONFIG_DIR</code>를 생성해 <strong>오직 테스트 대상 스킬만의 순수 기여도(Delta: <code>none</code> vs <code>v1</code>)</strong>를 변인 통제합니다.</li>
+      <li><strong>4. 네트워크 차단 (외부 의존성 차단 및 결정론적 평가):</strong> 막히는 부분을 구글링하거나 외부 API/패키지 설치로 우회하는 것을 막고, 시간에 따라 변하는 외부 웹 상태를 배제하여 <strong>결정론적 재현성(Determinism)</strong>과 보안을 확보합니다 (<code>sandbox.enabled: True</code>, <code>allowUnsandboxedCommands: False</code>).</li>
+    </ul>
 
-    <h3>6.2 메타의 Eval 성숙도 5단계 (Levels 0 ~ 4)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>차단 항목</th>
+          <th>에이전트가 시도할 수 있는 반칙 (Cheating)</th>
+          <th>차단 시 얻는 효과</th>
+          <th><code>skill-eval</code> 코드 레벨 구현 (<code>isolation.py</code>)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. 원본 Repo 차단</strong></td>
+          <td>Git 로그나 개발 문서를 읽고 출제 의도 파악</td>
+          <td>실제 배포 상태와 동일한 조건에서 검증</td>
+          <td><code>$TMPDIR</code> APFS clone + <code>origin</code> 제거 + <code>.claude/.agents</code> strip</td>
+        </tr>
+        <tr>
+          <td><strong>2. 정답 차단</strong></td>
+          <td>채점 스크립트나 정답 파일을 <code>grep</code>으로 찾아 베끼기</td>
+          <td>스킬의 절차와 논리를 통한 순수 문제 해결 능력 측정</td>
+          <td>외부 폴더 격리 + <code>permissions.deny</code> + 적발 시 <code>invalid</code> 무효화</td>
+        </tr>
+        <tr>
+          <td><strong>3. <code>~/.claude</code> 차단</strong></td>
+          <td>전역 <code>CLAUDE.md</code> 지침이나 개인 MCP 도구에 의존</td>
+          <td>오직 해당 스킬만의 순수 기여도(&Delta;) 측정</td>
+          <td>매 trial 빈 <code>CLAUDE_CONFIG_DIR</code> + <code>skillOverrides: off</code> + <code>disableAllHooks</code></td>
+        </tr>
+        <tr>
+          <td><strong>4. 네트워크 차단</strong></td>
+          <td>막히는 부분을 구글링하거나 외부 패키지 설치로 해결</td>
+          <td>시간에 구애받지 않는 재현성 확보 및 스킬 자립도 검증</td>
+          <td>OS 커널 샌드박스 (<code>allowUnsandboxedCommands: False</code>) + <code>probe</code> 21/21 검증</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>6.2 메타의 Eval 성숙도 6단계 (Levels 0 ~ 5)</h3>
     <table>
       <thead>
         <tr>

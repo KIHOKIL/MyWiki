@@ -167,3 +167,4 @@ node scripts/review-global-baselines.mjs \
 - [[AI_시대_새로운_패러다임_Spec_Driven_Development_실밸개발자|AI 시대 새로운 패러다임: Spec-Driven Development (SDD)]]
 - [[concepts/clang-codegraph|Clang 코드그래프 (Clang CodeGraph)]]
 - [[synthesis/phy-sw-ai-code-review-strategy|PHY 임베디드 SW 하이브리드 AI 코드 리뷰 전략]]
+

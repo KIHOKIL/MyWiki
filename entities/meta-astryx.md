@@ -35,3 +35,4 @@ summary: "Meta가 8년간 13,000개 이상의 사내 앱에서 검증한 뒤 오
 - [[01_Meta_Senior_2ndBrain_and_Eval_Notes|실밸개발자 — 개발자를 위한 2nd Brain과 Eval]]
 - [[concepts/clang-codegraph|Clang 코드그래프 (Clang CodeGraph)]]
 - [[synthesis/phy-sw-ai-code-review-strategy|PHY 임베디드 SW 하이브리드 AI 코드 리뷰 전략]]
+

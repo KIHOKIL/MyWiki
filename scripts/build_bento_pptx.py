@@ -534,6 +534,79 @@ add_bento_box(
 )
 
 # ==============================================================================
+# SLIDE 6-B: 4-Pillar Eval Sandbox Isolation (Anti-Reward-Hacking)
+# ==============================================================================
+s6b = prs.slides.add_slide(prs.slide_layouts[6])
+set_canvas_bg(s6b)
+add_clean_header(
+    s6b,
+    "Part 4-B · Sandbox Isolation (skill_eval/isolation.py)",
+    "Eval 프로세스 4대 차단 원칙: 데이터 오염 및 보상 해킹(Reward Hacking) 방지",
+    "테스트 대상 스킬의 순수 기여도(Delta)만 객관적으로 검증하기 위한 21개 무균 격리 프로브(probe)",
+    tag_color=ACCENT_ROSE
+)
+
+add_bento_box(
+    s6b, Inches(0.9), Inches(1.8), Inches(5.65), Inches(2.45),
+    tag="Isolation 01 · Source Repo",
+    title="🚫 1. 원본 Repo 차단 (개발 소스 & 메타데이터 격리)",
+    accent_color=ACCENT_ROSE,
+    accent_pos="top",
+    title_size=14.5,
+    body_size=10.5,
+    content_lines=[
+        "• 반칙(Cheating): git log/diff나 초안을 뒤져 문제 출제 의도 파악",
+        "• 컨닝 페이퍼 차단 및 실제 패키지 배포 환경 100% 모사",
+        "• 구현: 매 trial마다 $TMPDIR 아래 APFS clone 생성, origin 제거, .claude/.agents 폴더 sparse checkout 제거 및 원본 경로 deny"
+    ]
+)
+
+add_bento_box(
+    s6b, Inches(6.8), Inches(1.8), Inches(5.65), Inches(2.45),
+    tag="Isolation 02 · Ground Truth",
+    title="🔒 2. 정답 차단 (Golden Patch 은닉 & 역설계 방지)",
+    accent_color=ACCENT_AMBER,
+    accent_pos="top",
+    title_size=14.5,
+    body_size=10.5,
+    content_lines=[
+        "• 반칙(Reward Hacking): find/grep으로 answer-keys나 채점 코드 베끼기",
+        "• 채점 통과 조건만 하드코딩하는 역설계(Reverse Engineering) 원천 차단",
+        "• 구현: 워크스페이스 외부 격리 + permissions.deny + 접근 시도 적발 시 0점이 아닌 outcome: invalid(실행 무효)로 즉시 퇴출"
+    ]
+)
+
+add_bento_box(
+    s6b, Inches(0.9), Inches(4.45), Inches(5.65), Inches(2.45),
+    tag="Isolation 03 · Global Config",
+    title="🧹 3. ~/.claude 차단 (글로벌 환경 & 개인화 격리)",
+    accent_color=ACCENT_CYAN,
+    accent_pos="top",
+    title_size=14.5,
+    body_size=10.5,
+    content_lines=[
+        "• 반칙(Contamination): 전역 CLAUDE.md, 개인 스킬, MCP, 자동 메모리에 의존",
+        "• 변인 통제: 스킬 적용 전(none) vs 후(v1)의 순수 기여도(Delta)만 측정",
+        "• 구현: 매 trial 빈 CLAUDE_CONFIG_DIR + 번들 스킬 22종 off + disableAllHooks + 상위 폴더 CLAUDE.md 존재 시 실행 거부"
+    ]
+)
+
+add_bento_box(
+    s6b, Inches(6.8), Inches(4.45), Inches(5.65), Inches(2.45),
+    tag="Isolation 04 · Determinism",
+    title="🌐 4. 네트워크 차단 (외부 의존성 차단 & 결정론적 평가)",
+    accent_color=ACCENT_EMERALD,
+    accent_pos="top",
+    title_size=14.5,
+    body_size=10.5,
+    content_lines=[
+        "• 반칙(Bypass): 막히는 부분을 구글링하거나 외부 패키지 설치로 우회",
+        "• 시간에 따라 변하는 외부 웹/패키지 상태를 배제해 재현성(Determinism) 확보",
+        "• 구현: OS 커널 샌드박스(sandbox.enabled: True, allowUnsandboxedCommands: False) 및 skill-eval probe 21/21 PASS 검증"
+    ]
+)
+
+# ==============================================================================
 # SLIDE 7: 5-Step Stepper + 3 Modular Question Bento Boxes
 # ==============================================================================
 s7 = prs.slides.add_slide(prs.slide_layouts[6])
