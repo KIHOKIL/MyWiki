@@ -11,26 +11,25 @@ prs = Presentation()
 prs.slide_width = Inches(13.333)
 prs.slide_height = Inches(7.5)  # 16:9 Widescreen
 
-# Precision Bento Dark Theme Palette (Linear / Apple Dark Keynote)
-CANVAS_BG = RGBColor(11, 14, 20)           # #0B0E14
-CARD_BG = RGBColor(18, 22, 31)             # #12161F
-CARD_INNER_BG = RGBColor(24, 30, 42)       # #181E2A
-CARD_BORDER_DEFAULT = RGBColor(38, 46, 62) # #262E3E (1px crisp outline)
+# Bento Dark Theme Palette (Matching 04_Bento_Presentation.html)
+CANVAS_BG = RGBColor(9, 10, 15)            # #090A0F
+CARD_BG = RGBColor(18, 21, 31)             # #12151F
+CARD_BORDER_DEFAULT = RGBColor(36, 42, 58) # Subtle border rgba(255,255,255,0.08)
 
-# Accent Colors
+# Vibrant Accents
 ACCENT_CYAN = RGBColor(56, 189, 248)       # #38BDF8
 ACCENT_INDIGO = RGBColor(99, 102, 241)     # #6366F1
-ACCENT_EMERALD = RGBColor(16, 185, 129)    # #10B981
-ACCENT_AMBER = RGBColor(245, 158, 11)      # #F59E0B
+ACCENT_EMERALD = RGBColor(52, 211, 153)    # #34D399
+ACCENT_AMBER = RGBColor(251, 191, 36)      # #FBBF24
 ACCENT_ROSE = RGBColor(244, 63, 94)        # #F43F5E
 ACCENT_PURPLE = RGBColor(168, 85, 247)     # #A855F7
 
 TEXT_WHITE = RGBColor(248, 250, 252)
 TEXT_MUTED = RGBColor(148, 163, 184)
-TEXT_DIM = RGBColor(100, 116, 139)
 
-# Precision Micro-radius: 8.0pt (soft, architectural, eliminates clash with straight lines)
-MICRO_RADIUS_PT = 8.0
+# Bento Box Corner Radius (12pt = ~16px in HTML Bento)
+BENTO_RADIUS_PT = 12.0
+STRIPE_THICKNESS_PT = 3.5
 
 def set_canvas_bg(slide):
     bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height)
@@ -39,30 +38,23 @@ def set_canvas_bg(slide):
     bg.line.fill.background()
     return bg
 
-def apply_micro_radius(shape, radius_pt=MICRO_RADIUS_PT):
+def apply_corner_radius(shape, radius_pt=BENTO_RADIUS_PT):
     min_dim_pt = min(shape.width.pt, shape.height.pt)
     if min_dim_pt > 0:
         shape.adjustments[0] = radius_pt / min_dim_pt
 
 def add_clean_header(slide, tag_text, title_text, subtitle_text=None, tag_color=ACCENT_CYAN):
-    """
-    Apple / Linear Keynote Header:
-    Clean dot-prefixed category text with NO outer capsule container,
-    eliminating any shape clash with title and card borders.
-    """
     tb = slide.shapes.add_textbox(Inches(0.9), Inches(0.48), Inches(11.5), Inches(1.1))
     tf = tb.text_frame
     tf.word_wrap = True
     tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
 
-    # Category Tag
     p_tag = tf.paragraphs[0]
     p_tag.text = f"●  {tag_text.upper()}"
     p_tag.font.size = Pt(10)
     p_tag.font.bold = True
     p_tag.font.color.rgb = tag_color
 
-    # Title
     p_title = tf.add_paragraph()
     p_title.text = title_text
     p_title.font.size = Pt(22)
@@ -70,7 +62,6 @@ def add_clean_header(slide, tag_text, title_text, subtitle_text=None, tag_color=
     p_title.font.color.rgb = TEXT_WHITE
     p_title.space_before = Pt(3)
 
-    # Subtitle
     if subtitle_text:
         p_sub = tf.add_paragraph()
         p_sub.text = subtitle_text
@@ -82,26 +73,53 @@ def add_bento_box(slide, x, y, w, h,
                   tag=None,
                   title=None,
                   accent_color=None,
+                  accent_pos="top",  # "top" or "left" matching CSS border-top / border-left
                   content_lines=None,
                   title_size=15,
                   body_size=11,
-                  bg_color=CARD_BG,
-                  border_width=Pt(1.0)):
+                  bg_color=CARD_BG):
     """
-    Creates an architectural Bento card:
-    - Sleek 8pt micro-radius that blends seamlessly with straight lines
-    - Crisp subtle accent border
-    - Generous inner padding (0.32" margins)
-    - Perfectly aligned typography
+    Creates an authentic CSS-like Bento Box in PowerPoint:
+    Uses a dual-layer concentric rounded rectangle technique so the top (or left)
+    accent bar curves 100% seamlessly along the rounded corners of the box!
     """
-    card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h)
-    card.fill.solid()
-    card.fill.fore_color.rgb = bg_color
-    card.line.color.rgb = accent_color if accent_color else CARD_BORDER_DEFAULT
-    card.line.width = border_width
-    apply_micro_radius(card, radius_pt=MICRO_RADIUS_PT)
+    offset = Pt(STRIPE_THICKNESS_PT)
 
-    # Inner Text Box
+    if accent_color:
+        # 1. Base Accent Shape (exposes a curved border-top or border-left crescent)
+        accent_base = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h)
+        accent_base.fill.solid()
+        accent_base.fill.fore_color.rgb = accent_color
+        accent_base.line.fill.background()
+        apply_corner_radius(accent_base, radius_pt=BENTO_RADIUS_PT)
+
+        # 2. Foreground Card Surface shifted slightly to reveal the curved accent bar
+        if accent_pos == "left":
+            card_x = x + offset
+            card_y = y
+            card_w = w - offset
+            card_h = h
+        else:  # "top"
+            card_x = x
+            card_y = y + offset
+            card_w = w
+            card_h = h - offset
+
+        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, card_x, card_y, card_w, card_h)
+        card.fill.solid()
+        card.fill.fore_color.rgb = bg_color
+        card.line.color.rgb = CARD_BORDER_DEFAULT
+        card.line.width = Pt(1.0)
+        apply_corner_radius(card, radius_pt=BENTO_RADIUS_PT)
+    else:
+        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h)
+        card.fill.solid()
+        card.fill.fore_color.rgb = bg_color
+        card.line.color.rgb = CARD_BORDER_DEFAULT
+        card.line.width = Pt(1.0)
+        apply_corner_radius(card, radius_pt=BENTO_RADIUS_PT)
+
+    # 3. Inner Text Box
     tb = slide.shapes.add_textbox(x + Inches(0.32), y + Inches(0.28), w - Inches(0.64), h - Inches(0.56))
     tf = tb.text_frame
     tf.word_wrap = True
@@ -160,9 +178,9 @@ add_bento_box(
     tag="BENTO ARCHITECTURE · META SENIOR TECH TALK",
     title="AI 에이전트를 위한\n2nd Brain과 Eval 프레임워크",
     accent_color=ACCENT_CYAN,
+    accent_pos="top",
     title_size=26,
     body_size=12.5,
-    border_width=Pt(1.2),
     content_lines=[
         "실리콘밸리 메타 8년차 시니어 엔지니어 하재상 세미나 전수 분석 (77분)",
         "",
@@ -180,6 +198,7 @@ add_bento_box(
     tag="Meta Production Reality",
     title="📊 $30,000 / 월 에이전트 실험",
     accent_color=ACCENT_ROSE,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -196,6 +215,7 @@ add_bento_box(
     tag="Core Foundation",
     title="🛡️ 시스템 하네스(Harness)",
     accent_color=ACCENT_EMERALD,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -213,12 +233,12 @@ s2 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s2)
 add_clean_header(s2, "Part 1 · Paradigm Shift", "AI 코딩 패러다임의 전환: 코딩 속도에서 '검증 병목'으로", "단순 프롬프트 엔지니어링의 한계와 시스템 하네스(Harness) 전환의 필연성", tag_color=ACCENT_INDIGO)
 
-# Top Wide Bento Card (Height 1.65" for comfortable padding)
 add_bento_box(
     s2, Inches(0.9), Inches(1.8), Inches(11.55), Inches(1.65),
     tag="Bottleneck Evolution",
     title="⚡ 개발 병목의 이동 공식",
     accent_color=ACCENT_INDIGO,
+    accent_pos="top",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -228,12 +248,12 @@ add_bento_box(
     ]
 )
 
-# Bottom Left Bento: The Problem
 add_bento_box(
     s2, Inches(0.9), Inches(3.65), Inches(5.65), Inches(3.25),
     tag="Legacy Problem",
     title="❌ 프롬프팅 중심 코딩의 붕괴",
     accent_color=ACCENT_ROSE,
+    accent_pos="left",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -244,12 +264,12 @@ add_bento_box(
     ]
 )
 
-# Bottom Right Bento: The Harness Solution
 add_bento_box(
     s2, Inches(6.8), Inches(3.65), Inches(5.65), Inches(3.25),
     tag="Harness Engineering",
     title="🛡️ 시스템 하네스(Harness)의 해결책",
     accent_color=ACCENT_EMERALD,
+    accent_pos="left",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -261,7 +281,7 @@ add_bento_box(
 )
 
 # ==============================================================================
-# SLIDE 3: Meta Case Study (3-Box Trio)
+# SLIDE 3: Meta Case Study (3-Box Trio with Curved Top Bars)
 # ==============================================================================
 s3 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s3)
@@ -272,6 +292,7 @@ add_bento_box(
     tag="Pain Point · 10 Hours",
     title="1. 기존 수작업의 한계",
     accent_color=ACCENT_ROSE,
+    accent_pos="top",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -289,6 +310,7 @@ add_bento_box(
     tag="3-Layer Solution",
     title="2. 하네스 3대 결합 솔루션",
     accent_color=ACCENT_CYAN,
+    accent_pos="top",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -308,6 +330,7 @@ add_bento_box(
     tag="Key Outcome · 30 Mins",
     title="3. 압도적 성과 & 교훈",
     accent_color=ACCENT_EMERALD,
+    accent_pos="top",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -327,12 +350,12 @@ s4 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s4)
 add_clean_header(s4, "Part 3 · Second Brain Architecture", "세컨드 브레인 기둥 1: 컴파일러/AST 기반 Codebase Graph", "Grep의 텍스트 한계를 넘어 수학적으로 100% 결정론적인 파급 반경(Blast Radius) 도출", tag_color=ACCENT_CYAN)
 
-# Left Tall Box
 add_bento_box(
     s4, Inches(0.9), Inches(1.8), Inches(6.0), Inches(5.1),
     tag="Precision Compiler Indexing",
     title="🕸️ Grep vs Compiler AST 비교",
     accent_color=ACCENT_CYAN,
+    accent_pos="top",
     title_size=16,
     body_size=11,
     content_lines=[
@@ -349,12 +372,12 @@ add_bento_box(
     ]
 )
 
-# Right Top Box: BFS Hopping
 add_bento_box(
     s4, Inches(7.2), Inches(1.8), Inches(5.25), Inches(2.2),
     tag="Algorithmic Traversal",
     title="⚡ BFS Hopping: Blast Radius 계산",
     accent_color=ACCENT_PURPLE,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -364,12 +387,12 @@ add_bento_box(
     ]
 )
 
-# Right Bottom Box: Chart Container (Chart starts at 5.0" to avoid touching title)
-s4_chart_box = add_bento_box(
+add_bento_box(
     s4, Inches(7.2), Inches(4.2), Inches(5.25), Inches(2.7),
     tag="Benchmark Verification",
     title="📊 도구별 성능 및 토큰 효율",
     accent_color=ACCENT_EMERALD,
+    accent_pos="top",
     title_size=14,
     body_size=10
 )
@@ -377,7 +400,7 @@ if os.path.exists(chart_png):
     s4.shapes.add_picture(chart_png, Inches(7.45), Inches(5.0), width=Inches(4.75), height=Inches(1.75))
 
 # ==============================================================================
-# SLIDE 5: 2x2 Bento Matrix (Rich Content)
+# SLIDE 5: 2x2 Bento Matrix
 # ==============================================================================
 s5 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s5)
@@ -388,6 +411,7 @@ add_bento_box(
     tag="Historical Context",
     title="🧠 Code Memory: 아키텍처 의도 복원",
     accent_color=ACCENT_AMBER,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -403,6 +427,7 @@ add_bento_box(
     tag="Retrieval Ranking",
     title="🔍 BM25 랭킹: 희귀 도메인 용어 적중",
     accent_color=ACCENT_CYAN,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -418,6 +443,7 @@ add_bento_box(
     tag="Routing Policy · Local",
     title="⚡ Fast Path (로컬 수정 우회)",
     accent_color=ACCENT_INDIGO,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -433,6 +459,7 @@ add_bento_box(
     tag="Routing Policy · Architecture",
     title="🏛️ Brain Path (구조적 수정 의무화)",
     accent_color=ACCENT_EMERALD,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -455,6 +482,7 @@ add_bento_box(
     tag="Stage 1 · Deterministic",
     title="1. Hard Check (하드 체크)",
     accent_color=ACCENT_ROSE,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -473,6 +501,7 @@ add_bento_box(
     tag="Stage 2 · Qualitative",
     title="2. K-Judge Majority Voting",
     accent_color=ACCENT_PURPLE,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -491,6 +520,7 @@ add_bento_box(
     tag="Infrastructure & Gate",
     title="3. Sandbox & CI Gate",
     accent_color=ACCENT_EMERALD,
+    accent_pos="top",
     title_size=15,
     body_size=10.5,
     content_lines=[
@@ -510,7 +540,6 @@ s7 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s7)
 add_clean_header(s7, "Part 5 · Maturity & Standards", "메타의 Eval 성숙도 5단계 (Levels 0 ~ 4) 및 스킬 3대 필수 질문", "감(Vibe)에 의존하는 단계에서 셀프 피드백 자가 교정 루프까지의 진화", tag_color=ACCENT_EMERALD)
 
-# 5 Steps (Top)
 step_data = [
     ("Level 0", "느낌 (Vibe)", "'어? 잘 되는 것 같은데?'\n가장 위험한 단계", ACCENT_ROSE, Inches(0.9)),
     ("Level 1", "단위 테스트", "기본적인 컴파일 & 린트\n결정론적 하드 체크", ACCENT_AMBER, Inches(3.25)),
@@ -524,17 +553,18 @@ for lvl, name, desc, col, x_pos in step_data:
         tag=lvl,
         title=name,
         accent_color=col,
+        accent_pos="top",
         title_size=13.5,
         body_size=10,
         content_lines=desc.split("\n")
     )
 
-# Bottom: 3 Modular Bento Boxes for the 3 Essential Questions (Pure Grid!)
 add_bento_box(
     s7, Inches(0.9), Inches(4.3), Inches(3.65), Inches(2.6),
     tag="Rubric 01 · Trigger",
     title="🎯 1. 호출 정확도 (Triggering)",
     accent_color=ACCENT_CYAN,
+    accent_pos="top",
     title_size=14,
     body_size=10.5,
     content_lines=[
@@ -549,6 +579,7 @@ add_bento_box(
     tag="Rubric 02 · Uplift",
     title="📈 2. 성능 향상 (Performance)",
     accent_color=ACCENT_EMERALD,
+    accent_pos="top",
     title_size=14,
     body_size=10.5,
     content_lines=[
@@ -563,6 +594,7 @@ add_bento_box(
     tag="Rubric 03 · Safety",
     title="🛡️ 3. 무리그레션 (Non-Regression)",
     accent_color=ACCENT_PURPLE,
+    accent_pos="top",
     title_size=14,
     body_size=10.5,
     content_lines=[
@@ -584,6 +616,7 @@ add_bento_box(
     tag="Group Leader Blueprint",
     title="📡 모바일 통신 PHY SW 2nd Brain 로드맵",
     accent_color=ACCENT_CYAN,
+    accent_pos="left",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -603,6 +636,7 @@ add_bento_box(
     tag="Human Agency · Philosophy",
     title="💡 에필로그: 에이전트 시대, 인간의 주도권",
     accent_color=ACCENT_PURPLE,
+    accent_pos="left",
     title_size=15,
     body_size=11,
     content_lines=[
@@ -618,4 +652,4 @@ add_bento_box(
 )
 
 prs.save(out_pptx)
-print(f"Successfully generated refined Bento Presentation: {out_pptx}")
+print(f"Successfully generated curved-stripe Bento Presentation: {out_pptx}")
