@@ -10,6 +10,7 @@ updated: 2026-11-08
     - **전수 연구 노트:** `01_Meta_Senior_2ndBrain_and_Eval_Notes.md` (타임라인 전수 해부, 3대 핵심 질문, 2원화 라우팅 규칙, 모바일 통신 PHY SW 적용 청사진).
     - **반응형 인터랙티브 다크 리포트:** `02_Lecture_Report_WikiSkill.html` (좌측 ScrollSpy 목차, Mermaid.js 다이어그램, 코드 스니펫 및 콜아웃).
     - **Bento 싱글파일 슬라이드 덱:** `04_Bento_Presentation.html` (키보드 좌우 화살표 인터랙션, 7개 슬라이드 카드 그리드).
+    - **Bento 그리드 스타일 PPTX 덱:** `08_Bento_Grid_Presentation.pptx` (애플/웹 Bento 박스 모듈러 그리드, 카드 상단 액센트 스트라이프, 8개 고밀도 슬라이드).
     - **Presenton 모던 PPTX 덱:** `06_Presenton_Modern_Deck.pptx` (8개 고밀도 슬라이드, Deep Slate Navy 테마, 벤치마크 차트 삽입).
     - **PaperPilot 이그제큐티브 PDF 백서:** `07_PaperPilot_Executive_Whitepaper.pdf` (ReportLab 맑은고딕 정밀 조판, 헤더/푸터 워터마크, 4페이지 고밀도 테크니컬 리포트).
   - **핵심 엔지니어링 패러다임 정립:**
