@@ -6,13 +6,14 @@ updated: 2026-11-08
 ## Recent Activity
 - **Meta Senior SWE Second Brain & Eval Full Lecture Study & Multi-Format Suite (2026-11-08):**
   - **강의 아카이브 신설 (`_sources/Study/AI-Lectures/실밸개발자/20261108_2ndBrain_and_Eval/`):** 실밸개발자(하재상, Meta 시니어 엔지니어) 1시간 17분 풀 세미나(`AyKq4zFfrlc`) 36,179자 전수 자막(`clean_transcript.txt`, `yt_sub_AyKq4zFfrlc.ko.vtt`) 추출 및 타임라인별 심화 분석 완료.
-  - **4대 비주얼 산출물 구축 (`doc-visualizer-suite`):**
+  - **6대 비주얼 산출물 & 강사 원본 슬라이드 CV 추출 파이프라인 구축 (`doc-visualizer-suite` & `lecture-html-curator` 전 스킬 반영):**
     - **전수 연구 노트:** `01_Meta_Senior_2ndBrain_and_Eval_Notes.md` (타임라인 전수 해부, 3대 핵심 질문, 2원화 라우팅 규칙, 모바일 통신 PHY SW 적용 청사진).
     - **반응형 인터랙티브 다크 리포트:** `02_Lecture_Report_WikiSkill.html` (좌측 ScrollSpy 목차, Mermaid.js 다이어그램, 코드 스니펫 및 콜아웃).
     - **Bento 싱글파일 슬라이드 덱:** `04_Bento_Presentation.html` (키보드 좌우 화살표 인터랙션, 7개 슬라이드 카드 그리드).
-    - **Bento 그리드 스타일 PPTX 덱:** `08_Bento_Grid_Presentation.pptx` (애플/웹 Bento 박스 모듈러 그리드, 카드 상단 액센트 스트라이프, 8개 고밀도 슬라이드).
     - **Presenton 모던 PPTX 덱:** `06_Presenton_Modern_Deck.pptx` (8개 고밀도 슬라이드, Deep Slate Navy 테마, 벤치마크 차트 삽입).
     - **PaperPilot 이그제큐티브 PDF 백서:** `07_PaperPilot_Executive_Whitepaper.pdf` (ReportLab 맑은고딕 정밀 조판, 헤더/푸터 워터마크, 4페이지 고밀도 테크니컬 리포트).
+    - **Bento 그리드 스타일 PPTX 덱:** `08_Bento_Grid_Presentation.pptx` (`scripts/build_bento_pptx.py` — **동심원 이중 라운드 사각형 기법(`BENTO_RADIUS_PT = 12.0`, `STRIPE_THICKNESS_PT = 3.5`)**으로 둥근 모서리와 완벽히 일치하는 상단/좌측 곡선 액센트 바 구현 및 PowerPoint COM JPG 렌더링 전수 시각 검수 완료).
+    - **강사 원본 슬라이드 CV 캡처 슬라이드북 (68장):** `09_Instructor_Original_Slides_Book.pdf` & `10_Instructor_Original_Slides_Deck.pptx` (`scripts/extract_lecture_slides.py` — Sobel 평탄도 필터로 토킹헤드 제거 + 우측 웹캠 PiP 마스킹 + 256-bit `dHash` 중복 제거 + Lookahead 애니메이션 완성본 캡처 + 타임스탬프 자막 발표자 노트 자동 주입).
   - **핵심 엔지니어링 패러다임 정립:**
     - 코드 생성에서 검증(Verification)으로의 병목 전이 (메타 사내 대시보드 $30,000/월 실험).
     - 2nd Brain 아키텍처: Grep의 한계(노이즈 90%) ➔ 컴파일러 AST 기반 Codebase Graph (`brain build`, Symbol ID, BFS Blast Radius) + 'Why'를 복원하는 Code Memory (`why.mjs`, BM25 커밋/PR 검색).

@@ -118,7 +118,8 @@ Skills live in `.skills/<name>/SKILL.md`. Match the user's intent to the right s
 | "/wiki-stage-commit" / "review staged pages" / "commit staged writes" / "promote staged pages" / "what's waiting in staging" | `wiki-stage-commit` |
 | "restyle Obsidian" / "adjust the vault layout" / "CSS snippet" / "tune tabs/sidebars/graph panes" | `obsidian-layout-adjustment` |
 | "/generate-index" / "generate index" / "update source index" / "rebuild _sources index" / "index my sources" / "sync sources index" / "/generate-index <폴더명>" | `generate-index` |
-| "강의 정리" / "유튜브 강의 요약" / "유튜브 슬라이드" / "/lecture-html-curator" / "영상 HTML 요약" / "강의 슬라이드 만들어줘" | `lecture-html-curator` (유튜브/웹 링크 전수 요약, 프롬프트 추출, 에이전트 분석, 다크테마 HTML 슬라이드/리포트) |
+| "강의 정리" / "유튜브 강의 요약" / "유튜브 슬라이드" / "/lecture-html-curator" / "영상 HTML 요약" / "강의 슬라이드 만들어줘" | `lecture-html-curator` (유튜브/웹 링크 전수 요약, 강사 원본 슬라이드 CV 캡처, Bento PPTX/HTML, PaperPilot PDF, 다크테마 HTML 리포트) |
+| "PPT 만들어줘" / "Bento PPT" / "슬라이드 제작" / "PDF 백서 생성" / "보고서 포맷팅" / "문서 시각화" / "강사 슬라이드 캡처/추출" | `doc-visualizer-suite` (Bento Grid PPTX 동심원 곡선 바 + COM 시각 검수, Presenton PPTX, Bento HTML, PaperPilot PDF, CV 슬라이드 추출기) |
 
 ## Cross-Project Usage
 

@@ -68,9 +68,13 @@ flowchart TD
 ### Step 4: BananaLM 스타일 프롬프트 생성
 선택된 스타일 프리셋에 맞추어 이미지 생성기(BananaLM, Midjourney, DALL-E)에 즉시 복사해 넣을 수 있는 정밀 프롬프트 블록 제공.
 
-### Step 5: 산출물 저장
-- 완성된 기획안을 `_sources/Study/AI-Prompt/Slide-Generation/` 또는 `projects/` 하위에 마크다운 파일로 저장.
-- PPTX / HTML 슬라이드 코드(Reveal.js / Marp 등) 제공.
+### Step 5: 산출물 저장 및 멀티포맷 자동 빌드 (`doc-visualizer-suite` 연계)
+- 완성된 기획안을 `_sources/Study/AI-Prompt/Slide-Generation/` 또는 학습 폴더 하위에 마크다운 파일로 저장.
+- 실제 프레젠테이션 파일 생성 시 `doc-visualizer-suite`의 검증된 빌더를 사용한다:
+  - **Bento Grid PPTX (`scripts/build_bento_pptx.py`)**: 동심원 이중 라운드 사각형(`BENTO_RADIUS_PT = 12.0`, `STRIPE_THICKNESS_PT = 3.5`) 기법으로 둥근 모서리와 완벽히 일치하는 곡선 액센트 바 구현 + **PowerPoint COM JPG 익스포트(`SaveAs(..., 17)`) 후 `read_file` 시각 조화 검수 필수**.
+  - **Presenton 모던 PPTX (`scripts/build_presenton_deck.py`)**: 딥 슬레이트 다크 테마 네이티브 PPTX.
+  - **PaperPilot PDF 백서 (`scripts/build_paperpilot_pdf.py`)**: ReportLab 맑은 고딕 2-Pass 페이지 번호 탑재 A4 엔터프라이즈 백서.
+  - **강사 원본 슬라이드 추출 (`scripts/extract_lecture_slides.py`)**: 원본 유튜브 영상이 있을 경우 토킹헤드를 제거하고 강사가 직접 작성한 장표만 CV로 캡처해 발표자 노트가 포함된 슬라이드북 PDF/PPTX로 변환.
 
 ---
 

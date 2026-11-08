@@ -324,3 +324,17 @@ index.html 상세 템플릿은 `references/index-template.md`를 참조할 것.
 5. **카드/박스 내 항목 최대 6개** — 오버플로우 절대 방지
 6. **애니메이션**: cardAppear/stepIn 등 등장 애니메이션에 순차 delay (0.1~0.4s 간격)
 7. **마지막 슬라이드(summary)**: glow orb 배경 + 레인보우 gradient 사용 권장
+
+---
+
+## L. `doc-visualizer-suite` 연계 (Bento 단일 HTML & Bento Grid PPTX & 강사 원본 장표 추출)
+
+사용자가 개별 HTML 폴더 구조(`slides/01-*.html`) 대신 **단일 파일 Bento HTML 슬라이드**, **파워포인트(`.pptx`)**, **PDF 백서**, 또는 **유튜브 강의 화면의 강사 원본 장표 추출**을 원할 경우 `doc-visualizer-suite` 파이프라인을 함께 실행한다:
+
+1. **Bento 단일 파일 HTML (`04_Bento_Presentation.html`)**:
+   - 외부 의존성 없는 단일 `.html` 파일 내 CSS Grid Bento 박스 + 상단/좌측 네온 보더(`border-top` / `border-left`) + 키보드 방향키(`←`/`→`/`Space`) 슬라이드 전환.
+2. **Bento Grid 네이티브 PPTX (`scripts/build_bento_pptx.py`)**:
+   - `python-pptx`에서 둥근 모서리(`BENTO_RADIUS_PT = 12.0`)와 직선 스트라이프가 충돌하지 않도록 **동심원 이중 라운드 사각형 기법(`accent_base` 위에 `card`를 `Pt(3.5)` 오프셋 중첩)**을 적용해 모서리 곡선을 따라 휘어지는 상단/좌측 액센트 바 구현.
+   - 생성 후 반드시 **PowerPoint COM (`$pres.SaveAs($outDir, 17)`)**으로 슬라이드 전체를 JPG로 렌더링하고 `read_file`로 시각적 조화(Visual Harmony) 및 텍스트 겹침 여부를 전수 검사.
+3. **YouTube 강사 원본 슬라이드 CV 추출 (`scripts/extract_lecture_slides.py`)**:
+   - Sobel 평탄도 필터(토킹헤드 제거) + 웹캠 PiP 마스킹 + 256-bit `dHash` + Lookahead 완성본 캡처로 강사 원본 장표를 추출하여 `09_Instructor_Original_Slides_Book.pdf` 및 `10_Instructor_Original_Slides_Deck.pptx` 생성.
