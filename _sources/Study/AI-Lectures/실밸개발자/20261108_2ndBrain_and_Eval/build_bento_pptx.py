@@ -5,27 +5,32 @@ from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE
 
 out_pptx = r"_sources\Study\AI-Lectures\실밸개발자\20261108_2ndBrain_and_Eval\08_Bento_Grid_Presentation.pptx"
+chart_png = r"_sources\Study\AI-Lectures\실밸개발자\20261108_2ndBrain_and_Eval\assets\benchmark_comparison_chart.png"
 
 prs = Presentation()
 prs.slide_width = Inches(13.333)
 prs.slide_height = Inches(7.5)  # 16:9 Widescreen
 
-# Bento Dark Theme Palette
-CANVAS_BG = RGBColor(9, 10, 15)         # #090A0F (Deep Obsidian)
-CARD_BG = RGBColor(19, 23, 34)          # #131722 (Bento Card Surface)
-CARD_BORDER = RGBColor(35, 43, 62)      # #232B3E (Subtle Outer Border)
-INNER_SURFACE = RGBColor(26, 32, 48)    # #1A2030 (Slightly lighter inner container)
+# Precision Bento Dark Theme Palette (Linear / Apple Dark Keynote)
+CANVAS_BG = RGBColor(11, 14, 20)           # #0B0E14
+CARD_BG = RGBColor(18, 22, 31)             # #12161F
+CARD_INNER_BG = RGBColor(24, 30, 42)       # #181E2A
+CARD_BORDER_DEFAULT = RGBColor(38, 46, 62) # #262E3E (1px crisp outline)
 
-# Vibrant Accent Colors for Bento Stripes & Pills
-ACCENT_CYAN = RGBColor(56, 189, 248)    # #38BDF8 (Sky Cyan)
-ACCENT_INDIGO = RGBColor(99, 102, 241)  # #6366F1 (Electric Indigo)
-ACCENT_EMERALD = RGBColor(16, 185, 129) # #10B981 (Emerald Green)
-ACCENT_AMBER = RGBColor(245, 158, 11)   # #F59E0B (Sunset Amber)
-ACCENT_ROSE = RGBColor(244, 63, 94)     # #F43F5E (Neon Rose)
-ACCENT_PURPLE = RGBColor(168, 85, 247)  # #A855F7 (Purple Glow)
+# Accent Colors
+ACCENT_CYAN = RGBColor(56, 189, 248)       # #38BDF8
+ACCENT_INDIGO = RGBColor(99, 102, 241)     # #6366F1
+ACCENT_EMERALD = RGBColor(16, 185, 129)    # #10B981
+ACCENT_AMBER = RGBColor(245, 158, 11)      # #F59E0B
+ACCENT_ROSE = RGBColor(244, 63, 94)        # #F43F5E
+ACCENT_PURPLE = RGBColor(168, 85, 247)     # #A855F7
 
-TEXT_WHITE = RGBColor(248, 250, 252)    # #F8FAFC
-TEXT_MUTED = RGBColor(148, 163, 184)    # #94A3B8
+TEXT_WHITE = RGBColor(248, 250, 252)
+TEXT_MUTED = RGBColor(148, 163, 184)
+TEXT_DIM = RGBColor(100, 116, 139)
+
+# Precision Micro-radius: 8.0pt (soft, architectural, eliminates clash with straight lines)
+MICRO_RADIUS_PT = 8.0
 
 def set_canvas_bg(slide):
     bg = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, prs.slide_width, prs.slide_height)
@@ -34,88 +39,83 @@ def set_canvas_bg(slide):
     bg.line.fill.background()
     return bg
 
-def add_slide_header(slide, tag_text, title_text, subtitle_text=None):
-    # Tag Pill
-    pill = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.9), Inches(0.45), Inches(4.2), Inches(0.32))
-    pill.fill.solid()
-    pill.fill.fore_color.rgb = RGBColor(22, 28, 44)
-    pill.line.color.rgb = ACCENT_INDIGO
-    pill.line.width = Pt(1)
-    tf_p = pill.text_frame
-    tf_p.margin_left = Inches(0.12)
-    tf_p.margin_top = Inches(0.04)
-    p = tf_p.paragraphs[0]
-    p.text = f"⚡ {tag_text.upper()}"
-    p.font.size = Pt(9.5)
-    p.font.bold = True
-    p.font.color.rgb = ACCENT_CYAN
+def apply_micro_radius(shape, radius_pt=MICRO_RADIUS_PT):
+    min_dim_pt = min(shape.width.pt, shape.height.pt)
+    if min_dim_pt > 0:
+        shape.adjustments[0] = radius_pt / min_dim_pt
 
-    # Title & Subtitle Box
-    tb = slide.shapes.add_textbox(Inches(0.9), Inches(0.82), Inches(11.5), Inches(0.9))
+def add_clean_header(slide, tag_text, title_text, subtitle_text=None, tag_color=ACCENT_CYAN):
+    """
+    Apple / Linear Keynote Header:
+    Clean dot-prefixed category text with NO outer capsule container,
+    eliminating any shape clash with title and card borders.
+    """
+    tb = slide.shapes.add_textbox(Inches(0.9), Inches(0.48), Inches(11.5), Inches(1.1))
     tf = tb.text_frame
     tf.word_wrap = True
     tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
-    tp = tf.paragraphs[0]
-    tp.text = title_text
-    tp.font.size = Pt(22)
-    tp.font.bold = True
-    tp.font.color.rgb = TEXT_WHITE
 
+    # Category Tag
+    p_tag = tf.paragraphs[0]
+    p_tag.text = f"●  {tag_text.upper()}"
+    p_tag.font.size = Pt(10)
+    p_tag.font.bold = True
+    p_tag.font.color.rgb = tag_color
+
+    # Title
+    p_title = tf.add_paragraph()
+    p_title.text = title_text
+    p_title.font.size = Pt(22)
+    p_title.font.bold = True
+    p_title.font.color.rgb = TEXT_WHITE
+    p_title.space_before = Pt(3)
+
+    # Subtitle
     if subtitle_text:
-        sp = tf.add_paragraph()
-        sp.text = subtitle_text
-        sp.font.size = Pt(12)
-        sp.font.color.rgb = TEXT_MUTED
-        sp.space_before = Pt(3)
+        p_sub = tf.add_paragraph()
+        p_sub.text = subtitle_text
+        p_sub.font.size = Pt(11.5)
+        p_sub.font.color.rgb = TEXT_MUTED
+        p_sub.space_before = Pt(2)
 
-def add_bento_card(slide, x, y, w, h, 
-                   title=None, 
-                   tag=None, 
-                   accent_color=None, 
-                   border_color=None, 
-                   bg_color=CARD_BG, 
-                   content_lines=None, 
-                   title_size=15, 
-                   body_size=11.5,
-                   badge_color=None):
+def add_bento_box(slide, x, y, w, h,
+                  tag=None,
+                  title=None,
+                  accent_color=None,
+                  content_lines=None,
+                  title_size=15,
+                  body_size=11,
+                  bg_color=CARD_BG,
+                  border_width=Pt(1.0)):
     """
-    Creates an authentic Bento Grid Box:
-    - Rounded Card Surface
-    - Optional Top Colored Accent Bar
-    - Optional Pill Tag
-    - Clean Title & Structured Body
+    Creates an architectural Bento card:
+    - Sleek 8pt micro-radius that blends seamlessly with straight lines
+    - Crisp subtle accent border
+    - Generous inner padding (0.32" margins)
+    - Perfectly aligned typography
     """
-    # 1. Base Bento Card Container
     card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, w, h)
     card.fill.solid()
     card.fill.fore_color.rgb = bg_color
-    card.line.color.rgb = border_color if border_color else CARD_BORDER
-    card.line.width = Pt(1.2)
+    card.line.color.rgb = accent_color if accent_color else CARD_BORDER_DEFAULT
+    card.line.width = border_width
+    apply_micro_radius(card, radius_pt=MICRO_RADIUS_PT)
 
-    # 2. Signature Bento Top Accent Stripe (if accent_color is provided)
-    if accent_color:
-        stripe = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x + Inches(0.06), y + Inches(0.06), w - Inches(0.12), Inches(0.06))
-        stripe.fill.solid()
-        stripe.fill.fore_color.rgb = accent_color
-        stripe.line.fill.background()
-
-    # 3. Text Frame inside Bento Box
-    tb = slide.shapes.add_textbox(x + Inches(0.22), y + Inches(0.2), w - Inches(0.44), h - Inches(0.35))
+    # Inner Text Box
+    tb = slide.shapes.add_textbox(x + Inches(0.32), y + Inches(0.28), w - Inches(0.64), h - Inches(0.56))
     tf = tb.text_frame
     tf.word_wrap = True
     tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
 
     first = True
-    # Tag / Pill at top of card
     if tag:
         p_tag = tf.paragraphs[0]
         p_tag.text = tag.upper()
-        p_tag.font.size = Pt(9)
+        p_tag.font.size = Pt(8.5)
         p_tag.font.bold = True
-        p_tag.font.color.rgb = badge_color if badge_color else (accent_color if accent_color else ACCENT_CYAN)
+        p_tag.font.color.rgb = accent_color if accent_color else ACCENT_CYAN
         first = False
 
-    # Title
     if title:
         p_t = tf.paragraphs[0] if first else tf.add_paragraph()
         p_t.text = title
@@ -123,41 +123,46 @@ def add_bento_card(slide, x, y, w, h,
         p_t.font.bold = True
         p_t.font.color.rgb = TEXT_WHITE
         if not first:
-            p_t.space_before = Pt(4)
+            p_t.space_before = Pt(3)
         first = False
 
-    # Content Lines (Bullets or Paragraphs)
     if content_lines:
         for idx, line in enumerate(content_lines):
             p_c = tf.add_paragraph()
             p_c.text = line
             p_c.font.size = Pt(body_size)
-            p_c.font.color.rgb = TEXT_MUTED if not line.startswith("•") else TEXT_WHITE
+            
             if line.startswith("💡") or line.startswith("🚨") or line.startswith("🎯") or line.startswith("✅"):
                 p_c.font.bold = True
                 p_c.font.color.rgb = TEXT_WHITE
                 p_c.space_before = Pt(6)
+            elif line.startswith("•"):
+                p_c.font.color.rgb = TEXT_WHITE
+                p_c.space_before = Pt(3.5)
             elif idx == 0 and title:
-                p_c.space_before = Pt(6)
+                p_c.font.color.rgb = TEXT_MUTED
+                p_c.space_before = Pt(5)
             else:
-                p_c.space_before = Pt(3)
+                p_c.font.color.rgb = TEXT_MUTED
+                p_c.space_before = Pt(2.5)
 
     return card
 
 # ==============================================================================
-# SLIDE 1: Bento Hero Cover (Asymmetric Bento Grid)
+# SLIDE 1: Bento Hero Cover (Asymmetric Modular Grid)
 # ==============================================================================
 s1 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s1)
 
-# Large Main Hero Bento Box (Left 60%)
-add_bento_card(
-    s1, Inches(0.9), Inches(0.8), Inches(7.4), Inches(5.9),
-    tag="Bento Architecture · Meta Senior Engineering",
+# Main Large Hero Box (Left 60%)
+add_bento_box(
+    s1, Inches(0.9), Inches(0.85), Inches(7.5), Inches(5.8),
+    tag="BENTO ARCHITECTURE · META SENIOR TECH TALK",
     title="AI 에이전트를 위한\n2nd Brain과 Eval 프레임워크",
     accent_color=ACCENT_CYAN,
-    title_size=28,
-    body_size=13,
+    title_size=26,
+    body_size=12.5,
+    border_width=Pt(1.2),
     content_lines=[
         "실리콘밸리 메타 8년차 시니어 엔지니어 하재상 세미나 전수 분석 (77분)",
         "",
@@ -165,18 +170,18 @@ add_bento_card(
         "1. Context Layer (2nd Brain): 설명 없이 컴파일러 수준의 맥락을 자동 공급",
         "2. Verification Layer (Eval): 결정론적 하드 체크와 다수결 검증으로 신뢰도 보장",
         "",
-        "💡 임베디드 통신 / 물리계층(PHY) C/C++ 펌웨어 코드 리뷰 파이프라인 대응 전략 포함"
+        "💡 모바일 통신 / 물리계층(PHY) C/C++ 펌웨어 코드 리뷰 파이프라인 대응 전략 수록"
     ]
 )
 
-# Right Stack Card 1 (Top-Right)
-add_bento_card(
-    s1, Inches(8.5), Inches(0.8), Inches(3.9), Inches(2.8),
+# Right Stack 1 (Top-Right)
+add_bento_box(
+    s1, Inches(8.65), Inches(0.85), Inches(3.8), Inches(2.75),
     tag="Meta Production Reality",
     title="📊 $30,000 / 월 에이전트 실험",
     accent_color=ACCENT_ROSE,
-    title_size=16,
-    body_size=11,
+    title_size=15,
+    body_size=10.5,
     content_lines=[
         "• 메타 사내 대시보드 기준 월 $30,000 API 사용",
         "• 아무리 규칙과 도구를 잘 줘도 검증이 없으면 위임 불가",
@@ -185,14 +190,14 @@ add_bento_card(
     ]
 )
 
-# Right Stack Card 2 (Bottom-Right)
-add_bento_card(
-    s1, Inches(8.5), Inches(3.8), Inches(3.9), Inches(2.9),
+# Right Stack 2 (Bottom-Right)
+add_bento_box(
+    s1, Inches(8.65), Inches(3.85), Inches(3.8), Inches(2.8),
     tag="Core Foundation",
     title="🛡️ 시스템 하네스(Harness)",
     accent_color=ACCENT_EMERALD,
-    title_size=16,
-    body_size=11,
+    title_size=15,
+    body_size=10.5,
     content_lines=[
         "• 🕸️ Codebase Graph: 컴파일러 AST 기반 정밀 지도",
         "• 🧠 Code Memory: 커밋/PR의 'Why' 추적 (BM25)",
@@ -202,20 +207,20 @@ add_bento_card(
 )
 
 # ==============================================================================
-# SLIDE 2: Bento Grid: The Bottleneck Shift (Asymmetric 1-Wide + 2-Col)
+# SLIDE 2: Paradigm Shift (1-Wide + 2-Col)
 # ==============================================================================
 s2 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s2)
-add_slide_header(s2, "Part 1 · Paradigm Shift", "AI 코딩 패러다임의 전환: 코딩 속도에서 '검증 병목'으로", "단순 프롬프트 엔지니어링의 한계와 시스템 하네스(Harness) 전환의 필연성")
+add_clean_header(s2, "Part 1 · Paradigm Shift", "AI 코딩 패러다임의 전환: 코딩 속도에서 '검증 병목'으로", "단순 프롬프트 엔지니어링의 한계와 시스템 하네스(Harness) 전환의 필연성", tag_color=ACCENT_INDIGO)
 
-# Top Wide Bento Card: Contrast Summary
-add_bento_card(
-    s2, Inches(0.9), Inches(1.8), Inches(11.5), Inches(1.5),
+# Top Wide Bento Card (Height 1.65" for comfortable padding)
+add_bento_box(
+    s2, Inches(0.9), Inches(1.8), Inches(11.55), Inches(1.65),
     tag="Bottleneck Evolution",
     title="⚡ 개발 병목의 이동 공식",
     accent_color=ACCENT_INDIGO,
     title_size=15,
-    body_size=12,
+    body_size=11,
     content_lines=[
         "[과거] 코드 타이핑 및 구현 속도 병목  ➔  [LLM 도입] 초당 수백 줄 코드 작성 (생산성 착시)",
         "[현재의 진짜 병목] 초대형 PR 범람으로 인한 '인간 리뷰어의 검증 한계' 및 '환각(Hallucination) 공포'",
@@ -223,14 +228,14 @@ add_bento_card(
     ]
 )
 
-# Bottom Left Bento: The Problem (Rose accent)
-add_bento_card(
-    s2, Inches(0.9), Inches(3.5), Inches(5.6), Inches(3.4),
+# Bottom Left Bento: The Problem
+add_bento_box(
+    s2, Inches(0.9), Inches(3.65), Inches(5.65), Inches(3.25),
     tag="Legacy Problem",
     title="❌ 프롬프팅 중심 코딩의 붕괴",
     accent_color=ACCENT_ROSE,
     title_size=15,
-    body_size=11.5,
+    body_size=11,
     content_lines=[
         "• 초대형 PR 쏟아짐: 주니어/시니어 가리지 않고 검증 피로도 극대화",
         "• 세션 컨텍스트 리셋: 새 창을 열 때마다 매번 프로젝트 규칙 재설명",
@@ -239,14 +244,14 @@ add_bento_card(
     ]
 )
 
-# Bottom Right Bento: The Harness Solution (Emerald accent)
-add_bento_card(
-    s2, Inches(6.8), Inches(3.5), Inches(5.6), Inches(3.4),
+# Bottom Right Bento: The Harness Solution
+add_bento_box(
+    s2, Inches(6.8), Inches(3.65), Inches(5.65), Inches(3.25),
     tag="Harness Engineering",
     title="🛡️ 시스템 하네스(Harness)의 해결책",
     accent_color=ACCENT_EMERALD,
     title_size=15,
-    body_size=11.5,
+    body_size=11,
     content_lines=[
         "• Context Layer (2nd Brain): 시스템이 컴파일러 AST와 Git에서 맥락 자동 주입",
         "• Blast Radius 선행 계산: 코드 변경 전 파급 반경을 수학적으로 먼저 도출",
@@ -256,36 +261,36 @@ add_bento_card(
 )
 
 # ==============================================================================
-# SLIDE 3: Bento Trio: Meta Production Case Study (10hr ➔ 30min)
+# SLIDE 3: Meta Case Study (3-Box Trio)
 # ==============================================================================
 s3 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s3)
-add_slide_header(s3, "Part 2 · Meta Case Study", "메타 프로덕션 실전 사례: 성능 프로파일링 10시간 ➔ 30분 단축", "대규모 분산 백엔드 서비스의 레이턴시 트리아지를 에이전틱 하네스로 95% 단축한 비결")
+add_clean_header(s3, "Part 2 · Meta Case Study", "메타 프로덕션 실전 사례: 성능 프로파일링 10시간 ➔ 30분 단축", "대규모 분산 백엔드 서비스의 레이턴시 트리아지를 에이전틱 하네스로 95% 단축한 비결", tag_color=ACCENT_CYAN)
 
-# 3-Column Bento Boxes
-add_bento_card(
-    s3, Inches(0.9), Inches(1.8), Inches(3.6), Inches(5.1),
+add_bento_box(
+    s3, Inches(0.9), Inches(1.8), Inches(3.65), Inches(5.1),
     tag="Pain Point · 10 Hours",
     title="1. 기존 수작업의 한계",
     accent_color=ACCENT_ROSE,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=11,
     content_lines=[
         "• 분산 서비스의 응답 지연(Latency) 급증 발생",
         "• 수천 개 모듈 간 상호 호출로 원인 추적 난해",
         "• 시니어 엔지니어가 Flame Graph와 Trace 데이터를 수작업 대조",
         "• 단순 Grep 검색 시 90% 이상 무관한 주석/더미가 유입되어 LLM 환각 유발",
-        "🚨 결과: 원인 규명에만 평균 10시간 이상 소모"
+        "",
+        "🚨 결과: 원인 규명에 평균 10시간 이상 소모"
     ]
 )
 
-add_bento_card(
-    s3, Inches(4.85), Inches(1.8), Inches(3.6), Inches(5.1),
+add_bento_box(
+    s3, Inches(4.85), Inches(1.8), Inches(3.65), Inches(5.1),
     tag="3-Layer Solution",
     title="2. 하네스 3대 결합 솔루션",
     accent_color=ACCENT_CYAN,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=11,
     content_lines=[
         "• 🛠️ Profiling MCP Tool",
         "  Flame Graph 수치를 LLM이 정량 질의하는 표준화 도구",
@@ -293,17 +298,18 @@ add_bento_card(
         "  메타 시니어의 5단계 진단 체크리스트를 마크다운 화",
         "• 🕸️ 2nd Brain Graph",
         "  함수 호출선 및 데이터 흐름을 AST 수준에서 즉시 역추적",
+        "",
         "🎯 에이전트가 가설 수립 및 코드 검증을 자율 병렬 수행"
     ]
 )
 
-add_bento_card(
-    s3, Inches(8.8), Inches(1.8), Inches(3.6), Inches(5.1),
+add_bento_box(
+    s3, Inches(8.8), Inches(1.8), Inches(3.65), Inches(5.1),
     tag="Key Outcome · 30 Mins",
     title="3. 압도적 성과 & 교훈",
     accent_color=ACCENT_EMERALD,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=11,
     content_lines=[
         "• ⏱️ 소요 시간 95% 단축",
         "  10시간의 고난도 트리아지가 30분 만에 패치 제안까지 완료",
@@ -315,20 +321,20 @@ add_bento_card(
 )
 
 # ==============================================================================
-# SLIDE 4: Asymmetric Bento: Codebase Graph (AST Compiler vs Grep)
+# SLIDE 4: Codebase Graph with Real Benchmark Chart Image
 # ==============================================================================
 s4 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s4)
-add_slide_header(s4, "Part 3 · Second Brain Architecture", "세컨드 브레인 기둥 1: 컴파일러/AST 기반 Codebase Graph", "Grep의 텍스트 한계를 넘어 수학적으로 100% 결정론적인 파급 반경(Blast Radius) 도출")
+add_clean_header(s4, "Part 3 · Second Brain Architecture", "세컨드 브레인 기둥 1: 컴파일러/AST 기반 Codebase Graph", "Grep의 텍스트 한계를 넘어 수학적으로 100% 결정론적인 파급 반경(Blast Radius) 도출", tag_color=ACCENT_CYAN)
 
-# Left Tall Bento: Detailed Comparison
-add_bento_card(
+# Left Tall Box
+add_bento_box(
     s4, Inches(0.9), Inches(1.8), Inches(6.0), Inches(5.1),
     tag="Precision Compiler Indexing",
     title="🕸️ Grep vs Compiler AST 비교",
     accent_color=ACCENT_CYAN,
-    title_size=17,
-    body_size=11.5,
+    title_size=16,
+    body_size=11,
     content_lines=[
         "• 텍스트 Grep의 치명적 결함:",
         "  - 정규표현식 단순 매칭으로 주석, 테스트 더미, 유사 이름 대량 유입",
@@ -343,14 +349,14 @@ add_bento_card(
     ]
 )
 
-# Right Top Bento: BFS Hopping
-add_bento_card(
-    s4, Inches(7.2), Inches(1.8), Inches(5.2), Inches(2.45),
+# Right Top Box: BFS Hopping
+add_bento_box(
+    s4, Inches(7.2), Inches(1.8), Inches(5.25), Inches(2.2),
     tag="Algorithmic Traversal",
     title="⚡ BFS Hopping: Blast Radius 계산",
     accent_color=ACCENT_PURPLE,
     title_size=15,
-    body_size=11,
+    body_size=10.5,
     content_lines=[
         "• 함수 A 수정 시 영향받는 2차, 3차 호출 모듈 추적",
         "• 그래프 너비 우선 탐색(BFS)으로 파급 반경을 수학적으로 계산",
@@ -358,102 +364,99 @@ add_bento_card(
     ]
 )
 
-# Right Bottom Bento: Metric Stats
-add_bento_card(
-    s4, Inches(7.2), Inches(4.45), Inches(5.2), Inches(2.45),
+# Right Bottom Box: Chart Container (Chart starts at 5.0" to avoid touching title)
+s4_chart_box = add_bento_box(
+    s4, Inches(7.2), Inches(4.2), Inches(5.25), Inches(2.7),
     tag="Benchmark Verification",
     title="📊 도구별 성능 및 토큰 효율",
     accent_color=ACCENT_EMERALD,
-    title_size=15,
-    body_size=11,
-    content_lines=[
-        "• 토큰 소모량: Grep 대비 68% 절감 (무관 파일 유입 차단)",
-        "• 모델 응답 레이턴시: 3.2배 가속 (컴팩트 프롬프트 유지)",
-        "• 코드 수정 적중률: 94.2% 달성 (수정 누락 제로)"
-    ]
+    title_size=14,
+    body_size=10
 )
+if os.path.exists(chart_png):
+    s4.shapes.add_picture(chart_png, Inches(7.45), Inches(5.0), width=Inches(4.75), height=Inches(1.75))
 
 # ==============================================================================
-# SLIDE 5: 2x2 Bento Matrix: Code Memory & Routing Policy
+# SLIDE 5: 2x2 Bento Matrix (Rich Content)
 # ==============================================================================
 s5 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s5)
-add_slide_header(s5, "Part 3 · Second Brain Architecture", "세컨드 브레인 기둥 2: 'Why'를 추적하는 Code Memory & 라우팅 규칙", "그래프의 구조적 한계를 보완하는 역사적 맥락과 2원화 실행 정책")
+add_clean_header(s5, "Part 3 · Second Brain Architecture", "세컨드 브레인 기둥 2: 'Why'를 추적하는 Code Memory & 라우팅 규칙", "그래프의 구조적 한계를 보완하는 역사적 맥락과 2원화 실행 정책", tag_color=ACCENT_AMBER)
 
-# Card A (Top-Left): Code Memory
-add_bento_card(
-    s5, Inches(0.9), Inches(1.8), Inches(5.6), Inches(2.45),
+add_bento_box(
+    s5, Inches(0.9), Inches(1.8), Inches(5.65), Inches(2.45),
     tag="Historical Context",
     title="🧠 Code Memory: 아키텍처 의도 복원",
     accent_color=ACCENT_AMBER,
     title_size=15,
-    body_size=11,
+    body_size=10.5,
     content_lines=[
         "• 그래프의 맹점: '현재 구조'만 알 뿐 'Why'를 알지 못함",
         "• '이 함수는 왜 10us 딜레이를 주는가?' ➔ 과거 하드웨어 버그 회피 사유",
-        "• `why.mjs` & `query.mjs`: Git 커밋, PR 리뷰, ADR 연동"
+        "• `why.mjs` & `query.mjs`: Git 커밋, PR 리뷰, ADR 연동",
+        "• 의사결정 맥락을 보존하여 에이전트의 성급한 리팩토링 방지"
     ]
 )
 
-# Card B (Top-Right): BM25 Engine
-add_bento_card(
-    s5, Inches(6.8), Inches(1.8), Inches(5.6), Inches(2.45),
+add_bento_box(
+    s5, Inches(6.8), Inches(1.8), Inches(5.65), Inches(2.45),
     tag="Retrieval Ranking",
     title="🔍 BM25 랭킹: 희귀 도메인 용어 적중",
     accent_color=ACCENT_CYAN,
     title_size=15,
-    body_size=11,
+    body_size=10.5,
     content_lines=[
         "• 일반 벡터 임베딩은 통신/하드웨어 전문 약어 매칭에 취약",
-        "• BM25는 희귀 엔지니어링 고유명사에 가중치를 부여",
-        "• CPHY, DPHY, HARQ, MMIO 등 도메인 변경 맥락을 즉각 적중"
+        "• BM25는 희귀 엔지니어링 고유명사(IDF 가중치)를 최우선 랭킹",
+        "• CPHY, DPHY, HARQ, MMIO 등 도메인 변경 맥락을 즉각 적중",
+        "• 무관한 일반 단어 노이즈를 배제하여 검색 정밀도 극대화"
     ]
 )
 
-# Card C (Bottom-Left): Fast Path
-add_bento_card(
-    s5, Inches(0.9), Inches(4.45), Inches(5.6), Inches(2.45),
+add_bento_box(
+    s5, Inches(0.9), Inches(4.45), Inches(5.65), Inches(2.45),
     tag="Routing Policy · Local",
     title="⚡ Fast Path (로컬 수정 우회)",
     accent_color=ACCENT_INDIGO,
     title_size=15,
-    body_size=11,
+    body_size=10.5,
     content_lines=[
         "• 모든 단순 작업에 Brain을 태우면 레이턴시와 토큰 낭비 발생",
         "• 단일 파일 내 자명한 타이포 및 로컬 버그 수정",
-        "• LLM 직접 편집 (Brain 조회 바이패스)"
+        "• LLM 직접 편집 (Brain 조회 바이패스)",
+        "• 1초 이내 초고속 응답 달성 및 불필요한 토큰 소모 80% 절감"
     ]
 )
 
-# Card D (Bottom-Right): Brain Path
-add_bento_card(
-    s5, Inches(6.8), Inches(4.45), Inches(5.6), Inches(2.45),
+add_bento_box(
+    s5, Inches(6.8), Inches(4.45), Inches(5.65), Inches(2.45),
     tag="Routing Policy · Architecture",
     title="🏛️ Brain Path (구조적 수정 의무화)",
     accent_color=ACCENT_EMERALD,
     title_size=15,
-    body_size=11,
+    body_size=10.5,
     content_lines=[
         "• 공용 인터페이스 변경, 다중 모듈 리팩토링, 레지스터 정의 수정",
         "• 반드시 Code Graph BFS + Why 메모리 선행 조회 강제",
-        "• 변경 전 파급 반경 확인 후 안전하게 코드 작성"
+        "• 변경 전 파급 반경(Blast Radius) 확인 후 안전하게 코드 작성",
+        "• 다른 팀 모듈을 깨뜨리는 침묵의 장애를 시스템 레벨에서 원천 차단"
     ]
 )
 
 # ==============================================================================
-# SLIDE 6: Bento Trio: Eval 2-Stage Architecture
+# SLIDE 6: Eval 2-Stage Verification Architecture
 # ==============================================================================
 s6 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s6)
-add_slide_header(s6, "Part 4 · Verification Architecture", "Eval 체계: 결정론적 Hard Check + K-Judge Majority Voting", "Anthropic 프롬프트 업데이트 참사를 방지하는 2단계 검증 및 샌드박스 무균 격리")
+add_clean_header(s6, "Part 4 · Verification Architecture", "Eval 체계: 결정론적 Hard Check + K-Judge Majority Voting", "Anthropic 프롬프트 업데이트 참사를 방지하는 2단계 검증 및 샌드박스 무균 격리", tag_color=ACCENT_PURPLE)
 
-add_bento_card(
-    s6, Inches(0.9), Inches(1.8), Inches(3.6), Inches(5.1),
+add_bento_box(
+    s6, Inches(0.9), Inches(1.8), Inches(3.65), Inches(5.1),
     tag="Stage 1 · Deterministic",
     title="1. Hard Check (하드 체크)",
     accent_color=ACCENT_ROSE,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=10.5,
     content_lines=[
         "• 컴파일 성공 여부 (Clang exit code == 0)",
         "• 정적 분석 린트 무결점 (Clang-Tidy)",
@@ -465,13 +468,13 @@ add_bento_card(
     ]
 )
 
-add_bento_card(
-    s6, Inches(4.85), Inches(1.8), Inches(3.6), Inches(5.1),
+add_bento_box(
+    s6, Inches(4.85), Inches(1.8), Inches(3.65), Inches(5.1),
     tag="Stage 2 · Qualitative",
     title="2. K-Judge Majority Voting",
     accent_color=ACCENT_PURPLE,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=10.5,
     content_lines=[
         "• LLM-as-a-Judge 정성 평가",
         "• LLM 고유의 확률적 분산(Variance) 제거",
@@ -483,13 +486,13 @@ add_bento_card(
     ]
 )
 
-add_bento_card(
-    s6, Inches(8.8), Inches(1.8), Inches(3.6), Inches(5.1),
+add_bento_box(
+    s6, Inches(8.8), Inches(1.8), Inches(3.65), Inches(5.1),
     tag="Infrastructure & Gate",
     title="3. Sandbox & CI Gate",
     accent_color=ACCENT_EMERALD,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=10.5,
     content_lines=[
         "• 🧪 무균 샌드박스 (Sandbox Isolation)",
         "  정답 파일(Ground Truth) 및 로컬 전역 설정(~/.claude) 오염 원천 차단",
@@ -501,13 +504,13 @@ add_bento_card(
 )
 
 # ==============================================================================
-# SLIDE 7: Bento 5-Step Stepper: Meta's Eval Maturity Curve
+# SLIDE 7: 5-Step Stepper + 3 Modular Question Bento Boxes
 # ==============================================================================
 s7 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s7)
-add_slide_header(s7, "Part 5 · Maturity & Standards", "메타의 Eval 성숙도 5단계 (Levels 0 ~ 4) 및 스킬 3대 필수 질문", "감(Vibe)에 의존하는 단계에서 셀프 피드백 자가 교정 루프까지의 진화")
+add_clean_header(s7, "Part 5 · Maturity & Standards", "메타의 Eval 성숙도 5단계 (Levels 0 ~ 4) 및 스킬 3대 필수 질문", "감(Vibe)에 의존하는 단계에서 셀프 피드백 자가 교정 루프까지의 진화", tag_color=ACCENT_EMERALD)
 
-# Top 5 Horizontal Bento Cards
+# 5 Steps (Top)
 step_data = [
     ("Level 0", "느낌 (Vibe)", "'어? 잘 되는 것 같은데?'\n가장 위험한 단계", ACCENT_ROSE, Inches(0.9)),
     ("Level 1", "단위 테스트", "기본적인 컴파일 & 린트\n결정론적 하드 체크", ACCENT_AMBER, Inches(3.25)),
@@ -516,46 +519,73 @@ step_data = [
     ("Level 4", "Self-Improving", "실패 피드백 분석 후\n스킬/프롬프트 자가 개선", ACCENT_EMERALD, Inches(10.3))
 ]
 for lvl, name, desc, col, x_pos in step_data:
-    add_bento_card(
-        s7, x_pos, Inches(1.8), Inches(2.15), Inches(2.3),
+    add_bento_box(
+        s7, x_pos, Inches(1.8), Inches(2.15), Inches(2.2),
         tag=lvl,
         title=name,
         accent_color=col,
-        title_size=14,
-        body_size=10.5,
+        title_size=13.5,
+        body_size=10,
         content_lines=desc.split("\n")
     )
 
-# Bottom Wide Bento Card: 3 Essential Questions
-add_bento_card(
-    s7, Inches(0.9), Inches(4.35), Inches(11.55), Inches(2.55),
-    tag="Golden Rubric",
-    title="🎯 스킬 개발 시 반드시 답해야 하는 3대 질문",
-    accent_color=ACCENT_EMERALD,
-    title_size=15,
-    body_size=12,
+# Bottom: 3 Modular Bento Boxes for the 3 Essential Questions (Pure Grid!)
+add_bento_box(
+    s7, Inches(0.9), Inches(4.3), Inches(3.65), Inches(2.6),
+    tag="Rubric 01 · Trigger",
+    title="🎯 1. 호출 정확도 (Triggering)",
+    accent_color=ACCENT_CYAN,
+    title_size=14,
+    body_size=10.5,
     content_lines=[
-        "1. Triggering Accuracy (호출 정확도): 불려야 할 때 정확히 불리고, 안 불려야 할 때 과도하게 호출되어 토큰을 낭비하지 않는가?",
-        "2. Performance Gain (실질적 성능 향상): 기존 Baseline(도구 없음) 대비 작업 성공률이나 실행 속도가 통계적으로 개선되었는가?",
-        "3. Non-Regression (기존 역량 보존): 새로운 스킬을 추가했더니 기존에 잘 되던 기능이 깨지는 치명적 부작용이 없는가?"
+        "• 불려야 할 상황에서 정확하게 호출되는가?",
+        "• 무관한 요청에서 과도하게 호출되어 토큰과 시간을 낭비하지 않는가?",
+        "• 프롬프트 트리거 설명(Description)의 정밀도 검증"
+    ]
+)
+
+add_bento_box(
+    s7, Inches(4.85), Inches(4.3), Inches(3.65), Inches(2.6),
+    tag="Rubric 02 · Uplift",
+    title="📈 2. 성능 향상 (Performance)",
+    accent_color=ACCENT_EMERALD,
+    title_size=14,
+    body_size=10.5,
+    content_lines=[
+        "• 기존 Baseline(스킬 없음) 대비 성공률이 유의미하게 개선되었는가?",
+        "• 복잡한 멀티스텝 작업의 완수 시간이 실질적으로 단축되었는가?",
+        "• 골든 프롬프트 벤치마크 점수 상향 입증"
+    ]
+)
+
+add_bento_box(
+    s7, Inches(8.8), Inches(4.3), Inches(3.65), Inches(2.6),
+    tag="Rubric 03 · Safety",
+    title="🛡️ 3. 무리그레션 (Non-Regression)",
+    accent_color=ACCENT_PURPLE,
+    title_size=14,
+    body_size=10.5,
+    content_lines=[
+        "• 새 스킬 추가로 인해 기존에 잘 되던 기능이 깨지지 않는가?",
+        "• 다른 스킬과의 충돌이나 예기치 않은 부작용이 없는가?",
+        "• 전수 회귀 테스트 100% 통과 보장"
     ]
 )
 
 # ==============================================================================
-# SLIDE 8: Split Bento: Mobile PHY SW Roadmap & Epilogue
+# SLIDE 8: Domain Blueprint & Epilogue
 # ==============================================================================
 s8 = prs.slides.add_slide(prs.slide_layouts[6])
 set_canvas_bg(s8)
-add_slide_header(s8, "Part 6 · Domain Blueprint & Epilogue", "모바일 통신 물리계층(PHY) SW 그룹 적용 가이드 & 에필로그", "임베디드 C/C++ 펌웨어 리뷰 파이프라인으로의 1:1 대응 및 에이전트 시대 인간의 주도권")
+add_clean_header(s8, "Part 6 · Domain Blueprint & Epilogue", "모바일 통신 물리계층(PHY) SW 그룹 적용 가이드 & 에필로그", "임베디드 C/C++ 펌웨어 리뷰 파이프라인으로의 1:1 대응 및 에이전트 시대 인간의 주도권", tag_color=ACCENT_PURPLE)
 
-# Left Bento: Mobile PHY Roadmap
-add_bento_card(
-    s8, Inches(0.9), Inches(1.8), Inches(5.6), Inches(5.1),
+add_bento_box(
+    s8, Inches(0.9), Inches(1.8), Inches(5.65), Inches(5.1),
     tag="Group Leader Blueprint",
     title="📡 모바일 통신 PHY SW 2nd Brain 로드맵",
     accent_color=ACCENT_CYAN,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=11,
     content_lines=[
         "• 1. Clang AST 기반 하드웨어 레지스터 맵 그래프",
         "  MMIO 주소, 비트필드 구조체, ISR 인터럽트 벡터, 3GPP FSM 상태 머신을 심볼 링킹하여 레지스터 쓰기 경로 즉각 추적",
@@ -564,18 +594,17 @@ add_bento_card(
         "  과거 모뎀 IODT 필드 이슈 이력과 칩셋 호환성 패치 사유(Why)를 BM25로 인덱싱하여 무환각 코드 리뷰 지원",
         "",
         "• 3. 임베디드 펌웨어 Eval CI 게이트",
-        "  Hard Check(ARM GCC Cross-Compile + SRAM/D-Cache 사용량) + Domain Judge(ISR 동시성 경합 및 us 실시간 데드라인)"
+        "  Hard Check(ARM GCC Cross-Compile + SRAM/D-Cache 사용량) + Domain Judge(ISR 동시성 경합 및 us 실시간 데드라인 규격 다수결 판정)"
     ]
 )
 
-# Right Bento: Epilogue
-add_bento_card(
-    s8, Inches(6.8), Inches(1.8), Inches(5.6), Inches(5.1),
+add_bento_box(
+    s8, Inches(6.8), Inches(1.8), Inches(5.65), Inches(5.1),
     tag="Human Agency · Philosophy",
     title="💡 에필로그: 에이전트 시대, 인간의 주도권",
     accent_color=ACCENT_PURPLE,
-    title_size=16,
-    body_size=11.5,
+    title_size=15,
+    body_size=11,
     content_lines=[
         "\"에이전트에게 주도권을 뺏기지 마세요.\"",
         "",
@@ -589,4 +618,4 @@ add_bento_card(
 )
 
 prs.save(out_pptx)
-print(f"Successfully generated Bento-style Presentation: {out_pptx}")
+print(f"Successfully generated refined Bento Presentation: {out_pptx}")
