@@ -3,13 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bento Single-File Presentation: 2nd Brain & Eval</title>
+<title>Bento Slide Deck: 메타 시니어 엔지니어 2nd Brain & Eval 세미나</title>
 <style>
   :root {
     --bg: #090a0f;
     --slide-bg: #12151f;
     --accent: #6366f1;
     --accent-light: #818cf8;
+    --cyan: #38bdf8;
+    --emerald: #34d399;
+    --amber: #fbbf24;
+    --rose: #f43f5e;
     --text: #f8fafc;
     --muted: #94a3b8;
     --border: rgba(255, 255, 255, 0.08);
@@ -34,49 +38,54 @@
   .slide {
     display: none;
     width: 100%;
-    max-width: 1100px;
-    height: 620px;
+    max-width: 1160px;
+    height: 640px;
     background: var(--slide-bg);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 48px 56px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    padding: 44px 52px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.7);
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     position: relative;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.25s ease;
   }
   .slide.active { display: flex; }
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
   .slide-tag {
-    position: absolute;
-    top: 24px;
-    left: 48px;
     font-size: 11px;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent-light);
+    letter-spacing: 0.12em;
+    color: var(--cyan);
     font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
   }
-  h2 { font-size: 34px; font-weight: 800; margin-bottom: 20px; line-height: 1.25; }
-  p.lead { font-size: 18px; color: var(--muted); margin-bottom: 30px; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  h2 { font-size: 30px; font-weight: 800; margin-bottom: 12px; line-height: 1.25; }
+  p.lead { font-size: 16px; color: var(--muted); margin-bottom: 24px; line-height: 1.5; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex: 1; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; flex: 1; }
   .card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid var(--border);
     border-radius: 14px;
-    padding: 24px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
   }
-  .card h3 { font-size: 18px; color: #fff; margin-bottom: 12px; }
-  .card ul { margin-left: 18px; color: var(--muted); font-size: 15px; }
-  .card li { margin-bottom: 8px; }
+  .card h3 { font-size: 16px; color: #fff; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+  .card ul { margin-left: 18px; color: #cbd5e1; font-size: 13.5px; line-height: 1.55; }
+  .card li { margin-bottom: 6px; }
+  .card p { color: #cbd5e1; font-size: 13.5px; line-height: 1.55; }
   
   /* Bento Controls */
   .footer-nav {
-    height: 64px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -102,121 +111,275 @@
     font-size: 12px;
     color: var(--accent-light);
     background: rgba(99, 102, 241, 0.12);
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
+    border: 1px solid rgba(99, 102, 241, 0.25);
   }
 </style>
 </head>
 <body>
 
 <div class="stage">
-  <!-- Slide 1 -->
+  <!-- Slide 1: Cover -->
   <div class="slide active">
-    <div class="slide-tag">Bento Presentation Pattern · Meta Senior Tech Talk</div>
-    <h2>AI 에이전트를 위한<br><span style="color:var(--accent-light)">2nd Brain과 Eval 프레임워크</span></h2>
-    <p class="lead">Meta 8년차 시니어 엔지니어가 밝히는 자율 에이전트 구축의 두 기둥: 맥락(Context)과 검증(Verification)</p>
-    <div style="margin-top: 20px;">
-      <span class="note-pill">⌨️ 키보드 좌우 화살표 (← / →) 로 슬라이드를 넘길 수 있습니다</span>
+    <div>
+      <div class="slide-tag">⚡ META SENIOR LECTURE · BENTO SLIDE SUITE</div>
+      <h2>AI 에이전트를 위한<br><span style="color:var(--cyan)">2nd Brain과 Eval 프레임워크</span></h2>
+      <p class="lead">Meta 8년차 시니어 엔지니어 하재상 세미나 전수 분석 (1시간 17분)<br>자율 에이전트 도입의 두 기둥: 맥락 주입(Context)과 자동 검증(Verification)</p>
+    </div>
+    <div class="grid-3" style="max-height: 250px;">
+      <div class="card" style="border-top: 3px solid var(--cyan);">
+        <h3>🕸️ Codebase Graph</h3>
+        <p>컴파일러/AST 기반 정밀 지도<br>Symbol ID & BFS Hopping으로 파급 반경(Blast Radius) 선행 계산</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--amber);">
+        <h3>🧠 Code Memory</h3>
+        <p>Git 커밋, PR 리뷰, ADR의 'Why' 추적<br>BM25 키워드 랭킹으로 희귀 엔지니어링 약어 적중</p>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--emerald);">
+        <h3>⚖️ Eval (EDD)</h3>
+        <p>Hard Check (Exit code == 0) + K=3 Judge 다수결 투표<br>GitHub Actions CI Gatekeeper 연동</p>
+      </div>
+    </div>
+    <div>
+      <span class="note-pill">⌨️ 키보드 좌우 화살표 (← / →) 로 슬라이드를 이동할 수 있습니다</span>
     </div>
   </div>
 
-  <!-- Slide 2 -->
+  <!-- Slide 2: The Bottleneck Shift -->
   <div class="slide">
-    <div class="slide-tag">Part 1 · The Real Bottleneck</div>
-    <h2>AI 코딩의 병목은 '작성'이 아닌 '검증'</h2>
-    <p class="lead">프롬프트를 깎지 말고, 컨텍스트와 검증을 관장하는 시스템 하네스를 만들어야 합니다.</p>
-    <div class="grid">
-      <div class="card" style="border-left: 3px solid #ef4444;">
-        <h3>❌ 과거 vs 현재의 병목</h3>
-        <ul>
-          <li>과거: 코드 타이핑과 구현 속도가 병목</li>
-          <li>현재: 초당 수백 줄의 코드가 쏟아져 나와 <strong>리뷰와 검증이 극한의 병목</strong></li>
-          <li>환각(Hallucination)에 대한 불안으로 인간 피로도 증가</li>
-        </ul>
-      </div>
-      <div class="card" style="border-left: 3px solid #10b981;">
-        <h3>🛡️ 하네스(Harness) 전환</h3>
-        <ul>
-          <li>에이전트에게 매번 설명을 반복하는 것은 시스템 실패</li>
-          <li>지식 레이어(2nd Brain)가 맥락을 자동으로 공급</li>
-          <li>검증 레이어(Eval)가 통계적 신뢰성을 자동으로 증명</li>
-        </ul>
-      </div>
+    <div>
+      <div class="slide-tag">Part 1 · The Real Bottleneck</div>
+      <h2>AI 코딩의 병목: 코드 생성 ➔ '검증(Verification)'</h2>
+      <p class="lead">프롬프트를 깎지 말고, 컨텍스트와 검증을 관장하는 시스템 하네스(Harness)를 구축해야 합니다.</p>
     </div>
-  </div>
-
-  <!-- Slide 3 -->
-  <div class="slide">
-    <div class="slide-tag">Part 2 · Developer's 2nd Brain</div>
-    <h2>개발자용 세컨드 브레인의 2대 기둥</h2>
-    <p class="lead">코드베이스 지도와 의사결정 역사가 결합될 때 비로소 에이전트 온보딩이 완성됩니다.</p>
-    <div class="grid">
-      <div class="card">
-        <h3>🕸️ 기둥 1: Codebase Graph</h3>
+    <div class="grid-2">
+      <div class="card" style="border-left: 3px solid var(--rose);">
+        <h3 style="color:var(--rose);">❌ 프롬프팅 중심 코딩의 한계</h3>
         <ul>
-          <li>컴파일러 AST 기반의 결정론적 심볼 그래프</li>
-          <li>단순 검색이나 벡터 RAG를 압도하는 정확도</li>
-          <li>$k$-Hop 그래프를 통해 변경 시 파급 반경(Blast Radius) 자동 계산</li>
+          <li><strong>코드 타이핑 병목 소멸:</strong> LLM이 1초 만에 수백 줄의 코드를 작성</li>
+          <li><strong>초대형 PR 범람:</strong> 인간 리뷰어의 뇌에 감당 불가능한 검증 부하 집중</li>
+          <li><strong>환각(Hallucination) 공포:</strong> 결과물을 믿을 수 없어 수동 대조하느라 생산성 정체</li>
+          <li><strong>컨텍스트 리셋:</strong> 매 세션마다 아키텍처 규칙을 사람이 재설명하는 비효율</li>
         </ul>
       </div>
-      <div class="card">
-        <h3>🧠 기둥 2: Code Memory</h3>
+      <div class="card" style="border-left: 3px solid var(--emerald);">
+        <h3 style="color:var(--emerald);">🛡️ 메타의 $30,000/월 실험 교훈</h3>
         <ul>
-          <li>코드 자체에는 없는 "왜 이렇게 구현했는가?"(Why)</li>
-          <li>과거 장애 회고, 아키텍처 결정(ADR) 문서</li>
-          <li>에이전트가 신임 시니어 개발자처럼 프로젝트 배경 이해</li>
+          <li><strong>하재상 엔지니어의 통찰:</strong> 사내 대시보드 월 $30k API를 쓰며 절감한 원칙</li>
+          <li><strong>하네스(Harness) 전환:</strong> 룰과 툴만으로는 부족, 자동 검증 체계가 필수</li>
+          <li><strong>Context Layer (2nd Brain):</strong> 컴파일러 AST 기반으로 맥락 자동 주입</li>
+          <li><strong>Verification Layer (Eval):</strong> Hard Check + K-Judge로 통계적 신뢰도 확보 후 CI 머지</li>
         </ul>
       </div>
     </div>
   </div>
 
-  <!-- Slide 4 -->
+  <!-- Slide 3: Meta Case Study -->
   <div class="slide">
-    <div class="slide-tag">Part 3 · Verification & Eval</div>
-    <h2>Eval: 에이전트 품질을 증명하는 정량적 검증</h2>
-    <p class="lead">테스트 코드 없이 배포하지 않듯, Eval 없는 에이전트 스킬은 쓸 수 없습니다.</p>
-    <div class="card">
-      <h3>⚖️ Eval-Driven Development (EDD) 3대 검증 기준</h3>
-      <ul>
-        <li><strong>Trigger Accuracy:</strong> 스킬과 에이전트가 필요한 순간에만 정확히 발동하는가?</li>
-        <li><strong>Quality Gain:</strong> 기존 대비 성능과 검출율이 정량적으로 향상되었는가?</li>
-        <li><strong>Zero Regression:</strong> 새로운 규칙이 다른 정상 코드를 오탐(False Positive)으로 차단하지 않는가?</li>
-        <li><strong>CI/CD 자동 결합:</strong> GitHub Actions PR 머지 단계에서 자동으로 다수결 판정 수행</li>
-      </ul>
+    <div>
+      <div class="slide-tag">Part 2 · Meta Case Study</div>
+      <h2>메타 실전 사례: 성능 프로파일링 10시간 ➔ 30분 단축</h2>
+      <p class="lead">대규모 분산 백엔드 서비스의 지연(Latency) 트리아지를 에이전틱 하네스로 95% 단축한 비결</p>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="border-top: 3px solid var(--rose);">
+        <h3>1. 기존의 고난도 수작업</h3>
+        <ul>
+          <li>초대형 분산 백엔드 레이턴시 급증</li>
+          <li>수천 개 모듈 간 상호 호출로 원인 추적 난해</li>
+          <li>시니어 엔지니어가 Flame Graph와 Trace를 10시간 동안 수작업 대조</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--cyan);">
+        <h3>2. 하네스 3대 결합 솔루션</h3>
+        <ul>
+          <li><strong>Profiling MCP:</strong> Flame Graph 수치 직접 질의</li>
+          <li><strong>Senior Skill Manual:</strong> 시니어의 5단계 진단 매뉴얼을 마크다운 패키징</li>
+          <li><strong>2nd Brain Graph:</strong> 의존 함수 및 데이터 흐름 즉시 역추적</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--emerald);">
+        <h3>3. 성과 및 핵심 교훈</h3>
+        <ul>
+          <li>진단부터 패치 제안까지 <strong>30분 만에 완료</strong></li>
+          <li>단순 Grep 검색은 90% 이상 무관한 주석/더미 반환</li>
+          <li><strong>MCP 도구 + 시니어 노하우 + 코드 지도</strong>의 결합이 자율화의 핵심</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4: Codebase Graph -->
+  <div class="slide">
+    <div>
+      <div class="slide-tag">Part 3 · Second Brain Architecture</div>
+      <h2>컴파일러/AST 기반 Codebase Graph</h2>
+      <p class="lead">Grep의 키워드 검색 한계를 극복하고, 수학적으로 100% 결정론적인 파급 반경(Blast Radius)을 계산합니다.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card" style="border-left: 3px solid var(--cyan);">
+        <h3>🕸️ 왜 단순 Grep이 아닌 AST 컴파일러인가?</h3>
+        <ul>
+          <li><strong>Grep의 맹점:</strong> 키워드 검색 시 주석, 테스트 더미, 이름만 같은 무관 변수가 대량 유입되어 토큰 낭비 및 환각 유발</li>
+          <li><strong>`brain build` 인덱싱:</strong> TypeScript Compiler API, Clang AST 파서를 통해 모든 함수/구조체/클래스에 고유 <strong>Symbol ID</strong> 부여</li>
+          <li><strong>방향성 엣지:</strong> <code>CALLS</code>, <code>IMPORTS</code>, <code>WRITES_TO</code> 관계를 엄밀하게 저장</li>
+          <li><strong>BFS Hopping:</strong> 특정 함수 수정 시 파급되는 2차, 3차 영향권을 수학적으로 정밀 계산</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--amber);">
+        <h3>🧠 Code Memory & Routing Rule</h3>
+        <ul>
+          <li><strong>'Why'를 복원하는 Code Memory:</strong> 그래프는 현재 구조만 알 뿐 과거 설계 의도를 모름. Git 커밋, PR 리뷰, ADR 연동</li>
+          <li><strong>BM25 랭킹 채택:</strong> 일반 벡터 임베딩이 놓치는 희귀 하드웨어/엔지니어링 약어를 정확하게 매칭</li>
+          <li><strong>2원화 라우팅 규칙:</strong>
+            <br>• <strong>Fast Path:</strong> 단일 파일 로컬 수정 ➔ LLM 직접 편집 (No Brain)
+            <br>• <strong>Brain Path:</strong> 공용 인터페이스/아키텍처 수정 ➔ Graph & Memory 선행 조회 의무화</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5: Eval Architecture -->
+  <div class="slide">
+    <div>
+      <div class="slide-tag">Part 4 · Verification Architecture</div>
+      <h2>Eval 체계: 결정론적 Hard Check + K-Judge Majority Voting</h2>
+      <p class="lead">Claude Code 시스템 프롬프트 변경 참사를 막는 2단계 검증 및 샌드박스 무균 격리 파이프라인</p>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="border-top: 3px solid var(--rose);">
+        <h3 style="color:var(--rose);">Stage 1: Hard Check</h3>
+        <ul>
+          <li>컴파일 성공 여부 (Clang exit code == 0)</li>
+          <li>정적 분석 & 린트 무결점 (Clang-Tidy)</li>
+          <li>단위 테스트 통과 (Unit Test Pass)</li>
+          <li>스키마 규격 일치 (JSON Schema)</li>
+          <li><strong>1개라도 실패 시 즉시 0점 탈락</strong></li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--accent-light);">
+        <h3 style="color:var(--accent-light);">Stage 2: K-Judge Voting</h3>
+        <ul>
+          <li>LLM-as-a-Judge 정성 평가</li>
+          <li>LLM 확률적 변동성(Variance) 제거</li>
+          <li><strong>K=3회 독립 실행 (3인의 교수 심사 모델)</strong></li>
+          <li>2표 이상 찬성(Pass) 시에만 최종 합격</li>
+          <li>아키텍처 규칙 및 예외 처리 검증</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top: 3px solid var(--emerald);">
+        <h3 style="color:var(--emerald);">Sandbox & CI Gate</h3>
+        <ul>
+          <li><strong>무균 격리:</strong> Ground Truth 은닉, 글로벌 설정 오염 차단</li>
+          <li><strong>골든 프롬프트:</strong> 실무 전형 20~30개 시나리오 벤치마크</li>
+          <li><strong>CI Gatekeeper:</strong> <em>"CI에서 자동 실행되지 않는 Eval은 없는 것과 같다"</em> (PR 머지 강제)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 6: Meta's 5-Stage Maturity Model -->
+  <div class="slide">
+    <div>
+      <div class="slide-tag">Part 5 · Maturity & Standards</div>
+      <h2>메타의 Eval 성숙도 5단계 및 스킬 3대 필수 질문</h2>
+      <p class="lead">감(Vibe)에 의존하는 단계에서 셀프 피드백 루프까지의 진화 단계</p>
+    </div>
+    <div class="grid-2">
+      <div class="card" style="border-left: 3px solid var(--cyan);">
+        <h3>📈 Eval 성숙도 5단계 (Levels 0 ~ 4)</h3>
+        <ul>
+          <li><strong>Level 0 (느낌 / Vibe):</strong> "어? 잘 되는 것 같은데?" (가장 위험)</li>
+          <li><strong>Level 1 (단위 테스트 & 린트):</strong> 기본적인 하드 체크 자동화</li>
+          <li><strong>Level 2 (오프라인 Eval):</strong> 골든 프롬프트 벤치마크 정량 점수화</li>
+          <li><strong>Level 3 (CI Gatekeeper):</strong> PR 머지 전 자동 Eval 통과 의무화</li>
+          <li><strong>Level 4 (Self-Improving Loop):</strong> 에이전트가 실패 사례 분석 후 프롬프트 자체 교정</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--emerald);">
+        <h3>🎯 스킬 개발 시 반드시 답해야 하는 3대 질문</h3>
+        <ul>
+          <li><strong>1. Triggering Accuracy (호출 정확도):</strong>
+            <br>불려야 할 때 정확히 불리고, 안 불려야 할 때 토큰을 낭비하지 않는가?</li>
+          <li><strong>2. Performance Gain (실질적 성능 향상):</strong>
+            <br>기존 Baseline 대비 작업 성공률이나 속도가 유의미하게 개선되었는가?</li>
+          <li><strong>3. Non-Regression (기존 역량 보존):</strong>
+            <br>새로운 스킬을 추가했더니 기존 기능이 망가지는 부작용이 없는가?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 7: Mobile PHY SW Roadmap & Closing -->
+  <div class="slide">
+    <div>
+      <div class="slide-tag">Part 6 · Domain Blueprint & Epilogue</div>
+      <h2>모바일 통신 PHY SW 적용 청사진 & 에필로그</h2>
+      <p class="lead">임베디드 펌웨어 리뷰 파이프라인으로의 1:1 대응 및 에이전트 시대의 인간 주도권</p>
+    </div>
+    <div class="grid-2">
+      <div class="card" style="border-left: 3px solid var(--cyan);">
+        <h3>📡 모바일 통신 PHY SW 2nd Brain 로드맵</h3>
+        <ul>
+          <li><strong>Clang AST 기반 레지스터 맵:</strong> MMIO 주소, 비트필드, ISR 인터럽트 벡터, 3GPP FSM 상태 머신 심볼 링킹</li>
+          <li><strong>3GPP & 실리콘 에라타 Memory:</strong> 과거 IODT 필드 이슈 이력과 칩셋 호환성 패치 사유(Why) BM25 인덱싱</li>
+          <li><strong>펌웨어 Eval CI 게이트:</strong> Hard Check(Cross-Compile + SRAM 사용량) + Domain Judge(ISR 경합 및 us 실시간 데드라인)</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left: 3px solid var(--accent-light);">
+        <h3>💡 에필로그: 에이전트 시대, 인간의 주도권</h3>
+        <p style="font-style: italic; color: #e2e8f0; margin-bottom: 12px;">
+          "에이전트에게 주도권을 뺏기지 마세요. 에이전트를 돌리느라 24시간 쉬지 못하는 것은 도구의 본질을 잃은 것입니다. 나의 1번 가치(가족, 건강, 엔지니어링 본질)를 확고히 세우고 에이전트를 지렛대로 부려야 합니다."
+        </p>
+        <ul>
+          <li>설계, 전략, 아키텍처 판단 ➔ 인간 테크리드</li>
+          <li>구현과 검증 ➔ 견고한 시스템 하네스(2nd Brain + Eval CI)</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="footer-nav">
-  <div class="progress" id="progress">Slide 1 / 4</div>
+  <div class="progress" id="progress-indicator">Slide 1 of 7</div>
   <div class="nav-btns">
-    <button onclick="prevSlide()">이전 (←)</button>
-    <button onclick="nextSlide()">다음 (→)</button>
+    <button id="prev-btn">← 이전 (Prev)</button>
+    <button id="next-btn">다음 (Next) →</button>
   </div>
 </div>
 
 <script>
-  let current = 0;
   const slides = document.querySelectorAll('.slide');
-  const prog = document.getElementById('progress');
+  let currentIdx = 0;
+  const progress = document.getElementById('progress-indicator');
 
-  function show(idx) {
-    slides.forEach((s, i) => s.classList.toggle('active', i === idx));
-    prog.innerText = `Slide ${idx + 1} / ${slides.length}`;
+  function updateSlide(idx) {
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === idx);
+    });
+    progress.textContent = `Slide ${idx + 1} of ${slides.length}`;
   }
 
-  function nextSlide() {
-    if (current < slides.length - 1) { current++; show(current); }
-  }
-  function prevSlide() {
-    if (current > 0) { current--; show(current); }
-  }
+  document.getElementById('prev-btn').addEventListener('click', () => {
+    currentIdx = (currentIdx - 1 + slides.length) % slides.length;
+    updateSlide(currentIdx);
+  });
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    currentIdx = (currentIdx + 1) % slides.length;
+    updateSlide(currentIdx);
+  });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
-    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight' || e.key === ' ') {
+      currentIdx = (currentIdx + 1) % slides.length;
+      updateSlide(currentIdx);
+    } else if (e.key === 'ArrowLeft') {
+      currentIdx = (currentIdx - 1 + slides.length) % slides.length;
+      updateSlide(currentIdx);
+    }
   });
 </script>
 </body>
 </html>
-

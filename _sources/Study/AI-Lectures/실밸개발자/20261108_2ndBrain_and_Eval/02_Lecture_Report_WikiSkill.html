@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>실밸개발자 세미나: AI 에이전트를 위한 2nd Brain & Eval 프레임워크</title>
+<title>메타 시니어 엔지니어 하재상: 세컨드 브레인 + Eval 완벽 분석 보고서</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({ startOnLoad: true, theme: 'dark' });</script>
 <style>
   :root {
     --bg: #0d1117;
@@ -15,129 +17,377 @@
     --green: #3fb950;
     --purple: #bc8cff;
     --orange: #f0883e;
+    --rose: #f43f5e;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans KR", Roboto, sans-serif;
     background: var(--bg);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.65;
     display: flex;
     min-height: 100vh;
   }
   aside.toc {
-    width: 260px;
+    width: 280px;
     background: #090d13;
     border-right: 1px solid var(--border);
     position: fixed;
     top: 0; bottom: 0; left: 0;
-    padding: 24px 16px;
+    padding: 28px 18px;
     overflow-y: auto;
   }
-  aside.toc h3 { font-size: 11px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; letter-spacing: 0.08em; }
-  aside.toc a { display: block; color: var(--muted); text-decoration: none; font-size: 13px; padding: 6px 10px; border-radius: 6px; margin-bottom: 2px; }
+  aside.toc h3 { font-size: 11px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; letter-spacing: 0.1em; font-weight: 700; }
+  aside.toc a { display: block; color: var(--muted); text-decoration: none; font-size: 13px; padding: 7px 12px; border-radius: 6px; margin-bottom: 3px; line-height: 1.4; transition: all 0.15s; }
   aside.toc a:hover, aside.toc a.active { background: rgba(88, 166, 255, 0.12); color: var(--accent); font-weight: 600; }
-  main { margin-left: 260px; flex: 1; padding: 36px 48px; max-width: 1100px; }
+  main { margin-left: 280px; flex: 1; padding: 40px 56px; max-width: 1120px; }
   header {
     background: linear-gradient(135deg, #161b22 0%, #1e1b4b 100%);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 28px;
+    border-radius: 14px;
+    padding: 36px;
+    margin-bottom: 32px;
   }
-  h1 { font-size: 26px; color: #fff; margin-bottom: 10px; }
-  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; background: rgba(88, 166, 255, 0.15); color: var(--accent); margin-right: 6px; }
+  h1 { font-size: 28px; color: #fff; margin-bottom: 12px; font-weight: 800; line-height: 1.3; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; background: rgba(88, 166, 255, 0.15); color: var(--accent); margin-right: 6px; margin-bottom: 6px; }
   section.card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
-    margin-bottom: 24px;
+    border-radius: 14px;
+    padding: 32px;
+    margin-bottom: 28px;
   }
-  h2 { font-size: 20px; color: #fff; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-  h3 { font-size: 16px; color: var(--accent); margin: 20px 0 10px; }
-  p { font-size: 14.5px; color: #cbd5e1; margin-bottom: 12px; }
-  ul { margin-left: 20px; color: #cbd5e1; font-size: 14px; margin-bottom: 14px; }
-  li { margin-bottom: 6px; }
-  .callout { background: rgba(0,0,0,0.3); border-left: 4px solid var(--accent); padding: 12px 16px; border-radius: 0 8px 8px 0; margin: 14px 0; font-size: 13.5px; }
-  .callout.green { border-left-color: var(--green); }
-  .callout.purple { border-left-color: var(--purple); }
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
-  .box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
-  .box h4 { font-size: 14px; color: #fff; margin-bottom: 8px; }
+  h2 { font-size: 22px; color: #fff; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  h3 { font-size: 17px; color: var(--accent); margin: 24px 0 12px; }
+  p { font-size: 15px; color: #cbd5e1; margin-bottom: 14px; }
+  ul { margin-left: 22px; color: #cbd5e1; font-size: 14.5px; margin-bottom: 16px; }
+  li { margin-bottom: 7px; }
+  .callout {
+    background: rgba(88, 166, 255, 0.08);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 18px 0;
+    font-size: 14.5px;
+  }
+  .callout-quote {
+    background: rgba(188, 140, 255, 0.08);
+    border-left: 4px solid var(--purple);
+    padding: 16px 20px;
+    border-radius: 0 10px 10px 0;
+    margin: 18px 0;
+    font-style: italic;
+    color: #e2e8f0;
+  }
+  table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 14px; }
+  th, td { border: 1px solid var(--border); padding: 10px 14px; text-align: left; }
+  th { background: rgba(255, 255, 255, 0.05); color: #fff; font-weight: 600; }
+  pre {
+    background: #090d13;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    color: #e6edf3;
+    margin: 14px 0;
+  }
+  .mermaid { margin: 20px 0; background: #090d13; padding: 20px; border-radius: 10px; border: 1px solid var(--border); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 18px 0; }
+  .stat-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .stat-card h4 { font-size: 15px; margin-bottom: 8px; }
 </style>
 </head>
 <body>
 
 <aside class="toc">
-  <h3>Meta Senior Seminar</h3>
-  <a href="#summary" class="active">Overview & 핵심 테제</a>
-  <a href="#bottleneck">1. 패러다임 변화 (하네스)</a>
-  <a href="#secondbrain">2. 2nd Brain (Graph + Memory)</a>
-  <a href="#eval">3. Eval (EDD 검증 파이프라인)</a>
-  <a href="#action">4. 실무 액션 플랜</a>
+  <h3>📑 목차 & 네비게이션</h3>
+  <a href="#overview">1. 세미나 개요 & 병목 전이</a>
+  <a href="#meta-case">2. [사례] 메타 성능 프로파일링</a>
+  <a href="#code-graph">3. Codebase Graph 아키텍처</a>
+  <a href="#code-memory">4. Code Memory & Why 추적</a>
+  <a href="#eval-framework">5. Eval 2단계 검증 체계</a>
+  <a href="#sandbox-maturity">6. 샌드박스 & 5단계 성숙도</a>
+  <a href="#domain-blueprint">7. 모바일 통신 PHY SW 청사진</a>
+  <a href="#epilogue">8. 에필로그: 인간의 주도권</a>
 </aside>
 
 <main>
-  <header id="summary">
-    <span class="badge">Meta Senior 8-Year Tech Lead</span>
-    <span class="badge">Second Brain</span>
-    <span class="badge">Eval-Driven Dev</span>
-    <h1>AI 에이전트를 위한 2nd Brain과 Eval 프레임워크</h1>
-    <p style="color: #94a3b8; font-size: 14.5px;">
-      실밸개발자 세미나 전수 분석: 코드를 짜는 속도가 아니라, <strong>컨텍스트(2nd Brain)를 먹이고 결과물을 검증(Eval)하는 시스템 하네스</strong>가 개발자의 진짜 경쟁력입니다.
+  <header>
+    <div>
+      <span class="badge">META SENIOR SWE LECTURE</span>
+      <span class="badge">SECOND BRAIN</span>
+      <span class="badge">EVAL (EDD)</span>
+      <span class="badge">EMBEDDED PHY SW</span>
+    </div>
+    <h1>메타 시니어 엔지니어 하재상: 세컨드 브레인 + Eval 완벽 분석</h1>
+    <p style="color: var(--muted); margin-bottom: 0;">
+      출처: 패스트캠퍼스 × 실밸개발자 무료 세미나 풀버전 (1시간 17분 53초) | 분석 & 정리: MyWiki 2nd Brain 팀
     </p>
   </header>
 
-  <section id="bottleneck" class="card">
-    <h2>1. AI 시대의 진짜 병목과 하네스(Harness) 전환</h2>
-    <p>AI 코딩 도입 이후 코드 작성은 초고속화되었으나, 그로 인해 <strong>대형 PR 범람, 버그 추적 부담, 리뷰 병목</strong>이 수배로 증가했습니다.</p>
-    <div class="callout green">
-      <strong>핵심 통찰:</strong> 에이전트에게 매번 프롬프트를 깎아서 주는 것은 아마추어 방식입니다. <strong>컨텍스트 주입과 검증을 자동으로 수행하는 '하네스' 시스템</strong>을 구축해야 에이전트에게 일을 완전히 위임할 수 있습니다.
+  <!-- Section 1 -->
+  <section class="card" id="overview">
+    <h2>1. AI 코딩 패러다임의 전환: 코드 작성에서 '검증 병목'으로</h2>
+    <div class="callout-quote">
+      "제가 메타에서 일하면서 최근 한 달 동안 에이전트를 얼마나 썼는지 회사 대시보드를 보니 <strong>3만 달러($30,000)</strong>를 썼더라고요. 제 돈이 아닌 3만 달러를 쓰면서 절실히 깨달은 것은, 하네스(규칙, 툴, 프롬프트)를 아무리 잘 갖춰줘도 검증 시스템이 없으면 에이전트한테 일을 믿고 맡길 수 없다는 것입니다."
     </div>
-  </section>
-
-  <section id="secondbrain" class="card">
-    <h2>2. 개발자용 세컨드 브레인: 2대 핵심 기둥</h2>
+    <p>
+      AI 도입 이전의 개발 병목은 명백히 '코드 타이핑과 알고리즘 구현'이었습니다. 그러나 최신 LLM이 수백 줄의 코드를 초 단위로 생성하게 되면서 진짜 병목은 <strong>'이 방대한 PR의 결과물을 과연 믿을 수 있는가?'</strong>라는 검증(Verification) 영역으로 급격히 이동했습니다.
+    </p>
     <div class="grid-2">
-      <div class="box">
-        <h4>🕸️ 기둥 1: Codebase Graph (지도)</h4>
+      <div class="stat-card" style="border-left: 3px solid var(--rose);">
+        <h4 style="color: var(--rose);">🚨 프롬프팅 중심 코딩의 붕괴</h4>
         <ul>
-          <li>단순 텍스트 검색(grep)이나 벡터 RAG의 한계 극복</li>
-          <li>컴파일러 AST 기반 함수 호출망 및 심볼 링킹</li>
-          <li>$k$-Hop 그래프를 통해 코드 변경 시 영향 반경(Blast Radius) 자동 계산</li>
+          <li>매 대화창마다 아키텍처와 규칙을 사람이 재설명하는 낭비</li>
+          <li>초대형 PR이 쏟아져 인간 리뷰어의 인지 용량 초과</li>
+          <li>환각(Hallucination)에 대한 불안으로 결국 수동 전수 검사</li>
         </ul>
       </div>
-      <div class="box">
-        <h4>🧠 기둥 2: Code Memory (역사/맥락)</h4>
+      <div class="stat-card" style="border-left: 3px solid var(--green);">
+        <h4 style="color: var(--green);">🛡️ 시스템 하네스(Harness)의 해결</h4>
         <ul>
-          <li>코드 자체에는 없는 "왜 이렇게 설계했는가?"(Why) 축적</li>
-          <li>과거 버그 회고록, 커밋 의사결정 히스토리</li>
-          <li>에이전트가 신임 시니어 개발자처럼 프로젝트 맥락을 즉시 온보딩</li>
+          <li><strong>Context Layer (2nd Brain):</strong> 컴파일러 AST 그래프로 맥락 자동 주입</li>
+          <li><strong>Verification Layer (Eval):</strong> Hard Check + K-Judge Majority Voting</li>
+          <li><strong>CI Gatekeeper:</strong> 자동 검증을 통과한 PR만 안전하게 프로덕션 병합</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <section id="eval" class="card">
-    <h2>3. Eval: 에이전트 품질을 증명하는 정량적 검증</h2>
-    <p>테스트 코드 없이 프로덕션에 배포할 수 없듯이, <strong>Eval 없는 AI 에이전트와 스킬은 실무에 쓸 수 없습니다.</strong></p>
+  <!-- Section 2 -->
+  <section class="card" id="meta-case">
+    <h2>2. [실전 사례] 메타 성능 프로파일링: 10시간 ➔ 30분 단축</h2>
+    <p>
+      하재상 엔지니어가 메타 프로덕션 환경에서 직접 수행한 대표적인 에이전틱 최적화 성공 사례입니다.
+    </p>
+    <div class="mermaid">
+    flowchart LR
+        subgraph Traditional["❌ 기존 수동 방식 (10시간 소요)"]
+            A1["수치 분석 & 지표 확인"] --> A2["모듈 간 의존성 Grep 탐색"]
+            A2 --> A3["원인 후보군 수동 가설 검증"] --> A4["시니어 엔지니어 직접 디버깅"]
+        end
+
+        subgraph Agentic["✅ 하네스 결합 방식 (30분 소요)"]
+            B1["Profiling MCP Tool\n(Trace 데이터 자동 수집)"] --> B2["Senior Diagnostic Skill\n(메타 시니어의 진단 매뉴얼)"]
+            B2 --> B3["Code Graph & Memory\n(호출 경로 및 변경 이력 추적)"] --> B4["원인 특정 & 패치 제안 완료"]
+        end
+    </div>
+    <div class="callout">
+      <strong>핵심 통찰:</strong> 단순 Grep 검색은 검색 결과의 90% 이상이 무관한 주석이나 테스트 더미를 반환하여 에이전트를 환각에 빠뜨립니다. 반면 <strong>'표준화된 MCP 도구' + '시니어의 노하우(Skill)' + '컴파일러 코드 지도(Brain)'</strong>의 3자가 결합되었을 때 비로소 10시간의 고숙련 엔지니어링이 30분으로 단축될 수 있습니다.
+    </div>
+  </section>
+
+  <!-- Section 3 -->
+  <section class="card" id="code-graph">
+    <h2>3. 세컨드 브레인 기둥 1: 컴파일러/AST 기반 Codebase Graph</h2>
+    <p>
+      에이전트에게 프로젝트 맥락을 매 세션 주입하기 위한 첫 번째 핵심 축은 구조적 코드 지도인 <strong>Codebase Graph</strong>입니다.
+    </p>
+    <h3>3.1 Grep vs Compiler AST 비교</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>비교 항목</th>
+          <th>Grep / 단순 텍스트 검색</th>
+          <th>Codebase Graph (AST 기반)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>인덱싱 방식</strong></td>
+          <td>정규표현식 단순 문자열 매칭</td>
+          <td>TypeScript Compiler API, Clang AST 파서</td>
+        </tr>
+        <tr>
+          <td><strong>식별 체계</strong></td>
+          <td>단순 텍스트 토큰</td>
+          <td>모든 함수/구조체/클래스에 고유 <code>Symbol ID</code> 부여</td>
+        </tr>
+        <tr>
+          <td><strong>노이즈 수준</strong></td>
+          <td>주석, 테스트 더미, 유사 이름 대량 유입 (노이즈 90%)</td>
+          <td>100% 결정론적 정의/참조 관계 매핑</td>
+        </tr>
+        <tr>
+          <td><strong>파급 반경 (Blast Radius)</strong></td>
+          <td>추적 불가 (매번 누락 발생)</td>
+          <td><strong>BFS Hopping</strong>으로 2차, 3차 파급선 수학적 계산</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 4 -->
+  <section class="card" id="code-memory">
+    <h2>4. 세컨드 브레인 기둥 2: Code Memory & Routing Rule</h2>
+    <h3>4.1 'Why'를 추적하는 Code Memory</h3>
+    <p>
+      그래프는 '현재 코드가 어떻게 연결되어 있는가(What & How)'만 보여줄 뿐, <em>"이 복잡한 예외 처리는 왜 들어갔는가?", "이 함수는 왜 10us 딜레이를 주는가?"</em>라는 <strong>과거의 의사결정 맥락(Why)</strong>을 설명하지 못합니다.
+    </p>
     <ul>
-      <li><strong>Trigger 검증:</strong> 스킬과 에이전트가 필요한 순간에만 정확히 호출되는가?</li>
-      <li><strong>품질 향상 증명:</strong> 기존 대비 성능과 정확도가 객관적 지표로 향상되었는가?</li>
-      <li><strong>Side-Effect 방지:</strong> 새로운 프롬프트나 스킬이 다른 기존 정상 동작을 망가뜨리지 않았는가?</li>
-      <li><strong>CI 파이프라인 결합:</strong> 개발자 PC에서만 돌리는 것이 아니라 GitHub Actions PR 검사 단계에서 자동 실행</li>
+      <li><strong>`why.mjs` & `query.mjs`:</strong> Git 커밋 히스토리, PR 리뷰 코멘트, ADR(Architecture Decision Records)을 색인화.</li>
+      <li><strong>BM25 랭킹 채택:</strong> 일반 벡터 임베딩은 하드웨어 전문 약어(CPHY, DPHY, HARQ, MMIO) 매칭에 취약합니다. BM25는 희귀 엔지니어링 용어에 가중치를 부여하여 정확한 변경 사유를 적중시킵니다.</li>
+    </ul>
+
+    <h3>4.2 트레이드오프와 2원화 라우팅 규칙 (Routing Policy)</h3>
+    <div class="callout">
+      모든 단순 수정에 세컨드 브레인을 조회하면 응답 지연(Latency)과 토큰 낭비가 발생합니다.
+      <br>• <strong>Fast Path (국소 수정):</strong> 단일 파일 내 자명한 오탈자/로컬 수정 ➔ LLM 직접 편집 (No Brain)
+      <br>• <strong>Brain Path (구조적 수정):</strong> 공용 인터페이스 변경, 아키텍처 리팩토링, 레지스터 정의 수정 ➔ <strong>Graph BFS + Why 메모리 선행 조회 의무화</strong>
+    </div>
+  </section>
+
+  <!-- Section 5 -->
+  <section class="card" id="eval-framework">
+    <h2>5. Eval (평가 체계): 결정론적 Hard Check + K-Judge Majority Voting</h2>
+    <div class="callout-quote">
+      "Anthropic이 Claude Code 시스템 프롬프트를 미세하게 업데이트한 후 내부 벤치마크 평가를 제대로 돌리지 않아 치명적인 리그레션이 발생했던 참사나 Amazon, Vercel의 사례를 보십시오. 테스트 코드 없는 배포가 위험하듯, <strong>Eval 없는 에이전트 스킬 배포는 자살행위</strong>입니다."
+    </div>
+    <div class="mermaid">
+    flowchart TD
+        Input["에이전트 작업 결과물\n(코드 패치, 분석 보고서)"] --> Step1{"Stage 1: Hard Check\n(결정론적 코드 검증)"}
+        Step1 -- "실패 (빌드 에러, 린트 위반)" --> Zero["❌ Score = 0점\n즉시 탈락 (Short-circuit)"]
+        Step1 -- "통과 (Pass)" --> Step2["Stage 2: LLM-as-a-Judge\n(정성적 아키텍처 평가)"]
+        
+        subgraph Voting["K=3 독립 실행 (3인의 교수 다수결 투표)"]
+            J1["Judge 1 (Run 1)"]
+            J2["Judge 2 (Run 2)"]
+            J3["Judge 3 (Run 3)"]
+        end
+        Step2 --> Voting
+        Voting --> Check{"Pass 여부 판정\n(2표 이상 합격)"}
+        Check -- "합격" --> CI["✅ 최종 배포 승인 (CI Pass)"]
+        Check -- "불합격" --> Feedback["❌ 피드백 리포트 생성 및 반려"]
+    </div>
+    <ul>
+      <li><strong>Stage 1 (Hard Check):</strong> 컴파일(Clang exit code == 0), 정적 분석(Clang-Tidy), 단위 테스트, 입출력 스키마 일치 여부를 코드로 검증. 단 1개라도 불합격 시 즉시 0점 탈락.</li>
+      <li><strong>Stage 2 (K-Judge Majority Voting):</strong> LLM 고유의 확률적 분산(Variance)을 제거하기 위해 독립된 3회 실행(K=3)으로 채점하여 2표 이상 찬성 시에만 합격 처리.</li>
     </ul>
   </section>
 
-  <section id="action" class="card">
-    <h2>4. 우리 볼트(Brain) 및 실무 적용 시사점</h2>
-    <div class="callout purple">
-      <strong>우리의 실천 과제:</strong> 우리가 구축한 <code>ARM Clang Code Graph</code>와 <code>OpenCode 5-Layer 불변조건 검증기</code>를 GitHub CI 상의 정량적 Eval 체계와 결합하여, 인간 시니어 엔지니어의 리뷰 부담을 80% 줄이는 진정한 2nd Brain을 완성합니다.
+  <!-- Section 6 -->
+  <section class="card" id="sandbox-maturity">
+    <h2>6. 샌드박스 무균 격리 & 메타의 Eval 성숙도 5단계</h2>
+    <h3>6.1 Sandbox Isolation (무균 격리 원칙)</h3>
+    <p>
+      에이전트가 정답 파일(Ground Truth)을 미리 읽거나 로컬의 전역 설정(<code>~/.claude/settings.json</code>)에 오염되지 않도록 매 평가 실행마다 독립된 임시 컨테이너에서 무균 실행합니다.
+    </p>
+
+    <h3>6.2 메타의 Eval 성숙도 5단계 (Levels 0 ~ 4)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>레벨</th>
+          <th>단계 명칭</th>
+          <th>핵심 특징 및 운영 방식</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Level 0</strong></td>
+          <td>느낌 (Vibe)</td>
+          <td>"어? 잘 돌아가는 것 같은데?" 감에 의존하는 단계 (가장 위험)</td>
+        </tr>
+        <tr>
+          <td><strong>Level 1</strong></td>
+          <td>단위 테스트 & 린트</td>
+          <td>기본적인 결정론적 하드 체크 자동화</td>
+        </tr>
+        <tr>
+          <td><strong>Level 2</strong></td>
+          <td>오프라인 Eval</td>
+          <td>골든 프롬프트(Golden Prompts 20~30개) 기반 정량 점수화</td>
+        </tr>
+        <tr>
+          <td><strong>Level 3</strong></td>
+          <td>CI Gatekeeper</td>
+          <td><strong>"CI에서 자동 실행되지 않는 Eval은 없는 것과 같다."</strong> PR 머지 전 통과 의무화</td>
+        </tr>
+        <tr>
+          <td><strong>Level 4</strong></td>
+          <td>Self-Improving Loop</td>
+          <td>실패 사례 피드백을 에이전트가 스스로 분석하여 프롬프트/스킬 자체 자동 개선</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <strong>스킬 개발 시 반드시 답해야 하는 3대 질문:</strong><br>
+      ① <strong>Triggering Accuracy:</strong> 불려야 할 때 정확히 불리고, 안 불려야 할 때 토큰을 낭비하지 않는가?<br>
+      ② <strong>Performance Gain:</strong> 기존 Baseline 대비 작업 성공률이나 속도가 유의미하게 개선되었는가?<br>
+      ③ <strong>Non-Regression:</strong> 새로운 스킬을 추가했더니 기존 기능이 망가지는 부작용이 없는가?
     </div>
+  </section>
+
+  <!-- Section 7 -->
+  <section class="card" id="domain-blueprint">
+    <h2>7. 모바일 통신 물리계층(PHY) SW 그룹 2nd Brain 청사진</h2>
+    <p>
+      우리 그룹(Mobile SW 통신 프로토콜 및 물리계층 임베디드 SW)에 본 메타 세미나 아키텍처를 1:1 매핑하는 구체적 구현 전략입니다.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>계층</th>
+          <th>메타 범용 엔지니어링 패턴</th>
+          <th>모바일 PHY / 임베디드 SW 특화 모델</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Code Graph</strong></td>
+          <td>TS/Python AST 기반 함수 호출 매핑</td>
+          <td>ARM Clang AST 기반 <strong>하드웨어 레지스터 맵(MMIO Address, Bitfield)</strong>, ISR 인터럽트 벡터, 3GPP FSM 상태 머신 링킹</td>
+        </tr>
+        <tr>
+          <td><strong>Code Memory</strong></td>
+          <td>일반 PR 토론 및 아키텍처 결정(ADR)</td>
+          <td><strong>3GPP 표준 릴리즈 변경점, 퀄컴/경쟁사 칩셋 호환성, 실리콘 에라타(Silicon Errata)</strong> 및 과거 IODT 필드 이슈 이력 BM25 인덱싱</td>
+        </tr>
+        <tr>
+          <td><strong>Firmware Eval</strong></td>
+          <td>웹 서비스 린트 및 단위 테스트</td>
+          <td><strong>Stage 1:</strong> 타겟 크로스 컴파일러 빌드 + I/D-Cache 사용량 검증<br><strong>Stage 2:</strong> ISR 동시성 경합 및 us 실시간 데드라인 규격 다수결 판정</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Section 8 -->
+  <section class="card" id="epilogue">
+    <h2>8. 에필로그: 에이전트 시대, 인간 엔지니어의 주도권</h2>
+    <div class="callout-quote">
+      "에이전트가 나 대신 일을 해주니까 노트북을 덮어도 머릿속에서 '에이전트 잘 돌아가고 있나?', '지금 에이전트 놀고 있는 거 아닌가?' 하면서 24시간 쉬지 못하는 제 자신을 발견했습니다. 가족과 하와이 여행을 가서도 에이전트 생각만 하고 있더라고요.<br><br>
+      우리가 왜 AI를 씁니까? <strong>에이전트한테 주도권을 뺏기지 마세요.</strong> 나의 1번 가치(가족, 건강, 행복, 엔지니어링의 본질)를 확고히 세우고, 에이전트는 나를 그 가치로 데려다주는 강력한 도구로 부려야 합니다."
+    </div>
+    <p>
+      <strong>최종 시사점:</strong> 설계와 전략, 가치 판단은 인간 테크리드가 쥐고, 구현과 검증은 견고한 시스템 하네스(2nd Brain + Eval CI Gate)에 위임하십시오.
+    </p>
   </section>
 </main>
 
+<script>
+  // Simple ScrollSpy
+  const sections = document.querySelectorAll('section.card');
+  const navLinks = document.querySelectorAll('aside.toc a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 120) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
 </body>
 </html>
-

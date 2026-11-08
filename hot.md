@@ -1,9 +1,22 @@
 ---
 title: Hot Cache
-updated: 2026-10-31
+updated: 2026-11-08
 ---
 
 ## Recent Activity
+- **Meta Senior SWE Second Brain & Eval Full Lecture Study & Multi-Format Suite (2026-11-08):**
+  - **강의 아카이브 신설 (`_sources/Study/AI-Lectures/실밸개발자/20261108_2ndBrain_and_Eval/`):** 실밸개발자(하재상, Meta 시니어 엔지니어) 1시간 17분 풀 세미나(`AyKq4zFfrlc`) 36,179자 전수 자막(`clean_transcript.txt`, `yt_sub_AyKq4zFfrlc.ko.vtt`) 추출 및 타임라인별 심화 분석 완료.
+  - **4대 비주얼 산출물 구축 (`doc-visualizer-suite`):**
+    - **전수 연구 노트:** `01_Meta_Senior_2ndBrain_and_Eval_Notes.md` (타임라인 전수 해부, 3대 핵심 질문, 2원화 라우팅 규칙, 모바일 통신 PHY SW 적용 청사진).
+    - **반응형 인터랙티브 다크 리포트:** `02_Lecture_Report_WikiSkill.html` (좌측 ScrollSpy 목차, Mermaid.js 다이어그램, 코드 스니펫 및 콜아웃).
+    - **Bento 싱글파일 슬라이드 덱:** `04_Bento_Presentation.html` (키보드 좌우 화살표 인터랙션, 7개 슬라이드 카드 그리드).
+    - **Presenton 모던 PPTX 덱:** `06_Presenton_Modern_Deck.pptx` (8개 고밀도 슬라이드, Deep Slate Navy 테마, 벤치마크 차트 삽입).
+    - **PaperPilot 이그제큐티브 PDF 백서:** `07_PaperPilot_Executive_Whitepaper.pdf` (ReportLab 맑은고딕 정밀 조판, 헤더/푸터 워터마크, 4페이지 고밀도 테크니컬 리포트).
+  - **핵심 엔지니어링 패러다임 정립:**
+    - 코드 생성에서 검증(Verification)으로의 병목 전이 (메타 사내 대시보드 $30,000/월 실험).
+    - 2nd Brain 아키텍처: Grep의 한계(노이즈 90%) ➔ 컴파일러 AST 기반 Codebase Graph (`brain build`, Symbol ID, BFS Blast Radius) + 'Why'를 복원하는 Code Memory (`why.mjs`, BM25 커밋/PR 검색).
+    - Eval 체계: Deterministic Hard Check (컴파일/린트 실패 시 즉시 0점) ➔ LLM-as-a-Judge K=3 다수결 투표 (3인의 교수 심사 모델) ➔ Sandbox 무균 격리 ➔ CI Gatekeeper 강제.
+    - 그룹장 도메인 적용: ARM Clang AST 기반 MMIO 레지스터 맵 링킹, 3GPP 규격/실리콘 에라타 메모리, 펌웨어 임베디드 크로스컴파일/실시간 데드라인 Eval 체계 도출.
 - **PHY Embedded SW AI Code Review Deep Research & Lecture Curation (2026-10-31):**
   - **강의 아카이브 신설 (`_sources/Study/AI-Lectures/실밸개발자/20261031_AI_Code_Review/`):** 실밸개발자 강의(`Be5b6D1IoLI`, 19개 챕터) 전수 연구 노트(`코드_리뷰가_병목이_되는_이유_메타_시니어_AI_코드_리뷰_실밸개발자.md`), 다크테마 리포트(`lecture_report.html`), 슬라이드 덱(`slides/index.html`), 클린 자막(`clean_transcript.txt`), 프롬프트 3종(`prompts/prompt_01~03.txt`) 구축.
   - **PHY 임베디드 SW 심층 연구 및 PoC 하네스 (`_sources/Study/Code-Review/PHY-Embedded-SW/20261031_Deep_Research/`):** `GitHub + OpenCode + DeepSeek/GLM/Qwen + ARM Clang + CMake` 환경 맞춤형 `00_PHY_SW_Code_Review_Master_Blueprint.md`, 25대 오픈소스 실시간 벤치마크(`01_OpenSource_Code_Review_Benchmark.md`), 5-Layer 불변조건 카탈로그(`02_PHY_5Layer_Review_Invariants_Catalog.md`), 즉시 적용 가능한 PoC 패키지(`03_PHY_Review_Harness_PoC/`) 구축.
